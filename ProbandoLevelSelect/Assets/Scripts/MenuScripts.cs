@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+//Clase que gestionara las cosas que ocurran en el menú, por ahora existe solo para que el gameLogic sepa que se encuentra en el menu y para que los pauseCanvas de los niveles puedan cargar nivel (Menu principal) usando el metodo LoadLevel.
 
 public class MenuScripts : MonoBehaviour
 {
@@ -19,13 +20,7 @@ public class MenuScripts : MonoBehaviour
 
     }
 
-    public void LOADLEVEL1() {
-        SceneManager.LoadScene(1);
-
-    }
-
-
-
+    //Método para cambiar de escena usando el nombre
     public void LoadLevel(string name)
     {
         SceneManager.LoadScene(name);

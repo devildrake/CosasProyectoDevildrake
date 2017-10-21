@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+//Script para añadir un listener al método GameLogic.LoadMenu() a los botones que pertoque;
 public class AñadirListenerGameLogic : MonoBehaviour {
 
     public int index;
