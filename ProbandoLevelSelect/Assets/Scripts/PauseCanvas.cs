@@ -10,9 +10,6 @@ public class PauseCanvas : MonoBehaviour {
     //Referencia al gameObject que pone un tono gris a la escena
     public GameObject gris;
 
-    //Booelano para gestionar que el hecho de mantener una tecla no implique que se vuelva loco el canvas
-    bool once = false;
-
 	// Use this for initialization
 	void Start () {
 	}
@@ -26,15 +23,10 @@ public class PauseCanvas : MonoBehaviour {
 
     //Método que controla cuando se le da al escape para pausar
     void CheckPauseInput() {
-        if (Input.GetKeyDown(KeyCode.Escape) && !once) {
+        if (Input.GetKeyDown(KeyCode.Escape)){
             isPaused = !isPaused;
             gris.SetActive(isPaused);
-            once = true;
         }
-        if (Input.GetKeyUp(KeyCode.Escape) && once) {
-            once = false;
-        }
-
     }
 
     // Update is called once per frame

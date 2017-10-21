@@ -20,10 +20,13 @@ public class PlayerController : MonoBehaviour {
     //Referencia al RigidBody2D del personaje, se inicializa en el start.
     Rigidbody2D rb;
 
+    bool slowMotion;
+
     //Se inicializan las cosas
     void Start() {
         groundMask = LayerMask.GetMask("Ground");
         rb = GetComponent<Rigidbody2D>();
+        slowMotion = false;
     }
 
     // Update is called once per frame
@@ -31,6 +34,18 @@ public class PlayerController : MonoBehaviour {
         CheckGrounded();
         Move();
         CheckInputs();
+        CheckSlowMotion();
+    }
+
+    void CheckSlowMotion() {
+        if ((Input.GetKeyDown(KeyCode.LeftControl)) && !slowMotion) {
+            Time.timeScale = 0.5f;
+            slowMotion = true;
+        }
+        else if ((Input.GetKeyDown(KeyCode.LeftControl)) && slowMotion) {
+            Time.timeScale = 1.0f;
+            slowMotion = false;
+        }
     }
 
     //Funcion que hace al personaje moverse hacia los lados a partir del input de las flechas, en caso de estar en el aire se mantiene siempre y cuando no se pulsen de nuevo las teclas A o D lo que hace que se reduzca a la mitad la velocidad de movimiento en x 
