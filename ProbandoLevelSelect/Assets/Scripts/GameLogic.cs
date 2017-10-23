@@ -28,6 +28,7 @@ public class GameLogic : MonoBehaviour
     static string currentSceneName = null;
     public PauseCanvas pauseCanvas;
 
+    public List<GameObject> transformableObjects;
 
     void Awake()
     {
@@ -91,8 +92,8 @@ public class GameLogic : MonoBehaviour
         //Espera de un frame para comprobar que se ejecuta en el orden deseado
         if (!waitAFrame)
         {
-            waitAFrame = true;
-            checkMainMenu = false;
+            SetWaitAFrame(true);
+            SetCheckMainMenu(false);
         }
 
         //Una vez realizada la espera, sin haber comprobado si se esta en el menu principal
@@ -103,12 +104,22 @@ public class GameLogic : MonoBehaviour
             {
                 isInMainMenu = true;
             }
-            checkMainMenu = true;
+            SetCheckMainMenu(true);
         }
 
         //Una vez comprobado si estamos o no en el menu principal se pondria el comportamiento deseado
         else
         {
+            if (!isInMainMenu) {
+
+                if (Input.GetKeyDown(KeyCode.LeftShift)) {
+                    foreach(GameObject g in transformableObjects) {
+                        g.GetComponent<Transformable>().Change();
+                    }
+                }
+
+            }
+
 
         }
     }
