@@ -23,7 +23,9 @@ public class Transformable : MonoBehaviour{
             }
         }
     }
-
     public virtual void Change() {}
 
+    private void OnDestroy() {
+        if(GameLogic.instance!=null)GameLogic.instance.transformableObjects.Remove(gameObject);
+    }
 }
