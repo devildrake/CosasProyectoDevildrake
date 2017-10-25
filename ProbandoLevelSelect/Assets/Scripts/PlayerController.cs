@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour {
+public class PlayerController : Transformable {
 
     //Velocidad hacia los laterales base
     float characterSpeed = 5;
@@ -35,10 +35,16 @@ public class PlayerController : MonoBehaviour {
         rb = GetComponent<Rigidbody2D>();
         slowMotion = false;
         slowedInTheAir = false;
-    }
 
-    // Update is called once per frame
+
+        //Start del transformable
+        InitTransformable();
+    }
     void Update() {
+        //Add del transformable
+        AddToGameLogicList();
+
+
         CheckNotGrounded();
         Move();
         CheckInputs();
@@ -117,6 +123,7 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
+
     //Método que comprueba los inputs y actua en consecuencia
     void CheckInputs() {
 
@@ -126,4 +133,20 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
+    public override void Change() {
+        if (dawn) {
+            GetComponent<SpriteRenderer>().sprite = imagenDusk;
+            dawn = false;
+        }
+        else {
+            GetComponent<SpriteRenderer>().sprite = imagenDawn;
+
+            dawn = true;
+        }
+    }
+
+    protected override void LoadResources() {
+        imagenDawn = Resources.Load<Sprite>("bloom");
+        imagenDusk = Resources.Load<Sprite>("bloom");
+    }
 }

@@ -4,13 +4,8 @@ using UnityEngine;
 
 public class TransformableBackground : Transformable {
 
-    public Sprite imagenDusk;
-    public Sprite imagenDawn;
-
     private void Start() {
-        SetAddedFalse();
-        SetDawnTrue();
-        Change();
+        InitTransformable();
     }
 
     private void Update() {
@@ -29,4 +24,10 @@ public class TransformableBackground : Transformable {
             dawn = true;
         }
     }
+
+    protected override void LoadResources() {
+        imagenDawn = Resources.Load<Sprite>("Background/Background1");
+        imagenDusk = Resources.Load<Sprite>("Background/Background2");
+    }
+
 }

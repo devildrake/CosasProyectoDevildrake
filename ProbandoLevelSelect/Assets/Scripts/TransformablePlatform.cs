@@ -4,13 +4,9 @@ using UnityEngine;
 
 public class TransformablePlatform : Transformable {
 
-    public Sprite imagenDusk;
-    public Sprite imagenDawn;
 
     private void Start() {
-        SetAddedFalse();
-        SetDawnTrue();
-        Change();
+        InitTransformable();
     }
 
     private void Update() {
@@ -30,5 +26,9 @@ public class TransformablePlatform : Transformable {
         }
     }
 
+    protected override void LoadResources() {
+        imagenDawn = Resources.Load<Sprite>("Sprites/Platfroms/Hearthstone1");
+        imagenDusk = Resources.Load<Sprite>("Sprites/Platfroms/Hearthstone2");
+    }
 
 }

@@ -9,7 +9,10 @@ using UnityEngine.SceneManagement;
 public class GameLogic : MonoBehaviour
 {
 
-    public static GameLogic instance = null;             
+    public static GameLogic instance = null;
+
+    //Booleano que gestionara si el canvas esta activo y por tanto el juego pausado (AUN NO)
+    public bool isPaused;
 
     //Booleano privado pero visible que gestiona si se esta en el menu principal o no
     [SerializeField]
@@ -111,13 +114,13 @@ public class GameLogic : MonoBehaviour
         else
         {
             if (!isInMainMenu) {
-
-                if (Input.GetKeyDown(KeyCode.LeftShift)) {
-                    foreach(GameObject g in transformableObjects) {
-                        g.GetComponent<Transformable>().Change();
+                    if (Input.GetKeyDown(KeyCode.LeftShift)) {
+                        foreach (GameObject g in transformableObjects) {
+                            g.GetComponent<Transformable>().Change();
+                        }
                     }
-                }
-
+                
+                CheckPauseInput();
             }
 
 
@@ -129,4 +132,14 @@ public class GameLogic : MonoBehaviour
     {
         SceneManager.LoadScene(0);
     }
+
+
+    //Método que controla cuando se le da al escape para pausar
+    void CheckPauseInput() {
+        if (Input.GetKeyDown(KeyCode.Escape)) {
+            isPaused = !isPaused;
+        }
+    }
+
+
 }
