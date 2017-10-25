@@ -8,7 +8,10 @@ using UnityEngine.SceneManagement;
 
 public class GameLogic : MonoBehaviour
 {
+    //Float privado que se encarga de cambiar timeScale segun combiene cuando el juego no esta pausado
+    private float timeScaleLocal = 1;
 
+    //Instancia del singleton que se inicia en null
     public static GameLogic instance = null;
 
     //Booleano que gestionara si el canvas esta activo y por tanto el juego pausado (AUN NO)
@@ -83,8 +86,27 @@ public class GameLogic : MonoBehaviour
         currentSceneName = SceneManager.GetActiveScene().name;
     }
 
+    //Método para variar el timeScaleLocal siempre y cuando el juego no este pausado
+    public void SetTimeScaleLocal(float a) {
+        if(!isPaused)
+        timeScaleLocal = a;
+    }
+
+    //Método que pone el timeScale a 0 cuando el juego esta pausado y que cuando no esta pausado pone Time.timeScale igual a la variable timeScaleLocal
+    void TimeScaleStuff() {
+        if (isPaused) {
+            Time.timeScale = 0;
+        }
+        else {
+            Time.timeScale = timeScaleLocal;
+        }
+
+    }
+
     void Update()
     {
+        TimeScaleStuff();
+
         //Se comprueba si ha habido cambio de escena, si lo ha habido se reinician los booleanos waitAFrame, checkMainMenu e isInManMenu además de actualizar la variable currentSceneName
         if (ChangedScene())
         {

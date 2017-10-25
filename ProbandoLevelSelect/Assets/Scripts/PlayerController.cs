@@ -51,14 +51,14 @@ public class PlayerController : Transformable {
         CheckSlowMotion();
     }
 
-    //Método que comprueba si se ha pulsado la tecla control y cambia el booleano slowMotion además de modificar el timescale
+    //Método que comprueba si se ha pulsado la tecla control y cambia el booleano slowMotion además de modificar el timescaleLocal del singleton de GameLogic
     void CheckSlowMotion() {
         if ((Input.GetKeyDown(KeyCode.LeftControl)) && !slowMotion) {
-            Time.timeScale = 0.5f;
+            GameLogic.instance.SetTimeScaleLocal(0.5f);
             slowMotion = true;
         }
         else if ((Input.GetKeyDown(KeyCode.LeftControl)) && slowMotion) {
-            Time.timeScale = 1.0f;
+            GameLogic.instance.SetTimeScaleLocal(1.0f);
             slowMotion = false;
         }
     }
