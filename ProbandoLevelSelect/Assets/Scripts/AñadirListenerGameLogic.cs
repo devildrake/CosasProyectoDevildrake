@@ -9,9 +9,18 @@ public class AñadirListenerGameLogic : MonoBehaviour {
     public int index;
     private Button myselfButton;
 
-    void Start()
-    {
+    void Start() {
         myselfButton = GetComponent<Button>();
-        myselfButton.onClick.AddListener(() => GameLogic.instance.LoadMenu());
+
+        switch (index) {
+            case 0:
+                myselfButton.onClick.AddListener(() => GameLogic.instance.LoadMenu());
+                break;
+            case 1:
+                myselfButton.onClick.AddListener(() => GameLogic.instance.RestartScene());
+                break;
+            default:
+                break;
+    }
     }
 }

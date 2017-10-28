@@ -80,10 +80,11 @@ public class GameLogic : MonoBehaviour
     }
 
     //Método que reinicia la espera del frame para buscar referencias y reinicia el booleano isInMainMenu
-    void ResetSceneData() {
+    public void ResetSceneData() {
         SetWaitAFrame(false);
         isInMainMenu = false;
         currentSceneName = SceneManager.GetActiveScene().name;
+        DirectionCircle.SetOnce(true);
     }
 
     //Método para variar el timeScaleLocal siempre y cuando el juego no este pausado
@@ -105,6 +106,7 @@ public class GameLogic : MonoBehaviour
 
     void Update()
     {
+
         TimeScaleStuff();
 
         //Se comprueba si ha habido cambio de escena, si lo ha habido se reinician los booleanos waitAFrame, checkMainMenu e isInManMenu además de actualizar la variable currentSceneName
@@ -136,16 +138,23 @@ public class GameLogic : MonoBehaviour
         else
         {
             if (!isInMainMenu) {
+                //Si el juego no esta pausado
+                if (!isPaused) {
                     if (Input.GetKeyDown(KeyCode.LeftShift)) {
                         foreach (GameObject g in transformableObjects) {
                             g.GetComponent<Transformable>().Change();
                         }
                     }
-                
+
+                }
+                //Si el juego SI esta pausado
+                else {
+
+
+                }
+                //En cualquier caso se comprueba el input
                 CheckPauseInput();
             }
-
-
         }
     }
 
@@ -153,12 +162,26 @@ public class GameLogic : MonoBehaviour
     public void LoadMenu()
     {
         SceneManager.LoadScene(0);
+        ResetSceneData();
     }
 
+    public void RestartScene() {
+        SceneManager.LoadScene(currentSceneName);
+        ResetSceneData();
+    }
 
-    //Método que controla cuando se le da al escape para pausar
+    //Método que controla cuando se le da al escape para pausar, a su vez activa y desactiva el cursor en función de si 
+    //Se abre el menú in game
     void CheckPauseInput() {
         if (Input.GetKeyDown(KeyCode.Escape)) {
+            if (isPaused) {
+                Cursor.visible = false;
+                Cursor.lockState = CursorLockMode.None; //Se engancha el cursor en el centro de la pantalla.
+            }
+            else if (!isPaused) {
+                Cursor.visible = true;
+                Cursor.lockState = CursorLockMode.Locked; //Se engancha el cursor en el centro de la pantalla.
+            }
             isPaused = !isPaused;
         }
     }

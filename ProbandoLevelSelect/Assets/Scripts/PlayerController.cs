@@ -4,6 +4,16 @@ using UnityEngine;
 
 public class PlayerController : Transformable {
 
+    //Booleano privado que maneja que el personaje pueda utilizar el dash, se pone en true a la vez que el grounded y en false cuando se usa el Dash
+    [SerializeField]
+    private bool canDash;
+
+    //Vector dirección para el dash/Hit
+    private Vector2 direction;
+
+    //Hijo asignado a mano por ahora, anchor de rotación
+    public GameObject arrow;
+
     //Velocidad hacia los laterales base
     float characterSpeed = 5;
 
@@ -20,9 +30,6 @@ public class PlayerController : Transformable {
     //Referencia al RigidBody2D del personaje, se inicializa en el start.
     Rigidbody2D rb;
 
-    //BOOLEANO QUE GESTIONA SI EL TIEMPO ESTA REDUDCIDO O NO
-    bool slowMotion;
-
     //ESTE INT ES -1 SI EL MOVIMIENTO PREVIO FUE HACIA LA IZQUIERDA Y ES 1 SI EL MOVIMIENTO PREVIO FUE HACIA LA DERECHA
     float prevHorizontalMov;
 
@@ -33,8 +40,10 @@ public class PlayerController : Transformable {
     void Start() {
         groundMask = LayerMask.GetMask("Ground");
         rb = GetComponent<Rigidbody2D>();
-        slowMotion = false;
         slowedInTheAir = false;
+
+        //Se hace esto para que UseDirectionCircle haga uso de su bool once y inicialize las cosas que le interesan
+        direction = DirectionCircle.UseDirectionCircle(arrow, gameObject);
 
 
         //Start del transformable
@@ -44,23 +53,20 @@ public class PlayerController : Transformable {
         //Add del transformable
         AddToGameLogicList();
 
+        if (!GameLogic.instance.isPaused) {
+            CheckNotGrounded();
+            Move();
+            CheckInputs();
+        }else {
 
-        CheckNotGrounded();
-        Move();
-        CheckInputs();
-        CheckSlowMotion();
+
+        }
+        //CheckSlowMotion();
     }
 
-    //Método que comprueba si se ha pulsado la tecla control y cambia el booleano slowMotion además de modificar el timescaleLocal del singleton de GameLogic
-    void CheckSlowMotion() {
-        if ((Input.GetKeyDown(KeyCode.LeftControl)) && !slowMotion) {
-            GameLogic.instance.SetTimeScaleLocal(0.5f);
-            slowMotion = true;
-        }
-        else if ((Input.GetKeyDown(KeyCode.LeftControl)) && slowMotion) {
-            GameLogic.instance.SetTimeScaleLocal(1.0f);
-            slowMotion = false;
-        }
+    //Método setter para canDash
+    void SetCanDash(bool a) {
+        canDash = a;
     }
 
     //Funcion que hace al personaje moverse hacia los lados a partir del input de las flechas, en caso de estar en el aire se mantiene siempre y cuando se cambie la dirección horizontal en el aire se reduce a la mitad la velocidad
@@ -73,6 +79,7 @@ public class PlayerController : Transformable {
         }
 
         if (grounded) {
+            GetComponent<Rigidbody2D>().AddForce(new Vector2(-GetComponent<Rigidbody2D>().velocity.x, 0), ForceMode2D.Impulse);
             transform.Translate(Vector3.right * Input.GetAxis("Horizontal") * characterSpeed * Time.deltaTime);
             slowedInTheAir = false;
         }
@@ -89,6 +96,8 @@ public class PlayerController : Transformable {
                 mustSlow = 0.5f;
             }
             transform.Translate(Vector3.right * Input.GetAxis("Horizontal") * characterSpeed *mustSlow* Time.deltaTime);
+
+
 
         }
 
@@ -113,6 +122,7 @@ public class PlayerController : Transformable {
     //OnTriggerStay2D y OnTriggerEnter2D que comprueban si el tag del trigger es ground para actualizar el booleano grounded
     private void OnTriggerEnter2D(Collider2D collision) {
         if (collision.tag == "Ground") {
+            SetCanDash(true);
             grounded = true;
         }
     }
@@ -120,16 +130,37 @@ public class PlayerController : Transformable {
     private void OnTriggerStay2D(Collider2D collision) {
         if (collision.tag == "Ground") {
             grounded = true;
+            if (rb.velocity.y == 0) {
+                SetCanDash(true);
+            }
         }
     }
 
 
     //Método que comprueba los inputs y actua en consecuencia
     void CheckInputs() {
-
         //BARRA ESPACIADORA = SALTO
         if (Input.GetKeyDown(KeyCode.Space) && grounded) {
             Jump();
+        }
+        if (dawn) {
+
+            //Si el personaje puede dashear se utiliza el método UseDirectionCircle que renderiza las flechas
+            if (canDash)
+                direction = DirectionCircle.UseDirectionCircle(arrow, gameObject);
+
+            //Si se suelta el botón izquierdo del ratón y se puede dashear, se desactiva la slowMotion y se modifica el timeScale además de poner en false canDash
+            if (Input.GetMouseButtonUp(0) && canDash) {
+                GameLogic.instance.SetTimeScaleLocal(1.0f);
+                Dash.DoDash(gameObject, direction, 10);
+                SetCanDash(false);
+
+
+                //Si se pulsa el botón izquierdo del ratón y se puede dashear, se activa la slowMotion y se modifica el timeScale de gameLogic
+            }
+            else if (Input.GetMouseButtonDown(0) && canDash) {
+                GameLogic.instance.SetTimeScaleLocal(0.5f);
+            }
         }
     }
 
@@ -146,7 +177,7 @@ public class PlayerController : Transformable {
     }
 
     protected override void LoadResources() {
-        imagenDawn = Resources.Load<Sprite>("bloom");
-        imagenDusk = Resources.Load<Sprite>("bloom");
+        imagenDawn = Resources.Load<Sprite>("Sprites/bloom");
+        imagenDusk = Resources.Load<Sprite>("Sprites/bloom");
     }
 }
