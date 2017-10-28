@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class PlayerController : Transformable {
 
+    //Booleano para modificar hacia donde mira el personaje
+    bool faceRight;
+
     //Booleano privado que maneja que el personaje pueda utilizar el dash, se pone en true a la vez que el grounded y en false cuando se usa el Dash
     [SerializeField]
     private bool canDash;
@@ -33,11 +36,14 @@ public class PlayerController : Transformable {
     //ESTE INT ES -1 SI EL MOVIMIENTO PREVIO FUE HACIA LA IZQUIERDA Y ES 1 SI EL MOVIMIENTO PREVIO FUE HACIA LA DERECHA
     float prevHorizontalMov;
 
+    [SerializeField]
     //Booleano que comprueba si el personaje deberia estar ralentizado en el aire, se reinicia al estar en el suelo (Que se comprueba con colliders2D y tags)
     bool slowedInTheAir;
 
     //Se inicializan las cosas
     void Start() {
+        prevHorizontalMov = 1;
+        faceRight = true;
         groundMask = LayerMask.GetMask("Ground");
         rb = GetComponent<Rigidbody2D>();
         slowedInTheAir = false;
@@ -69,11 +75,18 @@ public class PlayerController : Transformable {
         canDash = a;
     }
 
+    //Método que cambia hacia donde mira el personaje, se le llama al cambiar el Input.GetAxis Horizontal de 1 a -1 o alreves
+    void Flip(){
+        Vector3 theScale = transform.localScale;
+        theScale.x *= -1;
+        transform.localScale = theScale;
+    }
+
     //Funcion que hace al personaje moverse hacia los lados a partir del input de las flechas, en caso de estar en el aire se mantiene siempre y cuando se cambie la dirección horizontal en el aire se reduce a la mitad la velocidad
     void Move() {
         bool changed = false;
         float mustSlow = 1;
-        if (Input.GetAxisRaw("Horizontal") != (float)prevHorizontalMov) {
+        if (Input.GetAxisRaw("Horizontal") != (float)prevHorizontalMov&&Input.GetAxisRaw("Horizontal")!=0.0f) {
             changed = true;
             prevHorizontalMov = Input.GetAxisRaw("Horizontal");
         }
@@ -93,12 +106,17 @@ public class PlayerController : Transformable {
 
         else {
             if (slowedInTheAir) {
+                rb.AddForce(new Vector2(-rb.velocity.x, 0), ForceMode2D.Impulse);
                 mustSlow = 0.5f;
             }
             transform.Translate(Vector3.right * Input.GetAxis("Horizontal") * characterSpeed *mustSlow* Time.deltaTime);
 
 
 
+        }
+
+        if (changed) {
+            Flip();
         }
 
     }
@@ -143,10 +161,16 @@ public class PlayerController : Transformable {
         if (Input.GetKeyDown(KeyCode.Space) && grounded) {
             Jump();
         }
+
+ 
+
+
+        //Comportamiento de dawn
         if (dawn) {
 
-            //Si el personaje puede dashear se utiliza el método UseDirectionCircle que renderiza las flechas
-            if (canDash)
+            ChangeToDawn();
+
+            if(canDash)       
                 direction = DirectionCircle.UseDirectionCircle(arrow, gameObject);
 
             //Si se suelta el botón izquierdo del ratón y se puede dashear, se desactiva la slowMotion y se modifica el timeScale además de poner en false canDash
@@ -162,8 +186,53 @@ public class PlayerController : Transformable {
                 GameLogic.instance.SetTimeScaleLocal(0.5f);
             }
         }
+
+        //Comportamiento de dusk
+
+        else {
+            if (Input.GetMouseButtonUp(0)) {
+                GetComponentInChildren<PunchArea>().Punch(direction,10);
+                GameLogic.instance.SetTimeScaleLocal(1.0f);
+
+            }
+            else if (Input.GetMouseButtonDown(0) && canDash) {
+                GameLogic.instance.SetTimeScaleLocal(0.5f);
+
+            }
+
+            ChangeToDusk();
+            direction = DirectionCircle.UseDirectionCircle(arrow, gameObject);
+
+
+        }
     }
 
+    //Método que gestiona el momento inicial de cambiar a dawn si es que hay cambio
+    void ChangeToDawn() {
+        if (prevDawn != dawn) {
+            changedWorld = true;
+            prevDawn = dawn;
+        }
+        if (changedWorld) {
+            changedWorld = false;
+            DirectionCircle.SetOnce(false);
+        }
+    }
+
+    //Método que gestiona el momento inicial de cambiar a dusk si es que hay cambio
+    void ChangeToDusk() {
+        if (prevDawn != dawn) {
+            changedWorld = true;
+            prevDawn = dawn;
+        }
+        if (changedWorld) {
+            changedWorld = false;
+            DirectionCircle.SetOnce(false);
+            canDash = false;
+            GameLogic.instance.SetTimeScaleLocal(1.0f);
+        }
+
+    }
     public override void Change() {
         if (dawn) {
             GetComponent<SpriteRenderer>().sprite = imagenDusk;

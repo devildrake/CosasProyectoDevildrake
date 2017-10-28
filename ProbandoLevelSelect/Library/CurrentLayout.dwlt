@@ -20,7 +20,7 @@ MonoBehaviour:
   m_ShowMode: 4
   m_Title: 
   m_RootView: {fileID: 2}
-  m_MinSize: {x: 950, y: 300}
+  m_MinSize: {x: 950, y: 521}
   m_MaxSize: {x: 10000, y: 10000}
 --- !u!114 &2
 MonoBehaviour:
@@ -105,8 +105,8 @@ MonoBehaviour:
     y: 30
     width: 1520
     height: 715
-  m_MinSize: {x: 711, y: 492}
-  m_MaxSize: {x: 18006, y: 14042}
+  m_MinSize: {x: 711, y: 471}
+  m_MaxSize: {x: 18006, y: 14021}
   vertical: 1
   controlID: 115
 --- !u!114 &6
@@ -130,8 +130,8 @@ MonoBehaviour:
     y: 0
     width: 1520
     height: 715
-  m_MinSize: {x: 711, y: 492}
-  m_MaxSize: {x: 18006, y: 14042}
+  m_MinSize: {x: 711, y: 471}
+  m_MaxSize: {x: 18006, y: 14021}
   vertical: 0
   controlID: 116
 --- !u!114 &7
@@ -154,8 +154,8 @@ MonoBehaviour:
     y: 0
     width: 544
     height: 715
-  m_MinSize: {x: 232, y: 492}
-  m_MaxSize: {x: 10002, y: 14042}
+  m_MinSize: {x: 232, y: 471}
+  m_MaxSize: {x: 10002, y: 14021}
   vertical: 1
   controlID: 29
 --- !u!114 &8
@@ -229,8 +229,8 @@ MonoBehaviour:
     y: 0
     width: 684
     height: 715
-  m_MinSize: {x: 204, y: 421}
-  m_MaxSize: {x: 4004, y: 8021}
+  m_MinSize: {x: 204, y: 442}
+  m_MaxSize: {x: 4004, y: 8042}
   vertical: 1
   controlID: 117
 --- !u!114 &11
@@ -415,9 +415,9 @@ MonoBehaviour:
     height: 423
   m_TreeViewState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 
-    m_LastClickedID: 0
-    m_ExpandedIDs: 6cecfeff0e4dffff82fbffff96fbffffa6fbfffff4ffffff00000000f227000002280000
+    m_SelectedIDs: 94affbff
+    m_LastClickedID: -282732
+    m_ExpandedIDs: 94affbff56e4fdff98fbffffa6fbffff00000000f6270000322800003e280000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -504,19 +504,19 @@ MonoBehaviour:
     m_ShowAllHits: 0
     m_SearchArea: 0
     m_Folders:
-    - Assets/Scripts
+    - Assets/Resources/Background
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Scripts
+  - Assets/Resources/Background
   m_LastFoldersGridSize: -1
   m_LastProjectPath: C:\Users\Devildrake\Documents\CosasProyectoDevildrake\ProbandoLevelSelect
   m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 6a270000
-    m_LastClickedID: 10090
-    m_ExpandedIDs: 000000003a27000094270000a2270000d8280000ffffff7f
+    m_SelectedIDs: 86270000
+    m_LastClickedID: 10118
+    m_ExpandedIDs: 000000003a27000094270000a2270000f4280000ffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -544,7 +544,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 000000003a27000094270000a2270000d8280000
+    m_ExpandedIDs: 000000003a27000094270000a2270000f4280000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -626,14 +626,14 @@ MonoBehaviour:
     width: 680
     height: 314
   m_SceneLighting: 1
-  lastFramingTime: 6036.1533031818535
+  lastFramingTime: 4544.911453022629
   m_2DMode: 1
   m_isRotationLocked: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 512, y: 384, z: 0}
+    m_Target: {x: 1.9533991, y: -0.119611144, z: -6.4773145}
     speed: 2
-    m_Value: {x: 512, y: 384, z: 0}
+    m_Value: {x: 1.9533991, y: -0.119611144, z: -6.4773145}
   m_RenderMode: 0
   m_ValidateTrueMetals: 0
   m_SceneViewState:
@@ -660,9 +660,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 22
+    m_Target: 1.7421561
     speed: 2
-    m_Value: 22
+    m_Value: 1.7421561
   m_Ortho:
     m_Target: 1
     speed: 2

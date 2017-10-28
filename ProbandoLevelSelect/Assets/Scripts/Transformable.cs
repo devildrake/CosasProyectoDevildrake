@@ -9,12 +9,22 @@ using UnityEngine;
 
 public class Transformable : MonoBehaviour{
 
+    public bool isPunchable;
+
     //booleano para gestionar si el objeto ha sido añadido a la lista de transformables
     protected bool added;
 
     //Booleano para gestionar si se encuentra en dusk o en dawn
     protected bool dawn;
 
+    //Booleano para gestionar si ha habido un cambio de mundo
+    protected bool changedWorld;
+
+    //Booleano para mantener constancia de en que mundo se estaba en el frame anterior
+    protected bool prevDawn;
+
+
+    //Sprites distintos para cada mundo
     [SerializeField]
     protected Sprite imagenDusk;
     [SerializeField]
@@ -22,10 +32,20 @@ public class Transformable : MonoBehaviour{
 
     //Método pseudo start que debe llamarse en el Start de cada heredero
     protected virtual void InitTransformable() {
+        isPunchable = false;
         added = false;
         dawn = true;
         LoadResources();
         Change();
+    }
+
+    protected virtual void ResetConstraint() {
+        GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezePositionX;
+
+    }
+
+    public virtual void InvokeReset() {
+        Invoke("ResetConstraint",0.5f);
     }
 
     //Método que debe estar en el update de los herederos que comprueba si este objeto ha sido añadido a la lista de objetos transformables
