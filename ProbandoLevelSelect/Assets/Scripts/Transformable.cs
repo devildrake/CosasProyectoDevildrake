@@ -17,13 +17,6 @@ public class Transformable : MonoBehaviour{
     //Booleano para gestionar si se encuentra en dusk o en dawn
     protected bool dawn;
 
-    //Booleano para gestionar si ha habido un cambio de mundo
-    protected bool changedWorld;
-
-    //Booleano para mantener constancia de en que mundo se estaba en el frame anterior
-    protected bool prevDawn;
-
-
     //Sprites distintos para cada mundo
     [SerializeField]
     protected Sprite imagenDusk;
@@ -39,13 +32,12 @@ public class Transformable : MonoBehaviour{
         Change();
     }
 
-    protected virtual void ResetConstraint() {
-        GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezePositionX;
-
+    protected virtual void ResetConstraints() {
+        GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
     }
 
     public virtual void InvokeReset() {
-        Invoke("ResetConstraint",0.5f);
+        Invoke("ResetConstraints",0.5f);
     }
 
     //Método que debe estar en el update de los herederos que comprueba si este objeto ha sido añadido a la lista de objetos transformables

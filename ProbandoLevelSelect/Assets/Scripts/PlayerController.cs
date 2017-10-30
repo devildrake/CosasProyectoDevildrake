@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class PlayerController : Transformable {
 
-    //Booleano para modificar hacia donde mira el personaje
-    bool faceRight;
+    bool leftPressed;
 
     //Booleano privado que maneja que el personaje pueda utilizar el dash, se pone en true a la vez que el grounded y en false cuando se usa el Dash
     [SerializeField]
@@ -42,8 +41,8 @@ public class PlayerController : Transformable {
 
     //Se inicializan las cosas
     void Start() {
+        leftPressed = false;
         prevHorizontalMov = 1;
-        faceRight = true;
         groundMask = LayerMask.GetMask("Ground");
         rb = GetComponent<Rigidbody2D>();
         slowedInTheAir = false;
@@ -59,15 +58,18 @@ public class PlayerController : Transformable {
         //Add del transformable
         AddToGameLogicList();
 
+        //Comportamiento sin pausar
         if (!GameLogic.instance.isPaused) {
             CheckNotGrounded();
             Move();
             CheckInputs();
-        }else {
+        }
+
+        //Comportamiento de pausado
+        else {
 
 
         }
-        //CheckSlowMotion();
     }
 
     //Método setter para canDash
@@ -86,6 +88,7 @@ public class PlayerController : Transformable {
     void Move() {
         bool changed = false;
         float mustSlow = 1;
+
         if (Input.GetAxisRaw("Horizontal") != (float)prevHorizontalMov&&Input.GetAxisRaw("Horizontal")!=0.0f) {
             changed = true;
             prevHorizontalMov = Input.GetAxisRaw("Horizontal");
@@ -140,20 +143,93 @@ public class PlayerController : Transformable {
     //OnTriggerStay2D y OnTriggerEnter2D que comprueban si el tag del trigger es ground para actualizar el booleano grounded
     private void OnTriggerEnter2D(Collider2D collision) {
         if (collision.tag == "Ground") {
-            SetCanDash(true);
-            grounded = true;
+            if (rb.velocity.y == 0) {
+                SetCanDash(true);
+                grounded = true;
+            }
         }
     }
 
     private void OnTriggerStay2D(Collider2D collision) {
         if (collision.tag == "Ground") {
-            grounded = true;
             if (rb.velocity.y == 0) {
                 SetCanDash(true);
+                grounded = true;
             }
         }
     }
 
+    void DawnBehavior() {
+        if (canDash)
+            direction = DirectionCircle.UseDirectionCircle(arrow, gameObject);
+
+        //Si se suelta el botón izquierdo del ratón y se puede dashear, se desactiva la slowMotion y se modifica el timeScale además de poner en false canDash
+        if (Input.GetMouseButtonUp(0) && canDash) {
+            if (leftPressed) {
+                GameLogic.instance.SetTimeScaleLocal(1.0f);
+
+                //En caso de ser la dirección hacia la derecha se comprueba si la prevHorizontalMov no era 1, en caso de no serlo, significa que el personaje antes estaba 
+                //mirando a la izquierda, por tanto se hace un flip y se cambia prevHorizontalMov al que corresponde.
+                if (direction.x > 0) {
+                    if (prevHorizontalMov != 1.0f) {
+                        Flip();
+                    }
+                    prevHorizontalMov = 1.0f;
+
+                }
+
+                //En este else se hace lo mismo pero hacia la izquierda
+                else {
+                    if (prevHorizontalMov != -1.0f) {
+                        Flip();
+                    }
+                    prevHorizontalMov = -1.0f;
+                }
+
+
+                Dash.DoDash(gameObject, direction, 10);
+                SetCanDash(false);
+                leftPressed = false;
+            }
+
+            //Si se pulsa el botón izquierdo del ratón y se puede dashear, se activa la slowMotion y se modifica el timeScale de gameLogic
+        }
+        else if (Input.GetMouseButtonDown(0) && canDash) {
+            leftPressed = true;
+            GameLogic.instance.SetTimeScaleLocal(0.5f);
+        }
+    }
+
+    //Método para aglotinar comportamiento de Dusk 
+    void DuskBehavior() {
+
+        //Si se suelta el botón izquierdo del ratón y se habia pulsado previamente, el tiempo pasa a cero
+        //En caso de estar grounded Se hace una llamada a Punch
+        if (Input.GetMouseButtonUp(0)) {
+            if (leftPressed) {
+                GameLogic.instance.SetTimeScaleLocal(1.0f);
+                if (grounded)
+                    GetComponentInChildren<PunchArea>().Punch(direction, 10);
+
+                leftPressed = false;
+            }
+        }
+
+        //En caso de pulsar el botón izquierdo del ratón y estar grounded, se pone el timepo a 0.5
+        else if (Input.GetMouseButtonDown(0) && grounded) {
+            GameLogic.instance.SetTimeScaleLocal(0.5f);
+            leftPressed = true;
+        }
+
+        //Si el personaje no esta en el suelo el tiempo pasa a ser 1 en Dusk
+        if (!grounded) 
+            GameLogic.instance.SetTimeScaleLocal(1.0f);
+
+        //Se renderizan las flechas en caso de clicar solo si esta en el suelo
+        else
+            direction = DirectionCircle.UseDirectionCircle(arrow, gameObject);
+
+    }
 
     //Método que comprueba los inputs y actua en consecuencia
     void CheckInputs() {
@@ -161,86 +237,28 @@ public class PlayerController : Transformable {
         if (Input.GetKeyDown(KeyCode.Space) && grounded) {
             Jump();
         }
-
- 
-
-
         //Comportamiento de dawn
         if (dawn) {
-
-            ChangeToDawn();
-
-            if(canDash)       
-                direction = DirectionCircle.UseDirectionCircle(arrow, gameObject);
-
-            //Si se suelta el botón izquierdo del ratón y se puede dashear, se desactiva la slowMotion y se modifica el timeScale además de poner en false canDash
-            if (Input.GetMouseButtonUp(0) && canDash) {
-                GameLogic.instance.SetTimeScaleLocal(1.0f);
-                Dash.DoDash(gameObject, direction, 10);
-                SetCanDash(false);
-
-
-                //Si se pulsa el botón izquierdo del ratón y se puede dashear, se activa la slowMotion y se modifica el timeScale de gameLogic
-            }
-            else if (Input.GetMouseButtonDown(0) && canDash) {
-                GameLogic.instance.SetTimeScaleLocal(0.5f);
-            }
+            DawnBehavior();
         }
 
         //Comportamiento de dusk
-
         else {
-            if (Input.GetMouseButtonUp(0)) {
-                GetComponentInChildren<PunchArea>().Punch(direction,10);
-                GameLogic.instance.SetTimeScaleLocal(1.0f);
-
-            }
-            else if (Input.GetMouseButtonDown(0) && canDash) {
-                GameLogic.instance.SetTimeScaleLocal(0.5f);
-
-            }
-
-            ChangeToDusk();
-            direction = DirectionCircle.UseDirectionCircle(arrow, gameObject);
-
-
+            DuskBehavior();
         }
     }
-
-    //Método que gestiona el momento inicial de cambiar a dawn si es que hay cambio
-    void ChangeToDawn() {
-        if (prevDawn != dawn) {
-            changedWorld = true;
-            prevDawn = dawn;
-        }
-        if (changedWorld) {
-            changedWorld = false;
-            DirectionCircle.SetOnce(false);
-        }
-    }
-
-    //Método que gestiona el momento inicial de cambiar a dusk si es que hay cambio
-    void ChangeToDusk() {
-        if (prevDawn != dawn) {
-            changedWorld = true;
-            prevDawn = dawn;
-        }
-        if (changedWorld) {
-            changedWorld = false;
-            DirectionCircle.SetOnce(false);
-            canDash = false;
-            GameLogic.instance.SetTimeScaleLocal(1.0f);
-        }
-
-    }
+    
+    //Método de cambio, varia con respecto a los demás ya que además modifica variables especiales
     public override void Change() {
+        DirectionCircle.SetOnce(false);
         if (dawn) {
             GetComponent<SpriteRenderer>().sprite = imagenDusk;
             dawn = false;
+            SetCanDash(false);
+            GameLogic.instance.SetTimeScaleLocal(1.0f);
         }
         else {
             GetComponent<SpriteRenderer>().sprite = imagenDawn;
-
             dawn = true;
         }
     }
