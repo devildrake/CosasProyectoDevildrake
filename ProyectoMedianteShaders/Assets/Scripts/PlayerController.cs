@@ -4,7 +4,18 @@ using UnityEngine;
 
 public class PlayerController : Transformable {
 
+    public Vector2 originalSizeCollider;
+    public Vector2 originalOffsetCollider;
+
+
     bool leftPressed;
+    public List<GameObject> NearbyObjects;
+
+    bool crawling;
+    bool moving;
+    bool smashing;
+
+    public float distanciaBordeSprite = 0.745f;
 
     //Booleano privado que maneja que el personaje pueda utilizar el dash, se pone en true a la vez que el grounded y en false cuando se usa el Dash
     [SerializeField]
@@ -20,11 +31,13 @@ public class PlayerController : Transformable {
     float characterSpeed = 5;
 
     //Fuerza del salto
-    float jumpStrenght = 10;
+    float jumpStrenght = 7;
 
     //Booleano que gestiona si el personaje esta en el suelo (Para saber si puede saltar o no)
     [SerializeField]
     bool grounded = false;
+
+    bool facingRight;
 
     //Mascara de suelo (Mas tarde podria ser util, ahora esta aqui por que para gestionar grounded hice pruebas varias)
     public LayerMask groundMask;
@@ -40,8 +53,12 @@ public class PlayerController : Transformable {
     bool slowedInTheAir;
     //Se inicializan las cosas
     void Start() {
+        originalOffsetCollider = GetComponent<BoxCollider2D>().offset;
+        originalSizeCollider = GetComponent<BoxCollider2D>().size;
+
         leftPressed = false;
         prevHorizontalMov = 1;
+        facingRight = true;
         groundMask = LayerMask.GetMask("Ground");
         rb = GetComponent<Rigidbody2D>();
         slowedInTheAir = false;
@@ -55,6 +72,8 @@ public class PlayerController : Transformable {
     }
     void Update() {
 
+
+
         //Add del transformable
         AddToGameLogicList();
 
@@ -65,14 +84,27 @@ public class PlayerController : Transformable {
         //Comportamiento sin pausar
         if (!GameLogic.instance.isPaused) {
             CheckGrounded();
+            CheckObjectsInFront();
             Move();
             CheckInputs();
+            Smashing();
         }
+
+
 
         //Comportamiento de pausado
         else {
 
 
+        }
+    }
+
+    void Smashing() {
+        if (smashing) {
+            if (grounded) {
+                DoSmash();
+                smashing = false;
+            }
         }
     }
 
@@ -86,6 +118,7 @@ public class PlayerController : Transformable {
         Vector3 theScale = transform.localScale;
         theScale.x *= -1;
         transform.localScale = theScale;
+        facingRight = !facingRight;
     }
 
     //Funcion que hace al personaje moverse hacia los lados a partir del input de las flechas, en caso de estar en el aire se mantiene siempre y cuando se cambie la dirección horizontal en el aire se reduce a la mitad la velocidad
@@ -102,6 +135,11 @@ public class PlayerController : Transformable {
             GetComponent<Rigidbody2D>().AddForce(new Vector2(-GetComponent<Rigidbody2D>().velocity.x, 0), ForceMode2D.Impulse);
             transform.Translate(Vector3.right * Input.GetAxis("Horizontal") * characterSpeed * Time.deltaTime);
             slowedInTheAir = false;
+            if (Input.GetAxis("Horizontal") != 0) {
+                moving = true;
+            }else {
+                moving = false;
+            }
         }
         else if (changed) {
 
@@ -128,6 +166,24 @@ public class PlayerController : Transformable {
 
     }
 
+    void CheckObjectsInFront() {
+        NearbyObjects.Clear();
+        if (!moving) {
+            RaycastHit2D hit2D;
+
+            if (facingRight)
+                hit2D = Physics2D.Raycast(rb.position, Vector2.right, 1.5f, groundMask);
+            else {
+                hit2D = Physics2D.Raycast(rb.position, Vector2.left, 1.5f, groundMask);
+            }
+
+            if (hit2D) {
+                if (!NearbyObjects.Contains(hit2D.transform.gameObject))
+                    NearbyObjects.Add(hit2D.transform.gameObject);
+            }
+        }
+    }
+
     //Metodo que añade una fuerza al personaje para simular un salto
     void Jump() {
         GetComponent<Rigidbody2D>().AddForce(transform.up * jumpStrenght, ForceMode2D.Impulse);
@@ -137,9 +193,14 @@ public class PlayerController : Transformable {
     void CheckGrounded() {
         if (rb.velocity.y < 0.1f && rb.velocity.y>=0.0f || rb.velocity.y > -0.1f && rb.velocity.y <=0.0f) {
             RaycastHit2D hit2D = Physics2D.Raycast(rb.position - new Vector2(0f, 0.5f), Vector2.down, 0.2f, groundMask);
+            RaycastHit2D hit2DLeft = Physics2D.Raycast(rb.position - new Vector2(0f, 0.5f) + new Vector2(-distanciaBordeSprite, 0), Vector2.down, 0.2f, groundMask);
+            RaycastHit2D hit2DRight = Physics2D.Raycast(rb.position - new Vector2(0f, 0.5f) + new Vector2(distanciaBordeSprite, 0), Vector2.down, 0.2f, groundMask);
             // If the raycast hit something
-            if (hit2D) {
+            if (hit2D||hit2DLeft||hit2DRight) {
                 grounded = true;
+                if (dawn) {
+                    SetCanDash(true);
+                }
             }
         }
         else {
@@ -186,18 +247,41 @@ public class PlayerController : Transformable {
             leftPressed = true;
             GameLogic.instance.SetTimeScaleLocal(0.5f);
         }
+
+        if (Input.GetKeyDown(KeyCode.LeftControl)) {
+            crawling = true;
+            Vector2 newSize = GetComponent<BoxCollider2D>().size;
+            newSize.y /= 2;
+            Vector2 newOffset = GetComponent<BoxCollider2D>().offset;
+            newOffset.y = newSize.y / 2;
+
+            GetComponent<BoxCollider2D>().size = newSize;
+            GetComponent<BoxCollider2D>().offset -= newOffset;
+
+
+        }
+        else if (Input.GetKeyUp(KeyCode.LeftControl)) {
+            GetComponent<BoxCollider2D>().size = originalSizeCollider;
+            GetComponent<BoxCollider2D>().offset = originalOffsetCollider;
+
+            crawling = false;
+
+
+        }
+
     }
 
-    //Método para aglotinar comportamiento de Dusk 
-    void DuskBehavior() {
+        //Método para aglotinar comportamiento de Dusk 
+        void DuskBehavior() {
 
         //Si se suelta el botón izquierdo del ratón y se habia pulsado previamente, el tiempo pasa a cero
         //En caso de estar grounded Se hace una llamada a Punch
         if (Input.GetMouseButtonUp(0)) {
             if (leftPressed) {
                 GameLogic.instance.SetTimeScaleLocal(1.0f);
-                if (grounded)
-                    GetComponentInChildren<PunchArea>().Punch(direction, 10);
+                if (grounded) {
+                    Punch(direction, 40000);
+                }
 
                 leftPressed = false;
             }
@@ -217,12 +301,32 @@ public class PlayerController : Transformable {
         else
             direction = DirectionCircle.UseDirectionCircle(arrow, gameObject);
 
+        if (Input.GetKeyDown(KeyCode.LeftControl)&&!grounded) {
+            Smash();
+        }
+
+    }
+
+    void Smash() {
+        if (!smashing) {
+            rb.AddForce(new Vector2(0, -500));
+            smashing = true;
+        }
+    }
+
+    void DoSmash() {
+        RaycastHit2D hit2D = Physics2D.Raycast(rb.position - new Vector2(0f, 0.5f), Vector2.down, 0.2f, groundMask);
+        if (hit2D) {
+            if (hit2D.transform.gameObject.GetComponent<DoubleObject>().isBreakable) {
+                hit2D.transform.gameObject.GetComponent<DoubleObject>().GetBroken();
+            }
+        }
     }
 
     //Método que comprueba los inputs y actua en consecuencia
     void CheckInputs() {
         //BARRA ESPACIADORA = SALTO
-        if (Input.GetKeyDown(KeyCode.Space) && grounded) {
+        if (Input.GetKeyDown(KeyCode.Space) && grounded&&!crawling) {
             Jump();
         }
         //Comportamiento de dawn
@@ -235,7 +339,19 @@ public class PlayerController : Transformable {
             DuskBehavior();
         }
     }
-    
+
+    public void Punch(Vector2 direction, float MAX_FORCE) {
+        foreach (GameObject g in NearbyObjects) {
+            if (g.GetComponent<DoubleObject>().isPunchable) {
+                g.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
+                g.GetComponent<Rigidbody2D>().AddForce(direction * MAX_FORCE, ForceMode2D.Impulse);
+                g.GetComponent<DoubleObject>().isPunchable = false;
+            }
+
+        }
+
+    }
+
     //Método de cambio, varia con respecto a los demás ya que además modifica variables especiales
     public override void Change() {
         Vector2 newPosition;
@@ -248,14 +364,15 @@ public class PlayerController : Transformable {
             GameLogic.instance.SetTimeScaleLocal(1.0f);
 
             newPosition = transform.position;
-            newPosition.y += GameLogic.instance.worldOffset;
+            newPosition.y -= GameLogic.instance.worldOffset;
             transform.position = newPosition;
+            crawling = false;
         }
         else {
             GetComponent<SpriteRenderer>().sprite = imagenDawn;
             dawn = true;
             newPosition = transform.position;
-            newPosition.y -= GameLogic.instance.worldOffset;
+            newPosition.y += GameLogic.instance.worldOffset;
             transform.position = newPosition;
         }
     }

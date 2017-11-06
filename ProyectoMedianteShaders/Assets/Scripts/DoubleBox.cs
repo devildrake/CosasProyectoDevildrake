@@ -3,15 +3,25 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class DoubleBox : DoubleObject {
-	// Use this for initialization
+    // Use this for initialization
+    Rigidbody2D rb;
+    public LayerMask groundMask;
+    float distanciaBordeSprite;
+
 	void Start () {
         InitTransformable();
-        offset = GameLogic.instance.worldOffset;
         isPunchable = true;
+        isBreakable = false;
+        interactuableBySmash = false;
+        offset = GameLogic.instance.worldOffset;
         if (worldAssignation == world.DAWN)
             GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
 
+        rb = GetComponent<Rigidbody2D>();
+        groundMask = LayerMask.GetMask("Ground");
 
+        distanciaBordeSprite = 0.745f;
+        rb.mass = 5000;
 	}
 
     protected override void BrotherBehavior() {
@@ -31,7 +41,10 @@ public class DoubleBox : DoubleObject {
         }
         
     }
-    
+
+    void BecomePunchable() {
+        isPunchable = true;
+    }
 
     protected override void LoadResources() {
 
@@ -46,6 +59,7 @@ public class DoubleBox : DoubleObject {
                 brotherObject.GetComponent<DoubleObject>().dominantVelocity = GetComponent<Rigidbody2D>().velocity;
                 brotherObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
                 GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
+                OnlyFreezeRotation();
                 brotherObject.GetComponent<Rigidbody2D>().velocity = dominantVelocity;
                 GetComponent<Rigidbody2D>().velocity = new Vector2(0.0f, 0.0f);
             }
@@ -55,7 +69,7 @@ public class DoubleBox : DoubleObject {
                 brotherObject.GetComponent<DoubleObject>().dominantVelocity = brotherObject.GetComponent<Rigidbody2D>().velocity;
                 GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
                 brotherObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
-                brotherObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0.0f,0.0f);
+                brotherObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0.0f,0.0f);    
                 GetComponent<Rigidbody2D>().velocity = dominantVelocity;
             }
 
@@ -66,9 +80,12 @@ public class DoubleBox : DoubleObject {
     }
 
 
-	// Update is called once per frame
-	void Update () {
+    // Update is called once per frame
+    void Update () {
         AddToGameLogicList();
         BrotherBehavior();
+        if (!isPunchable) {
+            Invoke("BecomePunchable", 0.5f);
+        }
     }
 }

@@ -9,7 +9,7 @@ public class CajaDusk : Transformable {
 
     private void Start() {
         InitTransformable();
-        isPunchable = true;
+        //isPunchable = true;
     }
 
 
@@ -38,7 +38,7 @@ public class CajaDusk : Transformable {
 
     private void OnTriggerEnter2D(Collider2D collision) {
         if (collision.tag == "Ground") {
-            FreezeConstraints();
+            //FreezeConstraints();
             Vector3 littleMov = transform.position;
             littleMov.y = transform.position.y - 0.03f;
             transform.position = littleMov;

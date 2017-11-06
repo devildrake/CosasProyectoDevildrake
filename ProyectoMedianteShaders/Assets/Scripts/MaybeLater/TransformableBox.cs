@@ -8,7 +8,7 @@ public class TransformableBox : Transformable {
 	void Start () {
         AddToGameLogicList();
         InitTransformable();
-        isPunchable = true;
+        //isPunchable = true;
 	}
 	
 	// Update is called once per frame

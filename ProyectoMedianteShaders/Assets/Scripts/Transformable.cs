@@ -9,7 +9,6 @@ using UnityEngine;
 
 public class Transformable : MonoBehaviour{
 
-    public bool isPunchable;
 
     //booleano para gestionar si el objeto ha sido añadido a la lista de transformables
     protected bool added;
@@ -23,20 +22,15 @@ public class Transformable : MonoBehaviour{
 
     //Método pseudo start que debe llamarse en el Start de cada heredero
     protected virtual void InitTransformable() {
-        isPunchable = false;
+        //isPunchable = false;
         added = false;
         dawn = true;
         LoadResources();
         Change();
     }
 
-    protected virtual void FreezeConstraints() {
-
-        GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
-    }
-
     protected virtual void OnlyFreezeRotation() {
-        GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
+        //GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
         GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
     }
 

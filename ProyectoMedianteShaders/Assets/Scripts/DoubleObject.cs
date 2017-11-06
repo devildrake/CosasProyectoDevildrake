@@ -23,6 +23,14 @@ public class DoubleObject : Transformable {
     //Velocidad dominante, solo la utilizan los objetos que deben enviarse de forma amorosa la velocidad
     public Vector2 dominantVelocity;
 
+    public bool isBreakable;
+    public bool interactuableBySmash;
+    public bool isPunchable;
+
+    public virtual void GetBroken() {
+        Debug.Log("Calling Get Broken");
+    }
+
     //Método de comportamiento entre hermanos
     protected virtual void BrotherBehavior() {
         Debug.Log("Falta implementar BrotherBehavior");

@@ -10,7 +10,7 @@ public class TransformableObject : Transformable {
     float offset = 20;
     // Use this for initialization
     void Start () {
-        isPunchable = true;
+        //isPunchable = true;
 	}
 	
 	// Update is called once per frame
