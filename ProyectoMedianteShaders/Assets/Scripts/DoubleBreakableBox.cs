@@ -7,6 +7,9 @@ public class DoubleBreakableBox : DoubleObject {
     Rigidbody2D rb;
     public LayerMask groundMask;
     float distanciaBordeSprite;
+    bool broken;
+    [SerializeField]
+    AudioClip smashedClip;
 
     void Start() {
         InitTransformable();
@@ -23,6 +26,7 @@ public class DoubleBreakableBox : DoubleObject {
         isPunchable = false;
         isBreakable = true;
         interactuableBySmash = false;
+        broken = false;
     }
 
     protected override void BrotherBehavior() {
@@ -44,7 +48,7 @@ public class DoubleBreakableBox : DoubleObject {
     }
 
     protected override void LoadResources() {
-
+        smashedClip = Resources.Load<AudioClip>("Sounds/BeSmashed");
     }
 
     public override void Change() {
@@ -52,13 +56,39 @@ public class DoubleBreakableBox : DoubleObject {
     }
 
     public override void GetBroken() {
+        broken = true;
+        //if (!dawn) {
+            if (GetComponent<AudioSource>() != null) {
+                GetComponent<AudioSource>().clip = smashedClip;
+                GetComponent<AudioSource>().Play();
+
+
+            }
+            else {
+                Debug.Log("No audio source to play to");
+            }
+
+        Destroy(gameObject.GetComponent<Rigidbody2D>());
+        Destroy(gameObject.GetComponent<BoxCollider2D>());
+        Destroy(gameObject.GetComponent<SpriteRenderer>());
         Destroy(brotherObject.gameObject);
+
+        Invoke("DestroyCompletely", 0.5f);
+
+
+
+        //   }
+    }
+
+    public void DestroyCompletely() {
         Destroy(gameObject);
     }
 
     // Update is called once per frame
     void Update() {
         AddToGameLogicList();
+
+        if(!broken)
         BrotherBehavior();
     }
 }

@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class PlayerController : Transformable {
 
+    AudioClip jumpClip;
+    AudioClip smashClip;
+    AudioClip dashClip;
+
     public Vector2 originalSizeCollider;
     public Vector2 originalOffsetCollider;
 
@@ -187,6 +191,8 @@ public class PlayerController : Transformable {
     //Metodo que añade una fuerza al personaje para simular un salto
     void Jump() {
         GetComponent<Rigidbody2D>().AddForce(transform.up * jumpStrenght, ForceMode2D.Impulse);
+        GetComponent<AudioSource>().clip = jumpClip;
+        GetComponent<AudioSource>().Play();
     }
 
     //Método que comprueba si la velocidad y del personaje es 0 o aprox. y actualiza el booleano grounded en consecuencia
@@ -235,7 +241,8 @@ public class PlayerController : Transformable {
                     prevHorizontalMov = -1.0f;
                 }
 
-
+                GetComponent<AudioSource>().clip = dashClip;
+                GetComponent<AudioSource>().Play();
                 Dash.DoDash(gameObject, direction, 10);
                 SetCanDash(false);
                 leftPressed = false;
@@ -309,6 +316,9 @@ public class PlayerController : Transformable {
 
     void Smash() {
         if (!smashing) {
+
+            GetComponent<AudioSource>().clip = smashClip;
+            GetComponent<AudioSource>().Play();
             rb.AddForce(new Vector2(0, -500));
             smashing = true;
         }
@@ -317,6 +327,7 @@ public class PlayerController : Transformable {
     void DoSmash() {
         RaycastHit2D hit2D = Physics2D.Raycast(rb.position - new Vector2(0f, 0.5f), Vector2.down, 0.2f, groundMask);
         if (hit2D) {
+            Debug.Log("HittingStuff");
             if (hit2D.transform.gameObject.GetComponent<DoubleObject>().isBreakable) {
                 hit2D.transform.gameObject.GetComponent<DoubleObject>().GetBroken();
             }
@@ -380,5 +391,8 @@ public class PlayerController : Transformable {
     protected override void LoadResources() {
         imagenDawn = Resources.Load<Sprite>("Sprites/bloom");
         imagenDusk = Resources.Load<Sprite>("Sprites/bloom");
+        dashClip = Resources.Load<AudioClip>("Sounds/Dash");
+        jumpClip = Resources.Load<AudioClip>("Sounds/Jump");
+        smashClip = Resources.Load<AudioClip>("Sounds/Smash");
     }
 }
