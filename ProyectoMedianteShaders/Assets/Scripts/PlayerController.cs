@@ -55,6 +55,11 @@ public class PlayerController : Transformable {
     [SerializeField]
     //Booleano que comprueba si el personaje deberia estar ralentizado en el aire, se reinicia al estar en el suelo (Que se comprueba con colliders2D y tags)
     bool slowedInTheAir;
+
+    //Referencia al script que controla la mascara alfa que se utiliza para el shader de mundos.
+    //Queremos acceder a este script para cambiar un flag y activar la transición de un mundo a otro.
+    public Change_Scale maskObjectScript; 
+
     //Se inicializan las cosas
     void Start() {
         originalOffsetCollider = GetComponent<BoxCollider2D>().offset;
@@ -73,6 +78,8 @@ public class PlayerController : Transformable {
 
         //Start del transformable
         InitTransformable();
+
+
     }
     void Update() {
 
@@ -378,6 +385,9 @@ public class PlayerController : Transformable {
             newPosition.y -= GameLogic.instance.worldOffset;
             transform.position = newPosition;
             crawling = false;
+
+            //activar el shader
+            maskObjectScript.change = false;
         }
         else {
             GetComponent<SpriteRenderer>().sprite = imagenDawn;
@@ -385,11 +395,14 @@ public class PlayerController : Transformable {
             newPosition = transform.position;
             newPosition.y += GameLogic.instance.worldOffset;
             transform.position = newPosition;
+
+            //activar el shader
+            maskObjectScript.change = true;
         }
     }
 
     protected override void LoadResources() {
-        imagenDawn = Resources.Load<Sprite>("Sprites/bloom");
+        imagenDawn = Resources.Load<Sprite>("Sprites/Pedro_PJ");
         imagenDusk = Resources.Load<Sprite>("Sprites/bloom");
         dashClip = Resources.Load<AudioClip>("Sounds/Dash");
         jumpClip = Resources.Load<AudioClip>("Sounds/Jump");
