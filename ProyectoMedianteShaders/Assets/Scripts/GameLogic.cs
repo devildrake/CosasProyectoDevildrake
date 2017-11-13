@@ -105,42 +105,35 @@ public class GameLogic : MonoBehaviour
         else {
             Time.timeScale = timeScaleLocal;
         }
-
     }
 
-    void Update()
-    {
+    void Update(){
 
         TimeScaleStuff();
 
         //Se comprueba si ha habido cambio de escena, si lo ha habido se reinician los booleanos waitAFrame, checkMainMenu e isInManMenu además de actualizar la variable currentSceneName
-        if (ChangedScene())
-        {
+        if (ChangedScene()){
             ResetSceneData();
         }
 
 
         //Espera de un frame para comprobar que se ejecuta en el orden deseado
-        if (!waitAFrame)
-        {
+        if (!waitAFrame){
             SetWaitAFrame(true);
             SetCheckMainMenu(false);
         }
 
         //Una vez realizada la espera, sin haber comprobado si se esta en el menu principal
-        else if(!checkMainMenu)
-        {
+        else if(!checkMainMenu){
             menuScripts = FindObjectOfType<MenuScripts>();
-            if (menuScripts != null)
-            {
+            if (menuScripts != null){
                 isInMainMenu = true;
             }
             SetCheckMainMenu(true);
         }
 
         //Una vez comprobado si estamos o no en el menu principal se pondria el comportamiento deseado
-        else
-        {
+        else{
             if (!isInMainMenu) {
                 //Si el juego no esta pausado
                 if (!isPaused) {
@@ -163,8 +156,7 @@ public class GameLogic : MonoBehaviour
     }
 
     //Método para cargar el menu desde cualquier escena
-    public void LoadMenu()
-    {
+    public void LoadMenu(){
         SceneManager.LoadScene(0);
         ResetSceneData();
     }

@@ -18,6 +18,9 @@ public class PlayerController : Transformable {
     bool crawling;
     bool moving;
     bool smashing;
+    bool dashing;
+    bool grabbing;
+    Vector3 distanceToGrabbedObject;
 
     public float distanciaBordeSprite = 0.745f;
 
@@ -125,59 +128,75 @@ public class PlayerController : Transformable {
     }
 
     //Método que cambia hacia donde mira el personaje, se le llama al cambiar el Input.GetAxis Horizontal de 1 a -1 o alreves
-    void Flip(){
-        Vector3 theScale = transform.localScale;
-        theScale.x *= -1;
-        transform.localScale = theScale;
-        facingRight = !facingRight;
+    void Flip() {
+        if (!grabbing) {
+            Vector3 theScale = transform.localScale;
+            theScale.x *= -1;
+            transform.localScale = theScale;
+            facingRight = !facingRight;
+        }
     }
 
     //Funcion que hace al personaje moverse hacia los lados a partir del input de las flechas, en caso de estar en el aire se mantiene siempre y cuando se cambie la dirección horizontal en el aire se reduce a la mitad la velocidad
     void Move() {
+        if (!grabbing) {
         bool changed = false;
         float mustSlow = 1;
-
-        if (Input.GetAxisRaw("Horizontal") != (float)prevHorizontalMov&&Input.GetAxisRaw("Horizontal")!=0.0f) {
-            changed = true;
-            prevHorizontalMov = Input.GetAxisRaw("Horizontal");
-        }
-
-        if (grounded) {
-            GetComponent<Rigidbody2D>().AddForce(new Vector2(-GetComponent<Rigidbody2D>().velocity.x, 0), ForceMode2D.Impulse);
-            transform.Translate(Vector3.right * Input.GetAxis("Horizontal") * characterSpeed * Time.deltaTime);
-            slowedInTheAir = false;
-            if (Input.GetAxis("Horizontal") != 0) {
-                moving = true;
-            }else {
-                moving = false;
+            if (Input.GetAxisRaw("Horizontal") != (float)prevHorizontalMov && Input.GetAxisRaw("Horizontal") != 0.0f) {
+                changed = true;
+                prevHorizontalMov = Input.GetAxisRaw("Horizontal");
             }
-        }
-        else if (changed) {
 
-            slowedInTheAir = true;
-            mustSlow = 0.5f;
-            transform.Translate(Vector3.right * Input.GetAxis("Horizontal") * characterSpeed * mustSlow * Time.deltaTime);
+            if (grounded) {
+                GetComponent<Rigidbody2D>().AddForce(new Vector2(-GetComponent<Rigidbody2D>().velocity.x, 0), ForceMode2D.Impulse);
+                transform.Translate(Vector3.right * Input.GetAxis("Horizontal") * characterSpeed * Time.deltaTime);
+                slowedInTheAir = false;
+                if (Input.GetAxis("Horizontal") != 0) {
+                    moving = true;
+                }
+                else {
+                    moving = false;
+                }
+            }
+            else if (changed) {
 
-        }
-
-        else {
-            if (slowedInTheAir) {
-                rb.AddForce(new Vector2(-rb.velocity.x, 0), ForceMode2D.Impulse);
+                slowedInTheAir = true;
                 mustSlow = 0.5f;
+                transform.Translate(Vector3.right * Input.GetAxis("Horizontal") * characterSpeed * mustSlow * Time.deltaTime);
+
             }
-            transform.Translate(Vector3.right * Input.GetAxis("Horizontal") * characterSpeed *mustSlow* Time.deltaTime);
 
+            else {
+                if (slowedInTheAir) {
+                    rb.AddForce(new Vector2(-rb.velocity.x, 0), ForceMode2D.Impulse);
+                    mustSlow = 0.5f;
+                }
+                transform.Translate(Vector3.right * Input.GetAxis("Horizontal") * characterSpeed * mustSlow * Time.deltaTime);
+            }
 
+            if (changed) {
+                Flip();
+            }
+
+        }else{
+            if (grounded) {
+                if (NearbyObjects[0].GetComponent<DoubleObject>().isMovable) {
+                    transform.Translate(Vector3.right * Input.GetAxis("Horizontal") * characterSpeed / 2 * Time.deltaTime);
+                    NearbyObjects[0].transform.position = transform.position - distanceToGrabbedObject;
+                    Debug.Log(distanceToGrabbedObject);
+                }else {
+                    grabbing = false;
+                }
+            }
+            else {
+
+            }
 
         }
-
-        if (changed) {
-            Flip();
-        }
-
     }
 
     void CheckObjectsInFront() {
+        bool temp = false;
         NearbyObjects.Clear();
         if (!moving) {
             RaycastHit2D hit2D;
@@ -189,9 +208,14 @@ public class PlayerController : Transformable {
             }
 
             if (hit2D) {
-                if (!NearbyObjects.Contains(hit2D.transform.gameObject))
+                if (!NearbyObjects.Contains(hit2D.transform.gameObject)) {
                     NearbyObjects.Add(hit2D.transform.gameObject);
+                    temp = true;
+                }
             }
+        }
+        if (!temp) {
+            grabbing = false;
         }
     }
 
@@ -211,9 +235,9 @@ public class PlayerController : Transformable {
             // If the raycast hit something
             if (hit2D||hit2DLeft||hit2DRight) {
                 grounded = true;
-                if (dawn) {
+                dashing = false;
                     SetCanDash(true);
-                }
+                
             }
         }
         else {
@@ -250,7 +274,8 @@ public class PlayerController : Transformable {
 
                 GetComponent<AudioSource>().clip = dashClip;
                 GetComponent<AudioSource>().Play();
-                Dash.DoDash(gameObject, direction, 10);
+                Dash.DoDash(gameObject, direction, 5);
+                dashing = true;
                 SetCanDash(false);
                 leftPressed = false;
             }
@@ -308,13 +333,24 @@ public class PlayerController : Transformable {
         }
 
         //Si el personaje no esta en el suelo el tiempo pasa a ser 1 en Dusk
-        if (!grounded) 
+        if (!grounded) {
             GameLogic.instance.SetTimeScaleLocal(1.0f);
-
+        }
         //Se renderizan las flechas en caso de clicar solo si esta en el suelo
-        else
+        else {
             direction = DirectionCircle.UseDirectionCircle(arrow, gameObject);
+            if (Input.GetMouseButtonDown(1)) {
+                foreach (GameObject g in NearbyObjects) {
+                    if (g.GetComponent<DoubleObject>().isMovable) {
+                        distanceToGrabbedObject = transform.position - NearbyObjects[0].transform.position;
+                        grabbing = true;
 
+                    }
+                }
+            }else if(Input.GetMouseButtonUp(1)){
+                grabbing = false;
+            }
+        }
         if (Input.GetKeyDown(KeyCode.LeftControl)&&!grounded) {
             Smash();
         }
@@ -323,7 +359,7 @@ public class PlayerController : Transformable {
 
     void Smash() {
         if (!smashing) {
-
+            rb.AddForce(new Vector2(-rb.velocity.x,0),ForceMode2D.Impulse);
             GetComponent<AudioSource>().clip = smashClip;
             GetComponent<AudioSource>().Play();
             rb.AddForce(new Vector2(0, -500));
@@ -378,7 +414,6 @@ public class PlayerController : Transformable {
         if (dawn) {
             GetComponent<SpriteRenderer>().sprite = imagenDusk;
             dawn = false;
-            SetCanDash(false);
             GameLogic.instance.SetTimeScaleLocal(1.0f);
 
             newPosition = transform.position;

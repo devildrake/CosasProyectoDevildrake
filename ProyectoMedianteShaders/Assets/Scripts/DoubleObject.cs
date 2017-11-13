@@ -26,6 +26,7 @@ public class DoubleObject : Transformable {
     public bool isBreakable;
     public bool interactuableBySmash;
     public bool isPunchable;
+    public bool isMovable;
 
     public virtual void GetBroken() {
         Debug.Log("Calling Get Broken");
