@@ -11,6 +11,11 @@ public class PlayerController : Transformable {
     public Vector2 originalSizeCollider;
     public Vector2 originalOffsetCollider;
 
+    public List<GameObject> objectsInDeflectArea;
+
+
+    float slowMotionTimeScale;
+    float dashForce;
 
     bool leftPressed;
     public List<GameObject> NearbyObjects;
@@ -74,9 +79,10 @@ public class PlayerController : Transformable {
         groundMask = LayerMask.GetMask("Ground");
         rb = GetComponent<Rigidbody2D>();
         slowedInTheAir = false;
-
+        slowMotionTimeScale = 0.3f;
+        dashForce = 8;
         //Se hace esto para que UseDirectionCircle haga uso de su bool once y inicialize las cosas que le interesan
-        direction = DirectionCircle.UseDirectionCircle(arrow, gameObject);
+        direction = DirectionCircle.UseDirectionCircle(arrow, gameObject,0);
 
 
         //Start del transformable
@@ -247,7 +253,11 @@ public class PlayerController : Transformable {
 
     void DawnBehavior() {
         if (canDash)
-            direction = DirectionCircle.UseDirectionCircle(arrow, gameObject);
+            direction = DirectionCircle.UseDirectionCircle(arrow, gameObject,0);
+
+        if (objectsInDeflectArea.Count != 0) {
+            direction = DirectionCircle.UseDirectionCircle(arrow, gameObject, 1);
+        }
 
         //Si se suelta el botón izquierdo del ratón y se puede dashear, se desactiva la slowMotion y se modifica el timeScale además de poner en false canDash
         if (Input.GetMouseButtonUp(0) && canDash) {
@@ -274,7 +284,7 @@ public class PlayerController : Transformable {
 
                 GetComponent<AudioSource>().clip = dashClip;
                 GetComponent<AudioSource>().Play();
-                Dash.DoDash(gameObject, direction, 5);
+                Dash.DoDash(gameObject, direction, dashForce);
                 dashing = true;
                 SetCanDash(false);
                 leftPressed = false;
@@ -284,7 +294,7 @@ public class PlayerController : Transformable {
         }
         else if (Input.GetMouseButtonDown(0) && canDash) {
             leftPressed = true;
-            GameLogic.instance.SetTimeScaleLocal(0.5f);
+            GameLogic.instance.SetTimeScaleLocal(slowMotionTimeScale);
         }
 
         if (Input.GetKeyDown(KeyCode.LeftControl)) {
@@ -307,6 +317,14 @@ public class PlayerController : Transformable {
 
 
         }
+        if (Input.GetMouseButtonDown(1)&&objectsInDeflectArea.Count!=0) {
+            GameLogic.instance.SetTimeScaleLocal(slowMotionTimeScale);
+        }else if (Input.GetMouseButtonUp(1)&& objectsInDeflectArea.Count!=0) {
+            foreach(GameObject g in objectsInDeflectArea) {
+                Dash.DoDash(g, direction, 10);
+            }
+            GameLogic.instance.SetTimeScaleLocal(1f);
+        }
 
     }
 
@@ -328,7 +346,7 @@ public class PlayerController : Transformable {
 
         //En caso de pulsar el botón izquierdo del ratón y estar grounded, se pone el timepo a 0.5
         else if (Input.GetMouseButtonDown(0) && grounded) {
-            GameLogic.instance.SetTimeScaleLocal(0.5f);
+            GameLogic.instance.SetTimeScaleLocal(slowMotionTimeScale);
             leftPressed = true;
         }
 
@@ -338,7 +356,7 @@ public class PlayerController : Transformable {
         }
         //Se renderizan las flechas en caso de clicar solo si esta en el suelo
         else {
-            direction = DirectionCircle.UseDirectionCircle(arrow, gameObject);
+            direction = DirectionCircle.UseDirectionCircle(arrow, gameObject,0);
             if (Input.GetMouseButtonDown(1)) {
                 foreach (GameObject g in NearbyObjects) {
                     if (g.GetComponent<DoubleObject>().isMovable) {
