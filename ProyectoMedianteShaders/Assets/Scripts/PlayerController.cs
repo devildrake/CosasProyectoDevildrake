@@ -22,9 +22,10 @@ public class PlayerController : Transformable {
 
     bool crawling;
     bool moving;
-    bool smashing;
+    public bool smashing;
     bool dashing;
     bool grabbing;
+    public bool sliding;
     Vector3 distanceToGrabbedObject;
 
     public float distanciaBordeSprite = 0.745f;
@@ -47,7 +48,7 @@ public class PlayerController : Transformable {
 
     //Booleano que gestiona si el personaje esta en el suelo (Para saber si puede saltar o no)
     [SerializeField]
-    bool grounded = false;
+    public bool grounded = false;
 
     bool facingRight;
 
@@ -145,59 +146,63 @@ public class PlayerController : Transformable {
 
     //Funcion que hace al personaje moverse hacia los lados a partir del input de las flechas, en caso de estar en el aire se mantiene siempre y cuando se cambie la dirección horizontal en el aire se reduce a la mitad la velocidad
     void Move() {
-        if (!grabbing) {
-        bool changed = false;
-        float mustSlow = 1;
-            if (Input.GetAxisRaw("Horizontal") != (float)prevHorizontalMov && Input.GetAxisRaw("Horizontal") != 0.0f) {
-                changed = true;
-                prevHorizontalMov = Input.GetAxisRaw("Horizontal");
-            }
+        if (!sliding) {
+            if (!grabbing) {
+                bool changed = false;
+                float mustSlow = 1;
+                if (Input.GetAxisRaw("Horizontal") != (float)prevHorizontalMov && Input.GetAxisRaw("Horizontal") != 0.0f) {
+                    changed = true;
+                    prevHorizontalMov = Input.GetAxisRaw("Horizontal");
+                }
 
-            if (grounded) {
-                GetComponent<Rigidbody2D>().AddForce(new Vector2(-GetComponent<Rigidbody2D>().velocity.x, 0), ForceMode2D.Impulse);
-                transform.Translate(Vector3.right * Input.GetAxis("Horizontal") * characterSpeed * Time.deltaTime);
-                slowedInTheAir = false;
-                if (Input.GetAxis("Horizontal") != 0) {
-                    moving = true;
+                if (grounded) {
+                    GetComponent<Rigidbody2D>().AddForce(new Vector2(-GetComponent<Rigidbody2D>().velocity.x, 0), ForceMode2D.Impulse);
+                    transform.Translate(Vector3.right * Input.GetAxis("Horizontal") * characterSpeed * Time.deltaTime);
+                    slowedInTheAir = false;
+                    if (Input.GetAxis("Horizontal") != 0) {
+                        moving = true;
+                    }
+                    else {
+                        moving = false;
+                    }
+                }
+                else if (changed) {
+
+                    slowedInTheAir = true;
+                    mustSlow = 0.5f;
+                    transform.Translate(Vector3.right * Input.GetAxis("Horizontal") * characterSpeed * mustSlow * Time.deltaTime);
+
+                }
+
+                else {
+                    if (slowedInTheAir) {
+                        rb.AddForce(new Vector2(-rb.velocity.x, 0), ForceMode2D.Impulse);
+                        mustSlow = 0.5f;
+                    }
+                    transform.Translate(Vector3.right * Input.GetAxis("Horizontal") * characterSpeed * mustSlow * Time.deltaTime);
+                }
+
+                if (changed) {
+                    Flip();
+                }
+
+            }
+            else {
+                if (grounded) {
+                    if (NearbyObjects[0].GetComponent<DoubleObject>().isMovable) {
+                        transform.Translate(Vector3.right * Input.GetAxis("Horizontal") * characterSpeed / 2 * Time.deltaTime);
+                        NearbyObjects[0].transform.position = transform.position - distanceToGrabbedObject;
+                        Debug.Log(distanceToGrabbedObject);
+                    }
+                    else {
+                        grabbing = false;
+                    }
                 }
                 else {
-                    moving = false;
+
                 }
-            }
-            else if (changed) {
-
-                slowedInTheAir = true;
-                mustSlow = 0.5f;
-                transform.Translate(Vector3.right * Input.GetAxis("Horizontal") * characterSpeed * mustSlow * Time.deltaTime);
 
             }
-
-            else {
-                if (slowedInTheAir) {
-                    rb.AddForce(new Vector2(-rb.velocity.x, 0), ForceMode2D.Impulse);
-                    mustSlow = 0.5f;
-                }
-                transform.Translate(Vector3.right * Input.GetAxis("Horizontal") * characterSpeed * mustSlow * Time.deltaTime);
-            }
-
-            if (changed) {
-                Flip();
-            }
-
-        }else{
-            if (grounded) {
-                if (NearbyObjects[0].GetComponent<DoubleObject>().isMovable) {
-                    transform.Translate(Vector3.right * Input.GetAxis("Horizontal") * characterSpeed / 2 * Time.deltaTime);
-                    NearbyObjects[0].transform.position = transform.position - distanceToGrabbedObject;
-                    Debug.Log(distanceToGrabbedObject);
-                }else {
-                    grabbing = false;
-                }
-            }
-            else {
-
-            }
-
         }
     }
 
@@ -227,19 +232,22 @@ public class PlayerController : Transformable {
 
     //Metodo que añade una fuerza al personaje para simular un salto
     void Jump() {
+        GetComponent<Rigidbody2D>().velocity= new Vector2(0,0);
         GetComponent<Rigidbody2D>().AddForce(transform.up * jumpStrenght, ForceMode2D.Impulse);
         GetComponent<AudioSource>().clip = jumpClip;
         GetComponent<AudioSource>().Play();
+        sliding = false;
     }
 
     //Método que comprueba si la velocidad y del personaje es 0 o aprox. y actualiza el booleano grounded en consecuencia
     void CheckGrounded() {
-        if (rb.velocity.y < 0.1f && rb.velocity.y>=0.0f || rb.velocity.y > -0.1f && rb.velocity.y <=0.0f) {
-            RaycastHit2D hit2D = Physics2D.Raycast(rb.position - new Vector2(0f, 0.5f), Vector2.down, 0.2f, groundMask);
-            RaycastHit2D hit2DLeft = Physics2D.Raycast(rb.position - new Vector2(0f, 0.5f) + new Vector2(-distanciaBordeSprite, 0), Vector2.down, 0.2f, groundMask);
-            RaycastHit2D hit2DRight = Physics2D.Raycast(rb.position - new Vector2(0f, 0.5f) + new Vector2(distanciaBordeSprite, 0), Vector2.down, 0.2f, groundMask);
+            if (rb.velocity.y < 0.1f && rb.velocity.y>=0.0f || rb.velocity.y > -0.1f && rb.velocity.y <=0.0f) {
+            RaycastHit2D hit2D = Physics2D.Raycast(rb.position - new Vector2(0f, 0.5f), Vector2.down, 0.1f, groundMask);
+            RaycastHit2D hit2DLeft = Physics2D.Raycast(rb.position - new Vector2(0f, 0.5f) + new Vector2(-distanciaBordeSprite, 0), Vector2.down, 0.1f, groundMask);
+            RaycastHit2D hit2DRight = Physics2D.Raycast(rb.position - new Vector2(0f, 0.5f) + new Vector2(distanciaBordeSprite, 0), Vector2.down, 0.1f, groundMask);
             // If the raycast hit something
             if (hit2D||hit2DLeft||hit2DRight) {
+                Debug.Log("GroundBruh");
                 grounded = true;
                 dashing = false;
                     SetCanDash(true);
@@ -371,6 +379,8 @@ public class PlayerController : Transformable {
         }
         if (Input.GetKeyDown(KeyCode.LeftControl)&&!grounded) {
             Smash();
+            GetComponent<AudioSource>().clip = GetComponent<PlayerController>().smashClip;
+            GetComponent<AudioSource>().Play();
         }
 
     }
@@ -380,7 +390,8 @@ public class PlayerController : Transformable {
             rb.AddForce(new Vector2(-rb.velocity.x,0),ForceMode2D.Impulse);
             GetComponent<AudioSource>().clip = smashClip;
             GetComponent<AudioSource>().Play();
-            rb.AddForce(new Vector2(0, -500));
+            rb.velocity = new Vector2(0, 0);
+            rb.AddForce(new Vector2(0, -700));
             smashing = true;
         }
     }
@@ -398,7 +409,7 @@ public class PlayerController : Transformable {
     //Método que comprueba los inputs y actua en consecuencia
     void CheckInputs() {
         //BARRA ESPACIADORA = SALTO
-        if (Input.GetKeyDown(KeyCode.Space) && grounded&&!crawling) {
+        if (Input.GetKeyDown(KeyCode.Space) && grounded&&!crawling) {//||Input.GetKeyDown(KeyCode.Space) && sliding) {
             Jump();
         }
         //Comportamiento de dawn

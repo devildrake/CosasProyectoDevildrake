@@ -15,6 +15,7 @@ public class DoublePlatform : DoubleObject {
             Vector2 positionWithOffset = brotherObject.transform.position;
             positionWithOffset.y += offset;
             transform.position = positionWithOffset;
+            transform.rotation = brotherObject.transform.rotation;
         }
         else {
             GetComponent<SpriteRenderer>().sprite = imagenDusk;
