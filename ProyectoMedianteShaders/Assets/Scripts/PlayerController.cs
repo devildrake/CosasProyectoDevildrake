@@ -20,7 +20,7 @@ public class PlayerController : Transformable {
     bool leftPressed;
     public List<GameObject> NearbyObjects;
 
-    bool crawling;
+    bool crawling; //iiiiin my craaaaaawl
     bool moving;
     public bool smashing;
     bool dashing;
@@ -50,7 +50,7 @@ public class PlayerController : Transformable {
     [SerializeField]
     public bool grounded = false;
 
-    bool facingRight;
+    public bool facingRight;
 
     //Mascara de suelo (Mas tarde podria ser util, ahora esta aqui por que para gestionar grounded hice pruebas varias)
     public LayerMask groundMask;
@@ -241,7 +241,7 @@ public class PlayerController : Transformable {
 
     //Método que comprueba si la velocidad y del personaje es 0 o aprox. y actualiza el booleano grounded en consecuencia
     void CheckGrounded() {
-            if (rb.velocity.y < 0.1f && rb.velocity.y>=0.0f || rb.velocity.y > -0.1f && rb.velocity.y <=0.0f) {
+        if (rb.velocity.y < 0.1f && rb.velocity.y>=0.0f || rb.velocity.y > -0.1f && rb.velocity.y <=0.0f) {
             RaycastHit2D hit2D = Physics2D.Raycast(rb.position - new Vector2(0f, 0.5f), Vector2.down, 0.1f, groundMask);
             RaycastHit2D hit2DLeft = Physics2D.Raycast(rb.position - new Vector2(0f, 0.5f) + new Vector2(-distanciaBordeSprite, 0), Vector2.down, 0.1f, groundMask);
             RaycastHit2D hit2DRight = Physics2D.Raycast(rb.position - new Vector2(0f, 0.5f) + new Vector2(distanciaBordeSprite, 0), Vector2.down, 0.1f, groundMask);
@@ -250,8 +250,7 @@ public class PlayerController : Transformable {
                 Debug.Log("GroundBruh");
                 grounded = true;
                 dashing = false;
-                    SetCanDash(true);
-                
+                SetCanDash(true);
             }
         }
         else {
@@ -261,7 +260,7 @@ public class PlayerController : Transformable {
 
     void DawnBehavior() {
         if (canDash)
-            direction = DirectionCircle.UseDirectionCircle(arrow, gameObject,0);
+            direction = PlayerUtilsStatic.UseDirectionCircle(arrow, gameObject,0,-90,90);
 
         if (objectsInDeflectArea.Count != 0) {
             direction = DirectionCircle.UseDirectionCircle(arrow, gameObject, 1);
