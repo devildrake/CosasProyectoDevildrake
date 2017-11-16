@@ -54,6 +54,7 @@ public class PlayerController : Transformable {
 
     //Mascara de suelo (Mas tarde podria ser util, ahora esta aqui por que para gestionar grounded hice pruebas varias)
     public LayerMask groundMask;
+    public LayerMask slideMask;
 
     //Referencia al RigidBody2D del personaje, se inicializa en el start.
     Rigidbody2D rb;
@@ -78,6 +79,8 @@ public class PlayerController : Transformable {
         prevHorizontalMov = 1;
         facingRight = true;
         groundMask = LayerMask.GetMask("Ground");
+        slideMask = LayerMask.GetMask("Slide");
+
         rb = GetComponent<Rigidbody2D>();
         slowedInTheAir = false;
         slowMotionTimeScale = 0.3f;
@@ -203,6 +206,11 @@ public class PlayerController : Transformable {
                 }
 
             }
+        }else {
+            if (rb.velocity.y > 0) {
+                sliding = false;
+            }
+
         }
     }
 
@@ -241,13 +249,12 @@ public class PlayerController : Transformable {
 
     //Método que comprueba si la velocidad y del personaje es 0 o aprox. y actualiza el booleano grounded en consecuencia
     void CheckGrounded() {
-        if (rb.velocity.y < 0.1f && rb.velocity.y>=0.0f || rb.velocity.y > -0.1f && rb.velocity.y <=0.0f) {
+        if (rb.velocity.y < 0.1f && rb.velocity.y >= 0.0f || rb.velocity.y > -0.1f && rb.velocity.y <= 0.0f) {
             RaycastHit2D hit2D = Physics2D.Raycast(rb.position - new Vector2(0f, 0.5f), Vector2.down, 0.1f, groundMask);
             RaycastHit2D hit2DLeft = Physics2D.Raycast(rb.position - new Vector2(0f, 0.5f) + new Vector2(-distanciaBordeSprite, 0), Vector2.down, 0.1f, groundMask);
             RaycastHit2D hit2DRight = Physics2D.Raycast(rb.position - new Vector2(0f, 0.5f) + new Vector2(distanciaBordeSprite, 0), Vector2.down, 0.1f, groundMask);
             // If the raycast hit something
-            if (hit2D||hit2DLeft||hit2DRight) {
-                Debug.Log("GroundBruh");
+            if (hit2D || hit2DLeft || hit2DRight) {
                 grounded = true;
                 dashing = false;
                 SetCanDash(true);
@@ -255,6 +262,42 @@ public class PlayerController : Transformable {
         }
         else {
             grounded = false;
+        }
+        RaycastHit2D hit2DLeftO = Physics2D.Raycast(rb.position - new Vector2(0f, 0.5f) + new Vector2(-distanciaBordeSprite, 0), Vector2.down, 0.1f, groundMask);
+        RaycastHit2D hit2DRightO = Physics2D.Raycast(rb.position - new Vector2(0f, 0.5f) + new Vector2(distanciaBordeSprite, 0), Vector2.down, 0.1f, groundMask);
+
+        if (!hit2DLeftO && !hit2DRightO) {
+            bool right = true;
+
+            //SLIDE PA LA DERECHA
+            hit2DRightO = Physics2D.Raycast(rb.position - new Vector2(0f, 0.5f) + new Vector2(distanciaBordeSprite, 0), Vector2.down, 3.0f, slideMask);
+            hit2DLeftO = Physics2D.Raycast(rb.position - new Vector2(0f, 0.5f) + new Vector2(-distanciaBordeSprite, 0), Vector2.down, 0.2f, slideMask);
+
+
+            if (!(hit2DLeftO && hit2DRightO)){
+                right = false;
+                //SLIDE PA LA IZQUIERDA
+                hit2DRightO = Physics2D.Raycast(rb.position - new Vector2(0f, 0.5f) + new Vector2(distanciaBordeSprite, 0), Vector2.down, 0.2f, slideMask);
+                hit2DLeftO = Physics2D.Raycast(rb.position - new Vector2(0f, 0.5f) + new Vector2(-distanciaBordeSprite, 0), Vector2.down, 3.0f, slideMask);
+            }
+            if (hit2DLeftO && hit2DRightO) {
+                if (!facingRight&& right) {
+                    Flip();
+                    prevHorizontalMov = 1.0f;
+
+                }
+                else if (facingRight && !right) {
+                    Flip();
+                    prevHorizontalMov = -1.0f;
+
+                }
+                sliding = true;
+                rb.velocity = new Vector2(rb.velocity.x, -10);
+
+            }
+        }
+        else {
+            sliding = false;
         }
     }
 
@@ -408,7 +451,7 @@ public class PlayerController : Transformable {
     //Método que comprueba los inputs y actua en consecuencia
     void CheckInputs() {
         //BARRA ESPACIADORA = SALTO
-        if (Input.GetKeyDown(KeyCode.Space) && grounded&&!crawling) {//||Input.GetKeyDown(KeyCode.Space) && sliding) {
+        if (Input.GetKeyDown(KeyCode.Space) && grounded&&!crawling||Input.GetKeyDown(KeyCode.Space) && sliding) {
             Jump();
         }
         //Comportamiento de dawn
