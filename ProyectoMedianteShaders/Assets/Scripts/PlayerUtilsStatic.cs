@@ -192,6 +192,14 @@ public static class PlayerUtilsStatic {
                 if ((mousePositions[1] - mousePositions[0]).y < 0) {
                     rotation *= -1;
                 }
+                if (!PJ.GetComponent<PlayerController>().facingRight) {
+                    if(rotation > 0 && rotation < 180 - maxAngle) {
+                        rotation = 180 - maxAngle;
+                    }
+                    if(rotation < 0 && rotation > -180 + minAngle) {
+                        rotation = -180 + minAngle;
+                    }
+                }
 
                 rot.eulerAngles = new Vector3(0, 0, rotation); //qaternion de rotacion que es el que le aplico luego a la flecha
                 arrowAnchor.transform.rotation = rot; //rota el sprite
