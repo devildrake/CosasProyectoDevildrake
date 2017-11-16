@@ -87,10 +87,10 @@ public static class PlayerUtilsStatic {
                 mousePositions[0] = Input.mousePosition;//actualiza el punto de la linea para que esta cambie en funcion de
                                                         //de la posicion del raton a cada frame
 
-                
+
                 float rotation = Vector3.Angle(new Vector3(1, 0, 0), (mousePositions[1] - mousePositions[0])); //calcula el angulo de inclinacion que tiene tu
-                                                                                                                   //drag del raton
-                
+                                                                                                               //drag del raton
+
 
                 //si la linea es descendente el angulo que calculo antes sera negativo, si no hago esto el angulo siempre será positivo. (SOLUCION RADEV)
                 if ((mousePositions[1] - mousePositions[0]).y < 0) {
@@ -131,9 +131,9 @@ public static class PlayerUtilsStatic {
                                                         //de la posicion del raton a cada frame
 
 
-                    float rotation = Vector3.Angle(new Vector3(1, 0, 0), (mousePositions[1] - mousePositions[0])); //calcula el angulo de inclinacion que tiene tu
-                                                                                                             //drag del raton
-               
+                float rotation = Vector3.Angle(new Vector3(1, 0, 0), (mousePositions[1] - mousePositions[0])); //calcula el angulo de inclinacion que tiene tu
+                                                                                                               //drag del raton
+
 
                 //si la linea es descendente el angulo que calculo antes sera negativo, si no hago esto el angulo siempre será positivo. (SOLUCION RADEV)
                 if ((mousePositions[1] - mousePositions[0]).y < 0) {
@@ -150,6 +150,7 @@ public static class PlayerUtilsStatic {
      * Sobrecarga del direction circle con angulo maximo y minimo.
      */
     public static Vector2 UseDirectionCircle(GameObject arrowAnchor, GameObject PJ, int behav, float minAngle, float maxAngle) {
+        Vector3 finalDirection = new Vector3();
         if (behav == 0) {
             arrowAnchor.transform.position = PJ.transform.position; //se asigna la posicion del personaje a la flecha para que esta siempre aparezca sobre el PJ
 
@@ -172,6 +173,9 @@ public static class PlayerUtilsStatic {
                 draw = false;
                 arrowAnchor.SetActive(false);
                 once = false;
+                if (PJ.GetComponent<PlayerController>().facingRight) {
+                    return finalDirection;
+                }
             }
 
             //EL CONDICIONAL GESTIONA CUANDO TIENE QUE IR CALCULANDO EL ANGULO Y PINTANDO LOS SPRITES
@@ -184,19 +188,32 @@ public static class PlayerUtilsStatic {
                 if (PJ.GetComponent<PlayerController>().facingRight) {
                     rotation = Vector3.Angle(new Vector3(1, 0, 0), (mousePositions[1] - mousePositions[0])); //calcula el angulo de inclinacion que tiene tu
                                                                                                              //drag del raton
+                    rotation = Mathf.Clamp(rotation, minAngle, maxAngle);
+                    if ((mousePositions[1] - mousePositions[0]).y < 0) {
+                        rotation *= -1;
+                    }
+                    finalDirection = new Vector3(Mathf.Cos(rotation * Mathf.Deg2Rad), Mathf.Sin(rotation * Mathf.Deg2Rad), 0);
                 } else {
                     rotation = Vector3.Angle(new Vector3(-1, 0, 0), (mousePositions[1] - mousePositions[0]));
+                    rotation = Mathf.Clamp(rotation, minAngle, maxAngle);
+                    //rotation += 180;
+                    if ((mousePositions[1] - mousePositions[0]).y < 0) {
+
+                        rotation = -180 + rotation;
+                    } else {
+                        rotation = 180 - rotation;
+                    }
                 }
 
                 //si la linea es descendente el angulo que calculo antes sera negativo, si no hago esto el angulo siempre será positivo. (SOLUCION RADEV)
-                if ((mousePositions[1] - mousePositions[0]).y < 0) {
-                    rotation *= -1;
-                }
+                /* if ((mousePositions[1] - mousePositions[0]).y < 0) {
+                     rotation *= -1;
+                 }*/
                 if (!PJ.GetComponent<PlayerController>().facingRight) {
-                    if(rotation > 0 && rotation < 180 - maxAngle) {
+                    if (rotation > 0 && rotation < 180 - maxAngle) {
                         rotation = 180 - maxAngle;
                     }
-                    if(rotation < 0 && rotation > -180 + minAngle) {
+                    if (rotation < 0 && rotation > -180 + minAngle) {
                         rotation = -180 + minAngle;
                     }
                 }
@@ -255,7 +272,8 @@ public static class PlayerUtilsStatic {
         return (mousePositions[1] - mousePositions[0]).normalized;
     }
 
-    public static void SetOnce(bool a) {
-        once = a;
+    public static void ResetDirectionCircle() {
+        draw = false;
+        once = true;
     }
 }
