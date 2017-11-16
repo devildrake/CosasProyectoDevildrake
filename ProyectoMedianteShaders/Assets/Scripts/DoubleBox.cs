@@ -14,8 +14,15 @@ public class DoubleBox : DoubleObject {
         isBreakable = false;
         interactuableBySmash = false;
         offset = GameLogic.instance.worldOffset;
-        if (worldAssignation == world.DAWN)
+        if (worldAssignation == world.DAWN) {
             GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
+            GetComponent<SpriteRenderer>().sprite = imagenDawn;
+        }
+        else {
+            GetComponent<SpriteRenderer>().sprite = imagenDusk;
+
+        }
+
 
         rb = GetComponent<Rigidbody2D>();
         groundMask = LayerMask.GetMask("Ground");
@@ -47,7 +54,13 @@ public class DoubleBox : DoubleObject {
     }
 
     protected override void LoadResources() {
+        if (worldAssignation == world.DAWN) {
+            imagenDawn = Resources.Load<Sprite>("Presentacion/DawnSprites/DawnBox");
+        }
+        else {
+            imagenDusk = Resources.Load<Sprite>("Presentacion/DuskSprites/DuskBox");
 
+        }
     }
 
     public override void Change() {

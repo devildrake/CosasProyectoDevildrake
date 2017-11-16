@@ -371,7 +371,8 @@ public class PlayerController : Transformable {
             GameLogic.instance.SetTimeScaleLocal(slowMotionTimeScale);
         }else if (Input.GetMouseButtonUp(1)&& objectsInDeflectArea.Count!=0) {
             foreach(GameObject g in objectsInDeflectArea) {
-                Dash.DoDash(g, direction, 10);
+                Dash.DoDash(g, direction, 20);
+                g.GetComponent<Rigidbody2D>().gravityScale = 0;
             }
             GameLogic.instance.SetTimeScaleLocal(1f);
         }
@@ -508,8 +509,8 @@ public class PlayerController : Transformable {
     }
 
     protected override void LoadResources() {
-        imagenDawn = Resources.Load<Sprite>("Sprites/Pedro_PJ");
-        imagenDusk = Resources.Load<Sprite>("Sprites/bloom");
+        imagenDawn = Resources.Load<Sprite>("Presentacion/DawnSprites/Dawn");
+        imagenDusk = Resources.Load<Sprite>("Presentacion/DuskSprites/Dusk"); ;
         dashClip = Resources.Load<AudioClip>("Sounds/Dash");
         jumpClip = Resources.Load<AudioClip>("Sounds/Jump");
         smashClip = Resources.Load<AudioClip>("Sounds/Smash");

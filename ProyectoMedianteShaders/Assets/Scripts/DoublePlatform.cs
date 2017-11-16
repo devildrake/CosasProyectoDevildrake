@@ -23,10 +23,16 @@ public class DoublePlatform : DoubleObject {
     }
 
     protected override void LoadResources() {
+        
         Debug.Log("Loading Resources");
-        imagenDawn = Resources.Load<Sprite>("Sprites/Platfroms/Hearthstone1");
-        imagenDusk = Resources.Load<Sprite>("Sprites/Platfroms/Hearthstone2");
-
+        if (gameObject.tag == "Slide") {
+            imagenDawn = Resources.Load<Sprite>("Presentacion/DawnSprites/DawnPlatformSlide");
+            imagenDusk = Resources.Load<Sprite>("Presentacion/DuskSprites/DuskPlatformSlide");
+        }
+        else {
+            imagenDawn = Resources.Load<Sprite>("Presentacion/DawnSprites/DawnPlatform");
+            imagenDusk = Resources.Load<Sprite>("Presentacion/DuskSprites/DuskPlatform");
+        }
     }
 
     // Update is called once per frame

@@ -9,7 +9,6 @@ using UnityEngine;
 
 public class Transformable : MonoBehaviour{
 
-
     //booleano para gestionar si el objeto ha sido añadido a la lista de transformables
     protected bool added;
 
@@ -20,6 +19,8 @@ public class Transformable : MonoBehaviour{
     public Sprite imagenDusk;
     public Sprite imagenDawn;
 
+    protected Vector2 originalPos;
+
     //Método pseudo start que debe llamarse en el Start de cada heredero
     protected virtual void InitTransformable() {
         //isPunchable = false;
@@ -27,6 +28,7 @@ public class Transformable : MonoBehaviour{
         dawn = true;
         LoadResources();
         Change();
+        originalPos = transform.position;
     }
 
     protected virtual void OnlyFreezeRotation() {
@@ -50,6 +52,12 @@ public class Transformable : MonoBehaviour{
         Debug.Log("LoadResources esta vacío");
     }
 
+    public virtual void Kill() {
+        transform.position = originalPos;
+        if (GetComponent<Rigidbody2D>() != null) {
+            GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
+        }
+    }
 
     //Método que se llama desde GameLogic con el listado de objetos transformables, cambia el booleano dawn y a su vez en función de si se pasa
     //a dawn = true o dawn = false se cambia el sprite a imagenDusk/imagenDawn

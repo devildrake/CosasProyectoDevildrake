@@ -34,7 +34,7 @@ public class DoubleBush : DoubleObject {
     }
 
     private void Kill(GameObject obj) {
-
+        obj.GetComponent<Transformable>().Kill();
     }
 
     // Update is called once per frame
