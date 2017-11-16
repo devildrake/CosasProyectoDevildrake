@@ -12,7 +12,7 @@ public class PlayerController : Transformable {
     public Vector2 originalOffsetCollider;
 
     public List<GameObject> objectsInDeflectArea;
-
+    public GameObject deflectArea;
 
     float slowMotionTimeScale;
     float dashForce;
@@ -91,7 +91,7 @@ public class PlayerController : Transformable {
 
         //Start del transformable
         InitTransformable();
-
+        deflectArea.SetActive(false);
 
     }
     void Update() {
@@ -307,6 +307,10 @@ public class PlayerController : Transformable {
 
         if (objectsInDeflectArea.Count != 0) {
             direction = DirectionCircle.UseDirectionCircle(arrow, gameObject, 1);
+            deflectArea.SetActive(true);
+        }
+        else {
+            deflectArea.SetActive(false);
         }
 
         //Si se suelta el botón izquierdo del ratón y se puede dashear, se desactiva la slowMotion y se modifica el timeScale además de poner en false canDash
