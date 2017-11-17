@@ -14,9 +14,13 @@ public class DoubleBreakableBox : DoubleObject {
     void Start() {
         InitTransformable();
         offset = GameLogic.instance.worldOffset;
-        if (worldAssignation == world.DAWN)
+        if (worldAssignation == world.DAWN) {
             GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
+            GetComponent<SpriteRenderer>().sprite = imagenDawn;
+        }else {
+            GetComponent<SpriteRenderer>().sprite = imagenDusk;
 
+        }
         rb = GetComponent<Rigidbody2D>();
         groundMask = LayerMask.GetMask("Ground");
 
@@ -49,6 +53,13 @@ public class DoubleBreakableBox : DoubleObject {
 
     protected override void LoadResources() {
         smashedClip = Resources.Load<AudioClip>("Sounds/BeSmashed");
+        if(worldAssignation == world.DAWN) {
+            imagenDawn = Resources.Load<Sprite>("Presentacion/DawnSprites/DawnBreakableBox");
+        }
+        else {
+            imagenDusk = Resources.Load<Sprite>("Presentacion/DuskSprites/DuskBreakableBox");
+        }
+
     }
 
     public override void Change() {

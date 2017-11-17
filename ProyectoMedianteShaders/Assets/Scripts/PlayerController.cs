@@ -12,7 +12,7 @@ public class PlayerController : Transformable {
     public Vector2 originalOffsetCollider;
 
     public List<GameObject> objectsInDeflectArea;
-
+    public GameObject deflectArea;
 
     float slowMotionTimeScale;
     float dashForce;
@@ -54,6 +54,7 @@ public class PlayerController : Transformable {
 
     //Mascara de suelo (Mas tarde podria ser util, ahora esta aqui por que para gestionar grounded hice pruebas varias)
     public LayerMask groundMask;
+    public LayerMask slideMask;
 
     //Referencia al RigidBody2D del personaje, se inicializa en el start.
     Rigidbody2D rb;
@@ -78,6 +79,8 @@ public class PlayerController : Transformable {
         prevHorizontalMov = 1;
         facingRight = true;
         groundMask = LayerMask.GetMask("Ground");
+        slideMask = LayerMask.GetMask("Slide");
+
         rb = GetComponent<Rigidbody2D>();
         slowedInTheAir = false;
         slowMotionTimeScale = 0.3f;
@@ -88,7 +91,7 @@ public class PlayerController : Transformable {
 
         //Start del transformable
         InitTransformable();
-
+        deflectArea.SetActive(false);
 
     }
     void Update() {
@@ -203,6 +206,11 @@ public class PlayerController : Transformable {
                 }
 
             }
+        }else {
+            if (rb.velocity.y > 0) {
+                sliding = false;
+            }
+
         }
     }
 
@@ -241,13 +249,12 @@ public class PlayerController : Transformable {
 
     //Método que comprueba si la velocidad y del personaje es 0 o aprox. y actualiza el booleano grounded en consecuencia
     void CheckGrounded() {
-        if (rb.velocity.y < 0.1f && rb.velocity.y>=0.0f || rb.velocity.y > -0.1f && rb.velocity.y <=0.0f) {
+        if (rb.velocity.y < 0.1f && rb.velocity.y >= 0.0f || rb.velocity.y > -0.1f && rb.velocity.y <= 0.0f) {
             RaycastHit2D hit2D = Physics2D.Raycast(rb.position - new Vector2(0f, 0.5f), Vector2.down, 0.1f, groundMask);
             RaycastHit2D hit2DLeft = Physics2D.Raycast(rb.position - new Vector2(0f, 0.5f) + new Vector2(-distanciaBordeSprite, 0), Vector2.down, 0.1f, groundMask);
             RaycastHit2D hit2DRight = Physics2D.Raycast(rb.position - new Vector2(0f, 0.5f) + new Vector2(distanciaBordeSprite, 0), Vector2.down, 0.1f, groundMask);
             // If the raycast hit something
-            if (hit2D||hit2DLeft||hit2DRight) {
-                Debug.Log("GroundBruh");
+            if (hit2D || hit2DLeft || hit2DRight) {
                 grounded = true;
                 dashing = false;
                 SetCanDash(true);
@@ -256,14 +263,54 @@ public class PlayerController : Transformable {
         else {
             grounded = false;
         }
+        RaycastHit2D hit2DLeftO = Physics2D.Raycast(rb.position - new Vector2(0f, 0.5f) + new Vector2(-distanciaBordeSprite, 0), Vector2.down, 0.1f, groundMask);
+        RaycastHit2D hit2DRightO = Physics2D.Raycast(rb.position - new Vector2(0f, 0.5f) + new Vector2(distanciaBordeSprite, 0), Vector2.down, 0.1f, groundMask);
+
+        if (!hit2DLeftO && !hit2DRightO) {
+            bool right = true;
+
+            //SLIDE PA LA DERECHA
+            hit2DRightO = Physics2D.Raycast(rb.position - new Vector2(0f, 0.5f) + new Vector2(distanciaBordeSprite, 0), Vector2.down, 3.0f, slideMask);
+            hit2DLeftO = Physics2D.Raycast(rb.position - new Vector2(0f, 0.5f) + new Vector2(-distanciaBordeSprite, 0), Vector2.down, 0.2f, slideMask);
+
+
+            if (!(hit2DLeftO && hit2DRightO)){
+                right = false;
+                //SLIDE PA LA IZQUIERDA
+                hit2DRightO = Physics2D.Raycast(rb.position - new Vector2(0f, 0.5f) + new Vector2(distanciaBordeSprite, 0), Vector2.down, 0.2f, slideMask);
+                hit2DLeftO = Physics2D.Raycast(rb.position - new Vector2(0f, 0.5f) + new Vector2(-distanciaBordeSprite, 0), Vector2.down, 3.0f, slideMask);
+            }
+            if (hit2DLeftO && hit2DRightO) {
+                if (!facingRight&& right) {
+                    Flip();
+                    prevHorizontalMov = 1.0f;
+
+                }
+                else if (facingRight && !right) {
+                    Flip();
+                    prevHorizontalMov = -1.0f;
+
+                }
+                sliding = true;
+                rb.velocity = new Vector2(rb.velocity.x, -10);
+
+            }
+        }
+        else {
+            sliding = false;
+        }
     }
 
     void DawnBehavior() {
         if (canDash)
-            direction = PlayerUtilsStatic.UseDirectionCircle(arrow, gameObject,0,-90,90);
+            direction = PlayerUtilsStatic.UseDirectionCircle(arrow, gameObject,0);
 
         if (objectsInDeflectArea.Count != 0) {
             direction = DirectionCircle.UseDirectionCircle(arrow, gameObject, 1);
+            deflectArea.SetActive(true);
+        }
+        else {
+            deflectArea.SetActive(false);
         }
 
         //Si se suelta el botón izquierdo del ratón y se puede dashear, se desactiva la slowMotion y se modifica el timeScale además de poner en false canDash
@@ -328,7 +375,8 @@ public class PlayerController : Transformable {
             GameLogic.instance.SetTimeScaleLocal(slowMotionTimeScale);
         }else if (Input.GetMouseButtonUp(1)&& objectsInDeflectArea.Count!=0) {
             foreach(GameObject g in objectsInDeflectArea) {
-                Dash.DoDash(g, direction, 10);
+                Dash.DoDash(g, direction, 20);
+                g.GetComponent<Rigidbody2D>().gravityScale = 0;
             }
             GameLogic.instance.SetTimeScaleLocal(1f);
         }
@@ -408,7 +456,7 @@ public class PlayerController : Transformable {
     //Método que comprueba los inputs y actua en consecuencia
     void CheckInputs() {
         //BARRA ESPACIADORA = SALTO
-        if (Input.GetKeyDown(KeyCode.Space) && grounded&&!crawling) {//||Input.GetKeyDown(KeyCode.Space) && sliding) {
+        if (Input.GetKeyDown(KeyCode.Space) && grounded&&!crawling||Input.GetKeyDown(KeyCode.Space) && sliding) {
             Jump();
         }
         //Comportamiento de dawn
@@ -465,8 +513,8 @@ public class PlayerController : Transformable {
     }
 
     protected override void LoadResources() {
-        imagenDawn = Resources.Load<Sprite>("Sprites/Pedro_PJ");
-        imagenDusk = Resources.Load<Sprite>("Sprites/bloom");
+        imagenDawn = Resources.Load<Sprite>("Presentacion/DawnSprites/Dawn");
+        imagenDusk = Resources.Load<Sprite>("Presentacion/DuskSprites/Dusk"); ;
         dashClip = Resources.Load<AudioClip>("Sounds/Dash");
         jumpClip = Resources.Load<AudioClip>("Sounds/Jump");
         smashClip = Resources.Load<AudioClip>("Sounds/Smash");
