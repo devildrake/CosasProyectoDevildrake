@@ -303,7 +303,7 @@ public class PlayerController : Transformable {
 
     void DawnBehavior() {
         if (canDash)
-            direction = PlayerUtilsStatic.UseDirectionCircle(arrow, gameObject,0);
+            direction = PlayerUtilsStatic.UseDirectionCircle(arrow, gameObject,0,-45,45);
 
         if (objectsInDeflectArea.Count != 0) {
             direction = DirectionCircle.UseDirectionCircle(arrow, gameObject, 1);
