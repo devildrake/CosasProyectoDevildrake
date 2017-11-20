@@ -41,8 +41,7 @@ public class GameLogic : MonoBehaviour
 
     void Awake()
     {
-        changeWorldClip = Resources.Load<AudioClip>("Sounds/ChangeWorld");
-        gameObject.GetComponent<AudioSource>().clip = changeWorldClip;
+
         worldOffset = 15;
 
         //Check if instance already exists
@@ -78,6 +77,8 @@ public class GameLogic : MonoBehaviour
     {
         SetWaitAFrame(false);
         SetCheckMainMenu(false);
+        changeWorldClip = Resources.Load<AudioClip>("Sounds/ChangeWorld");
+        gameObject.GetComponent<AudioSource>().clip = changeWorldClip;
     }
 
     //Se comprueba si la escena se ha cambiado
