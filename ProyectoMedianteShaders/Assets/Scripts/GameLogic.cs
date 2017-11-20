@@ -8,6 +8,7 @@ using UnityEngine.SceneManagement;
 
 public class GameLogic : MonoBehaviour
 {
+     AudioClip changeWorldClip;
     //Float privado que se encarga de cambiar timeScale segun combiene cuando el juego no esta pausado
     private float timeScaleLocal = 1;
 
@@ -40,6 +41,8 @@ public class GameLogic : MonoBehaviour
 
     void Awake()
     {
+        changeWorldClip = Resources.Load<AudioClip>("Sounds/ChangeWorld");
+        gameObject.GetComponent<AudioSource>().clip = changeWorldClip;
         worldOffset = 15;
 
         //Check if instance already exists
@@ -138,6 +141,13 @@ public class GameLogic : MonoBehaviour
                 //Si el juego no esta pausado
                 if (!isPaused) {
                     if (Input.GetKeyDown(KeyCode.LeftShift)) {
+                        if (gameObject.GetComponent<AudioSource>().pitch == 1.5) {
+                            gameObject.GetComponent<AudioSource>().pitch = 0.5f;
+                        }
+                        else {
+                            gameObject.GetComponent<AudioSource>().pitch = 1.5f;
+                        }
+                        gameObject.GetComponent<AudioSource>().Play();
                         foreach (GameObject g in transformableObjects) {
                             g.GetComponent<Transformable>().Change();
                         }

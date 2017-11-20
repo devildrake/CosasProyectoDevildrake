@@ -7,6 +7,13 @@ public class PlayerController : Transformable {
     AudioClip jumpClip;
     AudioClip smashClip;
     AudioClip dashClip;
+    AudioClip crawlClip;
+    AudioClip walkClip;
+    AudioClip deflectClip;
+    AudioClip grabClip;
+    AudioClip slideClip;
+    AudioClip dieClip;
+    AudioClip punchClip;
 
     public Vector2 originalSizeCollider;
     public Vector2 originalOffsetCollider;
@@ -17,10 +24,14 @@ public class PlayerController : Transformable {
     float slowMotionTimeScale;
     float dashForce;
 
+    float timeToRest;
+    float timeToDrag;
+    float timeCountToDrag;
+
     bool leftPressed;
     public List<GameObject> NearbyObjects;
 
-    bool crawling; //iiiiin my craaaaaawl
+    public bool crawling; //iiiiin my craaaaaawl
     bool moving;
     public bool smashing;
     bool dashing;
@@ -95,6 +106,9 @@ public class PlayerController : Transformable {
         //Start del transformable
         InitTransformable();
         deflectArea.SetActive(false);
+        timeToDrag = 0.8f;
+        timeToRest = 0.2f;
+        timeCountToDrag = 0;
 
     }
     void Update() {
@@ -115,6 +129,7 @@ public class PlayerController : Transformable {
             Move();
             CheckInputs();
             Smashing();
+
         }
 
 
@@ -154,6 +169,7 @@ public class PlayerController : Transformable {
     void Move() {
         if (!sliding) {
             if (!grabbing) {
+                timeCountToDrag = 0;
                 bool changed = false;
                 float mustSlow = 1;
                 if (Input.GetAxisRaw("Horizontal") != (float)prevHorizontalMov && Input.GetAxisRaw("Horizontal") != 0.0f) {
@@ -167,10 +183,22 @@ public class PlayerController : Transformable {
                     slowedInTheAir = false;
                     if (Input.GetAxis("Horizontal") != 0) {
                         moving = true;
+                        if (!GetComponent<AudioSource>().isPlaying&&!crawling) {
+                            GetComponent<AudioSource>().pitch = 0.3f;
+                            GetComponent<AudioSource>().clip = walkClip;
+                            GetComponent<AudioSource>().Play();
+                        }
+                        else if(crawling){
+                            GetComponent<AudioSource>().pitch = 0.3f;
+                            GetComponent<AudioSource>().clip = crawlClip;
+                            GetComponent<AudioSource>().Play();
+                        }
                     }
                     else {
                         moving = false;
                     }
+
+
                 }
                 else if (changed) {
 
@@ -196,9 +224,22 @@ public class PlayerController : Transformable {
             else {
                 if (grounded) {
                     if (NearbyObjects[0].GetComponent<DoubleObject>().isMovable) {
-                        transform.Translate(Vector3.right * Input.GetAxis("Horizontal") * characterSpeed / 2 * Time.deltaTime);
-                        NearbyObjects[0].transform.position = transform.position - distanceToGrabbedObject;
-                        Debug.Log(distanceToGrabbedObject);
+                        timeCountToDrag += Time.deltaTime;
+
+                        if (timeCountToDrag < timeToRest) {
+
+                        }
+                        else if (timeCountToDrag < timeToRest + timeToDrag) {
+                            transform.Translate(Vector3.right * Input.GetAxis("Horizontal") * characterSpeed / 2 * Time.deltaTime);
+                            NearbyObjects[0].transform.position = transform.position - distanceToGrabbedObject;
+                            Debug.Log(distanceToGrabbedObject);
+                            if (!GetComponent<AudioSource>().isPlaying) {
+                                GetComponent<AudioSource>().clip = grabClip;
+                                GetComponent<AudioSource>().Play();
+                            }
+                        }else {
+                            timeCountToDrag = 0;
+                        }
                     }
                     else {
                         grabbing = false;
@@ -212,6 +253,10 @@ public class PlayerController : Transformable {
         }else {
             if (rb.velocity.y > 0) {
                 sliding = false;
+            }
+            if (!GetComponent<AudioSource>().isPlaying) {
+                GetComponent<AudioSource>().clip = slideClip;
+                GetComponent<AudioSource>().Play();
             }
 
         }
@@ -244,6 +289,8 @@ public class PlayerController : Transformable {
     //Metodo que añade una fuerza al personaje para simular un salto
     void Jump() {
         GetComponent<Rigidbody2D>().velocity= new Vector2(0,0);
+        GetComponent<AudioSource>().pitch = 1.0f;
+
         GetComponent<Rigidbody2D>().AddForce(transform.up * jumpStrenght, ForceMode2D.Impulse);
         GetComponent<AudioSource>().clip = jumpClip;
         GetComponent<AudioSource>().Play();
@@ -338,6 +385,7 @@ public class PlayerController : Transformable {
                     }
                     prevHorizontalMov = -1.0f;
                 }
+                GetComponent<AudioSource>().pitch = 1.0f;
 
                 GetComponent<AudioSource>().clip = dashClip;
                 GetComponent<AudioSource>().Play();
@@ -396,6 +444,8 @@ public class PlayerController : Transformable {
                 GameLogic.instance.SetTimeScaleLocal(1.0f);
                 if (grounded) {
                     Punch(direction, 40000);
+                    GetComponent<AudioSource>().clip = punchClip;
+                    GetComponent<AudioSource>().Play();
                 }
 
                 leftPressed = false;
@@ -429,6 +479,8 @@ public class PlayerController : Transformable {
         }
         if (Input.GetKeyDown(KeyCode.LeftControl)&&!grounded) {
             Smash();
+            GetComponent<AudioSource>().pitch = 1.0f;
+
             GetComponent<AudioSource>().clip = GetComponent<PlayerController>().smashClip;
             GetComponent<AudioSource>().Play();
         }
@@ -439,6 +491,8 @@ public class PlayerController : Transformable {
         if (!smashing) {
             rb.AddForce(new Vector2(-rb.velocity.x,0),ForceMode2D.Impulse);
             GetComponent<AudioSource>().clip = smashClip;
+            GetComponent<AudioSource>().pitch = 1.0f;
+
             GetComponent<AudioSource>().Play();
             rb.velocity = new Vector2(0, 0);
             rb.AddForce(new Vector2(0, -700));
@@ -521,5 +575,21 @@ public class PlayerController : Transformable {
         dashClip = Resources.Load<AudioClip>("Sounds/Dash");
         jumpClip = Resources.Load<AudioClip>("Sounds/Jump");
         smashClip = Resources.Load<AudioClip>("Sounds/Smash");
+        crawlClip = Resources.Load<AudioClip>("Sounds/CrawlWalk");
+        walkClip = Resources.Load<AudioClip>("Sounds/WalkLoop");
+        deflectClip = Resources.Load<AudioClip>("Sounds/Deflect");
+        grabClip = Resources.Load<AudioClip>("Sounds/Grab");
+        slideClip = Resources.Load<AudioClip>("Sounds/Slide");
+        dieClip = Resources.Load<AudioClip>("Sounds/Die");
+        punchClip = Resources.Load<AudioClip>("Sounds/Punch");
     }
+    public override void Kill() {
+        transform.position = originalPos;
+        if (GetComponent<Rigidbody2D>() != null) {
+            GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
+        }
+        GetComponent<AudioSource>().clip = dieClip;
+        GetComponent<AudioSource>().Play();
+    }
+
 }
