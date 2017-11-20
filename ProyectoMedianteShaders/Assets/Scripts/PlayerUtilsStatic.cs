@@ -173,9 +173,6 @@ public static class PlayerUtilsStatic {
                 draw = false;
                 arrowAnchor.SetActive(false);
                 once = false;
-                if (PJ.GetComponent<PlayerController>().facingRight) {
-                    return finalDirection;
-                }
             }
 
             //EL CONDICIONAL GESTIONA CUANDO TIENE QUE IR CALCULANDO EL ANGULO Y PINTANDO LOS SPRITES
@@ -203,20 +200,22 @@ public static class PlayerUtilsStatic {
                     } else {
                         rotation = 180 - rotation;
                     }
+
+                    finalDirection = new Vector3(Mathf.Cos(rotation * Mathf.Deg2Rad), Mathf.Sin(rotation * Mathf.Deg2Rad), 0);
                 }
 
                 //si la linea es descendente el angulo que calculo antes sera negativo, si no hago esto el angulo siempre será positivo. (SOLUCION RADEV)
                 /* if ((mousePositions[1] - mousePositions[0]).y < 0) {
                      rotation *= -1;
                  }*/
-                if (!PJ.GetComponent<PlayerController>().facingRight) {
-                    if (rotation > 0 && rotation < 180 - maxAngle) {
-                        rotation = 180 - maxAngle;
-                    }
-                    if (rotation < 0 && rotation > -180 + minAngle) {
-                        rotation = -180 + minAngle;
-                    }
-                }
+                //if (!PJ.GetComponent<PlayerController>().facingRight) {
+                //    if (rotation > 0 && rotation < 180 - maxAngle) {
+                //        rotation = 180 - maxAngle;
+                //    }
+                //    if (rotation < 0 && rotation > -180 + minAngle) {
+                //        rotation = -180 + minAngle;
+                //    }
+                //}
 
                 rot.eulerAngles = new Vector3(0, 0, rotation); //qaternion de rotacion que es el que le aplico luego a la flecha
                 arrowAnchor.transform.rotation = rot; //rota el sprite
@@ -256,24 +255,34 @@ public static class PlayerUtilsStatic {
                 if (PJ.GetComponent<PlayerController>().facingRight) {
                     rotation = Vector3.Angle(new Vector3(1, 0, 0), (mousePositions[1] - mousePositions[0])); //calcula el angulo de inclinacion que tiene tu
                                                                                                              //drag del raton
+                    rotation = Mathf.Clamp(rotation, minAngle, maxAngle);
+                    if ((mousePositions[1] - mousePositions[0]).y < 0) {
+                        rotation *= -1;
+                    }
+                    finalDirection = new Vector3(Mathf.Cos(rotation * Mathf.Deg2Rad), Mathf.Sin(rotation * Mathf.Deg2Rad), 0);
                 } else {
                     rotation = Vector3.Angle(new Vector3(-1, 0, 0), (mousePositions[1] - mousePositions[0]));
-                }
+                    rotation = Mathf.Clamp(rotation, minAngle, maxAngle);
+                    //rotation += 180;
+                    if ((mousePositions[1] - mousePositions[0]).y < 0) {
 
-                //si la linea es descendente el angulo que calculo antes sera negativo, si no hago esto el angulo siempre será positivo. (SOLUCION RADEV)
-                if ((mousePositions[1] - mousePositions[0]).y < 0) {
-                    rotation *= -1;
+                        rotation = -180 + rotation;
+                    } else {
+                        rotation = 180 - rotation;
+                    }
+                    finalDirection = new Vector3(Mathf.Cos(rotation * Mathf.Deg2Rad), Mathf.Sin(rotation * Mathf.Deg2Rad), 0);
                 }
-                rotation = Mathf.Clamp(rotation, minAngle, maxAngle);
                 rot.eulerAngles = new Vector3(0, 0, rotation); //qaternion de rotacion que es el que le aplico luego a la flecha
                 arrowAnchor.transform.rotation = rot; //rota el sprite
             }
         }
+        //Debug.Log(finalDirection);
         return (mousePositions[1] - mousePositions[0]).normalized;
     }
 
     public static void ResetDirectionCircle() {
         draw = false;
         once = true;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 }
