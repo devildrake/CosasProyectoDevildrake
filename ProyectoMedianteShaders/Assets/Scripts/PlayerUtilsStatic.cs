@@ -5,8 +5,7 @@ using UnityEngine;
 public static class PlayerUtilsStatic {
     public static void DoDash(GameObject PJ, Vector2 direction, float MAX_FORCE) {
         Rigidbody2D rigidbody = PJ.GetComponent<Rigidbody2D>();
-        rigidbody.velocity = new Vector2(0, 0);
-        rigidbody.AddForce(rigidbody.velocity, ForceMode2D.Impulse);
+        Debug.Log(direction);
         rigidbody.AddForce(direction * MAX_FORCE, ForceMode2D.Impulse);
     }
     public static void Punch(Vector2 direction, float MAX_FORCE, List<GameObject>NearbyObjects) {
@@ -185,11 +184,11 @@ public static class PlayerUtilsStatic {
                 if (PJ.GetComponent<PlayerController>().facingRight) {
                     rotation = Vector3.Angle(new Vector3(1, 0, 0), (mousePositions[1] - mousePositions[0])); //calcula el angulo de inclinacion que tiene tu
                                                                                                              //drag del raton
-                    rotation = Mathf.Clamp(rotation, minAngle, maxAngle);
+                    //rotation = Mathf.Clamp(rotation, minAngle, maxAngle);
                     if ((mousePositions[1] - mousePositions[0]).y < 0) {
                         rotation *= -1;
                     }
-                    finalDirection = new Vector3(Mathf.Cos(rotation * Mathf.Deg2Rad), Mathf.Sin(rotation * Mathf.Deg2Rad), 0);
+                    rotation = Mathf.Clamp(rotation, minAngle, maxAngle);
                 } else {
                     rotation = Vector3.Angle(new Vector3(-1, 0, 0), (mousePositions[1] - mousePositions[0]));
                     rotation = Mathf.Clamp(rotation, minAngle, maxAngle);
@@ -200,28 +199,13 @@ public static class PlayerUtilsStatic {
                     } else {
                         rotation = 180 - rotation;
                     }
-
-                    finalDirection = new Vector3(Mathf.Cos(rotation * Mathf.Deg2Rad), Mathf.Sin(rotation * Mathf.Deg2Rad), 0);
                 }
-
-                //si la linea es descendente el angulo que calculo antes sera negativo, si no hago esto el angulo siempre será positivo. (SOLUCION RADEV)
-                /* if ((mousePositions[1] - mousePositions[0]).y < 0) {
-                     rotation *= -1;
-                 }*/
-                //if (!PJ.GetComponent<PlayerController>().facingRight) {
-                //    if (rotation > 0 && rotation < 180 - maxAngle) {
-                //        rotation = 180 - maxAngle;
-                //    }
-                //    if (rotation < 0 && rotation > -180 + minAngle) {
-                //        rotation = -180 + minAngle;
-                //    }
-                //}
 
                 rot.eulerAngles = new Vector3(0, 0, rotation); //qaternion de rotacion que es el que le aplico luego a la flecha
                 arrowAnchor.transform.rotation = rot; //rota el sprite
             }
 
-        } else {
+        } else { //behav == 2 --> funcionalidad para deflect
             arrowAnchor.transform.position = PJ.transform.position; //se asigna la posicion del personaje a la flecha para que esta siempre aparezca sobre el PJ
 
             if (once) {
@@ -249,34 +233,33 @@ public static class PlayerUtilsStatic {
             if (draw) {
                 mousePositions[0] = Input.mousePosition;//actualiza el punto de la linea para que esta cambie en funcion de
                                                         //de la posicion del raton a cada frame
-
-
                 float rotation;
                 if (PJ.GetComponent<PlayerController>().facingRight) {
                     rotation = Vector3.Angle(new Vector3(1, 0, 0), (mousePositions[1] - mousePositions[0])); //calcula el angulo de inclinacion que tiene tu
                                                                                                              //drag del raton
-                    rotation = Mathf.Clamp(rotation, minAngle, maxAngle);
+                    //rotation = Mathf.Clamp(rotation, minAngle, maxAngle);
                     if ((mousePositions[1] - mousePositions[0]).y < 0) {
                         rotation *= -1;
                     }
-                    finalDirection = new Vector3(Mathf.Cos(rotation * Mathf.Deg2Rad), Mathf.Sin(rotation * Mathf.Deg2Rad), 0);
+                    rotation = Mathf.Clamp(rotation, minAngle, maxAngle);
+                    Debug.Log("right--> " + rotation);
                 } else {
                     rotation = Vector3.Angle(new Vector3(-1, 0, 0), (mousePositions[1] - mousePositions[0]));
                     rotation = Mathf.Clamp(rotation, minAngle, maxAngle);
-                    //rotation += 180;
                     if ((mousePositions[1] - mousePositions[0]).y < 0) {
-
-                        rotation = -180 + rotation;
+                        rotation *= -1;
+                        rotation = -180 - rotation;
                     } else {
                         rotation = 180 - rotation;
                     }
-                    finalDirection = new Vector3(Mathf.Cos(rotation * Mathf.Deg2Rad), Mathf.Sin(rotation * Mathf.Deg2Rad), 0);
+                    
+                    Debug.Log("left--> " + rotation);
                 }
                 rot.eulerAngles = new Vector3(0, 0, rotation); //qaternion de rotacion que es el que le aplico luego a la flecha
                 arrowAnchor.transform.rotation = rot; //rota el sprite
             }
         }
-        //Debug.Log(finalDirection);
+        //return finalDirection.normalized;
         return (mousePositions[1] - mousePositions[0]).normalized;
     }
 
