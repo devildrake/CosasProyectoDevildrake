@@ -427,6 +427,8 @@ public class PlayerController : Transformable {
         }else if (Input.GetMouseButtonUp(1)&& objectsInDeflectArea.Count!=0) {
             foreach(GameObject g in objectsInDeflectArea) {
                 Dash.DoDash(g, deflectDirection, 20);
+                GetComponent<AudioSource>().clip = deflectClip;
+                GetComponent<AudioSource>().Play();
                 g.GetComponent<Rigidbody2D>().gravityScale = 0;
             }
             GameLogic.instance.SetTimeScaleLocal(1f);
