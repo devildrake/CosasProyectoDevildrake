@@ -13,6 +13,7 @@ public static class Dash  {
      * uso de fisicas.
      */
     public static void DoDash(GameObject PJ, Vector2 direction, float MAX_FORCE) {
+        Debug.Log("DoDash" + direction);
         Rigidbody2D rigidbody = PJ.GetComponent<Rigidbody2D>();
         rigidbody.velocity = new Vector2(0, 0);
         rigidbody.AddForce(rigidbody.velocity, ForceMode2D.Impulse);

@@ -356,7 +356,7 @@ public class PlayerController : Transformable {
             direction = PlayerUtilsStatic.UseDirectionCircle(arrow, gameObject,0);
 
         if (objectsInDeflectArea.Count != 0) {
-            deflectDirection = PlayerUtilsStatic.UseDirectionCircle(arrow, gameObject, 1,-90,90);
+            deflectDirection = PlayerUtilsStatic.UseDirectionCircle(arrow, gameObject, 1,-10,60);
             deflectArea.SetActive(true);
         }
         else {
