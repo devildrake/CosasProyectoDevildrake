@@ -12,15 +12,17 @@ public class DoubleBreakableBox : DoubleObject {
     AudioClip smashedClip;
 
     void Start() {
-        InitTransformable();
+
         offset = GameLogic.instance.worldOffset;
+        LoadResources();
         if (worldAssignation == world.DAWN) {
             GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
             GetComponent<SpriteRenderer>().sprite = imagenDawn;
         }else {
             GetComponent<SpriteRenderer>().sprite = imagenDusk;
-
         }
+        InitTransformable();
+
         rb = GetComponent<Rigidbody2D>();
         groundMask = LayerMask.GetMask("Ground");
 
@@ -43,10 +45,8 @@ public class DoubleBreakableBox : DoubleObject {
             else {
                 positionWithOffset.y -= offset;
             }
-
             transform.position = positionWithOffset;
             transform.rotation = brotherObject.transform.rotation;
-
         }
 
     }

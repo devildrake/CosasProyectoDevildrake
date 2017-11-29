@@ -104,7 +104,10 @@ public class PlayerController : Transformable {
 
 
         //Start del transformable
-        InitTransformable();
+        added = false;
+        dawn = false;
+        LoadResources();
+        originalPos = transform.position;
         deflectArea.SetActive(false);
         timeToDrag = 0.8f;
         timeToRest = 0.2f;

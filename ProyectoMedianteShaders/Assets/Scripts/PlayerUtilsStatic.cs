@@ -160,14 +160,14 @@ public static class PlayerUtilsStatic {
                 once = false;
                 mousePositions = new Vector2[2];
             }
-            if (Input.GetMouseButtonDown(1)) {
+            if (Input.GetMouseButtonDown(0)) {
                 Cursor.lockState = CursorLockMode.None; //Se puede volver a mover el cursor
                 mousePositions[1] = Input.mousePosition; //posicion donde se ha hecho click
                                                          //se activan la linea y la flecha para que se pinten en la pantalla.
                 draw = true;
                 arrowAnchor.SetActive(true);
 
-            } else if (Input.GetMouseButtonUp(1)) {
+            } else if (Input.GetMouseButtonUp(0)) {
                 Cursor.lockState = CursorLockMode.Locked; //se vuelve a bloquear el raton en el centro
                 draw = false;
                 arrowAnchor.SetActive(false);
