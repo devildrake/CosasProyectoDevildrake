@@ -36,6 +36,9 @@ public class PlayerController : Transformable {
     public bool smashing;
     bool dashing;
     bool grabbing;
+    public bool onImpulsor;
+    public bool canJumpOnImpulsor;
+    public bool calledImpuslorBool;
     public bool sliding;
     Vector3 distanceToGrabbedObject;
 
@@ -302,7 +305,7 @@ public class PlayerController : Transformable {
 
     //Método que comprueba si la velocidad y del personaje es 0 o aprox. y actualiza el booleano grounded en consecuencia
     void CheckGrounded() {
-        if (rb.velocity.y < 0.1f && rb.velocity.y >= 0.0f || rb.velocity.y > -0.1f && rb.velocity.y <= 0.0f) {
+
             RaycastHit2D hit2D = Physics2D.Raycast(rb.position - new Vector2(0f, 0.5f), Vector2.down, 0.1f, groundMask);
             RaycastHit2D hit2DLeft = Physics2D.Raycast(rb.position - new Vector2(0f, 0.5f) + new Vector2(-distanciaBordeSprite, 0), Vector2.down, 0.1f, groundMask);
             RaycastHit2D hit2DRight = Physics2D.Raycast(rb.position - new Vector2(0f, 0.5f) + new Vector2(distanciaBordeSprite, 0), Vector2.down, 0.1f, groundMask);
@@ -312,7 +315,7 @@ public class PlayerController : Transformable {
                 dashing = false;
                 SetCanDash(true);
             }
-        }
+        
         else {
             grounded = false;
         }
@@ -392,6 +395,7 @@ public class PlayerController : Transformable {
 
                 GetComponent<AudioSource>().clip = dashClip;
                 GetComponent<AudioSource>().Play();
+                canJumpOnImpulsor = false;
                 Dash.DoDash(gameObject, direction, dashForce);
                 dashing = true;
                 SetCanDash(false);
@@ -515,10 +519,43 @@ public class PlayerController : Transformable {
         }
     }
 
+    void ImpulsorBool()
+    {
+        calledImpuslorBool = false;
+        canJumpOnImpulsor = true;
+    }
     //Método que comprueba los inputs y actua en consecuencia
     void CheckInputs() {
+        bool someRayCastChecks = false;
+
+ 
+            RaycastHit2D hit2D = Physics2D.Raycast(rb.position - new Vector2(0f, 0.5f), Vector2.down, 0.1f, groundMask);
+            RaycastHit2D hit2DLeft = Physics2D.Raycast(rb.position - new Vector2(0f, 0.5f) + new Vector2(-distanciaBordeSprite, 0), Vector2.down, 0.1f, groundMask);
+            RaycastHit2D hit2DRight = Physics2D.Raycast(rb.position - new Vector2(0f, 0.5f) + new Vector2(distanciaBordeSprite, 0), Vector2.down, 0.1f, groundMask);
+
+            if (hit2D || hit2DLeft || hit2DRight)
+            {
+                someRayCastChecks = true;
+            }
+            if (!calledImpuslorBool)
+            {
+                Invoke("ImpulsorBool", 0.4f);
+                calledImpuslorBool = true;
+            }
+            
+
         //BARRA ESPACIADORA = SALTO
         if (Input.GetKeyDown(KeyCode.Space) && grounded&&!crawling||Input.GetKeyDown(KeyCode.Space) && sliding) {
+            Jump();
+        }else if (onImpulsor&&someRayCastChecks&&Input.GetKeyDown(KeyCode.Space))
+        {
+            if (!calledImpuslorBool)
+            {
+                Invoke("ImpulsorBool", 0.2f);
+                calledImpuslorBool = true;
+            }
+            canJumpOnImpulsor = false;
+            Debug.Log("JUMP");
             Jump();
         }
         //Comportamiento de dawn

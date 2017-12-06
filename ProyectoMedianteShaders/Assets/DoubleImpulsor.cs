@@ -8,10 +8,7 @@ public class DoubleImpulsor : DoubleObject
     Rigidbody2D rb;
     public LayerMask groundMask;
     float distanciaBordeSprite;
-    public List<GameObject> inTriggerZoneObjects;
-    bool changed;
-    bool rising = true;
-    public float localGravityScale = -0.4f;
+
     void Start()
     {
         InitTransformable();
@@ -79,7 +76,7 @@ public class DoubleImpulsor : DoubleObject
 
     public override void Change()
     {
-        changed = true;
+        GetComponentInChildren<ImpulsingAir>().changed = true;
         //El objeto que modifica a ambos haciendo de controlador es el que pertenece a Dawn
         if (worldAssignation == world.DAWN)
         {
@@ -111,87 +108,13 @@ public class DoubleImpulsor : DoubleObject
 
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (worldAssignation == world.DAWN)
-        {
-            if (collision.gameObject.GetComponent<Rigidbody2D>() != null)
-            {
-                if (!inTriggerZoneObjects.Contains(collision.gameObject))
-                {
-                    inTriggerZoneObjects.Add(collision.gameObject);
-                }
-            }
-        }
-    }
-
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        if (worldAssignation == world.DAWN)
-        {
-            if (collision.gameObject.GetComponent<Rigidbody2D>() != null)
-            {
-                if (!inTriggerZoneObjects.Contains(collision.gameObject))
-                {
-                    inTriggerZoneObjects.Add(collision.gameObject);
-                }
-            }
-        }
-    }
-
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (worldAssignation == world.DAWN)
-        {
-            if (collision.gameObject.GetComponent<Rigidbody2D>() != null)
-            {
-                if (inTriggerZoneObjects.Contains(collision.gameObject))
-                {
-                    collision.gameObject.GetComponent<Rigidbody2D>().gravityScale = 1;
-                    inTriggerZoneObjects.Remove(collision.gameObject);
-                }
-            }
-        }
-    }
-
-
     // Update is called once per frame
     void Update()
     {
 
-        if (rising)
-        {
-            localGravityScale -= 0.3f * Time.deltaTime;
-            if (localGravityScale < -0.5f)
-            {
-                rising = false;
-            }
-        }
-        else
-        {
-            localGravityScale += 0.3f * Time.deltaTime;
-            if (localGravityScale > 0.5f) ;
-            {
-                rising = true;
-            }
-        }
-
         AddToGameLogicList();
         BrotherBehavior();
-        if (changed)
-        {
-            foreach (GameObject g in inTriggerZoneObjects)
-            {
-                g.GetComponent<Rigidbody2D>().gravityScale = 1;
-            }
-            inTriggerZoneObjects.Clear();
-            changed = false;
-        }
-
-        foreach (GameObject g in inTriggerZoneObjects){
-            g.GetComponent<Rigidbody2D>().gravityScale = localGravityScale;
-        }
+       
 
     }
 }

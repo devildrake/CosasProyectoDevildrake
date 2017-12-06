@@ -42,7 +42,7 @@ public class GameLogic : MonoBehaviour
     void Awake()
     {
 
-        worldOffset = 15;
+        worldOffset = 300;
 
         //Check if instance already exists
         if (instance == null)

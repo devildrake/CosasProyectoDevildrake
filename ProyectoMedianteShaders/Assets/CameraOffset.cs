@@ -12,8 +12,8 @@ public class CameraOffset : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        positionWithOffset = DawnCamera.transform.position;
-        positionWithOffset.y -= GameLogic.instance.worldOffset;
-        transform.position = positionWithOffset;
+        positionWithOffset = transform.position;
+        positionWithOffset.y += GameLogic.instance.worldOffset;
+        DawnCamera.transform.position = positionWithOffset;
 	}
 }
