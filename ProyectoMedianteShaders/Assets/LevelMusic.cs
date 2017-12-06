@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LevelMusic : Transformable {
+public class LevelMusic : DoubleObject {
     AudioSource musicPlayer;
     AudioClip music;
     public int level;

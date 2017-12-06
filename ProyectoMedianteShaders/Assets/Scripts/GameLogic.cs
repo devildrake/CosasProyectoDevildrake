@@ -150,7 +150,8 @@ public class GameLogic : MonoBehaviour
                         }
                         gameObject.GetComponent<AudioSource>().Play();
                         foreach (GameObject g in transformableObjects) {
-                            g.GetComponent<Transformable>().Change();
+                            g.GetComponent<DoubleObject>().Change();
+                            //Debug.Log(g);
                         }
                     }
 

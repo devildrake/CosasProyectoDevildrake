@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : Transformable {
+public class PlayerController : DoubleObject {
 
     AudioClip jumpClip;
     AudioClip smashClip;
@@ -118,8 +118,6 @@ public class PlayerController : Transformable {
 
     }
     void Update() {
-
-
 
         //Add del transformable
         AddToGameLogicList();

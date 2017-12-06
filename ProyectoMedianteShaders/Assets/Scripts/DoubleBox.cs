@@ -87,7 +87,7 @@ public class DoubleBox : DoubleObject {
             }
 
             dawn = !dawn;
-            brotherObject.GetComponent<Transformable>().dawn = !brotherObject.GetComponent<Transformable>().dawn;
+            brotherObject.GetComponent<DoubleObject>().dawn = !brotherObject.GetComponent<DoubleObject>().dawn;
         }
 
     }
