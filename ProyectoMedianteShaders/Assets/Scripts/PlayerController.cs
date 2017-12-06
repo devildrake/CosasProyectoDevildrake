@@ -97,6 +97,7 @@ public class PlayerController : DoubleObject {
         facingRight = true;
         groundMask = LayerMask.GetMask("Ground");
         slideMask = LayerMask.GetMask("Slide");
+        offset = GameLogic.instance.worldOffset;
 
         rb = GetComponent<Rigidbody2D>();
         slowedInTheAir = false;
@@ -110,6 +111,12 @@ public class PlayerController : DoubleObject {
         added = false;
         dawn = false;
         LoadResources();
+        if (worldAssignation == world.DAWN)
+            GetComponent<SpriteRenderer>().sprite = imagenDawn;
+
+        else
+            GetComponent<SpriteRenderer>().sprite = imagenDusk;
+
         originalPos = transform.position;
         deflectArea.SetActive(false);
         timeToDrag = 0.8f;
@@ -128,12 +135,15 @@ public class PlayerController : DoubleObject {
 
         //Comportamiento sin pausar
         if (!GameLogic.instance.isPaused) {
-            CheckGrounded();
-            CheckObjectsInFront();
-            Move();
-            CheckInputs();
-            Smashing();
-
+            if ((worldAssignation == world.DAWN && dawn) ||(worldAssignation == world.DUSK&&!dawn)) {
+                CheckGrounded();
+                CheckObjectsInFront();
+                Move();
+                CheckInputs();
+                Smashing();
+                
+            }
+            BrotherBehavior();
         }
 
 
@@ -159,14 +169,43 @@ public class PlayerController : DoubleObject {
         canDash = a;
     }
 
+    protected override void BrotherBehavior()
+    {
+        Vector3 positionWithOffset;
+        if (GetComponent<Rigidbody2D>().bodyType == RigidbodyType2D.Kinematic)
+        {
+            positionWithOffset = brotherObject.transform.position;
+
+            if (worldAssignation == world.DAWN)
+                positionWithOffset.y += offset;
+            else
+            {
+                positionWithOffset.y -= offset;
+            }
+
+            transform.position = positionWithOffset;
+            transform.rotation = brotherObject.transform.rotation;
+
+        }
+
+    }
+
     //Método que cambia hacia donde mira el personaje, se le llama al cambiar el Input.GetAxis Horizontal de 1 a -1 o alreves
     void Flip() {
+        Debug.Log("Flip");
         if (!grabbing) {
             Vector3 theScale = transform.localScale;
             theScale.x *= -1;
             transform.localScale = theScale;
             facingRight = !facingRight;
+
+            if (brotherObject.GetComponent<PlayerController>().facingRight != facingRight)
+            {
+                brotherObject.GetComponent<PlayerController>().Flip();
+                brotherObject.GetComponent<PlayerController>().prevHorizontalMov = prevHorizontalMov;
+            }
         }
+
     }
 
     //Funcion que hace al personaje moverse hacia los lados a partir del input de las flechas, en caso de estar en el aire se mantiene siempre y cuando se cambie la dirección horizontal en el aire se reduce a la mitad la velocidad
@@ -581,28 +620,51 @@ public class PlayerController : DoubleObject {
 
     //Método de cambio, varia con respecto a los demás ya que además modifica variables especiales
     public override void Change() {
-        Vector2 newPosition;
+
+        //Vector2 newPosition;
 
         DirectionCircle.SetOnce(false);
+
+
+        //Si antes del cambio estaba en dusk, pasara a hacerse dynamic y al otro kinematic, además de darle su velocidad 
+
+
         if (dawn) {
-            GetComponent<SpriteRenderer>().sprite = imagenDusk;
+            //GetComponent<SpriteRenderer>().sprite = imagenDusk;
             dawn = false;
             GameLogic.instance.SetTimeScaleLocal(1.0f);
 
-            newPosition = transform.position;
-            newPosition.y -= GameLogic.instance.worldOffset;
-            transform.position = newPosition;
+            //newPosition = transform.position;
+            //newPosition.y -= GameLogic.instance.worldOffset;
+            //transform.position = newPosition;
             crawling = false;
 
             //activar el shader
+            if (worldAssignation == world.DAWN){
+                dominantVelocity = GetComponent<Rigidbody2D>().velocity;
+                brotherObject.GetComponent<DoubleObject>().dominantVelocity = GetComponent<Rigidbody2D>().velocity;
+                brotherObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
+                GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
+                OnlyFreezeRotation();
+                brotherObject.GetComponent<Rigidbody2D>().velocity = dominantVelocity;
+                GetComponent<Rigidbody2D>().velocity = new Vector2(0.0f, 0.0f);
+            }
             maskObjectScript.change = false;
         }
         else {
-            GetComponent<SpriteRenderer>().sprite = imagenDawn;
+            //GetComponent<SpriteRenderer>().sprite = imagenDawn;
             dawn = true;
-            newPosition = transform.position;
-            newPosition.y += GameLogic.instance.worldOffset;
-            transform.position = newPosition;
+            //newPosition = transform.position;
+            //newPosition.y += GameLogic.instance.worldOffset;
+            //transform.position = newPosition;
+            if (worldAssignation == world.DAWN){
+                dominantVelocity = brotherObject.GetComponent<Rigidbody2D>().velocity;
+                brotherObject.GetComponent<DoubleObject>().dominantVelocity = brotherObject.GetComponent<Rigidbody2D>().velocity;
+                GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
+                brotherObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
+                brotherObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0.0f, 0.0f);
+                GetComponent<Rigidbody2D>().velocity = dominantVelocity;
+            }
 
             //activar el shader
             maskObjectScript.change = true;

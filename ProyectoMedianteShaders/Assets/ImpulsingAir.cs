@@ -15,6 +15,12 @@ void Start () {
 
 }
 
+    public void RestartWind()
+    {
+        windSpeed = 0;
+        rising = true;
+    }
+
     // Update is called once per frame
     void Update() {
         if (active) {

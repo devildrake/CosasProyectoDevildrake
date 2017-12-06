@@ -76,6 +76,8 @@ public class DoubleImpulsor : DoubleObject
 
     public override void Change()
     {
+        GetComponentInChildren<ImpulsingAir>().RestartWind();
+
         GetComponentInChildren<ImpulsingAir>().changed = true;
         //El objeto que modifica a ambos haciendo de controlador es el que pertenece a Dawn
         if (worldAssignation == world.DAWN)

@@ -145,7 +145,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4059283590121386, guid: 877c887b73610ce41b41b22d7c134c7f, type: 2}
       propertyPath: m_RootOrder
-      value: 24
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 1059032109401816, guid: 877c887b73610ce41b41b22d7c134c7f, type: 2}
       propertyPath: m_Name
@@ -162,6 +162,11 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 877c887b73610ce41b41b22d7c134c7f, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &74851294 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1513007127109442, guid: 0737c82e1acb50948af50e8a505c1f11,
+    type: 2}
+  m_PrefabInternal: {fileID: 671397337}
 --- !u!1 &93362030
 GameObject:
   m_ObjectHideFlags: 0
@@ -216,9 +221,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f2cbd93065f3cf4dbc2b8958729cc1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dawn: 0
-  imagenDusk: {fileID: 0}
-  imagenDawn: {fileID: 0}
   worldAssignation: 1
   brotherObject: {fileID: 1111642487}
   dominantVelocity: {x: 0, y: 0}
@@ -226,6 +228,9 @@ MonoBehaviour:
   interactuableBySmash: 0
   isPunchable: 0
   isMovable: 0
+  dawn: 0
+  imagenDusk: {fileID: 0}
+  imagenDawn: {fileID: 0}
 --- !u!212 &93362034
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -309,9 +314,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f2cbd93065f3cf4dbc2b8958729cc1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dawn: 0
-  imagenDusk: {fileID: 0}
-  imagenDawn: {fileID: 0}
   worldAssignation: 0
   brotherObject: {fileID: 577912224}
   dominantVelocity: {x: 0, y: 0}
@@ -319,6 +321,9 @@ MonoBehaviour:
   interactuableBySmash: 0
   isPunchable: 0
   isMovable: 0
+  dawn: 0
+  imagenDusk: {fileID: 0}
+  imagenDawn: {fileID: 0}
 --- !u!61 &95253090
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -396,7 +401,7 @@ Transform:
   m_LocalScale: {x: 0.35, y: 0.11, z: 0.35}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 16
+  m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &105512806
 GameObject:
@@ -441,7 +446,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inTriggerZoneObjects: []
   changed: 0
-  localGravityScale: -0.4
+  windSpeed: -0.4
 --- !u!61 &105512809
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -583,9 +588,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f2cbd93065f3cf4dbc2b8958729cc1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dawn: 0
-  imagenDusk: {fileID: 0}
-  imagenDawn: {fileID: 0}
   worldAssignation: 1
   brotherObject: {fileID: 1799512536}
   dominantVelocity: {x: 0, y: 0}
@@ -593,6 +595,9 @@ MonoBehaviour:
   interactuableBySmash: 0
   isPunchable: 0
   isMovable: 0
+  dawn: 0
+  imagenDusk: {fileID: 0}
+  imagenDawn: {fileID: 0}
 --- !u!212 &481857920
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -701,9 +706,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f2cbd93065f3cf4dbc2b8958729cc1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dawn: 0
-  imagenDusk: {fileID: 0}
-  imagenDawn: {fileID: 0}
   worldAssignation: 0
   brotherObject: {fileID: 1659968920}
   dominantVelocity: {x: 0, y: 0}
@@ -711,6 +713,9 @@ MonoBehaviour:
   interactuableBySmash: 0
   isPunchable: 0
   isMovable: 0
+  dawn: 0
+  imagenDusk: {fileID: 0}
+  imagenDawn: {fileID: 0}
 --- !u!212 &496815319
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -842,9 +847,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f2cbd93065f3cf4dbc2b8958729cc1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dawn: 0
-  imagenDusk: {fileID: 0}
-  imagenDawn: {fileID: 0}
   worldAssignation: 1
   brotherObject: {fileID: 95253088}
   dominantVelocity: {x: 0, y: 0}
@@ -852,6 +854,9 @@ MonoBehaviour:
   interactuableBySmash: 0
   isPunchable: 0
   isMovable: 0
+  dawn: 0
+  imagenDusk: {fileID: 0}
+  imagenDawn: {fileID: 0}
 --- !u!61 &577912226
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -929,7 +934,7 @@ Transform:
   m_LocalScale: {x: 0.35, y: 0.11, z: 0.35}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 15
+  m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &607871391
 GameObject:
@@ -978,9 +983,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6408604e733b7546b4ce4d0f3494409, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dawn: 0
-  imagenDusk: {fileID: 0}
-  imagenDawn: {fileID: 0}
   worldAssignation: 0
   brotherObject: {fileID: 1104772578}
   dominantVelocity: {x: 0, y: 0}
@@ -988,6 +990,9 @@ MonoBehaviour:
   interactuableBySmash: 0
   isPunchable: 0
   isMovable: 0
+  dawn: 0
+  imagenDusk: {fileID: 0}
+  imagenDawn: {fileID: 0}
   groundMask:
     serializedVersion: 2
     m_Bits: 0
@@ -1210,6 +1215,23 @@ Prefab:
       propertyPath: maskObjectScript
       value: 
       objectReference: {fileID: 512344347}
+    - target: {fileID: 114257080370958620, guid: 0737c82e1acb50948af50e8a505c1f11,
+        type: 2}
+      propertyPath: brotherObject
+      value: 
+      objectReference: {fileID: 1717847329}
+    - target: {fileID: 114257080370958620, guid: 0737c82e1acb50948af50e8a505c1f11,
+        type: 2}
+      propertyPath: imagenDawn
+      value: 
+      objectReference: {fileID: 21300000, guid: d197577acb4423a46939ec134c5aa2ff,
+        type: 3}
+    - target: {fileID: 114257080370958620, guid: 0737c82e1acb50948af50e8a505c1f11,
+        type: 2}
+      propertyPath: imagenDusk
+      value: 
+      objectReference: {fileID: 21300000, guid: 56d34cd31f9899541bec469041dc2754,
+        type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0737c82e1acb50948af50e8a505c1f11, type: 2}
   m_IsPrefabParent: 0
@@ -1318,7 +1340,7 @@ Transform:
   m_LocalScale: {x: 6.8991466, y: 6.899152, z: 6.899152}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 18
+  m_RootOrder: 19
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &722611802
 Prefab:
@@ -1357,7 +1379,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4700942690822996, guid: 4ab5d108f96c5524f91183766bd33791, type: 2}
       propertyPath: m_RootOrder
-      value: 20
+      value: 21
       objectReference: {fileID: 0}
     - target: {fileID: 1584012307717428, guid: 4ab5d108f96c5524f91183766bd33791, type: 2}
       propertyPath: m_IsActive
@@ -1403,10 +1425,97 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4523204543809892, guid: e3971e8303ae7524199ddf25f6c76bbb, type: 2}
       propertyPath: m_RootOrder
-      value: 17
+      value: 18
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e3971e8303ae7524199ddf25f6c76bbb, type: 2}
+  m_IsPrefabParent: 0
+--- !u!1001 &1083654153
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4337932639320352, guid: 0737c82e1acb50948af50e8a505c1f11, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -1.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 4337932639320352, guid: 0737c82e1acb50948af50e8a505c1f11, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 4.84
+      objectReference: {fileID: 0}
+    - target: {fileID: 4337932639320352, guid: 0737c82e1acb50948af50e8a505c1f11, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4337932639320352, guid: 0737c82e1acb50948af50e8a505c1f11, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4337932639320352, guid: 0737c82e1acb50948af50e8a505c1f11, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4337932639320352, guid: 0737c82e1acb50948af50e8a505c1f11, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4337932639320352, guid: 0737c82e1acb50948af50e8a505c1f11, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4337932639320352, guid: 0737c82e1acb50948af50e8a505c1f11, type: 2}
+      propertyPath: m_RootOrder
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 114257080370958620, guid: 0737c82e1acb50948af50e8a505c1f11,
+        type: 2}
+      propertyPath: arrow
+      value: 
+      objectReference: {fileID: 1284999821}
+    - target: {fileID: 114257080370958620, guid: 0737c82e1acb50948af50e8a505c1f11,
+        type: 2}
+      propertyPath: maskObjectScript
+      value: 
+      objectReference: {fileID: 512344347}
+    - target: {fileID: 1513007127109442, guid: 0737c82e1acb50948af50e8a505c1f11, type: 2}
+      propertyPath: m_Name
+      value: Personaje (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 114257080370958620, guid: 0737c82e1acb50948af50e8a505c1f11,
+        type: 2}
+      propertyPath: isBreakable
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114257080370958620, guid: 0737c82e1acb50948af50e8a505c1f11,
+        type: 2}
+      propertyPath: worldAssignation
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 50474172198014278, guid: 0737c82e1acb50948af50e8a505c1f11,
+        type: 2}
+      propertyPath: m_BodyType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114257080370958620, guid: 0737c82e1acb50948af50e8a505c1f11,
+        type: 2}
+      propertyPath: brotherObject
+      value: 
+      objectReference: {fileID: 74851294}
+    - target: {fileID: 114257080370958620, guid: 0737c82e1acb50948af50e8a505c1f11,
+        type: 2}
+      propertyPath: imagenDawn
+      value: 
+      objectReference: {fileID: 21300000, guid: d197577acb4423a46939ec134c5aa2ff,
+        type: 3}
+    - target: {fileID: 114257080370958620, guid: 0737c82e1acb50948af50e8a505c1f11,
+        type: 2}
+      propertyPath: imagenDusk
+      value: 
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 0737c82e1acb50948af50e8a505c1f11, type: 2}
   m_IsPrefabParent: 0
 --- !u!1001 &1084990653
 Prefab:
@@ -1445,7 +1554,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4982699244160354, guid: ae35c42971117844681259cb544b8152, type: 2}
       propertyPath: m_RootOrder
-      value: 19
+      value: 20
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ae35c42971117844681259cb544b8152, type: 2}
@@ -1585,9 +1694,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6408604e733b7546b4ce4d0f3494409, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dawn: 0
-  imagenDusk: {fileID: 0}
-  imagenDawn: {fileID: 0}
   worldAssignation: 1
   brotherObject: {fileID: 607871391}
   dominantVelocity: {x: 0, y: 0}
@@ -1595,6 +1701,9 @@ MonoBehaviour:
   interactuableBySmash: 0
   isPunchable: 0
   isMovable: 0
+  dawn: 0
+  imagenDusk: {fileID: 0}
+  imagenDawn: {fileID: 0}
   groundMask:
     serializedVersion: 2
     m_Bits: 0
@@ -1652,9 +1761,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f2cbd93065f3cf4dbc2b8958729cc1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dawn: 0
-  imagenDusk: {fileID: 0}
-  imagenDawn: {fileID: 0}
   worldAssignation: 0
   brotherObject: {fileID: 93362030}
   dominantVelocity: {x: 0, y: 0}
@@ -1662,6 +1768,9 @@ MonoBehaviour:
   interactuableBySmash: 0
   isPunchable: 0
   isMovable: 0
+  dawn: 0
+  imagenDusk: {fileID: 0}
+  imagenDawn: {fileID: 0}
 --- !u!212 &1111642491
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1761,7 +1870,7 @@ Prefab:
     - target: {fileID: 224684319845667556, guid: 7d79cf81cc205c347ad6307b1b23be89,
         type: 2}
       propertyPath: m_RootOrder
-      value: 11
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 224684319845667556, guid: 7d79cf81cc205c347ad6307b1b23be89,
         type: 2}
@@ -1846,7 +1955,7 @@ Transform:
   - {fileID: 607871392}
   - {fileID: 1104772579}
   m_Father: {fileID: 0}
-  m_RootOrder: 23
+  m_RootOrder: 24
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1284598573
 GameObject:
@@ -1916,7 +2025,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inTriggerZoneObjects: []
   changed: 0
-  localGravityScale: -0.4
+  windSpeed: -0.4
 --- !u!1001 &1284999820
 Prefab:
   m_ObjectHideFlags: 0
@@ -2051,7 +2160,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4837736222555752, guid: 9ee6bc64003384e42b9ed33f860f80cb, type: 2}
       propertyPath: m_RootOrder
-      value: 13
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 20577801268566966, guid: 9ee6bc64003384e42b9ed33f860f80cb,
         type: 2}
@@ -2113,7 +2222,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4332567830990336, guid: 8957da61bb4d2c145905117e2ada9328, type: 2}
       propertyPath: m_RootOrder
-      value: 21
+      value: 22
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8957da61bb4d2c145905117e2ada9328, type: 2}
@@ -2186,7 +2295,7 @@ Transform:
   m_LocalScale: {x: 6.0967007, y: 4.6451135, z: 9.290227}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1659968920
 GameObject:
@@ -2217,9 +2326,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f2cbd93065f3cf4dbc2b8958729cc1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dawn: 0
-  imagenDusk: {fileID: 0}
-  imagenDawn: {fileID: 0}
   worldAssignation: 1
   brotherObject: {fileID: 496815315}
   dominantVelocity: {x: 0, y: 0}
@@ -2227,6 +2333,9 @@ MonoBehaviour:
   interactuableBySmash: 0
   isPunchable: 0
   isMovable: 0
+  dawn: 0
+  imagenDusk: {fileID: 0}
+  imagenDawn: {fileID: 0}
 --- !u!61 &1659968923
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2374,8 +2483,13 @@ Transform:
   m_LocalScale: {x: 5, y: 5, z: 5}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 14
+  m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1717847329 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1513007127109442, guid: 0737c82e1acb50948af50e8a505c1f11,
+    type: 2}
+  m_PrefabInternal: {fileID: 1083654153}
 --- !u!1 &1799512536
 GameObject:
   m_ObjectHideFlags: 0
@@ -2430,9 +2544,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f2cbd93065f3cf4dbc2b8958729cc1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dawn: 0
-  imagenDusk: {fileID: 0}
-  imagenDawn: {fileID: 0}
   worldAssignation: 0
   brotherObject: {fileID: 481857916}
   dominantVelocity: {x: 0, y: 0}
@@ -2440,6 +2551,9 @@ MonoBehaviour:
   interactuableBySmash: 0
   isPunchable: 0
   isMovable: 0
+  dawn: 0
+  imagenDusk: {fileID: 0}
+  imagenDawn: {fileID: 0}
 --- !u!212 &1799512540
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2522,6 +2636,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4716fcc27c3eba54cab4560779687047, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  worldAssignation: 0
+  brotherObject: {fileID: 0}
+  dominantVelocity: {x: 0, y: 0}
+  isBreakable: 0
+  interactuableBySmash: 0
+  isPunchable: 0
+  isMovable: 0
   dawn: 0
   imagenDusk: {fileID: 0}
   imagenDawn: {fileID: 0}
@@ -2656,7 +2777,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4059283590121386, guid: 877c887b73610ce41b41b22d7c134c7f, type: 2}
       propertyPath: m_RootOrder
-      value: 22
+      value: 23
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 877c887b73610ce41b41b22d7c134c7f, type: 2}
