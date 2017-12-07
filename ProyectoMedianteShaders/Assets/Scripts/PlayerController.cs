@@ -117,7 +117,7 @@ public class PlayerController : DoubleObject {
         else
             GetComponent<SpriteRenderer>().sprite = imagenDusk;
 
-        originalPos = transform.position;
+        originalPos = GameLogic.instance.spawnPoint;
         deflectArea.SetActive(false);
         timeToDrag = 0.8f;
         timeToRest = 0.2f;
@@ -686,7 +686,8 @@ public class PlayerController : DoubleObject {
         punchClip = Resources.Load<AudioClip>("Sounds/Punch");
     }
     public override void Kill() {
-        transform.position = originalPos;
+        
+        transform.position = GameLogic.instance.spawnPoint;
         if (GetComponent<Rigidbody2D>() != null) {
             GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
         }

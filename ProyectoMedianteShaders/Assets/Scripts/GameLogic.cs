@@ -37,6 +37,8 @@ public class GameLogic : MonoBehaviour
 
     public List<GameObject> transformableObjects;
 
+    public Vector3 spawnPoint;
+
     public float worldOffset;
 
     void Awake()
@@ -93,6 +95,12 @@ public class GameLogic : MonoBehaviour
         isInMainMenu = false;
         currentSceneName = SceneManager.GetActiveScene().name;
         DirectionCircle.SetOnce(true);
+        spawnPoint = GameObject.FindGameObjectWithTag("Player").transform.position;
+    }
+
+    public void SetSpawnPoint(Vector3 a)
+    {
+        spawnPoint = a;
     }
 
     //Método para variar el timeScaleLocal siempre y cuando el juego no este pausado

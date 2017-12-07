@@ -106,6 +106,7 @@ public class DoubleObject : MonoBehaviour {
     public virtual void Change()
     {
         Debug.Log("Change esta vacío");
+        dawn = !dawn;
     }
 
     //Al destruir este objeto se elimina de la lista de transformables
