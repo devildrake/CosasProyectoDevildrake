@@ -16,13 +16,15 @@ public class DoubleBox : DoubleObject {
         offset = GameLogic.instance.worldOffset;
         if (worldAssignation == world.DAWN) {
             GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
-            GetComponent<SpriteRenderer>().sprite = imagenDawn;
+            //GetComponent<SpriteRenderer>().sprite = imagenDawn;
         }
         else {
-            GetComponent<SpriteRenderer>().sprite = imagenDusk;
+            //GetComponent<SpriteRenderer>().sprite = imagenDusk;
 
         }
-
+        float randomVal = Random.Range(1, 4);
+        Debug.Log(randomVal);
+        GetComponentInChildren<MeshRenderer>().gameObject.transform.rotation *= Quaternion.AngleAxis(randomVal * 90,new Vector3(0,0,1));
 
         rb = GetComponent<Rigidbody2D>();
         groundMask = LayerMask.GetMask("Ground");

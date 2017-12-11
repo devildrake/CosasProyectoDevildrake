@@ -1208,8 +1208,8 @@ SkinnedMeshRenderer:
   m_BlendShapeWeights: []
   m_RootBone: {fileID: 0}
   m_AABB:
-    m_Center: {x: -0.41588205, y: 0.089163065, z: 0.3573549}
-    m_Extent: {x: 0.50824875, y: 0.71898943, z: 0.3973795}
+    m_Center: {x: -0.4158821, y: 0.089163065, z: 0.35735503}
+    m_Extent: {x: 0.508249, y: 0.71898955, z: 0.39737973}
   m_DirtyAABB: 0
 --- !u!1001 &978146927
 Prefab:
@@ -1236,7 +1236,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 5e28b6f3f0cbccf44840f72f8b49caa6, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 5e28b6f3f0cbccf44840f72f8b49caa6, type: 3}
       propertyPath: m_LocalRotation.z
@@ -1244,7 +1244,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 5e28b6f3f0cbccf44840f72f8b49caa6, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 5e28b6f3f0cbccf44840f72f8b49caa6, type: 3}
       propertyPath: m_RootOrder
@@ -1261,6 +1261,10 @@ Prefab:
     - target: {fileID: 100006, guid: 5e28b6f3f0cbccf44840f72f8b49caa6, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400002, guid: 5e28b6f3f0cbccf44840f72f8b49caa6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 90
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 2300004, guid: 5e28b6f3f0cbccf44840f72f8b49caa6, type: 3}
