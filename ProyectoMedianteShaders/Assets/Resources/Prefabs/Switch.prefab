@@ -73,7 +73,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1355502920661450}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 48.600002, y: 101.50001, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4915345553589034}
@@ -114,7 +114,7 @@ Rigidbody2D:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1355502920661450}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -134,7 +134,7 @@ Rigidbody2D:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1507482406004456}
-  m_BodyType: 1
+  m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -269,7 +269,8 @@ MonoBehaviour:
   activated: 0
   imagenDusk: {fileID: 0}
   imagenDawn: {fileID: 0}
-  objectsToTrigger: []
+  objectsToTrigger:
+  - {fileID: 0}
 --- !u!114 &114366260734435136
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -292,7 +293,8 @@ MonoBehaviour:
   activated: 0
   imagenDusk: {fileID: 0}
   imagenDawn: {fileID: 0}
-  objectsToTrigger: []
+  objectsToTrigger:
+  - {fileID: 0}
 --- !u!212 &212293787037659250
 SpriteRenderer:
   m_ObjectHideFlags: 1

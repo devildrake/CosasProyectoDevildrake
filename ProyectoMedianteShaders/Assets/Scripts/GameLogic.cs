@@ -22,6 +22,8 @@ public class GameLogic : MonoBehaviour
     [SerializeField]
     private bool isInMainMenu;
 
+    private bool setSpawnPoint;
+
     //Booleano que determina si se ha mirado si se esta en el menu principal o no
     private bool checkMainMenu;
 
@@ -79,6 +81,7 @@ public class GameLogic : MonoBehaviour
     {
         SetWaitAFrame(false);
         SetCheckMainMenu(false);
+        setSpawnPoint = false;
         changeWorldClip = Resources.Load<AudioClip>("Sounds/ChangeWorld");
         gameObject.GetComponent<AudioSource>().clip = changeWorldClip;
     }
@@ -95,7 +98,6 @@ public class GameLogic : MonoBehaviour
         isInMainMenu = false;
         currentSceneName = SceneManager.GetActiveScene().name;
         DirectionCircle.SetOnce(true);
-        spawnPoint = GameObject.FindGameObjectWithTag("Player").transform.position;
     }
 
     public void SetSpawnPoint(Vector3 a)
@@ -133,6 +135,7 @@ public class GameLogic : MonoBehaviour
         if (!waitAFrame){
             SetWaitAFrame(true);
             SetCheckMainMenu(false);
+            setSpawnPoint = false;
         }
 
         //Una vez realizada la espera, sin haber comprobado si se esta en el menu principal
@@ -149,6 +152,11 @@ public class GameLogic : MonoBehaviour
             if (!isInMainMenu) {
                 //Si el juego no esta pausado
                 if (!isPaused) {
+                    if (!setSpawnPoint)
+                    {
+                        spawnPoint = GameObject.FindGameObjectWithTag("Player").transform.position;
+                        setSpawnPoint = true;
+                    }
                     if (Input.GetKeyDown(KeyCode.LeftShift)) {
                         if (gameObject.GetComponent<AudioSource>().pitch == 1.5) {
                             gameObject.GetComponent<AudioSource>().pitch = 0.5f;
@@ -171,6 +179,12 @@ public class GameLogic : MonoBehaviour
                 }
                 //En cualquier caso se comprueba el input
                 CheckPauseInput();
+            }
+            else
+            {
+                Cursor.visible = true;
+                Cursor.lockState = CursorLockMode.None; //Se puede volver a mover el cursor
+
             }
         }
     }
