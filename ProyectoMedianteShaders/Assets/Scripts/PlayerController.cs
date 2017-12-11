@@ -192,7 +192,7 @@ public class PlayerController : DoubleObject {
 
     //Método que cambia hacia donde mira el personaje, se le llama al cambiar el Input.GetAxis Horizontal de 1 a -1 o alreves
     void Flip() {
-        Debug.Log("Flip");
+        //Debug.Log("Flip");
         if (!grabbing) {
             Vector3 theScale = transform.localScale;
             theScale.x *= -1;

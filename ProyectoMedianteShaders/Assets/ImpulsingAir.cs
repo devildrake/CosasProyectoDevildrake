@@ -8,11 +8,11 @@ public class ImpulsingAir : MonoBehaviour{
     public float windSpeed=-0.4f;
     bool rising;
     bool active;
+
 // Use this for initialization
 void Start () {
         if (GetComponentInParent<DoubleObject>().worldAssignation == DoubleObject.world.DAWN)
             active = true;
-
 }
 
     public void RestartWind()
@@ -20,10 +20,13 @@ void Start () {
         windSpeed = 0;
         rising = true;
     }
+      
 
     // Update is called once per frame
     void Update() {
-        if (active) {
+
+        //Debug.Log(GetComponentInParent<DoubleObject>());
+        if (active&& gameObject.GetComponentInParent<DoubleObject>().activated) {
             if (rising){
                 if (windSpeed < -0.4f){
                     Debug.Log("Pasa a restar");

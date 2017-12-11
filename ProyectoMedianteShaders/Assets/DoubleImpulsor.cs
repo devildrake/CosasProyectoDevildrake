@@ -70,7 +70,6 @@ public class DoubleImpulsor : DoubleObject
         else
         {
             imagenDusk = Resources.Load<Sprite>("Presentacion/DuskSprites/DuskBox");
-
         }
     }
 
@@ -110,6 +109,11 @@ public class DoubleImpulsor : DoubleObject
 
     }
 
+    public override void Activate()
+    {
+        base.Activate();
+        Change();
+    }
     // Update is called once per frame
     void Update()
     {

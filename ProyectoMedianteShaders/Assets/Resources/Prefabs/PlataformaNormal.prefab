@@ -82,7 +82,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1484038134023052}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 41.751427, y: -243, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4982699244160354}
@@ -95,8 +95,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1651695803839418}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -9.6, y: 28, z: 0}
-  m_LocalScale: {x: 0.35, y: 0.11, z: 0.35}
+  m_LocalPosition: {x: 7.08, y: -0.04, z: 0}
+  m_LocalScale: {x: 0.35, y: 0.11, z: 1}
   m_Children:
   - {fileID: 4258130619725898}
   - {fileID: 4215719672417572}
@@ -164,9 +164,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f2cbd93065f3cf4dbc2b8958729cc1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dawn: 0
-  imagenDusk: {fileID: 0}
-  imagenDawn: {fileID: 0}
   worldAssignation: 0
   brotherObject: {fileID: 1540504991680582}
   dominantVelocity: {x: 0, y: 0}
@@ -174,6 +171,10 @@ MonoBehaviour:
   interactuableBySmash: 0
   isPunchable: 0
   isMovable: 0
+  dawn: 0
+  activated: 0
+  imagenDusk: {fileID: 0}
+  imagenDawn: {fileID: 0}
 --- !u!114 &114951529654544142
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -185,9 +186,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f2cbd93065f3cf4dbc2b8958729cc1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dawn: 0
-  imagenDusk: {fileID: 0}
-  imagenDawn: {fileID: 0}
   worldAssignation: 1
   brotherObject: {fileID: 1484038134023052}
   dominantVelocity: {x: 0, y: 0}
@@ -195,6 +193,10 @@ MonoBehaviour:
   interactuableBySmash: 0
   isPunchable: 0
   isMovable: 0
+  dawn: 0
+  activated: 0
+  imagenDusk: {fileID: 0}
+  imagenDawn: {fileID: 0}
 --- !u!212 &212011123096048782
 SpriteRenderer:
   m_ObjectHideFlags: 1

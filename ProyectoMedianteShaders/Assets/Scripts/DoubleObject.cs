@@ -40,6 +40,8 @@ public class DoubleObject : MonoBehaviour {
     //Booleano para gestionar si se encuentra en dusk o en dawn
     public bool dawn;
 
+    public bool activated;
+
     //Sprites distintos para cada mundo
     public Sprite imagenDusk;
     public Sprite imagenDawn;
@@ -69,6 +71,20 @@ public class DoubleObject : MonoBehaviour {
     protected virtual void OnlyFreezeRotation()
     {
         GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
+    }
+
+    public virtual void Activate()
+    {
+        Debug.Log("ACTIVATING");
+        Debug.Log(gameObject);
+        activated = true;
+        Debug.Log(activated);
+
+    }
+
+    public virtual void DisActivate()
+    {
+        activated = false;
     }
 
     //Método que debe estar en el update de los herederos que comprueba si este objeto ha sido añadido a la lista de objetos transformables
@@ -105,7 +121,7 @@ public class DoubleObject : MonoBehaviour {
     //Si no se implementa en alguna clase heredera se ejecuta el debug
     public virtual void Change()
     {
-        Debug.Log("Change esta vacío");
+        //Debug.Log("Change esta vacío");
         dawn = !dawn;
     }
 

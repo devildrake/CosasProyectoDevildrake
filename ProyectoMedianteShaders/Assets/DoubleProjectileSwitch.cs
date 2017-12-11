@@ -1,15 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
-public class DoubleCheckPoint : DoubleObject
+public class DoubleProjectileSwitch : DoubleObject
 {
-    public bool endLevel;
+    static public int size;
+    public DoubleObject[] objectsToTrigger = new DoubleObject[size];
     // Use this for initialization
     void Start()
     {
         InitTransformable();
+        
         offset = GameLogic.instance.worldOffset;
         GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
 
@@ -17,6 +18,7 @@ public class DoubleCheckPoint : DoubleObject
         {
             GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
         }
+        GetComponent<Rigidbody2D>().gravityScale = 0;
     }
 
     protected override void BrotherBehavior()
@@ -51,24 +53,19 @@ public class DoubleCheckPoint : DoubleObject
 
     public void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Player") {
-            if (!endLevel)
-            {
-                if (worldAssignation == world.DAWN)
-                {
-                    GameLogic.instance.SetSpawnPoint(brotherObject.gameObject.transform.position);
-                }
-                else
-                {
-                    GameLogic.instance.SetSpawnPoint(gameObject.transform.position);
-                }
-            }
-            else { 
-                //CODIGO DE ACABAR NIVEL
-                SceneManager.LoadScene(0);
-            }
+        if (collision.gameObject.tag == "Projectile"&&!activated)
+        {
+            Activate();
+            Debug.Log("ACTIVATESTUFF");
 
+            foreach (DoubleObject g in objectsToTrigger)
+            {
+                Debug.Log("ACTIVATE");
+                g.Activate();
+                brotherObject.GetComponent<DoubleObject>().Activate();
+            }
         }
+
     }
 }
 
