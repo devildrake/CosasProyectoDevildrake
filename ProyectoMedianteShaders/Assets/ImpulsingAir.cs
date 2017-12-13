@@ -4,19 +4,22 @@ using UnityEngine;
 
 public class ImpulsingAir : MonoBehaviour{
     public List<GameObject> inTriggerZoneObjects;
+    public ParticleSystem windParticles;
     public bool changed;
     public float windSpeed=-0.4f;
     bool rising;
     bool active;
 
-// Use this for initialization
-void Start () {
+    // Use this for initialization
+    void Start () {
         if (GetComponentInParent<DoubleObject>().worldAssignation == DoubleObject.world.DAWN)
-            active = true;
-}
+        active = true;
 
-    public void RestartWind()
-    {
+        //el sistema de particulas inicia apagado
+        windParticles.Stop();
+    }
+
+    public void RestartWind(){
         windSpeed = 0;
         rising = true;
     }
@@ -26,7 +29,8 @@ void Start () {
     void Update() {
 
         //Debug.Log(GetComponentInParent<DoubleObject>());
-        if (active&& gameObject.GetComponentInParent<DoubleObject>().activated) {
+        if (active && gameObject.GetComponentInParent<DoubleObject>().activated) {
+            
             if (rising){
                 if (windSpeed < -0.4f){
                     Debug.Log("Pasa a restar");
@@ -48,6 +52,7 @@ void Start () {
 
 
             if (changed){
+                windParticles.Play();
                 if (inTriggerZoneObjects.Count > 0) {
                     foreach (GameObject g in inTriggerZoneObjects){
                         g.GetComponent<Rigidbody2D>().gravityScale = 1;
@@ -71,6 +76,7 @@ void Start () {
                 if(windSpeed>0&&!GameLogic.instance.isPaused)
                 closestItem.GetComponent<Rigidbody2D>().AddForce(Vector2.up * windSpeed * closestItem.GetComponent<Rigidbody2D>().mass, ForceMode2D.Impulse);
 
+                windParticles.trigger.SetCollider(0,closestItem.GetComponent<Rigidbody2D>());
             }
         }
     }
