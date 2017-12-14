@@ -27,6 +27,7 @@ public class PlayerController : DoubleObject {
     float timeToRest;
     float timeToDrag;
     float timeCountToDrag;
+    float maxSpeedY;
 
     bool leftPressed;
     public List<GameObject> NearbyObjects;
@@ -89,6 +90,7 @@ public class PlayerController : DoubleObject {
 
     //Se inicializan las cosas
     void Start() {
+        maxSpeedY = 8;
         originalOffsetCollider = GetComponent<BoxCollider2D>().offset;
         originalSizeCollider = GetComponent<BoxCollider2D>().size;
 
@@ -141,7 +143,7 @@ public class PlayerController : DoubleObject {
                 Move();
                 CheckInputs();
                 Smashing();
-                
+                ClampSpeed();
             }
             BrotherBehavior();
         }
@@ -152,6 +154,13 @@ public class PlayerController : DoubleObject {
         else {
 
 
+        }
+    }
+
+    void ClampSpeed() {
+        //Debug.Log(GetComponent<Rigidbody2D>().velocity.y);
+        if (GetComponent<Rigidbody2D>().velocity.y > maxSpeedY) {
+            GetComponent<Rigidbody2D>().velocity = new Vector2(GetComponent<Rigidbody2D>().velocity.x,maxSpeedY);
         }
     }
 
@@ -584,17 +593,22 @@ public class PlayerController : DoubleObject {
         //BARRA ESPACIADORA = SALTO
         if (Input.GetKeyDown(KeyCode.Space) && grounded&&!crawling||Input.GetKeyDown(KeyCode.Space) && sliding) {
             Jump();
-        }else if (onImpulsor&&someRayCastChecks&&Input.GetKeyDown(KeyCode.Space))
-        {
-            if (!calledImpuslorBool)
-            {
-                Invoke("ImpulsorBool", 0.2f);
-                calledImpuslorBool = true;
-            }
-            canJumpOnImpulsor = false;
-            Debug.Log("JUMP");
-            Jump();
         }
+
+        if (onImpulsor) {
+            //GetComponent<Rigidbody2D>().gravityScale = 0;
+
+            if (someRayCastChecks && Input.GetKeyDown(KeyCode.Space)) {
+                if (!calledImpuslorBool) {
+                    Invoke("ImpulsorBool", 0.2f);
+                    calledImpuslorBool = true;
+                }
+                canJumpOnImpulsor = false;
+                Debug.Log("JUMP");
+                Jump();
+            }
+        }
+
         //Comportamiento de dawn
         if (dawn) {
             DawnBehavior();
