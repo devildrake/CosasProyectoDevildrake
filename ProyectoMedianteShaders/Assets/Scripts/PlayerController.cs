@@ -41,6 +41,7 @@ public class PlayerController : DoubleObject {
     public bool canJumpOnImpulsor;
     public bool calledImpuslorBool;
     public bool sliding;
+    public DoubleObject interactableObject;
     Vector3 distanceToGrabbedObject;
 
     public float distanciaBordeSprite = 0.745f;
@@ -618,6 +619,14 @@ public class PlayerController : DoubleObject {
         else {
             DuskBehavior();
         }
+
+        if (interactableObject != null) {
+            if (Input.GetKeyDown(KeyCode.E)) {
+                interactableObject.Interact();
+            }
+        }
+
+
     }
 
     public void Punch(Vector2 direction, float MAX_FORCE) {
@@ -635,6 +644,7 @@ public class PlayerController : DoubleObject {
     //Método de cambio, varia con respecto a los demás ya que además modifica variables especiales
     public override void Change() {
 
+        interactableObject = null;
         //Vector2 newPosition;
 
         DirectionCircle.SetOnce(false);

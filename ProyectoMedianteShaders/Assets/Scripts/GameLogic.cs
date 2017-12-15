@@ -154,7 +154,13 @@ public class GameLogic : MonoBehaviour
                 if (!isPaused) {
                     if (!setSpawnPoint)
                     {
-                        spawnPoint = GameObject.FindGameObjectWithTag("Player").transform.position;
+                        GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
+                        if (playerObject.GetComponent<PlayerController>().worldAssignation == DoubleObject.world.DUSK) {
+                            spawnPoint = playerObject.transform.position;
+                        } else {
+                            spawnPoint = playerObject.transform.position-new Vector3(0,worldOffset);
+
+                        }
                         setSpawnPoint = true;
                     }
                     if (Input.GetKeyDown(KeyCode.LeftShift)) {

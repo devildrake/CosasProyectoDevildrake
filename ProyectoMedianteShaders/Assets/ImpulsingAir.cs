@@ -78,8 +78,9 @@ public class ImpulsingAir : MonoBehaviour{
 
                 windParticles.trigger.SetCollider(0,closestItem.GetComponent<Rigidbody2D>());
             }
-            windParticles.startSpeed = (windSpeed-(-0.4f)) * (1000-250) / (0.4f - -0.4f) + 250;
-            windParticles.maxParticles = (int)((windSpeed - (-0.4f)) * (1000 - 250) / (0.4f - -0.4f) + 250);
+            //windParticles.startSpeed = (windSpeed-(-0.4f)) * (1000-250) / (0.4f - -0.4f) + 250;
+            //windParticles.maxParticles = (int)((windSpeed - (-0.4f)) * (1000 - 0) / (0.4f - -0.4f) + 0);
+            //windParticles.startLifetime = (int)((windSpeed - (0.4f)) * (0.33f - 0.33f) / (-0.4f - 0.4f) + 0.33f);
         }
     }
 

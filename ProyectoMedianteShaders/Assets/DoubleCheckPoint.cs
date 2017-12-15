@@ -49,26 +49,37 @@ public class DoubleCheckPoint : DoubleObject
         BrotherBehavior();
     }
 
+    public override void Interact() {
+        if (!endLevel) {
+            if (worldAssignation == world.DAWN) {
+                GameLogic.instance.SetSpawnPoint(brotherObject.gameObject.transform.position);
+            } else {
+                GameLogic.instance.SetSpawnPoint(gameObject.transform.position);
+            }
+        } else {
+            //CODIGO DE ACABAR NIVEL
+            SceneManager.LoadScene(0);
+        }
+    }
+
     public void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Player") {
-            if (!endLevel)
-            {
-                if (worldAssignation == world.DAWN)
-                {
-                    GameLogic.instance.SetSpawnPoint(brotherObject.gameObject.transform.position);
-                }
-                else
-                {
-                    GameLogic.instance.SetSpawnPoint(gameObject.transform.position);
-                }
-            }
-            else { 
-                //CODIGO DE ACABAR NIVEL
-                SceneManager.LoadScene(0);
-            }
-
+            collision.gameObject.GetComponent<PlayerController>().interactableObject = gameObject.GetComponent<DoubleObject>();
         }
     }
+
+    public void OnTriggerStay2D(Collider2D collision) {
+        if (collision.gameObject.tag == "Player") {
+            collision.gameObject.GetComponent<PlayerController>().interactableObject = gameObject.GetComponent<DoubleObject>();
+        }
+    }
+
+    public void OnTriggerExit2D(Collider2D collision) {
+        if (collision.gameObject.tag == "Player") {
+            collision.gameObject.GetComponent<PlayerController>().interactableObject = null;
+        }
+    }
+
 }
 

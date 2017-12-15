@@ -68,6 +68,10 @@ public class DoubleObject : MonoBehaviour {
         originalPos = transform.position;
     }
 
+    public virtual void Interact() {
+        Debug.Log("Interact");
+    }
+
     protected virtual void OnlyFreezeRotation()
     {
         GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
