@@ -7,6 +7,8 @@ public class DoubleCheckPoint : DoubleObject
 {
     public bool endLevel;
     public GameObject interactionSprite;
+    public AudioClip interactSound;
+    private ParticleSystem particulasInteraccion;
     // Use this for initialization
     void Start()
     {
@@ -63,6 +65,12 @@ public class DoubleCheckPoint : DoubleObject
             //CODIGO DE ACABAR NIVEL
             SceneManager.LoadScene(0);
         }
+        if (GetComponent<AudioSource>() != null) {
+            GetComponent<AudioSource>().clip = interactSound;
+            GetComponent<AudioSource>().Play();
+        } else {
+            Debug.Log("No Audio Source");
+        }
     }
 
     public void OnTriggerEnter2D(Collider2D collision)
@@ -88,9 +96,12 @@ public class DoubleCheckPoint : DoubleObject
             collision.gameObject.GetComponent<PlayerController>().interactableObject = null;
             if (interactionSprite != null)
                 interactionSprite.SetActive(false);
-
         }
     }
 
+    protected override void LoadResources() {
+        interactSound = Resources.Load<AudioClip>("Sounds/Interact");
+        Debug.Log(interactSound);
+    }
 }
 
