@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class DoubleCheckPoint : DoubleObject
 {
     public bool endLevel;
+    public GameObject interactionSprite;
     // Use this for initialization
     void Start()
     {
@@ -17,6 +18,8 @@ public class DoubleCheckPoint : DoubleObject
         {
             GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
         }
+        if (interactionSprite != null)
+            interactionSprite.SetActive(false);
     }
 
     protected override void BrotherBehavior()
@@ -66,18 +69,26 @@ public class DoubleCheckPoint : DoubleObject
     {
         if (collision.gameObject.tag == "Player") {
             collision.gameObject.GetComponent<PlayerController>().interactableObject = gameObject.GetComponent<DoubleObject>();
+            if(interactionSprite!=null)
+            interactionSprite.SetActive(true);
         }
     }
 
     public void OnTriggerStay2D(Collider2D collision) {
         if (collision.gameObject.tag == "Player") {
             collision.gameObject.GetComponent<PlayerController>().interactableObject = gameObject.GetComponent<DoubleObject>();
+            if (interactionSprite != null)
+                interactionSprite.SetActive(true);
+
         }
     }
 
     public void OnTriggerExit2D(Collider2D collision) {
         if (collision.gameObject.tag == "Player") {
             collision.gameObject.GetComponent<PlayerController>().interactableObject = null;
+            if (interactionSprite != null)
+                interactionSprite.SetActive(false);
+
         }
     }
 
