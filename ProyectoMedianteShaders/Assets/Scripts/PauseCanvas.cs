@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PauseCanvas : MonoBehaviour {
 
@@ -10,8 +11,12 @@ public class PauseCanvas : MonoBehaviour {
     //Referencia al gameObject que pone un tono gris a la escena
     public GameObject gris;
 
+    public GameObject blackForFade;
 	// Use this for initialization
 	void Start () {
+        //blackForFade.SetActive(false);
+        blackForFade.GetComponent<Image>().color = new Color(blackForFade.GetComponent<Image>().color.r, blackForFade.GetComponent<Image>().color.g, blackForFade.GetComponent<Image>().color.b, 0);
+        GameLogic.instance.pauseCanvas = this;
 	}
 
     /*

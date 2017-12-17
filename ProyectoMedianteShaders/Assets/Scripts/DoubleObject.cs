@@ -18,32 +18,47 @@ public class DoubleObject : MonoBehaviour {
     public enum world {DUSK,DAWN};
 
     //Asignación del enum para diferenciar los dos mundos de una forma visual
+    [Tooltip("A que mundo pertenece este objeto")]
     public world worldAssignation;
 
     //Objeto hermano
+    [Tooltip("El otro objeto dentro de este prefab")]
     public GameObject brotherObject;
 
     //Offset, debe ser asignado a GameLogic.instance.worldOffset
     protected float offset;
 
     //Velocidad dominante, solo la utilizan los objetos que deben enviarse de forma amorosa la velocidad
+    [Tooltip("Velocidad domintante en caso de que este objeto o su hermano este en movimiento")]
     public Vector2 dominantVelocity;
 
+    [Tooltip("Si este objeto se puede romper con Smash")]
     public bool isBreakable;
+
+    [Tooltip("Si este objeto se puede activar con Smash")]
     public bool interactuableBySmash;
+
+    [Tooltip("Si este objeto se puede mover de un puñetazo (En este momento)")]
     public bool isPunchable;
+
+    [Tooltip("Si este objeto es movible (En general)")]
     public bool isMovable;
 
     //booleano para gestionar si el objeto ha sido añadido a la lista de transformables
     protected bool added;
 
     //Booleano para gestionar si se encuentra en dusk o en dawn
+    [Tooltip("En que mundo cree este objeto que esta")]
     public bool dawn;
 
+    [Tooltip("Si este objeto ha sido activado")]
     public bool activated;
 
     //Sprites distintos para cada mundo
+
+    [Tooltip("Sprite en mundo dusk")]
     public Sprite imagenDusk;
+    [Tooltip("Sprite en mundo dawn")]
     public Sprite imagenDawn;
 
     protected Vector2 originalPos;

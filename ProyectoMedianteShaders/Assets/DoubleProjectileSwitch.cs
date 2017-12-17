@@ -4,7 +4,12 @@ using UnityEngine;
 
 public class DoubleProjectileSwitch : DoubleObject
 {
+    //Tamaño del array de objetos 
+
+    [Tooltip("Aumentar esta variable permite activar más objetos")]
     static public int size;
+
+    [Tooltip("Hay que aumentar size para poder añadir nuevos objetos")]
     public DoubleObject[] objectsToTrigger = new DoubleObject[size];
     // Use this for initialization
     void Start()
@@ -51,6 +56,8 @@ public class DoubleProjectileSwitch : DoubleObject
         BrotherBehavior();
     }
 
+    //Se comprueba si el objeto que ha entrado en la zona de trigger es un proyectil y en caso afirmativo se activan con el método Activate todos los objetos
+    //Que se encuentran en objectsToTrigger
     public void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Projectile"&&!activated)

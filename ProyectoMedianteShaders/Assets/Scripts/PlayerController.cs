@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerController : DoubleObject {
 
+    //Clips de audio diferentes
     AudioClip jumpClip;
     AudioClip smashClip;
     AudioClip dashClip;
@@ -15,10 +16,14 @@ public class PlayerController : DoubleObject {
     AudioClip dieClip;
     AudioClip punchClip;
 
+
     public Vector2 originalSizeCollider;
     public Vector2 originalOffsetCollider;
 
+    //Lista de objetos en el area de Deflect
     public List<GameObject> objectsInDeflectArea;
+
+    //Referencia al objeto con el area de deflect
     public GameObject deflectArea;
 
     float slowMotionTimeScale;
@@ -158,13 +163,14 @@ public class PlayerController : DoubleObject {
         }
     }
 
+    //Clampeo de la velocidad del personaje
     void ClampSpeed() {
-        //Debug.Log(GetComponent<Rigidbody2D>().velocity.y);
         if (GetComponent<Rigidbody2D>().velocity.y > maxSpeedY) {
             GetComponent<Rigidbody2D>().velocity = new Vector2(GetComponent<Rigidbody2D>().velocity.x,maxSpeedY);
         }
     }
 
+    //Método que comprueba si el personaje está cargando contra el suelo, en caso afirmativo, hace el Smash
     void Smashing() {
         if (smashing) {
             if (grounded) {
@@ -179,6 +185,7 @@ public class PlayerController : DoubleObject {
         canDash = a;
     }
 
+    //Método virtual que modifica la posicio del objeto dominado con la del dominante
     protected override void BrotherBehavior()
     {
         Vector3 positionWithOffset;
@@ -202,7 +209,6 @@ public class PlayerController : DoubleObject {
 
     //Método que cambia hacia donde mira el personaje, se le llama al cambiar el Input.GetAxis Horizontal de 1 a -1 o alreves
     void Flip() {
-        //Debug.Log("Flip");
         if (!grabbing) {
             Vector3 theScale = transform.localScale;
             theScale.x *= -1;
@@ -315,6 +321,7 @@ public class PlayerController : DoubleObject {
         }
     }
 
+    //Método que comprueba si hay algun objeto en la dirección en la que mira el personaje
     void CheckObjectsInFront() {
         bool temp = false;
         NearbyObjects.Clear();
@@ -403,6 +410,7 @@ public class PlayerController : DoubleObject {
             sliding = false;
         }
     }
+
 
     void DawnBehavior() {
         if (canDash)
@@ -543,6 +551,7 @@ public class PlayerController : DoubleObject {
 
     }
 
+    //Método que pone smashing en true modificando la velocidad del personaje para que solo vaya hacia abajo
     void Smash() {
         if (!smashing) {
             rb.AddForce(new Vector2(-rb.velocity.x,0),ForceMode2D.Impulse);
@@ -556,6 +565,7 @@ public class PlayerController : DoubleObject {
         }
     }
 
+    //Método que comprueba que objeto hay debajo y si es rompible y en caso afirmativo llama a GetBroken
     void DoSmash() {
         RaycastHit2D hit2D = Physics2D.Raycast(rb.position - new Vector2(0f, 0.5f), Vector2.down, 0.2f, groundMask);
         if (hit2D) {
@@ -566,11 +576,13 @@ public class PlayerController : DoubleObject {
         }
     }
 
+    //Método intermediario para ciertos eventos temporales
     void ImpulsorBool()
     {
         calledImpuslorBool = false;
         canJumpOnImpulsor = true;
     }
+
     //Método que comprueba los inputs y actua en consecuencia
     void CheckInputs() {
         bool someRayCastChecks = false;
@@ -629,6 +641,7 @@ public class PlayerController : DoubleObject {
 
     }
 
+    //Método que comprueba si el objeto delante es posible de mover con un puñetazo y lo hace en consecuencia
     public void Punch(Vector2 direction, float MAX_FORCE) {
         foreach (GameObject g in NearbyObjects) {
             if (g.GetComponent<DoubleObject>().isPunchable) {
@@ -695,6 +708,7 @@ public class PlayerController : DoubleObject {
         }
     }
 
+    //Método de carga de recursos (en este caso sprites y sonidos)
     protected override void LoadResources() {
         imagenDawn = Resources.Load<Sprite>("Presentacion/DawnSprites/Dawn");
         imagenDusk = Resources.Load<Sprite>("Presentacion/DuskSprites/Dusk"); ;
@@ -709,6 +723,8 @@ public class PlayerController : DoubleObject {
         dieClip = Resources.Load<AudioClip>("Sounds/Die");
         punchClip = Resources.Load<AudioClip>("Sounds/Punch");
     }
+
+    //Método que reinicia la posición del personaje y aumenta la variable de muertes en GameLogic
     public override void Kill() {
         
         transform.position = GameLogic.instance.spawnPoint;
@@ -717,6 +733,7 @@ public class PlayerController : DoubleObject {
         }
         GetComponent<AudioSource>().clip = dieClip;
         GetComponent<AudioSource>().Play();
+        GameLogic.instance.timesDied++;
     }
 
 }

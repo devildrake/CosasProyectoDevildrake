@@ -6,16 +6,20 @@ using UnityEngine.SceneManagement;
 public class DoubleCheckPoint : DoubleObject
 {
     public bool endLevel;
+    bool interacted;
+    float counterFeedback;
+    float maxTimeFeedback = 5;
     public GameObject interactionSprite;
     public AudioClip interactSound;
-    private ParticleSystem particulasInteraccion;
+    public ParticleSystem particulasInteraccion;
     // Use this for initialization
     void Start()
     {
         InitTransformable();
         offset = GameLogic.instance.worldOffset;
         GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
-
+        if(particulasInteraccion!=null)
+        particulasInteraccion.Stop();
         if (worldAssignation == world.DAWN)
         {
             GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
@@ -48,13 +52,30 @@ public class DoubleCheckPoint : DoubleObject
 
 
     // Update is called once per frame
-    void Update()
-    {
+    void Update() {
         AddToGameLogicList();
         BrotherBehavior();
+        if (interacted) {
+            if (particulasInteraccion != null) {
+
+                if (!particulasInteraccion.isPlaying)
+                    particulasInteraccion.Play();
+
+                counterFeedback += Time.deltaTime;
+                if (counterFeedback > maxTimeFeedback) {
+                    counterFeedback = 0;
+                    interacted = false;
+                    particulasInteraccion.Stop();
+
+                }
+            } else {
+                Debug.Log(gameObject);
+            }
+        }
     }
 
     public override void Interact() {
+        interacted = true;
         if (!endLevel) {
             if (worldAssignation == world.DAWN) {
                 GameLogic.instance.SetSpawnPoint(brotherObject.gameObject.transform.position);
@@ -71,6 +92,8 @@ public class DoubleCheckPoint : DoubleObject
         } else {
             Debug.Log("No Audio Source");
         }
+        
+
     }
 
     public void OnTriggerEnter2D(Collider2D collision)

@@ -8,7 +8,20 @@ using UnityEngine.SceneManagement;
 
 public class GameLogic : MonoBehaviour
 {
-     AudioClip changeWorldClip;
+    //Tiempo que hay que pulsar para reinciar
+    private float maxTimeToReset=3;
+
+    //Tiempo que lleva el jugador pulsando
+    private float timerToReset;
+
+    //Variables de estadísticas 
+    public int timesDied=0;
+    public float timeElapsed=0;
+    public int pickedFragments=0;
+
+    //Clip de cambio de mundo
+    AudioClip changeWorldClip;
+
     //Float privado que se encarga de cambiar timeScale segun combiene cuando el juego no esta pausado
     private float timeScaleLocal = 1;
 
@@ -150,8 +163,22 @@ public class GameLogic : MonoBehaviour
         //Una vez comprobado si estamos o no en el menu principal se pondria el comportamiento deseado
         else{
             if (!isInMainMenu) {
+                if (Input.GetKey(KeyCode.R)) {
+                    timerToReset += Time.deltaTime;
+                } else {
+                    timerToReset = 0;
+                }
+
+                if (timerToReset > maxTimeToReset) {
+                    timerToReset = 0;
+                    Debug.Log("Bruh");
+                    RestartScene();
+                }
+
                 //Si el juego no esta pausado
                 if (!isPaused) {
+                    timeElapsed += Time.deltaTime;
+                    
                     if (!setSpawnPoint)
                     {
                         GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
@@ -163,6 +190,8 @@ public class GameLogic : MonoBehaviour
                         }
                         setSpawnPoint = true;
                     }
+
+                    //CAMBIO DE MUNDO
                     if (Input.GetKeyDown(KeyCode.LeftShift)) {
                         if (gameObject.GetComponent<AudioSource>().pitch == 1.5) {
                             gameObject.GetComponent<AudioSource>().pitch = 0.5f;
@@ -173,7 +202,6 @@ public class GameLogic : MonoBehaviour
                         gameObject.GetComponent<AudioSource>().Play();
                         foreach (GameObject g in transformableObjects) {
                             g.GetComponent<DoubleObject>().Change();
-                            //Debug.Log(g);
                         }
                     }
 
@@ -201,6 +229,7 @@ public class GameLogic : MonoBehaviour
         ResetSceneData();
     }
 
+    //Método para reiniciar la escena
     public void RestartScene() {
         SceneManager.LoadScene(currentSceneName);
         isPaused = false;
@@ -208,7 +237,7 @@ public class GameLogic : MonoBehaviour
     }
 
     //Método que controla cuando se le da al escape para pausar, a su vez activa y desactiva el cursor en función de si 
-    //Se abre el menú in game
+    //Se abre el menú in game y se modificar la variable isPaused
     void CheckPauseInput() {
         if (Input.GetKeyDown(KeyCode.Escape)) {
             if (isPaused) {

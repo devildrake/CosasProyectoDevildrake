@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 //Script para añadir un listener al método GameLogic.LoadMenu() a los botones que pertoque;
 public class AñadirListenerGameLogic : MonoBehaviour {
-
+    [Tooltip("0 -> Menu Principal \n1 -> Reincio nivel")]
     public int index;
     private Button myselfButton;
 
