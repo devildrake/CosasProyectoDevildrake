@@ -94,16 +94,7 @@ public class GameLogic : MonoBehaviour
             transformableObjects.Remove(g.gameObject);
             transformableObjects.Remove(g.brotherObject);
         }
-        if (g.gameObject.tag != "Projectile") {
-            Destroy(g.brotherObject);
-            Destroy(g.gameObject);
-        }
-    } 
-
-    public void SafelyDestroyProjectile(DoubleObject g) {
-        SafelyDestroy(g);
-        Destroy(g.GetComponent<DoubleProjectile>().parent);
-        
+        Destroy(g.transform.parent.gameObject);
     }
 
     void Start()

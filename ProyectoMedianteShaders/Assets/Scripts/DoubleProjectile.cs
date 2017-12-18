@@ -89,7 +89,8 @@ public class DoubleProjectile : DoubleObject {
             collision.gameObject.GetComponent<PlayerController>().Kill();
         }
         if (collision.gameObject != brotherObject) {
-            GameLogic.instance.SafelyDestroyProjectile(this);
+
+            GameLogic.instance.SafelyDestroy(this);
         }
     }
 
