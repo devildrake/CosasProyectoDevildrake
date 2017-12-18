@@ -2,12 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using FragmentDataNamespace;
+
 
 //Clase singleton (solo debe existir uno) referenciable a partir de una instancia estatica a si mismo que gestiona
 //si el jugador se encuentra en el menu principal 
 
 public class GameLogic : MonoBehaviour
 {
+    public List<FragmentData> fragments;
+    private int lastFragmentId = -1;
+
     //Tiempo que hay que pulsar para reinciar
     private float maxTimeToReset=3;
 
@@ -58,6 +63,7 @@ public class GameLogic : MonoBehaviour
 
     void Awake()
     {
+        fragments = new List<FragmentData>();
 
         worldOffset = 300;
 
@@ -79,10 +85,39 @@ public class GameLogic : MonoBehaviour
         //Call the InitGame function to initialize the first level 
     }
 
+
     //Setter de WaitAFrame
     void SetWaitAFrame(bool a)
     {
         waitAFrame = a;
+    }
+
+    public string GetCurrentLevel() {
+        return currentSceneName;
+    }
+
+    public void AddFragmentData(FragmentData a) {
+
+        bool temp = false;
+        foreach(FragmentData saved in fragments) {
+            if(saved.levelName == a.levelName) {
+                a.picked = saved.picked;
+                temp = true;
+            }
+        }
+        if (!temp) {
+            a.picked = false;
+            fragments.Add(a);
+            Debug.Log("Adding a Fragment");
+        }
+
+    }
+
+    public void GrabFragment(FragmentData a) {
+        if (fragments.Contains(a)) {
+            a.picked = true;
+            pickedFragments++;
+        }
     }
 
     //Setter de CheckMainMenu

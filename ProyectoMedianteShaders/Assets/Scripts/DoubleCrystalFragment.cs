@@ -1,26 +1,24 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using FragmentDataNamespace;
+//using System.Collections;
 
-public class DoubleProjectile : DoubleObject {
+public class DoubleCrystalFragment : DoubleObject {
     // Use this for initialization
+    FragmentData data;
     Rigidbody2D rb;
-
     void Start() {
         InitTransformable();
-        isPunchable = true;
+        isPunchable = false;
+        isMovable = false;
         isBreakable = false;
         interactuableBySmash = false;
         offset = GameLogic.instance.worldOffset;
         if (worldAssignation == world.DAWN) {
             GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
-            //GetComponent<SpriteRenderer>().sprite = imagenDawn;
-        } else {
-            //GetComponent<SpriteRenderer>().sprite = imagenDusk;
-
-        }
-
+        } 
         rb = GetComponent<Rigidbody2D>();
+
+        rb.mass = 5000;
     }
 
     protected override void BrotherBehavior() {
@@ -39,10 +37,6 @@ public class DoubleProjectile : DoubleObject {
 
         }
 
-    }
-
-    void BecomePunchable() {
-        isPunchable = true;
     }
 
     protected override void LoadResources() {
@@ -83,12 +77,29 @@ public class DoubleProjectile : DoubleObject {
 
     }
 
-    private void OnCollisionEnter2D(Collision2D collision) {
+    private void OnTriggerEnter2D(Collider2D collision) {
         if (collision.gameObject.tag == "Player") {
-            collision.gameObject.GetComponent<PlayerController>().Kill();
+            GameLogic.instance.GrabFragment(data);
+            GameLogic.instance.SafelyDestroy(this);
         }
-        if (collision.gameObject != brotherObject) {
+    }
 
+    protected override void AddToGameLogicList() {
+        if (!added) {
+            if (GameLogic.instance != null) {
+                added = true;
+                GameLogic.instance.transformableObjects.Add(gameObject);
+                offset = GameLogic.instance.worldOffset;
+                    data = new FragmentData(false,GameLogic.instance.GetCurrentLevel());
+                    GameLogic.instance.AddFragmentData(data);
+                
+            }
+        }
+    }
+
+    void CheckPick() {
+        if (data.picked) {
+            //Debug.Log(this);
             GameLogic.instance.SafelyDestroy(this);
         }
     }
@@ -97,8 +108,8 @@ public class DoubleProjectile : DoubleObject {
     void Update() {
         AddToGameLogicList();
         BrotherBehavior();
-        //if (!isPunchable) {
-        //    Invoke("BecomePunchable", 0.5f);
-        //}
+        if (added) {
+            CheckPick();
+        }
     }
 }
