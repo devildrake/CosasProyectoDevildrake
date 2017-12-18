@@ -72,6 +72,7 @@ public class DoubleProjectileSwitch : DoubleObject{
                     particles.startSpeed += 1;
                     particles.Emit(200);
                     particles.startSpeed -= 1;
+                    objectsToTrigger[listCount].Activate();
                     listCount++;
                 }
             } else {
