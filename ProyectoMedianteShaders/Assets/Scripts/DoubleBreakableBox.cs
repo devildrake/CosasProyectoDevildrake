@@ -92,7 +92,7 @@ public class DoubleBreakableBox : DoubleObject {
     }
 
     public void DestroyCompletely() {
-        Destroy(gameObject);
+        GameLogic.instance.SafelyDestroy(this);
     }
 
     // Update is called once per frame
