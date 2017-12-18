@@ -89,6 +89,22 @@ public class GameLogic : MonoBehaviour
     void SetCheckMainMenu(bool a) {
         checkMainMenu = a;
     }
+    public void SafelyDestroy(DoubleObject g) {
+        if (transformableObjects.Contains(g.gameObject)) {
+            transformableObjects.Remove(g.gameObject);
+            transformableObjects.Remove(g.brotherObject);
+        }
+        if (g.gameObject.tag != "Projectile") {
+            Destroy(g.brotherObject);
+            Destroy(g.gameObject);
+        }
+    } 
+
+    public void SafelyDestroyProjectile(DoubleObject g) {
+        SafelyDestroy(g);
+        Destroy(g.GetComponent<DoubleProjectile>().parent);
+        
+    }
 
     void Start()
     {
