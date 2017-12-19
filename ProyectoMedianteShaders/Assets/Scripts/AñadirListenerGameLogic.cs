@@ -18,6 +18,7 @@ public class AñadirListenerGameLogic : MonoBehaviour {
                 break;
             case 1:
                 myselfButton.onClick.AddListener(() => GameLogic.instance.RestartScene());
+
                 break;
             default:
                 break;

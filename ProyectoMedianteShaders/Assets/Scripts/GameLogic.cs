@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using FragmentDataNamespace;
 
 
@@ -36,6 +37,9 @@ public class GameLogic : MonoBehaviour
     //Booleano que gestionara si el canvas esta activo y por tanto el juego pausado (AUN NO)
     public bool isPaused;
 
+    //Booleano que gestiona si el jugador ha llegado al final del nivel
+    public bool levelFinished; 
+
     //Booleano privado pero visible que gestiona si se esta en el menu principal o no
     [SerializeField]
     private bool isInMainMenu;
@@ -63,6 +67,8 @@ public class GameLogic : MonoBehaviour
 
     void Awake()
     {
+        currentSceneName = SceneManager.GetActiveScene().name;
+
         fragments = new List<FragmentData>();
 
         worldOffset = 300;
@@ -114,11 +120,14 @@ public class GameLogic : MonoBehaviour
     }
 
     public void GrabFragment(FragmentData a) {
-        if (fragments.Contains(a)) {
-            a.picked = true;
-            pickedFragments++;
+        foreach (FragmentData f in fragments) {
+            if (f.levelName == a.levelName) {
+                a.picked=f.picked = true;   
+            }
         }
+            pickedFragments++;
     }
+    
 
     //Setter de CheckMainMenu
     void SetCheckMainMenu(bool a) {
@@ -187,29 +196,30 @@ public class GameLogic : MonoBehaviour
 
 
         //Espera de un frame para comprobar que se ejecuta en el orden deseado
-        if (!waitAFrame){
+        if (!waitAFrame) {
             SetWaitAFrame(true);
             SetCheckMainMenu(false);
             setSpawnPoint = false;
         }
 
         //Una vez realizada la espera, sin haber comprobado si se esta en el menu principal
-        else if(!checkMainMenu){
+        else if (!checkMainMenu) {
             menuScripts = FindObjectOfType<MenuScripts>();
-            if (menuScripts != null){
+            if (menuScripts != null) {
                 isInMainMenu = true;
             }
             SetCheckMainMenu(true);
         }
 
         //Una vez comprobado si estamos o no en el menu principal se pondria el comportamiento deseado
-        else{
+        else {
             if (!isInMainMenu) {
-                if (Input.GetKey(KeyCode.R)) {
-                    timerToReset += Time.deltaTime;
-                } else {
-                    timerToReset = 0;
-                }
+                if (!levelFinished) { 
+                    if (Input.GetKey(KeyCode.R)) {
+                        timerToReset += Time.deltaTime;
+                    } else {
+                        timerToReset = 0;
+                    }
 
                 if (timerToReset > maxTimeToReset) {
                     timerToReset = 0;
@@ -220,14 +230,13 @@ public class GameLogic : MonoBehaviour
                 //Si el juego no esta pausado
                 if (!isPaused) {
                     timeElapsed += Time.deltaTime;
-                    
-                    if (!setSpawnPoint)
-                    {
+
+                    if (!setSpawnPoint) {
                         GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
                         if (playerObject.GetComponent<PlayerController>().worldAssignation == DoubleObject.world.DUSK) {
                             spawnPoint = playerObject.transform.position;
                         } else {
-                            spawnPoint = playerObject.transform.position-new Vector3(0,worldOffset);
+                            spawnPoint = playerObject.transform.position - new Vector3(0, worldOffset);
 
                         }
                         setSpawnPoint = true;
@@ -237,8 +246,7 @@ public class GameLogic : MonoBehaviour
                     if (Input.GetKeyDown(KeyCode.LeftShift)) {
                         if (gameObject.GetComponent<AudioSource>().pitch == 1.5) {
                             gameObject.GetComponent<AudioSource>().pitch = 0.5f;
-                        }
-                        else {
+                        } else {
                             gameObject.GetComponent<AudioSource>().pitch = 1.5f;
                         }
                         gameObject.GetComponent<AudioSource>().Play();
@@ -255,24 +263,27 @@ public class GameLogic : MonoBehaviour
                 }
                 //En cualquier caso se comprueba el input
                 CheckPauseInput();
-            }
-            else
-            {
-                Cursor.visible = true;
-                Cursor.lockState = CursorLockMode.None; //Se puede volver a mover el cursor
+                } else {
 
-            }
+                }
+        }
+             else {
+                    Cursor.visible = true;
+                    Cursor.lockState = CursorLockMode.None; //Se puede volver a mover el cursor
+                }
         }
     }
 
     //Método para cargar el menu desde cualquier escena
     public void LoadMenu(){
+        instance.levelFinished = false;
         SceneManager.LoadScene(0);
         ResetSceneData();
     }
 
     //Método para reiniciar la escena
     public void RestartScene() {
+        instance.levelFinished = false;
         SceneManager.LoadScene(currentSceneName);
         isPaused = false;
         ResetSceneData();

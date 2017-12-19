@@ -69,7 +69,7 @@ public class DoubleCheckPoint : DoubleObject
 
                 }
             } else {
-                Debug.Log(gameObject);
+
             }
         }
     }
@@ -84,7 +84,9 @@ public class DoubleCheckPoint : DoubleObject
             }
         } else {
             //CODIGO DE ACABAR NIVEL
-            SceneManager.LoadScene(0);
+            //SceneManager.LoadScene(0);
+            GameLogic.instance.levelFinished = true;
+            Debug.Log(GameLogic.instance.levelFinished);
         }
         if (GetComponent<AudioSource>() != null) {
             GetComponent<AudioSource>().clip = interactSound;

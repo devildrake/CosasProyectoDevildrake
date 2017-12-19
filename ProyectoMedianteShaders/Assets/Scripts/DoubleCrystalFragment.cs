@@ -91,6 +91,7 @@ public class DoubleCrystalFragment : DoubleObject {
                 GameLogic.instance.transformableObjects.Add(gameObject);
                 offset = GameLogic.instance.worldOffset;
                     data = new FragmentData(false,GameLogic.instance.GetCurrentLevel());
+                Debug.Log(GameLogic.instance.GetCurrentLevel());
                     GameLogic.instance.AddFragmentData(data);
                 
             }

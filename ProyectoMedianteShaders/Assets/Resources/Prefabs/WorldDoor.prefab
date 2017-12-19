@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 114314523839651102}
   - component: {fileID: 61180751301018402}
   - component: {fileID: 50578651201319098}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: DoubleCheckPoint (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -54,7 +54,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4828352737216634}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: WorldDoor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -223,7 +223,7 @@ GameObject:
   - component: {fileID: 114624232075025110}
   - component: {fileID: 61224629524126380}
   - component: {fileID: 50705864071943062}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: DoubleCheckPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -290,7 +290,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4946433498830496}
   - component: {fileID: 212740377393421044}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Key_E
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -306,7 +306,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4922168861829208}
   - component: {fileID: 212591370687827904}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Key_E
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1211,6 +1211,8 @@ MonoBehaviour:
   imagenDawn: {fileID: 0}
   endLevel: 1
   interactionSprite: {fileID: 1934250243228434}
+  interactSound: {fileID: 0}
+  particulasInteraccion: {fileID: 0}
 --- !u!114 &114624232075025110
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1235,6 +1237,8 @@ MonoBehaviour:
   imagenDawn: {fileID: 0}
   endLevel: 1
   interactionSprite: {fileID: 1908762637294616}
+  interactSound: {fileID: 0}
+  particulasInteraccion: {fileID: 0}
 --- !u!212 &212591370687827904
 SpriteRenderer:
   m_ObjectHideFlags: 1

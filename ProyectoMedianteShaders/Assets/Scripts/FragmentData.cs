@@ -1,4 +1,5 @@
 ﻿namespace FragmentDataNamespace {
+    [System.Serializable]
     public class FragmentData {
         public bool picked;
         public string levelName;
