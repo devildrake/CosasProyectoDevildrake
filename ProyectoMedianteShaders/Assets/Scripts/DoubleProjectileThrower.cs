@@ -2,26 +2,38 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DoubleProjectile : DoubleObject {
+public class DoubleProjectileThrower : DoubleObject {
     // Use this for initialization
     Rigidbody2D rb;
-    public Vector2 initialSpeed;
+    public LayerMask groundMask;
+    float distanciaBordeSprite;
+    float projectileGenerationTime = 4;
+    float projectileTimer = 4;
+
+    public float minDistance = 6;
+    GameObject ProjectilePrefab;
     void Start() {
+        GetComponent<Rigidbody2D>().gravityScale = 0;
         InitTransformable();
-        isPunchable = true;
+        isPunchable = false;
         isBreakable = false;
         interactuableBySmash = false;
         offset = GameLogic.instance.worldOffset;
         if (worldAssignation == world.DAWN) {
             GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
-            //GetComponent<SpriteRenderer>().sprite = imagenDawn;
+            GetComponent<SpriteRenderer>().sprite = imagenDawn;
         } else {
-            GetComponent<Rigidbody2D>().velocity = initialSpeed;
-            //GetComponent<SpriteRenderer>().sprite = imagenDusk;
+            GetComponent<SpriteRenderer>().sprite = imagenDusk;
 
         }
 
+
         rb = GetComponent<Rigidbody2D>();
+        groundMask = LayerMask.GetMask("Ground");
+
+        distanciaBordeSprite = 0.745f;
+        rb.mass = 5000;
+        ProjectilePrefab = Resources.Load<GameObject>("Prefabs/DoubleProjectile");
     }
 
     protected override void BrotherBehavior() {
@@ -42,17 +54,12 @@ public class DoubleProjectile : DoubleObject {
 
     }
 
-    void BecomePunchable() {
-        isPunchable = true;
-    }
-
     protected override void LoadResources() {
-        //if (worldAssignation == world.DAWN) {
-        //    imagenDawn = Resources.Load<Sprite>("Presentacion/DawnSprites/DawnBox");
-        //} else {
-        //    imagenDusk = Resources.Load<Sprite>("Presentacion/DuskSprites/DuskBox");
-
-        //}
+        if (worldAssignation == world.DAWN) {
+            imagenDawn = Resources.Load<Sprite>("Presentacion/DawnSprites/DawnBox");
+        } else {
+            imagenDusk = Resources.Load<Sprite>("Presentacion/DuskSprites/DuskBox");
+        }
     }
 
     public override void Change() {
@@ -67,6 +74,9 @@ public class DoubleProjectile : DoubleObject {
                 OnlyFreezeRotation();
                 brotherObject.GetComponent<Rigidbody2D>().velocity = dominantVelocity;
                 GetComponent<Rigidbody2D>().velocity = new Vector2(0.0f, 0.0f);
+                //active = false;
+                //brotherObject.GetComponent<DoubleProjectileThrower>().active = true;
+
             }
             //Si antes del cambio estaba en dusk, pasara a hacerse dynamic y al otro kinematic, además de darle su velocidad 
             else {
@@ -76,6 +86,9 @@ public class DoubleProjectile : DoubleObject {
                 brotherObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
                 brotherObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0.0f, 0.0f);
                 GetComponent<Rigidbody2D>().velocity = dominantVelocity;
+                //brotherObject.GetComponent<DoubleProjectileThrower>().active = false;
+                //active = true;
+
             }
 
             dawn = !dawn;
@@ -84,22 +97,50 @@ public class DoubleProjectile : DoubleObject {
 
     }
 
-    private void OnCollisionEnter2D(Collision2D collision) {
-        if (collision.gameObject.tag == "Player") {
-            collision.gameObject.GetComponent<PlayerController>().Kill();
-        }
-        if (collision.gameObject != brotherObject&&collision.gameObject.tag!="ProjectileThrow") {
-
-            GameLogic.instance.SafelyDestroy(this);
-        }
+    public override void Activate() {
+        base.Activate();
+        //Change();
     }
-
     // Update is called once per frame
     void Update() {
+
         AddToGameLogicList();
         BrotherBehavior();
-        //if (!isPunchable) {
-        //    Invoke("BecomePunchable", 0.5f);
-        //}
+
+        if (activated && GameLogic.instance != null && GameLogic.instance.currentPlayer != null&&worldAssignation==world.DAWN) {
+            //Debug.Log(Vector2.Distance(GameLogic.instance.currentPlayer.gameObject.transform.position, gameObject.transform.position));
+
+            if ((Vector2.Distance(GameLogic.instance.currentPlayer.gameObject.transform.position, gameObject.transform.position) < minDistance)|| (Vector2.Distance(GameLogic.instance.currentPlayer.gameObject.transform.position, brotherObject.transform.position) < minDistance)) {
+                ProjectileCreation();
+            } else {
+
+            }
+        }
+
     }
+
+    void CreateProjectile(Vector2 direction) {
+        GameObject temp = Instantiate(ProjectilePrefab,brotherObject.transform.position + new Vector3(0,-1.1f,0),Quaternion.identity) as GameObject;
+
+
+        DoubleProjectile [] projectiles = temp.GetComponentsInChildren<DoubleProjectile>();
+        projectiles[0].gameObject.GetComponent<Rigidbody2D>().velocity = direction * 10; 
+        projectiles[1].gameObject.GetComponent<Rigidbody2D>().velocity = direction * 10;
+        Debug.Log(direction);
+
+    }
+
+    void ProjectileCreation() {
+            if (projectileTimer > 0) {
+                projectileTimer -= Time.deltaTime;
+            } else {
+                projectileTimer = projectileGenerationTime;
+            if(dawn)
+                CreateProjectile((GameLogic.instance.currentPlayer.transform.position - gameObject.transform.position).normalized);
+            else
+                CreateProjectile((GameLogic.instance.currentPlayer.transform.position - brotherObject.transform.position).normalized);
+
+        }
+    }
+    
 }

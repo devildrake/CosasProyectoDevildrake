@@ -11,6 +11,8 @@ using FragmentDataNamespace;
 
 public class GameLogic : MonoBehaviour
 {
+    public PlayerController currentPlayer;
+
     public List<FragmentData> fragments;
     private int lastFragmentId = -1;
 
@@ -270,7 +272,8 @@ public class GameLogic : MonoBehaviour
                 }
         }
              else {
-                    Cursor.visible = true;
+                currentPlayer = null;
+                Cursor.visible = true;
                     Cursor.lockState = CursorLockMode.None; //Se puede volver a mover el cursor
                 }
         }

@@ -112,7 +112,7 @@ public class DoubleImpulsor : DoubleObject
     public override void Activate()
     {
         base.Activate();
-        Change();
+        //Change();
     }
     // Update is called once per frame
     void Update()

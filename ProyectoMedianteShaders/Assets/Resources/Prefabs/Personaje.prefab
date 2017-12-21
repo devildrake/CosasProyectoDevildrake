@@ -139,7 +139,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1479282962458526}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -62.1, y: -38.599995, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 2.5000002, y: 2.4999995, z: 0.5}
   m_Children:
   - {fileID: 4639399940139130}
@@ -181,7 +181,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1107181357787516}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -47.799995, y: -38.599995, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 2.5000002, y: 2.4999995, z: 0.5}
   m_Children:
   - {fileID: 4675246823317154}
@@ -195,7 +195,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1888253378895332}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3.08, y: 8.7, z: 0}
+  m_LocalPosition: {x: -2.49, y: 4.95, z: 0}
   m_LocalScale: {x: 0.1, y: 0.10000001, z: 1}
   m_Children:
   - {fileID: 4064114378534618}
@@ -553,6 +553,7 @@ MonoBehaviour:
   canJumpOnImpulsor: 0
   calledImpuslorBool: 0
   sliding: 0
+  interactableObject: {fileID: 0}
   distanciaBordeSprite: 0.745
   canDash: 0
   arrow: {fileID: 0}
@@ -610,6 +611,7 @@ MonoBehaviour:
   canJumpOnImpulsor: 0
   calledImpuslorBool: 0
   sliding: 0
+  interactableObject: {fileID: 0}
   distanciaBordeSprite: 0.745
   canDash: 0
   arrow: {fileID: 0}

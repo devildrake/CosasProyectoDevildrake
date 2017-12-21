@@ -132,6 +132,19 @@ public class PlayerController : DoubleObject {
         timeCountToDrag = 0;
 
     }
+
+    protected override void AddToGameLogicList() {
+        if (!added) {
+            if (GameLogic.instance != null) {
+                added = true;
+                GameLogic.instance.transformableObjects.Add(gameObject);
+                if (worldAssignation == world.DUSK)
+                    GameLogic.instance.currentPlayer = this;
+            }
+        }
+
+    }
+
     void Update() {
 
         //Add del transformable
@@ -678,6 +691,7 @@ public class PlayerController : DoubleObject {
 
             //activar el shader
             if (worldAssignation == world.DAWN){
+                GameLogic.instance.currentPlayer = brotherObject.GetComponent<PlayerController>();
                 dominantVelocity = GetComponent<Rigidbody2D>().velocity;
                 brotherObject.GetComponent<DoubleObject>().dominantVelocity = GetComponent<Rigidbody2D>().velocity;
                 brotherObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
@@ -695,6 +709,7 @@ public class PlayerController : DoubleObject {
             //newPosition.y += GameLogic.instance.worldOffset;
             //transform.position = newPosition;
             if (worldAssignation == world.DAWN){
+                GameLogic.instance.currentPlayer = this;
                 dominantVelocity = brotherObject.GetComponent<Rigidbody2D>().velocity;
                 brotherObject.GetComponent<DoubleObject>().dominantVelocity = brotherObject.GetComponent<Rigidbody2D>().velocity;
                 GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
@@ -726,8 +741,13 @@ public class PlayerController : DoubleObject {
 
     //Método que reinicia la posición del personaje y aumenta la variable de muertes en GameLogic
     public override void Kill() {
-        
+        if(worldAssignation==world.DUSK)
         transform.position = GameLogic.instance.spawnPoint;
+
+        else
+            transform.position = GameLogic.instance.spawnPoint + new Vector3(0,GameLogic.instance.worldOffset,0);
+
+
         if (GetComponent<Rigidbody2D>() != null) {
             GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
         }
