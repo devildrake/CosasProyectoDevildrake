@@ -6,6 +6,10 @@ using UnityEngine;
 public class DoubleProjectileSwitch : DoubleObject{
     //Tamaño del array de objetos 
 
+    public enum wayToActivate { projectile,objectWeight};
+
+    public wayToActivate howToActivate;
+
     [Tooltip("Aumentar esta variable permite activar más objetos")]
     static public int size;
 
@@ -15,9 +19,10 @@ public class DoubleProjectileSwitch : DoubleObject{
     //sistema de particulas para cuando se activa el switch
     private ParticleSystem particles;
     private int listCount; //counter for iterate the list of elements to activate.
-
+    private List<GameObject> objectsInTrigger;
     // Use this for initialization
     void Start(){
+        objectsInTrigger = new List<GameObject>();
         InitTransformable();
         
         offset = GameLogic.instance.worldOffset;
@@ -63,6 +68,13 @@ public class DoubleProjectileSwitch : DoubleObject{
         
     }
 
+    public override void Change() {
+        base.Change();
+        objectsInTrigger.Clear();
+        if(howToActivate == wayToActivate.objectWeight)
+        activated = false;
+    }
+
     //Manages the particle system.
     private void ParticleSystemBehavior() {
         if (particles.isEmitting) {
@@ -82,23 +94,73 @@ public class DoubleProjectileSwitch : DoubleObject{
     }
 
     public override void Activate() {
-        base.Activate();
-        particles.Play();
+        if (!activated) {
+            base.Activate();
+            particles.Play();
+        }
     }
 
     //Se comprueba si el objeto que ha entrado en la zona de trigger es un proyectil y en caso afirmativo se activan con el método Activate todos los objetos
     //Que se encuentran en objectsToTrigger
     public void OnTriggerEnter2D(Collider2D collision){
-        if (collision.gameObject.tag == "Projectile"&&!activated){
-            Activate();
-            /*
-            foreach (DoubleObject g in objectsToTrigger)
-            {
-                Debug.Log("ACTIVATE");
-                g.Activate();
-                brotherObject.GetComponent<DoubleObject>().Activate();
+        if (!objectsInTrigger.Contains(collision.gameObject)) {
+            objectsInTrigger.Add(collision.gameObject);
+        }
+        if (howToActivate == wayToActivate.projectile) {
+            if (collision.gameObject.tag == "Projectile" && !activated) {
+                Activate();
+                /*
+                foreach (DoubleObject g in objectsToTrigger)
+                {
+                    Debug.Log("ACTIVATE");
+                    g.Activate();
+                    brotherObject.GetComponent<DoubleObject>().Activate();
+                }
+                */
             }
-            */
+        } else if(collision.gameObject!=brotherObject){
+            Activate();
+        }
+
+    }
+
+    public void OnTriggerStay2D(Collider2D collision) {
+        if (!objectsInTrigger.Contains(collision.gameObject)) {
+            objectsInTrigger.Add(collision.gameObject);
+        }
+        if (howToActivate == wayToActivate.projectile) {
+            if (collision.gameObject.tag == "Projectile" && !activated) {
+                Activate();
+                /*
+                foreach (DoubleObject g in objectsToTrigger)
+                {
+                    Debug.Log("ACTIVATE");
+                    g.Activate();
+                    brotherObject.GetComponent<DoubleObject>().Activate();
+                }
+                */
+            }
+        } else if (collision.gameObject != brotherObject&&collision.gameObject.tag!="Area") {
+            Activate();
+        }
+
+    }
+
+    public override void DisActivate() {
+
+        base.DisActivate();
+        foreach(DoubleObject g in objectsToTrigger) {
+            g.DisActivate();
+        }
+        listCount = 0;
+    }
+
+    private void OnTriggerExit2D(Collider2D collision) {
+        if (objectsInTrigger.Contains(collision.gameObject)) {
+            objectsInTrigger.Remove(collision.gameObject);
+        }
+        if (howToActivate == wayToActivate.objectWeight&&objectsInTrigger.Count==0) {
+            DisActivate();
         }
 
     }
