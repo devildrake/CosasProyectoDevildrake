@@ -62,10 +62,12 @@ public class ImpulsingAir : MonoBehaviour{
                 }
 
             }
+            windParticles.Play();
+
 
             //En caso de que haya habido un cambio de mundo
             if (changed){
-                windParticles.Play();
+                //windParticles.Play();
 
                 //Si hay alguno objeto y alguno es el jugador se cambia la variable onImpulsor y se limpia la lista
                 if (inTriggerZoneObjects.Count > 0) {
@@ -102,6 +104,8 @@ public class ImpulsingAir : MonoBehaviour{
             //windParticles.startSpeed = (windSpeed-(-0.4f)) * (1000-250) / (0.4f - -0.4f) + 250;
             //windParticles.maxParticles = (int)((windSpeed - (-0.4f)) * (1000 - 0) / (0.4f - -0.4f) + 0);
             //windParticles.startLifetime = (int)((windSpeed - (0.4f)) * (0.33f - 0.33f) / (-0.4f - 0.4f) + 0.33f);
+        } else {
+            windParticles.Stop();
         }
     }
 

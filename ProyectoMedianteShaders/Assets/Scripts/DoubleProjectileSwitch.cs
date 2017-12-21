@@ -19,10 +19,10 @@ public class DoubleProjectileSwitch : DoubleObject{
     //sistema de particulas para cuando se activa el switch
     private ParticleSystem particles;
     private int listCount; //counter for iterate the list of elements to activate.
-    private List<GameObject> objectsInTrigger;
+    public List<DoubleObject> objectsInTrigger;
     // Use this for initialization
     void Start(){
-        objectsInTrigger = new List<GameObject>();
+        objectsInTrigger = new List<DoubleObject>();
         InitTransformable();
         
         offset = GameLogic.instance.worldOffset;
@@ -65,7 +65,9 @@ public class DoubleProjectileSwitch : DoubleObject{
         if(particles != null) {
             ParticleSystemBehavior();
         }
-        
+        if (howToActivate == wayToActivate.objectWeight && objectsInTrigger.Count == 0) {
+            DisActivate();
+        }
     }
 
     public override void Change() {
@@ -103,8 +105,8 @@ public class DoubleProjectileSwitch : DoubleObject{
     //Se comprueba si el objeto que ha entrado en la zona de trigger es un proyectil y en caso afirmativo se activan con el método Activate todos los objetos
     //Que se encuentran en objectsToTrigger
     public void OnTriggerEnter2D(Collider2D collision){
-        if (!objectsInTrigger.Contains(collision.gameObject)) {
-            objectsInTrigger.Add(collision.gameObject);
+        if (!objectsInTrigger.Contains(collision.gameObject.GetComponent<DoubleObject>())) {
+            objectsInTrigger.Add(collision.gameObject.GetComponent<DoubleObject>());
         }
         if (howToActivate == wayToActivate.projectile) {
             if (collision.gameObject.tag == "Projectile" && !activated) {
@@ -118,16 +120,17 @@ public class DoubleProjectileSwitch : DoubleObject{
                 }
                 */
             }
-        } else if(collision.gameObject!=brotherObject){
+        } else if (collision.gameObject != brotherObject && collision.gameObject.tag != "Area" && gameObject.GetComponent<DoubleObject>() != null) {
+            if (!objectsInTrigger.Contains(collision.gameObject.GetComponent<DoubleObject>())) {
+                objectsInTrigger.Add(collision.gameObject.GetComponent<DoubleObject>());
+            }
             Activate();
         }
 
     }
 
     public void OnTriggerStay2D(Collider2D collision) {
-        if (!objectsInTrigger.Contains(collision.gameObject)) {
-            objectsInTrigger.Add(collision.gameObject);
-        }
+
         if (howToActivate == wayToActivate.projectile) {
             if (collision.gameObject.tag == "Projectile" && !activated) {
                 Activate();
@@ -140,7 +143,10 @@ public class DoubleProjectileSwitch : DoubleObject{
                 }
                 */
             }
-        } else if (collision.gameObject != brotherObject&&collision.gameObject.tag!="Area") {
+        } else if (collision.gameObject != brotherObject&&collision.gameObject.tag!="Area"&&gameObject.GetComponent<DoubleObject>()!=null) {
+            if (!objectsInTrigger.Contains(collision.gameObject.GetComponent<DoubleObject>())) {
+                objectsInTrigger.Add(collision.gameObject.GetComponent<DoubleObject>());
+            }
             Activate();
         }
 
@@ -156,11 +162,8 @@ public class DoubleProjectileSwitch : DoubleObject{
     }
 
     private void OnTriggerExit2D(Collider2D collision) {
-        if (objectsInTrigger.Contains(collision.gameObject)) {
-            objectsInTrigger.Remove(collision.gameObject);
-        }
-        if (howToActivate == wayToActivate.objectWeight&&objectsInTrigger.Count==0) {
-            DisActivate();
+        if (objectsInTrigger.Contains(collision.gameObject.GetComponent<DoubleObject>())) {
+            objectsInTrigger.Remove(collision.gameObject.GetComponent<DoubleObject>());
         }
 
     }
