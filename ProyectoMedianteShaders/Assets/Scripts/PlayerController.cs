@@ -123,7 +123,7 @@ public class PlayerController : DoubleObject {
             GetComponent<SpriteRenderer>().sprite = imagenDawn;
 
         else
-            GetComponent<SpriteRenderer>().sprite = imagenDusk;
+            //GetComponent<SpriteRenderer>().sprite = imagenDusk;
 
         originalPos = GameLogic.instance.spawnPoint;
         deflectArea.SetActive(false);
@@ -173,6 +173,17 @@ public class PlayerController : DoubleObject {
         else {
 
 
+        }
+
+        SetAnimValues();
+
+    }
+
+    void SetAnimValues() {
+        if (GetComponentInChildren<Animator>() != null) {
+            GetComponentInChildren<Animator>().SetBool("moving", moving);
+            GetComponentInChildren<Animator>().SetBool("grounded", grounded);
+            GetComponentInChildren<Animator>().SetFloat("speedY", GetComponent<Rigidbody2D>().velocity.y);
         }
     }
 
