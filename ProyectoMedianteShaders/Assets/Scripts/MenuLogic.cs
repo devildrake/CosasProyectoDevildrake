@@ -5,6 +5,10 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class MenuLogic : MonoBehaviour {
+    //referencia al Canvas para hacer el fade in
+    public Canvas canvas;
+    private CanvasGroup canvasGroup;
+
     //-----------------------state 0
     public GameObject pressAnyKeyObj;//elemento del state 0
     //------------------------------------------------------------
@@ -16,6 +20,11 @@ public class MenuLogic : MonoBehaviour {
     private Transform highlight;
     //------------------------------------------------------------
 
+    /*
+     * menuState = -1 --> FadeIn del juego.
+     * menuState = 0 --> Pantalla de pulsa cualquier tecla para continuar
+     * menuState = 1 --> Pantalla jugar/salir
+     */
     private int menuState;
     private bool axisInUse = false;
 
@@ -24,7 +33,8 @@ public class MenuLogic : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        menuState = 0;
+        canvasGroup = canvas.GetComponent<CanvasGroup>();
+        menuState = -1;
         timer = 0f;
         timeToBlink = 0.4f;
         pressAnyKeyObj.SetActive(true);
@@ -39,6 +49,14 @@ public class MenuLogic : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         switch (menuState) {
+            case -1:
+                if(canvasGroup.alpha > 0) {
+                    canvasGroup.alpha -= Time.deltaTime/2;
+                } else {
+                    //canvasGroup.alpha = 0;
+                    menuState = 0;
+                }
+                break;
             case 0:
                 Blink(pressAnyKeyObj);
                 if (Input.anyKey) {
