@@ -67,6 +67,8 @@ public class GameLogic : MonoBehaviour
 
     void Awake()
     {
+        Application.targetFrameRate = 60;
+
         currentSceneName = SceneManager.GetActiveScene().name;
 
         fragments = new List<FragmentData>();
