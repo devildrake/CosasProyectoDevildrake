@@ -126,7 +126,7 @@ public class DoubleProjectileThrower : DoubleObject {
         DoubleProjectile [] projectiles = temp.GetComponentsInChildren<DoubleProjectile>();
         projectiles[0].gameObject.GetComponent<Rigidbody2D>().velocity = direction * 10; 
         projectiles[1].gameObject.GetComponent<Rigidbody2D>().velocity = direction * 10;
-        Debug.Log(direction);
+        //Debug.Log(projectiles[0]);
 
     }
 
@@ -136,9 +136,9 @@ public class DoubleProjectileThrower : DoubleObject {
             } else {
                 projectileTimer = projectileGenerationTime;
             if(dawn)
-                CreateProjectile((GameLogic.instance.currentPlayer.transform.position - gameObject.transform.position).normalized);
+                CreateProjectile((GameLogic.instance.currentPlayer.gameObject.transform.position - gameObject.transform.position).normalized);
             else
-                CreateProjectile((GameLogic.instance.currentPlayer.transform.position - brotherObject.transform.position).normalized);
+                CreateProjectile((GameLogic.instance.currentPlayer.gameObject.transform.position - brotherObject.transform.position).normalized);
 
         }
     }
