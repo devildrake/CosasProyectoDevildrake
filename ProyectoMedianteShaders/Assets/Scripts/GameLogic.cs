@@ -166,6 +166,8 @@ public class GameLogic : MonoBehaviour
         isInMainMenu = false;
         currentSceneName = SceneManager.GetActiveScene().name;
         DirectionCircle.SetOnce(true);
+        timeElapsed = 0;
+        pickedFragments = 0;
     }
 
     public void SetSpawnPoint(Vector3 a)

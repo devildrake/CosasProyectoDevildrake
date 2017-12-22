@@ -512,7 +512,7 @@ public class PlayerController : DoubleObject {
             GameLogic.instance.SetTimeScaleLocal(slowMotionTimeScale);
         }else if (Input.GetMouseButtonUp(1)&& objectsInDeflectArea.Count!=0) {
             foreach(GameObject g in objectsInDeflectArea) {
-                Dash.DoDash(g, deflectDirection, 20);
+                PlayerUtilsStatic.DoDash(g, deflectDirection, 20);
                 GetComponent<AudioSource>().clip = deflectClip;
                 GetComponent<AudioSource>().Play();
                 g.GetComponent<Rigidbody2D>().gravityScale = 0;
@@ -752,12 +752,12 @@ public class PlayerController : DoubleObject {
 
     //Método que reinicia la posición del personaje y aumenta la variable de muertes en GameLogic
     public override void Kill() {
-        if(worldAssignation==world.DUSK)
-        transform.position = GameLogic.instance.spawnPoint;
-
-        else
-            transform.position = GameLogic.instance.spawnPoint + new Vector3(0,GameLogic.instance.worldOffset,0);
-
+        if (worldAssignation == world.DUSK) {
+            transform.position = GameLogic.instance.spawnPoint;
+        } else {
+            Debug.Log(GameLogic.instance.spawnPoint);
+            transform.position = GameLogic.instance.spawnPoint + new Vector3(0, GameLogic.instance.worldOffset, 0);
+        }
 
         if (GetComponent<Rigidbody2D>() != null) {
             GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);

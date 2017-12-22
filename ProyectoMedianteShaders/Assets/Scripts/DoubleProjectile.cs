@@ -6,33 +6,52 @@ public class DoubleProjectile : DoubleObject {
     // Use this for initialization
     Rigidbody2D rb;
     public Vector2 initialSpeed;
-    void Start() {
+    private void Awake()
+    {
         InitTransformable();
         isPunchable = true;
         isBreakable = false;
         interactuableBySmash = false;
         offset = GameLogic.instance.worldOffset;
-        if (worldAssignation == world.DAWN) {
+        if (worldAssignation == world.DAWN)
+        {
             GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
+
             //GetComponent<SpriteRenderer>().sprite = imagenDawn;
-        } else {
+        }
+        else
+        {
             GetComponent<Rigidbody2D>().velocity = initialSpeed;
+            GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
+
             //GetComponent<SpriteRenderer>().sprite = imagenDusk;
 
         }
-
         rb = GetComponent<Rigidbody2D>();
     }
 
+    void Start() {
+        
+    }
+
     protected override void BrotherBehavior() {
+
         Vector3 positionWithOffset;
         if (GetComponent<Rigidbody2D>().bodyType == RigidbodyType2D.Kinematic) {
             positionWithOffset = brotherObject.transform.position;
 
             if (worldAssignation == world.DAWN)
+            {
                 positionWithOffset.y += offset;
-            else {
+                GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
+                brotherObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
+
+            } else
+            {
                 positionWithOffset.y -= offset;
+                GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
+                brotherObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
+
             }
 
             transform.position = positionWithOffset;
@@ -86,6 +105,7 @@ public class DoubleProjectile : DoubleObject {
 
     private void OnCollisionEnter2D(Collision2D collision) {
         if (collision.gameObject.tag == "Player") {
+            Debug.Log("CollisionWithPlayer");
             collision.gameObject.GetComponent<PlayerController>().Kill();
         }
         if (collision.gameObject != brotherObject&&collision.gameObject.tag!="ProjectileThrow") {

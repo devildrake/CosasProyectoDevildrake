@@ -11,14 +11,15 @@ public class DoublePlatform : DoubleObject {
         isPunchable = false;
 
         if (worldAssignation == world.DAWN) {
-            GetComponent<SpriteRenderer>().sprite = imagenDawn;
+            //GetComponent<SpriteRenderer>().sprite = imagenDawn;
             Vector2 positionWithOffset = brotherObject.transform.position;
             positionWithOffset.y += offset;
+            print("offset " + offset);
             transform.position = positionWithOffset;
             transform.rotation = brotherObject.transform.rotation;
         }
         else {
-            GetComponent<SpriteRenderer>().sprite = imagenDusk;
+            //GetComponent<SpriteRenderer>().sprite = imagenDusk;
         }
     }
 

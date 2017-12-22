@@ -102,7 +102,7 @@ public class MenuLogic : MonoBehaviour {
 
         if(Input.GetAxisRaw("Select") == 1) {
             if(selected == 0) {
-                SceneManager.LoadScene("Nivel4Sample");
+                SceneManager.LoadScene("NivelPrototipo");
             }else if(selected == 1) {
                 print("salir");
                 Application.Quit();

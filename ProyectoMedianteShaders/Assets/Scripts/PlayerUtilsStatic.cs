@@ -5,6 +5,7 @@ using UnityEngine;
 public static class PlayerUtilsStatic {
     public static void DoDash(GameObject PJ, Vector2 direction, float MAX_FORCE) {
         Rigidbody2D rigidbody = PJ.GetComponent<Rigidbody2D>();
+        Debug.Log(rigidbody.bodyType);
         rigidbody.AddForce(direction * MAX_FORCE, ForceMode2D.Impulse);
     }
     public static void Punch(Vector2 direction, float MAX_FORCE, List<GameObject>NearbyObjects) {

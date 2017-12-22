@@ -82,8 +82,8 @@ public class DoubleProjectileThrower : DoubleObject {
             else {
                 dominantVelocity = brotherObject.GetComponent<Rigidbody2D>().velocity;
                 brotherObject.GetComponent<DoubleObject>().dominantVelocity = brotherObject.GetComponent<Rigidbody2D>().velocity;
-                GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
-                brotherObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
+                GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
+                brotherObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
                 brotherObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0.0f, 0.0f);
                 GetComponent<Rigidbody2D>().velocity = dominantVelocity;
                 //brotherObject.GetComponent<DoubleProjectileThrower>().active = false;
@@ -124,8 +124,9 @@ public class DoubleProjectileThrower : DoubleObject {
 
 
         DoubleProjectile [] projectiles = temp.GetComponentsInChildren<DoubleProjectile>();
-        projectiles[0].gameObject.GetComponent<Rigidbody2D>().velocity = direction * 10; 
-        projectiles[1].gameObject.GetComponent<Rigidbody2D>().velocity = direction * 10;
+        projectiles[0].gameObject.GetComponent<Rigidbody2D>().velocity = direction * 2;// * Time.deltaTime;
+        projectiles[1].gameObject.GetComponent<Rigidbody2D>().velocity = direction * 2;// * Time.deltaTime;
+
         //Debug.Log(projectiles[0]);
 
     }
