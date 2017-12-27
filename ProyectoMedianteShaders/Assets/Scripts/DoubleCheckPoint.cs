@@ -126,7 +126,6 @@ public class DoubleCheckPoint : DoubleObject
 
     protected override void LoadResources() {
         interactSound = Resources.Load<AudioClip>("Sounds/Interact");
-        Debug.Log(interactSound);
     }
 }
 

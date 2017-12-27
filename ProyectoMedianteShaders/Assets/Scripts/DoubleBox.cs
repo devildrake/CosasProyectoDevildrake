@@ -23,7 +23,7 @@ public class DoubleBox : DoubleObject {
 
         }
         float randomVal = Random.Range(1, 4);
-        Debug.Log(randomVal);
+        //Debug.Log(randomVal);
         GetComponentInChildren<MeshRenderer>().gameObject.transform.rotation *= Quaternion.AngleAxis(randomVal * 90,new Vector3(0,0,1));
 
         rb = GetComponent<Rigidbody2D>();

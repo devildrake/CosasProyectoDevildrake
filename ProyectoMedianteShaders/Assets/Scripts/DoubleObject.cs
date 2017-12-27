@@ -123,7 +123,7 @@ public class DoubleObject : MonoBehaviour {
     //Si no se implementa en alguna clase heredera se ejecuta el debug
     protected virtual void LoadResources()
     {
-        Debug.Log("LoadResources esta vacío");
+        //Debug.Log("LoadResources esta vacío");
     }
 
     public virtual void Kill()

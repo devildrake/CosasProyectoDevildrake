@@ -118,7 +118,7 @@ public class GameLogic : MonoBehaviour
         if (!temp) {
             a.picked = false;
             fragments.Add(a);
-            Debug.Log("Adding a Fragment");
+            //Debug.Log("Adding a Fragment");
         }
 
     }
@@ -168,6 +168,10 @@ public class GameLogic : MonoBehaviour
         DirectionCircle.SetOnce(true);
         timeElapsed = 0;
         pickedFragments = 0;
+    }
+
+    public static bool isNull(GameObject g) {
+        return g == null;
     }
 
     public void SetSpawnPoint(Vector3 a)

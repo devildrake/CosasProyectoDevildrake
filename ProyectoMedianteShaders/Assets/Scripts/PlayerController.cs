@@ -641,7 +641,7 @@ public class PlayerController : DoubleObject {
                     calledImpuslorBool = true;
                 }
                 canJumpOnImpulsor = false;
-                Debug.Log("JUMP");
+                //Debug.Log("JUMP");
                 Jump();
             }
         }

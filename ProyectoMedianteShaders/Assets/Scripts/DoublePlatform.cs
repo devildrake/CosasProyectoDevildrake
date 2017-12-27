@@ -14,7 +14,7 @@ public class DoublePlatform : DoubleObject {
             //GetComponent<SpriteRenderer>().sprite = imagenDawn;
             Vector2 positionWithOffset = brotherObject.transform.position;
             positionWithOffset.y += offset;
-            print("offset " + offset);
+            //print("offset " + offset);
             transform.position = positionWithOffset;
             transform.rotation = brotherObject.transform.rotation;
         }
@@ -25,7 +25,7 @@ public class DoublePlatform : DoubleObject {
 
     protected override void LoadResources() {
         
-        Debug.Log("Loading Resources");
+        //Debug.Log("Loading Resources");
         if (gameObject.tag == "Slide") {
             imagenDawn = Resources.Load<Sprite>("Presentacion/DawnSprites/DawnPlatformSlide");
             imagenDusk = Resources.Load<Sprite>("Presentacion/DuskSprites/DuskPlatformSlide");

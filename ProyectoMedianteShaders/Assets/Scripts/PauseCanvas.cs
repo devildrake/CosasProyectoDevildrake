@@ -22,7 +22,7 @@ public class PauseCanvas : MonoBehaviour {
         GameLogic.instance.pauseCanvas = this;
         scoreScreen.SetActive(false);
         scoreScreen.GetComponent<Image>().color = new Color(scoreScreen.GetComponent<Image>().color.r, scoreScreen.GetComponent<Image>().color.g, scoreScreen.GetComponent<Image>().color.b, 0);
-        Debug.Log("Alpha a 0 -> " + scoreScreen.GetComponent<Image>().color.a);
+        //Debug.Log("Alpha a 0 -> " + scoreScreen.GetComponent<Image>().color.a);
         texts = scoreScreen.GetComponentsInChildren<Text>();
     }
 

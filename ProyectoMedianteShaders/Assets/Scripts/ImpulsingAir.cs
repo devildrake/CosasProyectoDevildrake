@@ -40,6 +40,8 @@ public class ImpulsingAir : MonoBehaviour{
       
 
     void Update() {
+        inTriggerZoneObjects.RemoveAll(GameLogic.isNull);
+
         // Se comprueba si puede estar activo (active) y si ha sido activado (activated) mediante algun tipo de switch y en caso afirmativo pasa todo 
         if (active && gameObject.GetComponentInParent<DoubleObject>().activated) {
             
@@ -54,7 +56,7 @@ public class ImpulsingAir : MonoBehaviour{
             }
             else{
                 if (windSpeed > 0.4f){
-                    Debug.Log("Pasa a sumar");
+                    //Debug.Log("Pasa a sumar");
                     rising = true;
                 }
                 else{
