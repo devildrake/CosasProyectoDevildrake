@@ -97,6 +97,7 @@ public class EnemyWalker : DoubleObject {
 
     }
 
+    //Comportamiento en dawn, castea un rayo hacia donde esta moviendose y si encuentra algo con layerMask Ground, cambia su dirección
     void DawnBehavior() {
         if (dawn) {
             RaycastHit2D hit2D;
@@ -118,13 +119,14 @@ public class EnemyWalker : DoubleObject {
 
         }
     }
-
+    //Velocidad a 0
     void DuskBehavior() {
         if (!dawn) {
             GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
         }
     }
 
+    //Si colisiona en dawn el personaje, lo mata, si lo hace en dusk con velocidad y inferior o igual a 0, bota
     private void OnTriggerEnter2D(Collider2D other) {
         if (dawn && worldAssignation == world.DAWN) {
             if (other.tag == "Player") {
@@ -139,6 +141,7 @@ public class EnemyWalker : DoubleObject {
         }
     }
 
+    //Si colisiona en dawn el personaje, lo mata, si lo hace en dusk con velocidad y inferior o igual a 0, bota
     private void OnTriggerStay2D(Collider2D other) {
         if (dawn && worldAssignation == world.DAWN) {
             if (other.tag == "Player") {
@@ -158,6 +161,8 @@ public class EnemyWalker : DoubleObject {
     void Update() {
         AddToGameLogicList();
         BrotherBehavior();
+
+
         if (worldAssignation == world.DAWN)
             DawnBehavior();
         else
