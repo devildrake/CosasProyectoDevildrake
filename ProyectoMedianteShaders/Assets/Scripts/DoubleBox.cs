@@ -7,12 +7,14 @@ public class DoubleBox : DoubleObject {
     Rigidbody2D rb;
     public LayerMask groundMask;
     float distanciaBordeSprite;
-
+    float timerToBecomePunchable;
+    float timeToBecomePunchable;
 	void Start () {
         InitTransformable();
         isPunchable = true;
         isBreakable = false;
         interactuableBySmash = false;
+        timeToBecomePunchable = 0.5f;
         offset = GameLogic.instance.worldOffset;
         if (worldAssignation == world.DAWN) {
             GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
@@ -99,8 +101,17 @@ public class DoubleBox : DoubleObject {
     void Update () {
         AddToGameLogicList();
         BrotherBehavior();
+
+        //Caja puncheable, si no lo es en un momento dado, va sumando tiempo a un contador para volver a volverse punchable
         if (!isPunchable) {
-            Invoke("BecomePunchable", 0.5f);
+            //Invoke("BecomePunchable", 0.5f);
+            timerToBecomePunchable += Time.deltaTime;
+            if (timerToBecomePunchable > timeToBecomePunchable) {
+                timerToBecomePunchable = 0;
+                isPunchable = true;
+            }
         }
+
+
     }
 }

@@ -260,8 +260,10 @@ public class PlayerController : DoubleObject {
                     prevHorizontalMov = Input.GetAxisRaw("Horizontal");
                 }
 
+
                 if (grounded) {
                     GetComponent<Rigidbody2D>().AddForce(new Vector2(-GetComponent<Rigidbody2D>().velocity.x, 0), ForceMode2D.Impulse);
+                    //Debug.Log("Se para");
                     transform.Translate(Vector3.right * Input.GetAxis("Horizontal") * characterSpeed * Time.deltaTime);
                     slowedInTheAir = false;
                     if (Input.GetAxis("Horizontal") != 0) {
@@ -283,17 +285,20 @@ public class PlayerController : DoubleObject {
 
 
                 }
+                //Not Grounded and changed
                 else if (changed) {
-
                     slowedInTheAir = true;
                     mustSlow = 0.5f;
                     transform.Translate(Vector3.right * Input.GetAxis("Horizontal") * characterSpeed * mustSlow * Time.deltaTime);
 
-                }
+                    //Velocidad X a 0
+                    rb.AddForce(new Vector2(-rb.velocity.x, 0), ForceMode2D.Impulse);
 
+                }
+                //Not Grounded and not changed
                 else {
                     if (slowedInTheAir) {
-                        rb.AddForce(new Vector2(-rb.velocity.x, 0), ForceMode2D.Impulse);
+                        //rb.AddForce(new Vector2(-rb.velocity.x, 0), ForceMode2D.Impulse);
                         mustSlow = 0.5f;
                     }
                     transform.Translate(Vector3.right * Input.GetAxis("Horizontal") * characterSpeed * mustSlow * Time.deltaTime);
@@ -304,6 +309,7 @@ public class PlayerController : DoubleObject {
                 }
 
             }
+            //Grabbing es true
             else {
                 if (grounded) {
                     if (NearbyObjects[0].GetComponent<DoubleObject>().isMovable) {
@@ -333,7 +339,7 @@ public class PlayerController : DoubleObject {
                 }
 
             }
-        }else {
+        }else {//Sliding es true
             if (rb.velocity.y > 0) {
                 sliding = false;
             }
@@ -345,11 +351,12 @@ public class PlayerController : DoubleObject {
         }
     }
 
-    //Método que comprueba si hay algun objeto en la dirección en la que mira el personaje
+    //Método que comprueba si hay algun objeto en la dirección en la que mira el personaje antes lo hacía solo quieto, pero 
+    //Lo cambié para que lo pudiera hace ren movimiento.
     void CheckObjectsInFront() {
         bool temp = false;
         NearbyObjects.Clear();
-        if (!moving) {
+       // if (!moving) {
             RaycastHit2D hit2D;
 
             if (facingRight)
@@ -364,7 +371,7 @@ public class PlayerController : DoubleObject {
                     temp = true;
                 }
             }
-        }
+       // }
         if (!temp) {
             grabbing = false;
         }
@@ -457,24 +464,29 @@ public class PlayerController : DoubleObject {
                 //mirando a la izquierda, por tanto se hace un flip y se cambia prevHorizontalMov al que corresponde.
                 if (direction.x > 0) {
                     if (prevHorizontalMov != 1.0f) {
+                        prevHorizontalMov = 1.0f;
                         Flip();
                     }
-                    prevHorizontalMov = 1.0f;
-
+                    //Debug.Log("Cambio de Prev");
+                    Debug.Log(direction);
                 }
 
                 //En este else se hace lo mismo pero hacia la izquierda
-                else {
+                else if(direction.x<0){
                     if (prevHorizontalMov != -1.0f) {
+                        prevHorizontalMov = -1.0f;
                         Flip();
                     }
-                    prevHorizontalMov = -1.0f;
+                    //Debug.Log("Cambio de Prev");
+                    Debug.Log(direction);
+
                 }
                 GetComponent<AudioSource>().pitch = 1.0f;
 
                 GetComponent<AudioSource>().clip = dashClip;
                 GetComponent<AudioSource>().Play();
                 canJumpOnImpulsor = false;
+                GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
                 Dash.DoDash(gameObject, direction, dashForce);
                 dashing = true;
                 SetCanDash(false);
