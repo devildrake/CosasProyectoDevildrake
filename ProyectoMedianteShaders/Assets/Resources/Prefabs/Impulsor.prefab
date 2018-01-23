@@ -481,7 +481,7 @@ MonoBehaviour:
   windParticles: {fileID: 198381368471590050}
   changed: 0
   windSpeed: -0.4
-  maxVelocity: 3.6
+  maxVelocity: 3.6125
 --- !u!114 &114674719415664276
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -589,7 +589,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -1603953413
+  randomSeed: 610173364
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -3715,7 +3715,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 506513237
+  randomSeed: -685868498
   InitialModule:
     serializedVersion: 3
     enabled: 1

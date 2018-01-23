@@ -98,10 +98,17 @@ public class ImpulsingAir : MonoBehaviour{
                 }
 
                 //Se añade una fuerza al objeto más cercano siempre y cuando el viento sea positivo y el juego no este pausado
-                if (windSpeed > 0 && !GameLogic.instance.isPaused)
+                if (windSpeed > 0 && !GameLogic.instance.isPaused) {
                     //closestItem.GetComponent<Rigidbody2D>().AddForce(Vector2.up * windSpeed * closestItem.GetComponent<Rigidbody2D>().mass, ForceMode2D.Impulse);
-                    closestItem.GetComponent<Rigidbody2D>().velocity = new Vector2(closestItem.GetComponent<Rigidbody2D>().velocity.x,maxVelocity);
-                windParticles.trigger.SetCollider(0,closestItem.GetComponent<Rigidbody2D>());
+                    closestItem.GetComponent<Rigidbody2D>().velocity = new Vector2(closestItem.GetComponent<Rigidbody2D>().velocity.x, maxVelocity);
+                }
+                int counter = 0;
+                
+                foreach(GameObject g in inTriggerZoneObjects) {
+                    windParticles.trigger.SetCollider(counter, g.GetComponent<Rigidbody2D>());
+                    counter++;
+                }
+                //windParticles.trigger.SetCollider(0,closestItem.GetComponent<Rigidbody2D>());
             }
             //windParticles.startSpeed = (windSpeed-(-0.4f)) * (1000-250) / (0.4f - -0.4f) + 250;
             //windParticles.maxParticles = (int)((windSpeed - (-0.4f)) * (1000 - 0) / (0.4f - -0.4f) + 0);

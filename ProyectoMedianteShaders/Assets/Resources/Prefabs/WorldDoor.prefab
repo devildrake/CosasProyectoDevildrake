@@ -380,7 +380,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1934250243228434
 GameObject:
   m_ObjectHideFlags: 1
@@ -396,7 +396,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1945849032721842
 GameObject:
   m_ObjectHideFlags: 1
@@ -562,7 +562,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1071798292401342}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 300, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4905993831916048}
@@ -675,7 +675,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1192426944612318}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.51, y: 2.22, z: 0}
+  m_LocalPosition: {x: 15.9, y: 2.31, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4732016293900032}
@@ -1346,7 +1346,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 7
 --- !u!50 &50705864071943062
 Rigidbody2D:
   serializedVersion: 4
@@ -1366,7 +1366,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 7
 --- !u!61 &61180751301018402
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -1569,13 +1569,13 @@ MonoBehaviour:
   interactuableBySmash: 0
   isPunchable: 0
   isMovable: 0
-  dawn: 0
+  dawn: 1
   activated: 0
   imagenDusk: {fileID: 0}
   imagenDawn: {fileID: 0}
   endLevel: 1
   interactionSprite: {fileID: 1934250243228434}
-  interactSound: {fileID: 0}
+  interactSound: {fileID: 8300000, guid: f6bbaa876acb61c4ea67d5c75794b0b1, type: 3}
   particulasInteraccion: {fileID: 0}
 --- !u!114 &114624232075025110
 MonoBehaviour:
@@ -1595,13 +1595,13 @@ MonoBehaviour:
   interactuableBySmash: 0
   isPunchable: 0
   isMovable: 0
-  dawn: 0
+  dawn: 1
   activated: 0
   imagenDusk: {fileID: 0}
   imagenDawn: {fileID: 0}
   endLevel: 1
   interactionSprite: {fileID: 1908762637294616}
-  interactSound: {fileID: 0}
+  interactSound: {fileID: 8300000, guid: f6bbaa876acb61c4ea67d5c75794b0b1, type: 3}
   particulasInteraccion: {fileID: 0}
 --- !u!198 &198502105423944080
 ParticleSystem:
@@ -1660,7 +1660,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -948801786
+  randomSeed: 755600711
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -4786,7 +4786,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 1428301325
+  randomSeed: 352068725
   InitialModule:
     serializedVersion: 3
     enabled: 1
