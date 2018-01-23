@@ -11,16 +11,20 @@ using FragmentDataNamespace;
 
 public class GameLogic : MonoBehaviour
 {
-    public PlayerController currentPlayer;
 
+    //Flag para la transición inicial de la camara
+    public bool cameraTransition;
+
+    public PlayerController currentPlayer;
+    
     public List<FragmentData> fragments;
     private int lastFragmentId = -1;
 
     //Tiempo que hay que pulsar para reinciar
-    private float maxTimeToReset=3;
+    public float maxTimeToReset=3;
 
     //Tiempo que lleva el jugador pulsando
-    private float timerToReset;
+    public float timerToReset;
 
     //Variables de estadísticas 
     public int timesDied=0;
@@ -93,6 +97,9 @@ public class GameLogic : MonoBehaviour
         DontDestroyOnLoad(gameObject);
 
         //Call the InitGame function to initialize the first level 
+
+
+        cameraTransition = true;
     }
 
 
@@ -162,6 +169,7 @@ public class GameLogic : MonoBehaviour
 
     //Método que reinicia la espera del frame para buscar referencias y reinicia el booleano isInMainMenu
     public void ResetSceneData() {
+        cameraTransition = true;
         SetWaitAFrame(false);
         isInMainMenu = false;
         currentSceneName = SceneManager.GetActiveScene().name;

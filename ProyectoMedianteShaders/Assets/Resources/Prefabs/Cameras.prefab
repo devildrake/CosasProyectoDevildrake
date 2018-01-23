@@ -76,6 +76,7 @@ GameObject:
   - component: {fileID: 124243397115092362}
   - component: {fileID: 81474682664932748}
   - component: {fileID: 114298928001473534}
+  - component: {fileID: 114613420337049034}
   m_Layer: 0
   m_Name: Dusk_Camera
   m_TagString: MainCamera
@@ -112,6 +113,7 @@ GameObject:
   - component: {fileID: 20297954772211834}
   - component: {fileID: 92116520517096614}
   - component: {fileID: 124284623661071768}
+  - component: {fileID: 114450270304445684}
   m_Layer: 0
   m_Name: Dawn_Camera
   m_TagString: MainCamera
@@ -184,7 +186,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1259688191223266}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -6.502815, y: -6.135106, z: -12}
+  m_LocalPosition: {x: -5.97, y: -5.27, z: -12}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4837736222555752}
@@ -224,7 +226,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1243047202794512}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.002815, y: 8.835106, z: 0}
+  m_LocalPosition: {x: 6.002815, y: 1.2251058, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4683877634682780}
@@ -326,7 +328,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 6
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -362,7 +364,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 6
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -531,6 +533,50 @@ MonoBehaviour:
   change: 0
   velocity: 200
   maxScale: 25
+--- !u!114 &114450270304445684
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1477299748906488}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 266cbcc34680a204baed1c0fcfa50009, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 0}
+  offset: {x: 0, y: 0, z: -10}
+  overViewPosition: {x: 0, y: 0, z: 0}
+  farDistance: 0
+  closeDistance: 0
+  transitionThreshold: 0
+  OffsetX: 0
+  transitionTime: 0
+  transitionTimer: 0
+  distanceThreshold: 0
+  cameraState: 0
+--- !u!114 &114613420337049034
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1259688191223266}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 266cbcc34680a204baed1c0fcfa50009, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 0}
+  offset: {x: 0, y: 0, z: -10}
+  overViewPosition: {x: 0, y: 0, z: 0}
+  farDistance: 0
+  closeDistance: 0
+  transitionThreshold: 0
+  OffsetX: 0
+  transitionTime: 0
+  transitionTimer: 0
+  distanceThreshold: 0
+  cameraState: 0
 --- !u!124 &124243397115092362
 Behaviour:
   m_ObjectHideFlags: 1

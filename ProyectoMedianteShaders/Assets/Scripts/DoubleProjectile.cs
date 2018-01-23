@@ -12,7 +12,6 @@ public class DoubleProjectile : DoubleObject {
         isPunchable = true;
         isBreakable = false;
         interactuableBySmash = false;
-        offset = GameLogic.instance.worldOffset;
         if (worldAssignation == world.DAWN)
         {
             GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
@@ -31,7 +30,8 @@ public class DoubleProjectile : DoubleObject {
     }
 
     void Start() {
-        
+        offset = GameLogic.instance.worldOffset;
+
     }
 
     protected override void BrotherBehavior() {

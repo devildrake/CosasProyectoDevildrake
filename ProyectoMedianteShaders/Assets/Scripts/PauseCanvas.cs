@@ -7,6 +7,7 @@ public class PauseCanvas : MonoBehaviour {
 
     public GameObject salir;
     public GameObject comprovacion;
+    public GameObject Barra;
     bool textSet;
 
     //Referencia al gameObject que pone un tono gris a la escena
@@ -95,6 +96,9 @@ public class PauseCanvas : MonoBehaviour {
     void Update () {
         //CheckNull();
         CheckPause();
-
+        if (Input.GetKey(KeyCode.R)) {
+            Barra.SetActive(true);
+        } else
+            Barra.SetActive(false);
     }
 }

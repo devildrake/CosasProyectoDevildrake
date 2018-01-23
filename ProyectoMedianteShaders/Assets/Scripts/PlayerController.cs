@@ -432,6 +432,7 @@ public class PlayerController : DoubleObject {
                     prevHorizontalMov = -1.0f;
 
                 }
+                Debug.Log(hit2DLeftO.collider.gameObject.transform.rotation.z);
                 sliding = true;
                 rb.velocity = new Vector2(rb.velocity.x, -10);
 

@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class DoublePlatform : DoubleObject {
-
+    public bool isSlider;
 	// Use this for initialization
 	void Start () {
+        if (gameObject.tag == "slider") {
+            isSlider = true;
+        }
         InitTransformable();
         offset = GameLogic.instance.worldOffset;
         isPunchable = false;
