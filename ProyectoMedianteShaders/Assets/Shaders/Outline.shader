@@ -35,7 +35,7 @@
 
 	SubShader {
 		Tags{
-			"Queue" = "Transparent"
+			"Queue" = "Geometry"
 		}
 		Pass{ //RENDER Outline
 			ZWrite Off
