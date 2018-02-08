@@ -7,6 +7,15 @@ public class Agent : DoubleObject {
     protected State dawnState;
     protected State duskState;
     protected bool startedAI;
+
+    //Esto antes era solo de Flying Seed, pero puede que más agentes lo puedan aprovechar
+    [Tooltip("Si este objeto ha sido pisado por el jugador, esto será true, se debe reiniciar en los OnEnter de los estados")]
+    public bool stompedOn;
+
+    [Tooltip("Si este objeto ha sido tocado por el jugador, esto será true, se debe reiniciar en los OnEnter de los estados")]
+    public bool touchedByPlayer;
+
+
     void Start() {
         startedAI = false;
         InitTransformable();

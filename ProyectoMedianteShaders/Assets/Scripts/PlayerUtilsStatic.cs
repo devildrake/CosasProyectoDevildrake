@@ -279,4 +279,29 @@ public static class PlayerUtilsStatic {
         once = true;
         Cursor.lockState = CursorLockMode.Locked;
     }
+
+ /* ==========================================================================================
+ * ===================================RAYCASTHITARRAYMASK=====================================
+ * ==========================================================================================
+ */
+
+    public static RaycastHit2D RayCastArrayMask(Vector3 position,Vector3 direction,float distance,LayerMask[] mascaras) {
+        RaycastHit2D local;
+        bool found = false;
+        int i = 0;
+        local = Physics2D.Raycast(position - new Vector3(0f, 0.5f, 0f), direction, distance, mascaras[0]);
+
+        while (!found&&i<mascaras.Length) {
+            local = Physics2D.Raycast(position - new Vector3(0f, 0.5f, 0f), direction, 0.1f, mascaras[i]);
+            if (local) {
+                found = true;
+            } else {
+                i++;
+            }
+        }
+
+        return local;
+    }
+
+
 }

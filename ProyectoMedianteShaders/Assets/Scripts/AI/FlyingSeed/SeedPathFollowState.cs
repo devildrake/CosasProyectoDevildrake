@@ -7,10 +7,12 @@ public class SeedPathFollowState : State {
     float minSpeed=1;
     float threshold = 0.2f;
     float slowThreshold = 2.0f;
-    float followSpeed = 3;
+    float followSpeed = 0;
     bool increasing;
+    
     public override void OnEnter(Agent a) {
         increasing = true;
+        Debug.Log("PathFollow");
     }
 
     public override void Update(Agent a, float dt) {
@@ -51,6 +53,12 @@ public class SeedPathFollowState : State {
                 }
             } 
         }
+
+        if (a.touchedByPlayer) {
+            a.SwitchState(1, new SeedBlowUpState());
+        }
+
+
     }
 
     public override void OnExit(Agent a) {

@@ -6,8 +6,11 @@ public class DoubleProjectile : DoubleObject {
     // Use this for initialization
     Rigidbody2D rb;
     public Vector2 initialSpeed;
+    float maxTimeAlive;
+    float timeAlive;
     private void Awake()
     {
+        maxTimeAlive = 15;
         InitTransformable();
         isPunchable = true;
         isBreakable = false;
@@ -114,12 +117,23 @@ public class DoubleProjectile : DoubleObject {
         }
     }
 
+    void ProjectileLifeSpan() {
+        timeAlive += Time.deltaTime;
+        if (timeAlive > maxTimeAlive) {
+            GameLogic.instance.SafelyDestroy(this);
+        }
+    }
+
     // Update is called once per frame
     void Update() {
         AddToGameLogicList();
         BrotherBehavior();
+        ProjectileLifeSpan();
         //if (!isPunchable) {
         //    Invoke("BecomePunchable", 0.5f);
         //}
+
+
+
     }
 }

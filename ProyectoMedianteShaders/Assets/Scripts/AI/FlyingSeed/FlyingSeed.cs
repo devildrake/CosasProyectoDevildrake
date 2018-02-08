@@ -7,8 +7,72 @@ public class FlyingSeed : Agent {
     public Transform[] Path_Points = new Transform[0];
     public int currentTarget;
     public Vector3 orbitPos;
-    public bool stompedOn;
+    //public bool stompedOn;
     public float timeOnTheGround=0;
+
+
+    public GameObject grabbedObject;
+    public Vector2 grabOffset;
+    public GameObject detectStompObject;
+    public float timeCastingBlowUp;
+
+    public void DropObject() {
+        if (grabbedObject != null) {
+            grabbedObject = null;
+            grabOffset = new Vector2(0, 0);
+            brotherObject.GetComponent<FlyingSeed>().grabbedObject = null;
+            brotherObject.GetComponent<FlyingSeed>().grabOffset = new Vector2(0, 0);
+        }
+    }
+
+    public void GrabObject(GameObject g){
+        grabbedObject = g;
+        grabOffset = g.transform.position - gameObject.transform.position;
+
+
+        brotherObject.GetComponent<FlyingSeed>().grabbedObject = g.GetComponent<DoubleObject>().brotherObject;
+        brotherObject.GetComponent<FlyingSeed>().grabOffset = g.GetComponent<DoubleObject>().brotherObject.transform.position - brotherObject.transform.position;
+
+    }
+
+    public void CheckForObjects() {
+        LayerMask[] mascaras = new LayerMask[3];
+        mascaras[0] = LayerMask.GetMask("Ground");
+        mascaras[1] = LayerMask.GetMask("Ground");
+        mascaras[2] = LayerMask.GetMask("Ground");
+
+
+        RaycastHit2D hit2D = PlayerUtilsStatic.RayCastArrayMask(transform.position - new Vector3(0, 0.5f, 0), Vector3.down, 0.05f, mascaras);
+        if (hit2D) {
+            Debug.Log("Trying to grab" + hit2D.collider.gameObject);
+            GrabObject(hit2D.collider.gameObject);
+            Debug.DrawRay(transform.position - new Vector3(0f, 0.5f, 0f), Vector2.down);
+        }
+
+    }
+
+    public void BlowUp() {
+        GameObject ProjectilePrefab = Resources.Load<GameObject>("Prefabs/DoubleProjectile");
+
+
+        Vector2 direction;
+
+        if (!dawn)
+            direction = ((GameLogic.instance.currentPlayer.gameObject.transform.position - gameObject.transform.position).normalized);
+        else
+            direction = ((GameLogic.instance.currentPlayer.gameObject.transform.position - brotherObject.transform.position).normalized);
+
+        GameObject temp = Instantiate(ProjectilePrefab, transform.position + new Vector3(direction.x*1.2f,direction.y*1.2f,0), Quaternion.identity) as GameObject;
+
+        DoubleProjectile[] projectiles = temp.GetComponentsInChildren<DoubleProjectile>();
+
+
+        projectiles[0].gameObject.GetComponent<Rigidbody2D>().velocity = direction * 2;// * Time.deltaTime;
+        projectiles[1].gameObject.GetComponent<Rigidbody2D>().velocity = direction * 2;// * Time.deltaTime;
+        projectiles[0].gameObject.GetComponent<Rigidbody2D>().gravityScale = 0;
+        projectiles[1].gameObject.GetComponent<Rigidbody2D>().gravityScale = 0;
+    }
+
 
     void Start() {
         stompedOn = false;
@@ -68,6 +132,7 @@ public class FlyingSeed : Agent {
         if (worldAssignation == world.DAWN) {
             //Si antes del cambio estaba en dawn, pasara a hacerse kinematic y al otro dynamic, además de darle su velocidad
             if (dawn) {
+                dawnState = new SeedIdleState();
                 dominantVelocity = GetComponent<Rigidbody2D>().velocity;
                 brotherObject.GetComponent<DoubleObject>().dominantVelocity = GetComponent<Rigidbody2D>().velocity;
                 brotherObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
@@ -81,6 +146,8 @@ public class FlyingSeed : Agent {
             }
             //Si antes del cambio estaba en dusk, pasara a hacerse dynamic y al otro kinematic, además de darle su velocidad 
             else {
+                brotherObject.GetComponent<FlyingSeed>().SwitchState(1, new SeedPathFollowState());
+                touchedByPlayer = false;
                 dominantVelocity = brotherObject.GetComponent<Rigidbody2D>().velocity;
                 brotherObject.GetComponent<DoubleObject>().dominantVelocity = brotherObject.GetComponent<Rigidbody2D>().velocity;
                 GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
@@ -113,6 +180,7 @@ public class FlyingSeed : Agent {
 
     // Update is called once per frame
     void Update() {
+
         AddToGameLogicList();
         BrotherBehavior();
         StartAI();
@@ -122,6 +190,10 @@ public class FlyingSeed : Agent {
             DawnBehavior();
         else
             DuskBehavior();
+
+        if(grabbedObject != null) {
+            grabbedObject.transform.position = gameObject.transform.position + (Vector3)grabOffset;
+        }
 
     }
 

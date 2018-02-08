@@ -113,7 +113,7 @@ public class EnemyWalker : DoubleObject {
                 GetComponent<Rigidbody2D>().velocity = new Vector2(-velocity, 0);
             }
             if (hit2D) {
-                Debug.Log(hit2D.collider.gameObject.tag);
+                //Debug.Log(hit2D.collider.gameObject.tag);
                 movingRight = !movingRight;
             }
 

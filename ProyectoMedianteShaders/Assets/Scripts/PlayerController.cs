@@ -469,7 +469,6 @@ public class PlayerController : DoubleObject {
                         Flip();
                     }
                     //Debug.Log("Cambio de Prev");
-                    Debug.Log(direction);
                 }
 
                 //En este else se hace lo mismo pero hacia la izquierda
