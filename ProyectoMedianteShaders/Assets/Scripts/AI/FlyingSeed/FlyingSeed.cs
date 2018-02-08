@@ -26,6 +26,7 @@ public class FlyingSeed : Agent {
     }
 
     public void GrabObject(GameObject g){
+        GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
         grabbedObject = g;
         grabOffset = g.transform.position - gameObject.transform.position;
 
