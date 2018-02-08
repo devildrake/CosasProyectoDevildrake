@@ -42,6 +42,9 @@ public class PlayerController : DoubleObject {
     public bool smashing;
     bool dashing;
     bool grabbing;
+    bool groundedChecker;
+    float auxTime;
+
     public bool onImpulsor;
     public bool canJumpOnImpulsor;
     public bool calledImpuslorBool;
@@ -391,18 +394,39 @@ public class PlayerController : DoubleObject {
     //Método que comprueba si la velocidad y del personaje es 0 o aprox. y actualiza el booleano grounded en consecuencia
     void CheckGrounded() {
 
-            RaycastHit2D hit2D = Physics2D.Raycast(rb.position - new Vector2(0f, 0.5f), Vector2.down, 0.1f, groundMask);
-            RaycastHit2D hit2DLeft = Physics2D.Raycast(rb.position - new Vector2(0f, 0.5f) + new Vector2(-distanciaBordeSprite, 0), Vector2.down, 0.1f, groundMask);
-            RaycastHit2D hit2DRight = Physics2D.Raycast(rb.position - new Vector2(0f, 0.5f) + new Vector2(distanciaBordeSprite, 0), Vector2.down, 0.1f, groundMask);
-            // If the raycast hit something
-            if (hit2D || hit2DLeft || hit2DRight) {
-                grounded = true;
-                dashing = false;
-                SetCanDash(true);
+        LayerMask[] mascaras = new LayerMask[3];
+        mascaras[0] = LayerMask.GetMask("Platform");
+        mascaras[1] = LayerMask.GetMask("Ground");
+        mascaras[2] = LayerMask.GetMask("Enemy");
+
+
+        RaycastHit2D hit2D = PlayerUtilsStatic.RayCastArrayMask(transform.position - new Vector3(0, 0.5f, 0), Vector3.down, 0.05f, mascaras);
+        RaycastHit2D hit2DLeft = PlayerUtilsStatic.RayCastArrayMask(transform.position - new Vector3(0, 0.5f, 0)+ new Vector3(-distanciaBordeSprite, 0,0), Vector3.down, 0.05f, mascaras);
+        RaycastHit2D hit2DRight = PlayerUtilsStatic.RayCastArrayMask(transform.position - new Vector3(0, 0.5f, 0) + new Vector3(distanciaBordeSprite, 0,0), Vector3.down, 0.05f, mascaras);
+
+
+        //RaycastHit2D hit2D = Physics2D.Raycast(rb.position - new Vector2(0f, 0.5f), Vector2.down, 0.1f, groundMask);
+        //RaycastHit2D hit2DLeft = Physics2D.Raycast(rb.position - new Vector2(0f, 0.5f) + new Vector2(-distanciaBordeSprite, 0), Vector2.down, 0.1f, groundMask);
+        //RaycastHit2D hit2DRight = Physics2D.Raycast(rb.position - new Vector2(0f, 0.5f) + new Vector2(distanciaBordeSprite, 0), Vector2.down, 0.1f, groundMask);
+        // If the raycast hit something
+        if (hit2D || hit2DLeft || hit2DRight) {
+                if (groundedChecker) {
+
+                    grounded = true;
+                    dashing = false;
+                    SetCanDash(true);
+            }  else {
+                if (auxTime > 0.1f)
+                    groundedChecker = true;
+                else
+                    auxTime += Time.deltaTime;
             }
+         }
         
         else {
             grounded = false;
+            groundedChecker = false;
+            auxTime = 0;
         }
         RaycastHit2D hit2DLeftO = Physics2D.Raycast(rb.position - new Vector2(0f, 0.5f) + new Vector2(-distanciaBordeSprite, 0), Vector2.down, 0.1f, groundMask);
         RaycastHit2D hit2DRightO = Physics2D.Raycast(rb.position - new Vector2(0f, 0.5f) + new Vector2(distanciaBordeSprite, 0), Vector2.down, 0.1f, groundMask);

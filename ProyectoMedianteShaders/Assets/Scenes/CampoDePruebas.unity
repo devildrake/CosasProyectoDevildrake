@@ -1046,6 +1046,22 @@ Prefab:
       propertyPath: m_RootOrder
       value: 14
       objectReference: {fileID: 0}
+    - target: {fileID: 1954721266343506, guid: 877c887b73610ce41b41b22d7c134c7f, type: 2}
+      propertyPath: m_Layer
+      value: 27
+      objectReference: {fileID: 0}
+    - target: {fileID: 1036194123318086, guid: 877c887b73610ce41b41b22d7c134c7f, type: 2}
+      propertyPath: m_Layer
+      value: 27
+      objectReference: {fileID: 0}
+    - target: {fileID: 1950958672978570, guid: 877c887b73610ce41b41b22d7c134c7f, type: 2}
+      propertyPath: m_Layer
+      value: 27
+      objectReference: {fileID: 0}
+    - target: {fileID: 1715758012940152, guid: 877c887b73610ce41b41b22d7c134c7f, type: 2}
+      propertyPath: m_Layer
+      value: 27
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 877c887b73610ce41b41b22d7c134c7f, type: 2}
   m_IsPrefabParent: 0
@@ -1444,7 +1460,7 @@ GameObject:
   - component: {fileID: 1291282353}
   - component: {fileID: 1291282355}
   - component: {fileID: 1291282354}
-  m_Layer: 10
+  m_Layer: 28
   m_Name: GameObject
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -1673,7 +1689,7 @@ GameObject:
   - component: {fileID: 1531564042}
   - component: {fileID: 1531564043}
   - component: {fileID: 1531564040}
-  m_Layer: 0
+  m_Layer: 28
   m_Name: SemillaDusk
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2337,7 +2353,7 @@ GameObject:
   - component: {fileID: 1995191432}
   - component: {fileID: 1995191433}
   - component: {fileID: 1995191434}
-  m_Layer: 0
+  m_Layer: 28
   m_Name: GameObject
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -2464,7 +2480,7 @@ GameObject:
   - component: {fileID: 2078423887}
   - component: {fileID: 2078423888}
   - component: {fileID: 2078423885}
-  m_Layer: 0
+  m_Layer: 28
   m_Name: SemillaDawn
   m_TagString: Untagged
   m_Icon: {fileID: 0}

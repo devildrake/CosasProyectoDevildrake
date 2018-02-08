@@ -38,9 +38,9 @@ public class FlyingSeed : Agent {
 
     public void CheckForObjects() {
         LayerMask[] mascaras = new LayerMask[3];
-        mascaras[0] = LayerMask.GetMask("Ground");
-        mascaras[1] = LayerMask.GetMask("Ground");
-        mascaras[2] = LayerMask.GetMask("Ground");
+        mascaras[0] = LayerMask.GetMask("Platform");
+        mascaras[1] = LayerMask.GetMask("Platform");
+        mascaras[2] = LayerMask.GetMask("Platform");
 
 
         RaycastHit2D hit2D = PlayerUtilsStatic.RayCastArrayMask(transform.position - new Vector3(0, 0.5f, 0), Vector3.down, 0.05f, mascaras);
