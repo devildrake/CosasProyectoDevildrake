@@ -5,7 +5,7 @@ using UnityEngine;
 public class GroundCheck : MonoBehaviour {
     bool groundedChecker;
     float auxTime;
-
+    public float rayLength;
 
     private void Start() {
         auxTime = 0;
@@ -20,9 +20,9 @@ public class GroundCheck : MonoBehaviour {
         //mascaras[2] = LayerMask.GetMask("Enemy");
 
 
-        RaycastHit2D hit2D = PlayerUtilsStatic.RayCastArrayMask(transform.position, Vector3.down, 0.05f, mascaras);
-        RaycastHit2D hit2DLeft = PlayerUtilsStatic.RayCastArrayMask(transform.position + new Vector3(-player.distanciaBordeSprite, 0, 0), Vector3.down, 0.05f, mascaras);
-        RaycastHit2D hit2DRight = PlayerUtilsStatic.RayCastArrayMask(transform.position + new Vector3(player.distanciaBordeSprite, 0, 0), Vector3.down, 0.05f, mascaras);
+        RaycastHit2D hit2D = PlayerUtilsStatic.RayCastArrayMask(transform.position, Vector3.down, rayLength, mascaras);
+        RaycastHit2D hit2DLeft = PlayerUtilsStatic.RayCastArrayMask(transform.position + new Vector3(-player.distanciaBordeSprite, 0, 0), Vector3.down, rayLength, mascaras);
+        RaycastHit2D hit2DRight = PlayerUtilsStatic.RayCastArrayMask(transform.position + new Vector3(player.distanciaBordeSprite, 0, 0), Vector3.down, rayLength, mascaras);
 
         if (hit2D.collider != null) 
         Debug.Log(hit2D.collider);

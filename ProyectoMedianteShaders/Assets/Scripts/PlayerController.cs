@@ -345,7 +345,7 @@ public class PlayerController : DoubleObject {
             }
         }else {//Sliding es true
             if (rb.velocity.y > 0) {
-                sliding = false;
+                //sliding = false;
             }
             if (!GetComponent<AudioSource>().isPlaying) {
                 GetComponent<AudioSource>().clip = slideClip;
