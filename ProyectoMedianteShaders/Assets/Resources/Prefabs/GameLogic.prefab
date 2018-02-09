@@ -132,8 +132,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e1d83626cf12654f8e79b32ec4115c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cameraTransition: 0
+  currentPlayer: {fileID: 0}
+  fragments: []
+  maxTimeToReset: 3
+  timerToReset: 0
+  timesDied: 0
+  timeElapsed: 0
+  pickedFragments: 0
   isPaused: 0
+  levelFinished: 0
   isInMainMenu: 0
   pauseCanvas: {fileID: 0}
   transformableObjects: []
+  spawnPoint: {x: 0, y: 0, z: 0}
   worldOffset: 0

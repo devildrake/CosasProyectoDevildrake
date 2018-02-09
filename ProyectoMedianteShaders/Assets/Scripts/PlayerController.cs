@@ -40,10 +40,10 @@ public class PlayerController : DoubleObject {
     public bool crawling; //iiiiin my craaaaaawl
     bool moving;
     public bool smashing;
-    bool dashing;
+    public bool dashing;
     bool grabbing;
-    bool groundedChecker;
-    float auxTime;
+    //bool groundedChecker;
+    //float auxTime;
 
     public bool onImpulsor;
     public bool canJumpOnImpulsor;
@@ -84,10 +84,10 @@ public class PlayerController : DoubleObject {
     public LayerMask slideMask;
 
     //Referencia al RigidBody2D del personaje, se inicializa en el start.
-    Rigidbody2D rb;
+    public Rigidbody2D rb;
 
     //ESTE INT ES -1 SI EL MOVIMIENTO PREVIO FUE HACIA LA IZQUIERDA Y ES 1 SI EL MOVIMIENTO PREVIO FUE HACIA LA DERECHA
-    float prevHorizontalMov;
+    public float prevHorizontalMov;
 
     [SerializeField]
     //Booleano que comprueba si el personaje deberia estar ralentizado en el aire, se reinicia al estar en el suelo (Que se comprueba con colliders2D y tags)
@@ -160,7 +160,8 @@ public class PlayerController : DoubleObject {
         //Comportamiento sin pausar
         if (!GameLogic.instance.isPaused) {
             if ((worldAssignation == world.DAWN && dawn) ||(worldAssignation == world.DUSK&&!dawn)) {
-                CheckGrounded();
+                //CheckGrounded();
+                GetComponentInChildren<GroundCheck>().CheckGrounded(this);
                 CheckObjectsInFront();
                 Move();
                 CheckInputs();
@@ -208,7 +209,7 @@ public class PlayerController : DoubleObject {
     }
 
     //Método setter para canDash
-    void SetCanDash(bool a) {
+    public void SetCanDash(bool a) {
         canDash = a;
     }
 
@@ -235,7 +236,7 @@ public class PlayerController : DoubleObject {
     }
 
     //Método que cambia hacia donde mira el personaje, se le llama al cambiar el Input.GetAxis Horizontal de 1 a -1 o alreves
-    void Flip() {
+    public void Flip() {
         if (!grabbing) {
             Vector3 theScale = transform.localScale;
             theScale.x *= -1;
@@ -390,83 +391,6 @@ public class PlayerController : DoubleObject {
         GetComponent<AudioSource>().Play();
         sliding = false;
     }
-
-    //Método que comprueba si la velocidad y del personaje es 0 o aprox. y actualiza el booleano grounded en consecuencia
-    void CheckGrounded() {
-
-        LayerMask[] mascaras = new LayerMask[3];
-        mascaras[0] = LayerMask.GetMask("Platform");
-        mascaras[1] = LayerMask.GetMask("Ground");
-        mascaras[2] = LayerMask.GetMask("Enemy");
-
-
-        RaycastHit2D hit2D = PlayerUtilsStatic.RayCastArrayMask(transform.position - new Vector3(0, 0.5f, 0), Vector3.down, 0.05f, mascaras);
-        RaycastHit2D hit2DLeft = PlayerUtilsStatic.RayCastArrayMask(transform.position - new Vector3(0, 0.5f, 0)+ new Vector3(-distanciaBordeSprite, 0,0), Vector3.down, 0.05f, mascaras);
-        RaycastHit2D hit2DRight = PlayerUtilsStatic.RayCastArrayMask(transform.position - new Vector3(0, 0.5f, 0) + new Vector3(distanciaBordeSprite, 0,0), Vector3.down, 0.05f, mascaras);
-
-
-        //RaycastHit2D hit2D = Physics2D.Raycast(rb.position - new Vector2(0f, 0.5f), Vector2.down, 0.1f, groundMask);
-        //RaycastHit2D hit2DLeft = Physics2D.Raycast(rb.position - new Vector2(0f, 0.5f) + new Vector2(-distanciaBordeSprite, 0), Vector2.down, 0.1f, groundMask);
-        //RaycastHit2D hit2DRight = Physics2D.Raycast(rb.position - new Vector2(0f, 0.5f) + new Vector2(distanciaBordeSprite, 0), Vector2.down, 0.1f, groundMask);
-        // If the raycast hit something
-        if (hit2D || hit2DLeft || hit2DRight) {
-                if (groundedChecker) {
-
-                    grounded = true;
-                    dashing = false;
-                    SetCanDash(true);
-            }  else {
-                if (auxTime > 0.1f)
-                    groundedChecker = true;
-                else
-                    auxTime += Time.deltaTime;
-            }
-         }
-        
-        else {
-            grounded = false;
-            groundedChecker = false;
-            auxTime = 0;
-        }
-        RaycastHit2D hit2DLeftO = Physics2D.Raycast(rb.position - new Vector2(0f, 0.5f) + new Vector2(-distanciaBordeSprite, 0), Vector2.down, 0.1f, groundMask);
-        RaycastHit2D hit2DRightO = Physics2D.Raycast(rb.position - new Vector2(0f, 0.5f) + new Vector2(distanciaBordeSprite, 0), Vector2.down, 0.1f, groundMask);
-
-        if (!hit2DLeftO && !hit2DRightO) {
-            bool right = true;
-
-            //SLIDE PA LA DERECHA
-            hit2DRightO = Physics2D.Raycast(rb.position - new Vector2(0f, 0.5f) + new Vector2(distanciaBordeSprite, 0), Vector2.down, 3.0f, slideMask);
-            hit2DLeftO = Physics2D.Raycast(rb.position - new Vector2(0f, 0.5f) + new Vector2(-distanciaBordeSprite, 0), Vector2.down, 0.2f, slideMask);
-
-
-            if (!(hit2DLeftO && hit2DRightO)){
-                right = false;
-                //SLIDE PA LA IZQUIERDA
-                hit2DRightO = Physics2D.Raycast(rb.position - new Vector2(0f, 0.5f) + new Vector2(distanciaBordeSprite, 0), Vector2.down, 0.2f, slideMask);
-                hit2DLeftO = Physics2D.Raycast(rb.position - new Vector2(0f, 0.5f) + new Vector2(-distanciaBordeSprite, 0), Vector2.down, 3.0f, slideMask);
-            }
-            if (hit2DLeftO && hit2DRightO) {
-                if (!facingRight&& right) {
-                    Flip();
-                    prevHorizontalMov = 1.0f;
-
-                }
-                else if (facingRight && !right) {
-                    Flip();
-                    prevHorizontalMov = -1.0f;
-
-                }
-                Debug.Log(hit2DLeftO.collider.gameObject.transform.rotation.z);
-                sliding = true;
-                rb.velocity = new Vector2(rb.velocity.x, -10);
-
-            }
-        }
-        else {
-            sliding = false;
-        }
-    }
-
 
     void DawnBehavior() {
         if (canDash)

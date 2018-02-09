@@ -3,15 +3,29 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyWalker : DoubleObject {
-    // Use this for initialization
     Rigidbody2D rb;
     public LayerMask groundMask;
-    float distanciaBordeSprite;
     public float bounceForce;
-    bool movingRight;
     public float velocity;
+    float threshold = 0.2f;
+    float maxSpeed = 2;
+
+
+    public Transform[] PatrolPoints;
+    public Vector3[] VectorPatrolPoints;
+    bool goingA;
+
     void Start() {
-        movingRight = true;
+        if (worldAssignation == world.DAWN) {
+            VectorPatrolPoints = new Vector3[2];
+            VectorPatrolPoints[0] = new Vector3(PatrolPoints[0].position.x, PatrolPoints[0].position.y, PatrolPoints[0].position.z);
+            VectorPatrolPoints[1] = new Vector3(PatrolPoints[1].position.x, PatrolPoints[1].position.y, PatrolPoints[1].position.z);
+            Destroy(PatrolPoints[0].gameObject);
+            Destroy(PatrolPoints[1].gameObject);
+        }
+
+
+
         bounceForce = 50;
         velocity = 2.5f;
         InitTransformable();
@@ -33,7 +47,6 @@ public class EnemyWalker : DoubleObject {
         rb = GetComponent<Rigidbody2D>();
         groundMask = LayerMask.GetMask("Ground");
 
-        distanciaBordeSprite = 0.745f;
         rb.mass = 1;
     }
 
@@ -99,25 +112,32 @@ public class EnemyWalker : DoubleObject {
 
     //Comportamiento en dawn, castea un rayo hacia donde esta moviendose y si encuentra algo con layerMask Ground, cambia su dirección
     void DawnBehavior() {
-        if (dawn) {
-            RaycastHit2D hit2D;
 
-            if (movingRight) {
-                hit2D = Physics2D.Raycast(gameObject.transform.position, Vector2.right+new Vector2(0,0.5f), 1f, groundMask);
-                Debug.DrawRay(gameObject.transform.position+new Vector3(0,0.5f,0), Vector2.right);
-                GetComponent<Rigidbody2D>().velocity = new Vector2(velocity, 0);
+        print(Mathf.Abs(VectorPatrolPoints[0].x - transform.position.x));
+
+        if (goingA) {
+            if(Mathf.Abs(VectorPatrolPoints[0].x - transform.position.x) > threshold) {
+                velocity = VectorPatrolPoints[0].x - transform.position.x;
             } else {
-                hit2D = Physics2D.Raycast(gameObject.transform.position, Vector2.left + new Vector2(0, 0.5f), 1f, groundMask);
-                Debug.DrawRay(gameObject.transform.position + new Vector3(0, 0.5f, 0), Vector2.left);
-
-                GetComponent<Rigidbody2D>().velocity = new Vector2(-velocity, 0);
+                goingA = false;
             }
-            if (hit2D) {
-                //Debug.Log(hit2D.collider.gameObject.tag);
-                movingRight = !movingRight;
+        } else {
+            if (Mathf.Abs(VectorPatrolPoints[1].x - transform.position.x) > threshold) {
+                velocity = VectorPatrolPoints[1].x - transform.position.x;
+            } else {
+                goingA = true;
             }
-
         }
+
+        if (velocity > 0) {
+            GetComponent<Rigidbody2D>().velocity = new Vector2(maxSpeed, 0);
+        }
+        else{
+            GetComponent<Rigidbody2D>().velocity = new Vector2(-maxSpeed, 0);
+        }
+
+
+
     }
     //Velocidad a 0
     void DuskBehavior() {

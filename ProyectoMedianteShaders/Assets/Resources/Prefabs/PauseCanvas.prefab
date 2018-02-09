@@ -110,6 +110,7 @@ GameObject:
   - component: {fileID: 114368816560045060}
   - component: {fileID: 114675578544299868}
   - component: {fileID: 114891369169068594}
+  - component: {fileID: 225196806094696666}
   m_Layer: 5
   m_Name: PauseCanvas
   m_TagString: Untagged
@@ -2342,7 +2343,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0.09}
   m_SizeDelta: {x: 1024, y: 768}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224381122238022818
@@ -2594,3 +2595,14 @@ RectTransform:
   m_AnchoredPosition: {x: 331, y: -260}
   m_SizeDelta: {x: 94, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!225 &225196806094696666
+CanvasGroup:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1293824943403972}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0

@@ -12,7 +12,6 @@ public class SeedPathFollowState : State {
     
     public override void OnEnter(Agent a) {
         increasing = true;
-        Debug.Log("PathFollow");
     }
 
     public override void Update(Agent a, float dt) {

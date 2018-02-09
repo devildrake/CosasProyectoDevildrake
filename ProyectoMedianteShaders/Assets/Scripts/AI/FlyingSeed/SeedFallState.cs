@@ -18,7 +18,6 @@ public class SeedFallState : State {
     }
 
     override public void OnExit(Agent a) {
-        Debug.Log("Exit");
 
     }
 }

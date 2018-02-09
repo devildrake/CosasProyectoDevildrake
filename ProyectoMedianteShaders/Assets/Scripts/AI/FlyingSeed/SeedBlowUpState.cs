@@ -7,7 +7,6 @@ public class SeedBlowUpState : State {
     float timeToExplode = 2;
 
     public override void OnEnter(Agent a) {
-        Debug.Log("BlowUp");
         a.GetComponent<FlyingSeed>().timeCastingBlowUp = 0;
         a.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
         a.touchedByPlayer = false;

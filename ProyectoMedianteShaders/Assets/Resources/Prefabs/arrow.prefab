@@ -20,7 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4969705461339340}
   - component: {fileID: 212886721077210394}
-  m_Layer: 5
+  m_Layer: 31
   m_Name: arrow_sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -35,7 +35,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4268534446638940}
-  m_Layer: 5
+  m_Layer: 31
   m_Name: arrow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -51,7 +51,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4771750033734700}
   - component: {fileID: 212719455992898644}
-  m_Layer: 5
+  m_Layer: 31
   m_Name: flecha trasera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -65,8 +65,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1809996947838576}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -13.059353, y: -2.1308613, z: 13.078297}
-  m_LocalScale: {x: 7.0861316, y: 7.0861216, z: 2}
+  m_LocalPosition: {x: -13.059353, y: -9.740862, z: 13.078297}
+  m_LocalScale: {x: 1, y: 1, z: 2}
   m_Children:
   - {fileID: 4969705461339340}
   - {fileID: 4771750033734700}
@@ -131,7 +131,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: e4b035de6a8a3b941bc402fd9adecd67, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f9f4e7877299c9a4db1e61d0d77a5eb1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -139,7 +139,7 @@ SpriteRenderer:
   m_Size: {x: 5.12, y: 5.12}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
 --- !u!212 &212886721077210394
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -172,7 +172,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 8a822c7cd8e2f0b409583cd946dd3e1a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 8e673dad74a766245884b25b90c99706, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -180,4 +180,4 @@ SpriteRenderer:
   m_Size: {x: 5.12, y: 5.12}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
