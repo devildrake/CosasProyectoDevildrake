@@ -39,7 +39,7 @@ public class FlyingSeed : Agent {
     public void CheckForObjects() {
         LayerMask[] mascaras = new LayerMask[3];
         mascaras[0] = LayerMask.GetMask("Platform");
-        mascaras[1] = LayerMask.GetMask("Platform");
+        mascaras[1] = LayerMask.GetMask("Enemy");
         mascaras[2] = LayerMask.GetMask("Platform");
 
 
@@ -48,6 +48,14 @@ public class FlyingSeed : Agent {
             Debug.Log("Trying to grab" + hit2D.collider.gameObject);
             GrabObject(hit2D.collider.gameObject);
             Debug.DrawRay(transform.position - new Vector3(0f, 0.5f, 0f), Vector2.down);
+        } else {
+        hit2D =  Physics2D.Raycast(transform.position - new Vector3(0, 0.5f, 0), Vector3.down, 0.05f, LayerMask.GetMask("Walkable"));
+            if (hit2D) {
+                print("Bruh");
+                if (GetComponentInParent<CanBeGrabbed>() != null) {
+                    GrabObject(hit2D.collider.gameObject);
+                }
+            }
         }
 
     }
@@ -91,7 +99,6 @@ public class FlyingSeed : Agent {
             //GetComponent<SpriteRenderer>().sprite = imagenDusk;
 
         }
-
 
     }
 
@@ -182,6 +189,9 @@ public class FlyingSeed : Agent {
     // Update is called once per frame
     void Update() {
 
+        if(duskState!=null)
+        print(duskState.ToString());
+
         AddToGameLogicList();
         BrotherBehavior();
         StartAI();
@@ -203,6 +213,8 @@ public class FlyingSeed : Agent {
             startedAI = true;
             SwitchState(0, new SeedIdleState());
             SwitchState(1, new SeedPathFollowState());
+            dawn = false;
+
         }
     }
 }

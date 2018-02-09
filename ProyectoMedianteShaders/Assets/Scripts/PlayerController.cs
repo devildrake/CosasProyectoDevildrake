@@ -345,7 +345,7 @@ public class PlayerController : DoubleObject {
             }
         }else {//Sliding es true
             if (rb.velocity.y > 0) {
-                //sliding = false;
+                sliding = false;
             }
             if (!GetComponent<AudioSource>().isPlaying) {
                 GetComponent<AudioSource>().clip = slideClip;
@@ -393,7 +393,7 @@ public class PlayerController : DoubleObject {
     }
 
     void DawnBehavior() {
-        if (canDash)
+        if (canDash&&!grounded)
             direction = PlayerUtilsStatic.UseDirectionCircle(arrow, gameObject,0);
 
         if (objectsInDeflectArea.Count != 0) {
@@ -406,7 +406,7 @@ public class PlayerController : DoubleObject {
 
         //Si se suelta el botón izquierdo del ratón y se puede dashear, se desactiva la slowMotion y se modifica el timeScale además de poner en false canDash
         if (Input.GetMouseButtonUp(0) && canDash) {
-            if (leftPressed) {
+            if (leftPressed&&!grounded) {
                 GameLogic.instance.SetTimeScaleLocal(1.0f);
 
                 //En caso de ser la dirección hacia la derecha se comprueba si la prevHorizontalMov no era 1, en caso de no serlo, significa que el personaje antes estaba 
@@ -443,7 +443,7 @@ public class PlayerController : DoubleObject {
 
             //Si se pulsa el botón izquierdo del ratón y se puede dashear, se activa la slowMotion y se modifica el timeScale de gameLogic
         }
-        else if (Input.GetMouseButtonDown(0) && canDash) {
+        else if (Input.GetMouseButtonDown(0) && canDash&& !grounded) {
             leftPressed = true;
             GameLogic.instance.SetTimeScaleLocal(slowMotionTimeScale);
         }

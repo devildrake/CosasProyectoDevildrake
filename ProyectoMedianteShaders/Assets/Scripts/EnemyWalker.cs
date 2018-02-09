@@ -113,7 +113,6 @@ public class EnemyWalker : DoubleObject {
     //Comportamiento en dawn, castea un rayo hacia donde esta moviendose y si encuentra algo con layerMask Ground, cambia su dirección
     void DawnBehavior() {
 
-        print(Mathf.Abs(VectorPatrolPoints[0].x - transform.position.x));
 
         if (goingA) {
             if(Mathf.Abs(VectorPatrolPoints[0].x - transform.position.x) > threshold) {
