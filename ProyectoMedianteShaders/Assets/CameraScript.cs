@@ -17,7 +17,8 @@ public class CameraScript : MonoBehaviour {
     private void Start() {
         cameraState = CameraState.CLOSE;
         overViewPosition = transform.position;
-        farDistance = 10;
+
+        //farDistance = 10;
         closeDistance = 4.5f;
         OffsetX = 3;
         transitionTime = 2;
