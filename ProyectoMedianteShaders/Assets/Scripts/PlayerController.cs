@@ -158,8 +158,6 @@ public class PlayerController : DoubleObject {
 
     void Update() {
 
-        Debug.Log(objectsInDeflectArea.Count);
-
         //Debug.Log(grounded);
         //Add del transformable
         AddToGameLogicList();
