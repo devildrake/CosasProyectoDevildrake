@@ -15,6 +15,8 @@ public class Agent : DoubleObject {
     [Tooltip("Si este objeto ha sido tocado por el jugador, esto será true, se debe reiniciar en los OnEnter de los estados")]
     public bool touchedByPlayer;
 
+    [Tooltip("Si este objeto detecta desde algun trigger al jugador")]
+    public bool playerInArea;
 
     void Start() {
         startedAI = false;

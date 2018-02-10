@@ -71,6 +71,10 @@ public class GameLogic : MonoBehaviour
 
     public float worldOffset;
 
+    public void KillPlayer() {
+        currentPlayer.Kill();
+    }
+
     void Awake()
     {
         Application.targetFrameRate = 60;

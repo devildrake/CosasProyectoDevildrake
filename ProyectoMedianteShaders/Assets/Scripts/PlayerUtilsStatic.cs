@@ -284,7 +284,14 @@ public static class PlayerUtilsStatic {
  * ===================================RAYCASTHITARRAYMASK=====================================
  * ==========================================================================================
  */
-
+ /// <summary>
+ /// Se le pasa la posición origen la dirección la distancia y un array de mascaras (minimo 2)
+ /// </summary>
+ /// <param name="position"></param>
+ /// <param name="direction"></param>
+ /// <param name="distance"></param>
+ /// <param name="mascaras"></param>
+ /// <returns></returns>
     public static RaycastHit2D RayCastArrayMask(Vector3 position,Vector3 direction,float distance,LayerMask[] mascaras) {
         RaycastHit2D local;
         bool found = false;
@@ -299,7 +306,6 @@ public static class PlayerUtilsStatic {
                 i++;
             }
         }
-
         return local;
     }
 

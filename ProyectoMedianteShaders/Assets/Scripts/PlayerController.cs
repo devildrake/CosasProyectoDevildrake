@@ -82,6 +82,7 @@ public class PlayerController : DoubleObject {
     //Mascara de suelo (Mas tarde podria ser util, ahora esta aqui por que para gestionar grounded hice pruebas varias)
     public LayerMask groundMask;
     public LayerMask slideMask;
+    public LayerMask[] grabbableMask;
 
     //Referencia al RigidBody2D del personaje, se inicializa en el start.
     public Rigidbody2D rb;
@@ -99,6 +100,13 @@ public class PlayerController : DoubleObject {
 
     //Se inicializan las cosas
     void Start() {
+        grabbableMask = new LayerMask[3];
+
+        grabbableMask[0] = LayerMask.GetMask("Ground");
+        grabbableMask[2] = LayerMask.GetMask("Enemy");
+        grabbableMask[1] = LayerMask.GetMask("Platform");
+
+
         maxSpeedY = 8;
         originalOffsetCollider = GetComponent<BoxCollider2D>().offset;
         originalSizeCollider = GetComponent<BoxCollider2D>().size;
@@ -150,6 +158,9 @@ public class PlayerController : DoubleObject {
 
     void Update() {
 
+        Debug.Log(objectsInDeflectArea.Count);
+
+        //Debug.Log(grounded);
         //Add del transformable
         AddToGameLogicList();
 
@@ -363,13 +374,32 @@ public class PlayerController : DoubleObject {
        // if (!moving) {
             RaycastHit2D hit2D;
 
-            if (facingRight)
-                hit2D = Physics2D.Raycast(rb.position, Vector2.right, 1.5f, groundMask);
-            else {
-                hit2D = Physics2D.Raycast(rb.position, Vector2.left, 1.5f, groundMask);
+        if (facingRight) {
+            //ESTO FUNCIONA hit2D = Physics2D.Raycast(rb.position, Vector2.right, 1.5f, LayerMask.GetMask("Platform"));
+            hit2D = Physics2D.Raycast(rb.position, Vector2.right, 1.5f, LayerMask.GetMask("Platform"));
+            if (!hit2D) {
+                hit2D = Physics2D.Raycast(rb.position, Vector2.right, 1.5f, LayerMask.GetMask("Enemy"));
+            }
+            if (!hit2D) {
+                hit2D = Physics2D.Raycast(rb.position, Vector2.right, 1.5f, LayerMask.GetMask("Ground"));
             }
 
-            if (hit2D) {
+            //hit2D = Physics2D.Raycast(rb.position, Vector2.right, 1.5f, groundMask);
+            //hit2D = PlayerUtilsStatic.RayCastArrayMask(rb.position, Vector2.right, 1.5f, grabbableMask);
+            Debug.DrawRay(rb.position, Vector2.right * 1.5f);
+        } else {
+            //hit2D = Physics2D.Raycast(rb.position, Vector2.left, 1.5f, groundMask);
+            //hit2D = PlayerUtilsStatic.RayCastArrayMask(rb.position, Vector2.left, 1.5f, grabbableMask);
+            hit2D = Physics2D.Raycast(rb.position, Vector2.left, 1.5f, LayerMask.GetMask("Platform"));
+            if (!hit2D) {
+                hit2D = Physics2D.Raycast(rb.position, Vector2.left, 1.5f, LayerMask.GetMask("Enemy"));
+            }
+            if (!hit2D) {
+                hit2D = Physics2D.Raycast(rb.position, Vector2.left, 1.5f, LayerMask.GetMask("Ground"));
+            }
+        }
+
+        if (hit2D) {
                 if (!NearbyObjects.Contains(hit2D.transform.gameObject)) {
                     NearbyObjects.Add(hit2D.transform.gameObject);
                     temp = true;
@@ -472,10 +502,20 @@ public class PlayerController : DoubleObject {
             GameLogic.instance.SetTimeScaleLocal(slowMotionTimeScale);
         }else if (Input.GetMouseButtonUp(1)&& objectsInDeflectArea.Count!=0) {
             foreach(GameObject g in objectsInDeflectArea) {
-                PlayerUtilsStatic.DoDash(g, deflectDirection, 20);
+
+                if (g.GetComponent<Trampler>() != null) {
+                    g.GetComponent<Trampler>().SwitchState(0, new TramplerStunnedState());
+                }
+
+                g.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
+                PlayerUtilsStatic.DoDash(g, deflectDirection, 20*g.GetComponent<Rigidbody2D>().mass/2);
                 GetComponent<AudioSource>().clip = deflectClip;
                 GetComponent<AudioSource>().Play();
+
+                if (g.tag == "Projectile")
                 g.GetComponent<Rigidbody2D>().gravityScale = 0;
+
+
             }
             GameLogic.instance.SetTimeScaleLocal(1f);
         }

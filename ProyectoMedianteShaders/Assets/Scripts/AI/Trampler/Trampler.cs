@@ -2,33 +2,42 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyWalker : DoubleObject {
-    Rigidbody2D rb;
-    public LayerMask groundMask;
-    public float bounceForce;
-    public float velocity;
-    float threshold = 0.2f;
-    float maxSpeed = 2;
+public class Trampler : Agent {
 
-
-    public Transform[] PatrolPoints;
-    public Vector3[] VectorPatrolPoints;
-    bool goingA;
+    public float stunDuration;
+    public float timeStunned;
+    public Vector3 pointA;
+    public Vector3 pointB;
+    public GameObject objectA;
+    public GameObject objectB;
+    public float maxSpeed;
+    public float currentSpeed;
+    //Int para definir hacia donde debe moverse el trampler al cargar, 0 es hacia A, 1 es hacia B, 2 o cualquier otra cosa es aun no se sae
+    public int whereTo;
+    public LayerMask[] masks;
+    public bool mustStop;
+    public void ResetPoints() {
+        if (worldAssignation == world.DAWN) {
+            pointA = new Vector3(objectA.transform.position.x, objectA.transform.position.y, objectA.transform.position.z);
+            pointB = new Vector3(objectB.transform.position.x, objectB.transform.position.y, objectB.transform.position.z);
+        }
+    }
 
     void Start() {
-        if (worldAssignation == world.DAWN) {
-            VectorPatrolPoints = new Vector3[2];
-            VectorPatrolPoints[0] = new Vector3(PatrolPoints[0].position.x, PatrolPoints[0].position.y, PatrolPoints[0].position.z);
-            VectorPatrolPoints[1] = new Vector3(PatrolPoints[1].position.x, PatrolPoints[1].position.y, PatrolPoints[1].position.z);
-            Destroy(PatrolPoints[0].gameObject);
-            Destroy(PatrolPoints[1].gameObject);
-        }
+        masks = new LayerMask[2];
 
+        masks[0] = LayerMask.GetMask("Ground");
+        masks[1] = LayerMask.GetMask("Platform");
 
+        ResetPoints();
 
-        bounceForce = 50;
-        velocity = 2.5f;
+        stunDuration = 2;
+        timeStunned = 0;
+        maxSpeed = 5;
+
+        stompedOn = false;
         InitTransformable();
+
         isPunchable = false;
         isBreakable = false;
         interactuableBySmash = false;
@@ -40,15 +49,11 @@ public class EnemyWalker : DoubleObject {
             //GetComponent<SpriteRenderer>().sprite = imagenDusk;
 
         }
-        float randomVal = Random.Range(1, 4);
-        //Debug.Log(randomVal);
-        //GetComponentInChildren<MeshRenderer>().gameObject.transform.rotation *= Quaternion.AngleAxis(randomVal * 90, new Vector3(0, 0, 1));
 
-        rb = GetComponent<Rigidbody2D>();
-        groundMask = LayerMask.GetMask("Ground");
-
-        rb.mass = 1;
     }
+
+
+
 
     protected override void BrotherBehavior() {
         Vector3 positionWithOffset;
@@ -63,7 +68,6 @@ public class EnemyWalker : DoubleObject {
 
             transform.position = positionWithOffset;
             transform.rotation = brotherObject.transform.rotation;
-
         }
 
     }
@@ -86,6 +90,7 @@ public class EnemyWalker : DoubleObject {
         if (worldAssignation == world.DAWN) {
             //Si antes del cambio estaba en dawn, pasara a hacerse kinematic y al otro dynamic, además de darle su velocidad
             if (dawn) {
+                //dawnState = new SeedIdleState();
                 dominantVelocity = GetComponent<Rigidbody2D>().velocity;
                 brotherObject.GetComponent<DoubleObject>().dominantVelocity = GetComponent<Rigidbody2D>().velocity;
                 brotherObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
@@ -93,15 +98,23 @@ public class EnemyWalker : DoubleObject {
                 OnlyFreezeRotation();
                 brotherObject.GetComponent<Rigidbody2D>().velocity = dominantVelocity;
                 GetComponent<Rigidbody2D>().velocity = new Vector2(0.0f, 0.0f);
+                if (duskState != null)
+                    duskState.OnEnter(this);
+
             }
             //Si antes del cambio estaba en dusk, pasara a hacerse dynamic y al otro kinematic, además de darle su velocidad 
             else {
+                //brotherObject.GetComponent<FlyingSeed>().SwitchState(1, new SeedPathFollowState());
+                touchedByPlayer = false;
                 dominantVelocity = brotherObject.GetComponent<Rigidbody2D>().velocity;
                 brotherObject.GetComponent<DoubleObject>().dominantVelocity = brotherObject.GetComponent<Rigidbody2D>().velocity;
                 GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
                 brotherObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
                 brotherObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0.0f, 0.0f);
                 GetComponent<Rigidbody2D>().velocity = dominantVelocity;
+                if (dawnState != null)
+                    dawnState.OnEnter(this);
+
             }
 
             dawn = !dawn;
@@ -110,76 +123,32 @@ public class EnemyWalker : DoubleObject {
 
     }
 
-    //Comportamiento en dawn, castea un rayo hacia donde esta moviendose y si encuentra algo con layerMask Ground, cambia su dirección
     void DawnBehavior() {
-
-
-        if (goingA) {
-            if(Mathf.Abs(VectorPatrolPoints[0].x - transform.position.x) > threshold) {
-                velocity = VectorPatrolPoints[0].x - transform.position.x;
-            } else {
-                goingA = false;
-            }
-        } else {
-            if (Mathf.Abs(VectorPatrolPoints[1].x - transform.position.x) > threshold) {
-                velocity = VectorPatrolPoints[1].x - transform.position.x;
-            } else {
-                goingA = true;
-            }
+        if (dawn && dawnState != null) {
+            dawnState.Update(this, Time.deltaTime);
         }
-
-        if (velocity > 0) {
-            GetComponent<Rigidbody2D>().velocity = new Vector2(maxSpeed, 0);
-        }
-        else{
-            GetComponent<Rigidbody2D>().velocity = new Vector2(-maxSpeed, 0);
-        }
-
-
-
     }
-    //Velocidad a 0
     void DuskBehavior() {
-        if (!dawn) {
-            GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
+        if (!dawn && duskState != null) {
+            duskState.Update(this, Time.deltaTime);
         }
     }
 
-    //Si colisiona en dawn el personaje, lo mata, si lo hace en dusk con velocidad y inferior o igual a 0, bota
-    private void OnTriggerEnter2D(Collider2D other) {
-        if (dawn && worldAssignation == world.DAWN) {
-            if (other.tag == "Player") {
-                other.GetComponent<PlayerController>().Kill();
-            }
-        }else if (!dawn && worldAssignation == world.DUSK) {
-            if (other.tag == "Player") {
-                if (other.GetComponent<Rigidbody2D>().velocity.y <= 0) {
-                    other.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, 1 * bounceForce), ForceMode2D.Impulse);
-                }
-            }
-        }
-    }
 
-    //Si colisiona en dawn el personaje, lo mata, si lo hace en dusk con velocidad y inferior o igual a 0, bota
-    private void OnTriggerStay2D(Collider2D other) {
-        if (dawn && worldAssignation == world.DAWN) {
-            if (other.tag == "Player") {
-                other.GetComponent<PlayerController>().Kill();
-            }
-        } else if (!dawn && worldAssignation == world.DUSK) {
-            if (other.tag == "Player") {
-                if (other.GetComponent<Rigidbody2D>().velocity.y <= 0) {
-                    Debug.Log(other.GetComponent<Rigidbody2D>());
-                    other.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, 1 * bounceForce),ForceMode2D.Impulse);
-                }
-            }
-        }
-    }
 
     // Update is called once per frame
     void Update() {
+        GetComponent<Rigidbody2D>().gravityScale = 1;
+        //if(dawnState!=null&&dawn&&worldAssignation==world.DAWN)
+        //Debug.Log(dawnState.ToString());
+
+
+        //if (duskState != null)
+        //    print(duskState.ToString());
+
         AddToGameLogicList();
         BrotherBehavior();
+        StartAI();
 
 
         if (worldAssignation == world.DAWN)
@@ -187,5 +156,15 @@ public class EnemyWalker : DoubleObject {
         else
             DuskBehavior();
 
+    }
+
+    protected override void StartAI() {
+        if (!startedAI && added) {
+            startedAI = true;
+            SwitchState(0, new TramplerIdleState());
+            SwitchState(1, new TramplerDraggableState());
+            dawn = false;
+
+        }
     }
 }
