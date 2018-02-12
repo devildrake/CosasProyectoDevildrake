@@ -85,6 +85,9 @@ public class GameLogic : MonoBehaviour {
 
     public float worldOffset;
 
+    public float musicVolume;
+    public float sfxVolume;
+
     public void KillPlayer() {
         currentPlayer.Kill();
     }
