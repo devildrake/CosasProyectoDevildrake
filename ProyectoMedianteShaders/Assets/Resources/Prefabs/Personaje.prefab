@@ -180,7 +180,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &1116273845817118
 GameObject:
   m_ObjectHideFlags: 1
@@ -2201,7 +2201,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1888253378895332}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -6.62, y: 2.83, z: -1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.1, y: 0.10000001, z: 0.1}
   m_Children:
   - {fileID: 4064114378534618}
@@ -4817,8 +4817,8 @@ SkinnedMeshRenderer:
   m_BlendShapeWeights: []
   m_RootBone: {fileID: 0}
   m_AABB:
-    m_Center: {x: -0.008220911, y: 0.19520473, z: -0.10597229}
-    m_Extent: {x: 0.36190665, y: 0.40039468, z: 0.7436555}
+    m_Center: {x: -0.008220917, y: 0.1952046, z: -0.10597226}
+    m_Extent: {x: 0.3619067, y: 0.40039483, z: 0.74365556}
   m_DirtyAABB: 0
 --- !u!137 &137466209166093182
 SkinnedMeshRenderer:

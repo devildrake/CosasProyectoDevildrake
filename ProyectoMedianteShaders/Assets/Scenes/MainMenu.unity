@@ -942,6 +942,7 @@ GameObject:
   - component: {fileID: 1212409167}
   - component: {fileID: 1212409166}
   - component: {fileID: 1212409168}
+  - component: {fileID: 1212409169}
   m_Layer: 0
   m_Name: menu_logic
   m_TagString: Untagged
@@ -1059,6 +1060,32 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
+--- !u!114 &1212409169
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1212409165}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e1d83626cf12654f8e79b32ec4115c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cameraTransition: 0
+  currentPlayer: {fileID: 0}
+  fragments: []
+  maxTimeToReset: 3
+  timerToReset: 0
+  timesDied: 0
+  timeElapsed: 0
+  pickedFragments: 0
+  isPaused: 0
+  levelFinished: 0
+  isInMainMenu: 1
+  pauseCanvas: {fileID: 0}
+  transformableObjects: []
+  spawnPoint: {x: 0, y: 0, z: 0}
+  worldOffset: 0
 --- !u!1 &1323880470
 GameObject:
   m_ObjectHideFlags: 0

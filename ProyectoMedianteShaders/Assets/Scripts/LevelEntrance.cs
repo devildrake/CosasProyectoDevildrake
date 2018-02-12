@@ -1,24 +1,40 @@
-﻿using UnityEngine;
-using FragmentDataNamespace;
-//using System.Collections;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
-public class DoubleCrystalFragment : DoubleObject {
+public class LevelEntrance : DoubleObject {
     // Use this for initialization
-    FragmentData data;
     Rigidbody2D rb;
+    public int levelToLoad;
+    public GameObject interactionSprite;
+    bool available;
+
     void Start() {
+        interactionSprite.SetActive(false);
         InitTransformable();
-        isPunchable = false;
-        isMovable = false;
+        isPunchable = true;
         isBreakable = false;
         interactuableBySmash = false;
         offset = GameLogic.instance.worldOffset;
         if (worldAssignation == world.DAWN) {
             GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
-        } 
+            //GetComponent<SpriteRenderer>().sprite = imagenDawn;
+        } else {
+            //GetComponent<SpriteRenderer>().sprite = imagenDusk;
+
+        }
+        float randomVal = Random.Range(1, 4);
+        //Debug.Log(randomVal);
+        GetComponentInChildren<MeshRenderer>().gameObject.transform.rotation *= Quaternion.AngleAxis(randomVal * 90, new Vector3(0, 0, 1));
+
+        if (GameLogic.instance.completedLevels[levelToLoad]) {
+            activated = true;
+        }
+
         rb = GetComponent<Rigidbody2D>();
 
         rb.mass = 5000;
+        rb.gravityScale = 0;
     }
 
     protected override void BrotherBehavior() {
@@ -39,13 +55,17 @@ public class DoubleCrystalFragment : DoubleObject {
 
     }
 
-    protected override void LoadResources() {
-        //if (worldAssignation == world.DAWN) {
-        //    imagenDawn = Resources.Load<Sprite>("Presentacion/DawnSprites/DawnBox");
-        //} else {
-        //    imagenDusk = Resources.Load<Sprite>("Presentacion/DuskSprites/DuskBox");
+    void BecomePunchable() {
+        isPunchable = true;
+    }
 
-        //}
+    protected override void LoadResources() {
+        if (worldAssignation == world.DAWN) {
+            imagenDawn = Resources.Load<Sprite>("Presentacion/DawnSprites/DawnBox");
+        } else {
+            imagenDusk = Resources.Load<Sprite>("Presentacion/DuskSprites/DuskBox");
+
+        }
     }
 
     public override void Change() {
@@ -77,32 +97,26 @@ public class DoubleCrystalFragment : DoubleObject {
 
     }
 
-    private void OnTriggerEnter2D(Collider2D collision) {
-        if (collision.gameObject.tag == "Player") {
-            GameLogic.instance.GrabFragment(data);
-            GameLogic.instance.SafelyDestroy(this);
-        }
+    public override void Interact() {
+        if(activated)
+        GameLogic.instance.LoadScene(levelToLoad);
     }
 
-    protected override void AddToGameLogicList() {
-        if (!added) {
-            if (GameLogic.instance != null) {
-                added = true;
-                GameLogic.instance.transformableObjects.Add(gameObject);
-                offset = GameLogic.instance.worldOffset;
-                    data = new FragmentData(false,GameLogic.instance.GetCurrentLevel());
-                //Debug.Log(GameLogic.instance.GetCurrentLevel());
-                    GameLogic.instance.AddFragmentData(data);
-                
+    public void OnTriggerEnter2D(Collider2D collision) {
+        if (activated) {
+            if (collision.gameObject.tag == "Player") {
+                collision.gameObject.GetComponent<PlayerController>().interactableObject = gameObject.GetComponent<DoubleObject>();
+                if (interactionSprite != null)
+                    interactionSprite.SetActive(true);
             }
         }
     }
-
-    void CheckPick() {
-        if (data.picked) {
-            //Debug.Log(this);
-            //AQUI FALTA HACER QUE SE GUARDE 
-            GameLogic.instance.SafelyDestroy(this);
+    
+    public void OnTriggerExit2D(Collider2D collision) {
+        if (collision.gameObject.tag == "Player") {
+            collision.gameObject.GetComponent<PlayerController>().interactableObject = null;
+            if (interactionSprite != null)
+                interactionSprite.SetActive(false);
         }
     }
 
@@ -110,8 +124,7 @@ public class DoubleCrystalFragment : DoubleObject {
     void Update() {
         AddToGameLogicList();
         BrotherBehavior();
-        if (added) {
-            CheckPick();
-        }
     }
 }
+
+

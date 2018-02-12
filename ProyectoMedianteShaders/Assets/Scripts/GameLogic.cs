@@ -4,32 +4,46 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using FragmentDataNamespace;
-
+using System;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.IO;
 
 //Clase singleton (solo debe existir uno) referenciable a partir de una instancia estatica a si mismo que gestiona
 //si el jugador se encuentra en el menu principal 
 
-public class GameLogic : MonoBehaviour
-{
+public class GameLogic : MonoBehaviour {
+    //////////////////////VARIABLES LOAD/SAVE////////////////////////////
+    //////////////////////VARIABLES LOAD/SAVE////////////////////////////
+    //////////////////////VARIABLES LOAD/SAVE////////////////////////////
+
+    bool firstOpening;
+    public Dictionary<int, bool> completedLevels;
+
+
+
+    //////////////////////VARIABLES LOAD/SAVE////////////////////////////
+    //////////////////////VARIABLES LOAD/SAVE////////////////////////////
+    //////////////////////VARIABLES LOAD/SAVE////////////////////////////
+
 
     //Flag para la transición inicial de la camara
     public bool cameraTransition;
 
     public PlayerController currentPlayer;
-    
+
     public List<FragmentData> fragments;
     private int lastFragmentId = -1;
 
     //Tiempo que hay que pulsar para reinciar
-    public float maxTimeToReset=3;
+    public float maxTimeToReset = 3;
 
     //Tiempo que lleva el jugador pulsando
     public float timerToReset;
 
     //Variables de estadísticas 
-    public int timesDied=0;
-    public float timeElapsed=0;
-    public int pickedFragments=0;
+    public int timesDied = 0;
+    public float timeElapsed = 0;
+    public int pickedFragments = 0;
 
     //Clip de cambio de mundo
     AudioClip changeWorldClip;
@@ -44,7 +58,7 @@ public class GameLogic : MonoBehaviour
     public bool isPaused;
 
     //Booleano que gestiona si el jugador ha llegado al final del nivel
-    public bool levelFinished; 
+    public bool levelFinished;
 
     //Booleano privado pero visible que gestiona si se esta en el menu principal o no
     [SerializeField]
@@ -75,8 +89,8 @@ public class GameLogic : MonoBehaviour
         currentPlayer.Kill();
     }
 
-    void Awake()
-    {
+    void Awake() {
+        completedLevels = new Dictionary<int, bool>();
         Application.targetFrameRate = 60;
 
         currentSceneName = SceneManager.GetActiveScene().name;
@@ -104,13 +118,19 @@ public class GameLogic : MonoBehaviour
 
 
         cameraTransition = true;
+        Load();
+
+
     }
 
 
     //Setter de WaitAFrame
-    void SetWaitAFrame(bool a)
-    {
+    void SetWaitAFrame(bool a) {
         waitAFrame = a;
+    }
+
+    public int GetCurrentLevelIndex() {
+        return SceneManager.GetActiveScene().buildIndex;
     }
 
     public string GetCurrentLevel() {
@@ -120,8 +140,8 @@ public class GameLogic : MonoBehaviour
     public void AddFragmentData(FragmentData a) {
 
         bool temp = false;
-        foreach(FragmentData saved in fragments) {
-            if(saved.levelName == a.levelName) {
+        foreach (FragmentData saved in fragments) {
+            if (saved.levelName == a.levelName) {
                 a.picked = saved.picked;
                 temp = true;
             }
@@ -137,12 +157,12 @@ public class GameLogic : MonoBehaviour
     public void GrabFragment(FragmentData a) {
         foreach (FragmentData f in fragments) {
             if (f.levelName == a.levelName) {
-                a.picked=f.picked = true;   
+                a.picked = f.picked = true;
             }
         }
-            pickedFragments++;
+        pickedFragments++;
     }
-    
+
 
     //Setter de CheckMainMenu
     void SetCheckMainMenu(bool a) {
@@ -156,8 +176,7 @@ public class GameLogic : MonoBehaviour
         Destroy(g.transform.parent.gameObject);
     }
 
-    void Start()
-    {
+    void Start() {
         SetWaitAFrame(false);
         SetCheckMainMenu(false);
         setSpawnPoint = false;
@@ -186,33 +205,31 @@ public class GameLogic : MonoBehaviour
         return g == null;
     }
 
-    public void SetSpawnPoint(Vector3 a)
-    {
+    public void SetSpawnPoint(Vector3 a) {
         spawnPoint = a;
     }
 
     //Método para variar el timeScaleLocal siempre y cuando el juego no este pausado
     public void SetTimeScaleLocal(float a) {
-        if(!isPaused)
-        timeScaleLocal = a;
+        if (!isPaused)
+            timeScaleLocal = a;
     }
 
     //Método que pone el timeScale a 0 cuando el juego esta pausado y que cuando no esta pausado pone Time.timeScale igual a la variable timeScaleLocal
     void TimeScaleStuff() {
         if (isPaused) {
             Time.timeScale = 0;
-        }
-        else {
+        } else {
             Time.timeScale = timeScaleLocal;
         }
     }
 
-    void Update(){
+    void Update() {
 
         TimeScaleStuff();
 
         //Se comprueba si ha habido cambio de escena, si lo ha habido se reinician los booleanos waitAFrame, checkMainMenu e isInManMenu además de actualizar la variable currentSceneName
-        if (ChangedScene()){
+        if (ChangedScene()) {
             ResetSceneData();
         }
 
@@ -236,69 +253,77 @@ public class GameLogic : MonoBehaviour
         //Una vez comprobado si estamos o no en el menu principal se pondria el comportamiento deseado
         else {
             if (!isInMainMenu) {
-                if (!levelFinished) { 
+                if (!levelFinished) {
                     if (Input.GetKey(KeyCode.R)) {
                         timerToReset += Time.deltaTime;
                     } else {
                         timerToReset = 0;
                     }
 
-                if (timerToReset > maxTimeToReset) {
-                    timerToReset = 0;
-                    Debug.Log("Bruh");
-                    RestartScene();
-                }
-
-                //Si el juego no esta pausado
-                if (!isPaused) {
-                    timeElapsed += Time.deltaTime;
-
-                    if (!setSpawnPoint) {
-                        GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
-                        if (playerObject.GetComponent<PlayerController>().worldAssignation == DoubleObject.world.DUSK) {
-                            spawnPoint = playerObject.transform.position;
-                        } else {
-                            spawnPoint = playerObject.transform.position - new Vector3(0, worldOffset);
-
-                        }
-                        setSpawnPoint = true;
+                    if (timerToReset > maxTimeToReset) {
+                        timerToReset = 0;
+                        Debug.Log("Bruh");
+                        RestartScene();
                     }
 
-                    //CAMBIO DE MUNDO
-                    if (Input.GetKeyDown(KeyCode.LeftShift)) {
-                        if (gameObject.GetComponent<AudioSource>().pitch == 1.5) {
-                            gameObject.GetComponent<AudioSource>().pitch = 0.5f;
-                        } else {
-                            gameObject.GetComponent<AudioSource>().pitch = 1.5f;
+                    //Si el juego no esta pausado
+                    if (!isPaused) {
+                        timeElapsed += Time.deltaTime;
+
+                        if (!setSpawnPoint) {
+                            GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
+                            if (playerObject.GetComponent<PlayerController>().worldAssignation == DoubleObject.world.DUSK) {
+                                spawnPoint = playerObject.transform.position;
+                            } else {
+                                spawnPoint = playerObject.transform.position - new Vector3(0, worldOffset);
+
+                            }
+                            setSpawnPoint = true;
                         }
-                        gameObject.GetComponent<AudioSource>().Play();
-                        foreach (GameObject g in transformableObjects) {
-                            g.GetComponent<DoubleObject>().Change();
+
+                        //CAMBIO DE MUNDO
+                        if (Input.GetKeyDown(KeyCode.LeftShift)) {
+                            if (gameObject.GetComponent<AudioSource>().pitch == 1.5) {
+                                gameObject.GetComponent<AudioSource>().pitch = 0.5f;
+                            } else {
+                                gameObject.GetComponent<AudioSource>().pitch = 1.5f;
+                            }
+                            gameObject.GetComponent<AudioSource>().Play();
+                            foreach (GameObject g in transformableObjects) {
+                                g.GetComponent<DoubleObject>().Change();
+                            }
                         }
+
                     }
-
-                }
-                //Si el juego SI esta pausado
-                else {
+                    //Si el juego SI esta pausado
+                    else {
 
 
-                }
-                //En cualquier caso se comprueba el input
-                CheckPauseInput();
+                    }
+                    //En cualquier caso se comprueba el input
+                    CheckPauseInput();
                 } else {
+                    //LevelFinishStuff
+                    Save();
+
 
                 }
-        }
-             else {
+            } else {
                 currentPlayer = null;
                 Cursor.visible = true;
-                    Cursor.lockState = CursorLockMode.None; //Se puede volver a mover el cursor
-                }
+                Cursor.lockState = CursorLockMode.None; //Se puede volver a mover el cursor
+            }
         }
     }
 
+    public void LoadScene(int which) {
+        instance.levelFinished = false;
+        SceneManager.LoadScene(which);
+        ResetSceneData();
+    }
+
     //Método para cargar el menu desde cualquier escena
-    public void LoadMenu(){
+    public void LoadMenu() {
         instance.levelFinished = false;
         SceneManager.LoadScene(0);
         ResetSceneData();
@@ -319,8 +344,7 @@ public class GameLogic : MonoBehaviour
             if (isPaused) {
                 Cursor.visible = false;
                 Cursor.lockState = CursorLockMode.None; //Se engancha el cursor en el centro de la pantalla.
-            }
-            else if (!isPaused) {
+            } else if (!isPaused) {
                 Cursor.visible = true;
                 Cursor.lockState = CursorLockMode.Locked; //Se engancha el cursor en el centro de la pantalla.
             }
@@ -328,5 +352,52 @@ public class GameLogic : MonoBehaviour
         }
     }
 
+    public void Save() {
+        BinaryFormatter bf = new BinaryFormatter();
+        FileStream file = File.Create(Application.persistentDataPath + "/playerInfoSave.dat");
+        PlayerData data = new PlayerData();
+
+        //Igualar variables a cargar (Locales) a las de data
+
+        data.firstOpening = firstOpening;
+        data.completedLevels = completedLevels;
+
+        bf.Serialize(file, data);
+        file.Close();
+    }
+
+    void InitLoadSaveVariables() {
+        firstOpening = true;
+        completedLevels[1] = false;
+        completedLevels[2] = false;
+        completedLevels[3] = false;
+        Save();
+    }
+
+    public void Load() {
+        Debug.Log(Application.persistentDataPath);
+        if (File.Exists(Application.persistentDataPath + "/playerInfoSave.dat")) {
+            BinaryFormatter bf = new BinaryFormatter();
+            FileStream file = File.Open(Application.persistentDataPath + "/playerInfoSave.dat",FileMode.Open);
+            PlayerData data = (PlayerData)bf.Deserialize(file);
+            file.Close();
+
+            firstOpening = data.firstOpening;
+            completedLevels = data.completedLevels;
+            //Igualar variables a cargar (Locales) a las de data
+
+        } else {
+            InitLoadSaveVariables();
+        }
+
+
+    }
+
+    [Serializable]
+    class PlayerData{
+        public bool firstOpening;
+        public Dictionary<int, bool> completedLevels;
+
+    };
 
 }
