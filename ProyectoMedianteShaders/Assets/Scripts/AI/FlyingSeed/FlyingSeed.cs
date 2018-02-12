@@ -9,7 +9,7 @@ public class FlyingSeed : Agent {
     public Vector3 orbitPos;
     //public bool stompedOn;
     public float timeOnTheGround=0;
-
+    public bool rising;
 
     public GameObject grabbedObject;
     public Vector2 grabOffset;

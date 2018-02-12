@@ -6,8 +6,37 @@ public class Seeker : Agent {
 
     public Vector3 orbitPos;
     public bool rising;
+    public GameObject tentacles;
+    float tentacleHideTime;
+    float tentacleHideTimer;
+    public Transform[] Path_Points = new Transform[0];
+    public int currentTarget;
+    public bool playerInVisionCone;
+
+
+    public void HideTentacles() {
+        tentacleHideTimer = 0;
+        if (worldAssignation == world.DUSK) {
+            tentacles.SetActive(false);
+        }
+    }
+
+    public void ShowTentacles() {
+        if (worldAssignation == world.DUSK) {
+            tentacles.SetActive(true);
+        }
+    }
 
     void Start() {
+        if (worldAssignation == world.DUSK) {
+            tentacleHideTimer = 0;
+            tentacleHideTime = 3;
+            tentacles = GetComponentInChildren<TriggerDetectionPlayer>().gameObject;
+        }
+
+
+
+        rising = true;
         stompedOn = false;
         InitTransformable();
 
@@ -100,6 +129,13 @@ public class Seeker : Agent {
     void DuskBehavior() {
         if (!dawn && duskState != null) {
             duskState.Update(this, Time.deltaTime);
+            if (!tentacles.gameObject.activeInHierarchy) {
+                tentacleHideTimer += Time.deltaTime;
+                if (tentacleHideTimer > tentacleHideTime) {
+                    tentacleHideTimer = 0;
+                    ShowTentacles();
+                }
+            }
         }
     }
 
@@ -107,7 +143,8 @@ public class Seeker : Agent {
 
     // Update is called once per frame
     void Update() {
-        GetComponent<Rigidbody2D>().gravityScale = 1;
+        //GetComponent<Rigidbody2D>().gravityScale = 1;
+
 
 
         AddToGameLogicList();

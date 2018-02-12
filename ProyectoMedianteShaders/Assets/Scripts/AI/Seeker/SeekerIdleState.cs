@@ -5,7 +5,7 @@ using UnityEngine;
 public class SeekerIdleState : State {
     float idleThreshold = 0.2f;
     float idleVelocity = 0.1f;
-    float idleOffset = 0.3f;
+    float idleOffset = 0.2f;
 
     override public void OnEnter(Agent a) {
         a.GetComponent<Seeker>().rising = true;
@@ -14,25 +14,24 @@ public class SeekerIdleState : State {
     }
 
     override public void Update(Agent a, float dt) {
-        Agent agent = a.gameObject.GetComponent<Agent>();
-
+        bool rising = a.GetComponent<Seeker>().rising;
 
         Vector3 targetPos;
-        if (a.GetComponent<Seeker>().rising) {
-            targetPos = agent.GetComponent<Seeker>().orbitPos + new Vector3(0, idleOffset, 0);
+        if (rising) {
+            targetPos = a.GetComponent<Seeker>().orbitPos + new Vector3(0, idleOffset, 0);
         } else {
-            targetPos = agent.GetComponent<Seeker>().orbitPos - new Vector3(0, idleOffset, 0);
+            targetPos = a.GetComponent<Seeker>().orbitPos - new Vector3(0, idleOffset, 0);
         }
 
-        if (Vector2.Distance(targetPos, agent.transform.position) > idleThreshold) {
-            agent.GetComponent<Rigidbody2D>().velocity = (targetPos - agent.transform.position).normalized * idleVelocity;
-            Debug.Log(Vector2.Distance(targetPos, agent.transform.position));
+        if (Vector2.Distance(targetPos, a.transform.position) > idleThreshold) {
+            a.GetComponent<Rigidbody2D>().velocity = (targetPos - a.transform.position).normalized * idleVelocity;
+
+            //Debug.Log(Vector2.Distance(targetPos, a.transform.position));
         } else {
-            a.GetComponent<Seeker>().rising = !a.GetComponent<Seeker>().rising;
+            rising = !rising;
 
 
         }
-
 
     }
 

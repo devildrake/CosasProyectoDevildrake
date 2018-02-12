@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class SeedIdleState : State {
-    bool rising = true;
+    //bool rising = true;
     float idleThreshold = 0.2f;
     float idleVelocity = 0.1f;
     float idleOffset = 0.3f;
@@ -20,6 +20,7 @@ public class SeedIdleState : State {
     }
 
     override public void Update(Agent a, float dt) {
+        bool rising = a.GetComponent<FlyingSeed>().rising;
         Agent agent = a.gameObject.GetComponent<Agent>();
 
         Vector3 targetPos;
