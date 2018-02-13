@@ -23,6 +23,9 @@ public class PlayerController : DoubleObject {
     //Lista de objetos en el area de Deflect
     public List<GameObject> objectsInDeflectArea;
 
+    public float punchCoolDown;
+    public float punchTimer;
+
     //Referencia al objeto con el area de deflect
     public GameObject deflectArea;
 
@@ -100,6 +103,9 @@ public class PlayerController : DoubleObject {
 
     //Se inicializan las cosas
     void Start() {
+
+        punchCoolDown = 0.5f;
+
         grabbableMask = new LayerMask[3];
 
         grabbableMask[0] = LayerMask.GetMask("Ground");
@@ -156,6 +162,12 @@ public class PlayerController : DoubleObject {
 
     }
 
+    void CoolDowns() {
+        if (punchCoolDown > punchTimer) {
+            punchTimer += Time.deltaTime;
+        }
+    }
+
     void Update() {
 
         //Debug.Log(grounded);
@@ -178,6 +190,7 @@ public class PlayerController : DoubleObject {
                 ClampSpeed();
             }
             BrotherBehavior();
+            CoolDowns();
         }
 
 
@@ -197,6 +210,14 @@ public class PlayerController : DoubleObject {
             GetComponentInChildren<Animator>().SetBool("moving", moving);
             GetComponentInChildren<Animator>().SetBool("grounded", grounded);
             GetComponentInChildren<Animator>().SetFloat("speedY", GetComponent<Rigidbody2D>().velocity.y);
+            GetComponentInChildren<Animator>().SetBool("sliding", sliding);
+
+            if (worldAssignation == world.DUSK) {
+                GetComponentInChildren<Animator>().SetBool("punching", punchTimer < punchCoolDown);
+            } else {
+
+            }
+
         }
     }
 
@@ -525,11 +546,12 @@ public class PlayerController : DoubleObject {
 
         //Si se suelta el botón izquierdo del ratón y se habia pulsado previamente, el tiempo pasa a cero
         //En caso de estar grounded Se hace una llamada a Punch
-        if (Input.GetMouseButtonUp(0)) {
+        if (Input.GetMouseButtonUp(0)&& punchTimer > punchCoolDown) {
             if (leftPressed) {
                 GameLogic.instance.SetTimeScaleLocal(1.0f);
                 if (grounded) {
                     Punch(direction, 40000);
+                    punchTimer = 0;
                     GetComponent<AudioSource>().clip = punchClip;
                     GetComponent<AudioSource>().Play();
                 }
@@ -539,7 +561,7 @@ public class PlayerController : DoubleObject {
         }
 
         //En caso de pulsar el botón izquierdo del ratón y estar grounded, se pone el timepo a 0.5
-        else if (Input.GetMouseButtonDown(0) && grounded) {
+        else if (Input.GetMouseButtonDown(0) && grounded&&punchTimer>punchCoolDown) {
             GameLogic.instance.SetTimeScaleLocal(slowMotionTimeScale);
             leftPressed = true;
         }
@@ -679,6 +701,9 @@ public class PlayerController : DoubleObject {
     //Método de cambio, varia con respecto a los demás ya que además modifica variables especiales
     public override void Change() {
 
+        leftPressed = false;
+        GameLogic.instance.SetTimeScaleLocal(1.0f);
+
         interactableObject = null;
         //Vector2 newPosition;
 
@@ -696,7 +721,7 @@ public class PlayerController : DoubleObject {
             //newPosition = transform.position;
             //newPosition.y -= GameLogic.instance.worldOffset;
             //transform.position = newPosition;
-            crawling = false;
+            //crawling = false;
 
             //activar el shader
             if (worldAssignation == world.DAWN){

@@ -286,14 +286,18 @@ public class GameLogic : MonoBehaviour {
 
                         //CAMBIO DE MUNDO
                         if (Input.GetKeyDown(KeyCode.LeftShift)) {
-                            if (gameObject.GetComponent<AudioSource>().pitch == 1.5) {
-                                gameObject.GetComponent<AudioSource>().pitch = 0.5f;
-                            } else {
-                                gameObject.GetComponent<AudioSource>().pitch = 1.5f;
-                            }
-                            gameObject.GetComponent<AudioSource>().Play();
-                            foreach (GameObject g in transformableObjects) {
-                                g.GetComponent<DoubleObject>().Change();
+                            if (currentPlayer != null) {
+                                if (!currentPlayer.crawling) {
+                                    if (gameObject.GetComponent<AudioSource>().pitch == 1.5) {
+                                        gameObject.GetComponent<AudioSource>().pitch = 0.5f;
+                                    } else {
+                                        gameObject.GetComponent<AudioSource>().pitch = 1.5f;
+                                    }
+                                    gameObject.GetComponent<AudioSource>().Play();
+                                    foreach (GameObject g in transformableObjects) {
+                                        g.GetComponent<DoubleObject>().Change();
+                                    }
+                                }
                             }
                         }
 
