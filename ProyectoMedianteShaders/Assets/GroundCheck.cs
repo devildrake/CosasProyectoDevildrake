@@ -33,7 +33,7 @@ public class GroundCheck : MonoBehaviour {
         // If the raycast hit something
         if (hit2D || hit2DLeft || hit2DRight) {
                 player.grounded = true;
-                player.dashing = false;
+                //player.dashing = false;
                 player.SetCanDash(true);
 
         } else {

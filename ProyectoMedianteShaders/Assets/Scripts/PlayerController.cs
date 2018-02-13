@@ -26,6 +26,12 @@ public class PlayerController : DoubleObject {
     public float punchCoolDown;
     public float punchTimer;
 
+    public float dashCoolDown;
+    public float dashTimer;
+
+    public float deflectCoolDown;
+    public float deflectTimer;
+
     //Referencia al objeto con el area de deflect
     public GameObject deflectArea;
 
@@ -43,7 +49,6 @@ public class PlayerController : DoubleObject {
     public bool crawling; //iiiiin my craaaaaawl
     bool moving;
     public bool smashing;
-    public bool dashing;
     bool grabbing;
     //bool groundedChecker;
     //float auxTime;
@@ -103,8 +108,9 @@ public class PlayerController : DoubleObject {
 
     //Se inicializan las cosas
     void Start() {
-
+        dashCoolDown = 0.5f;
         punchCoolDown = 0.5f;
+        deflectCoolDown = 0.5f;
 
         grabbableMask = new LayerMask[3];
 
@@ -166,6 +172,14 @@ public class PlayerController : DoubleObject {
         if (punchCoolDown > punchTimer) {
             punchTimer += Time.deltaTime;
         }
+
+        if (dashCoolDown > dashTimer) {
+            dashTimer += Time.deltaTime;
+        }
+
+        if (deflectCoolDown > deflectTimer) {
+            deflectTimer += Time.deltaTime;
+        }
     }
 
     void Update() {
@@ -215,6 +229,11 @@ public class PlayerController : DoubleObject {
             if (worldAssignation == world.DUSK) {
                 GetComponentInChildren<Animator>().SetBool("punching", punchTimer < punchCoolDown);
             } else {
+                GetComponentInChildren<Animator>().SetBool("dashing", dashTimer < dashCoolDown);
+                GetComponentInChildren<Animator>().SetBool("crawling", crawling);
+                GetComponentInChildren<Animator>().SetBool("dash_press", Input.GetMouseButton(0)&&dashTimer>=dashCoolDown&&canDash&&!grounded);
+                GetComponentInChildren<Animator>().SetBool("deflecting", deflectTimer < deflectCoolDown);
+                GetComponentInChildren<Animator>().SetBool("deflect_press", Input.GetMouseButton(1) && deflectTimer >= deflectCoolDown&&objectsInDeflectArea.Count>0);
 
             }
 
@@ -442,7 +461,7 @@ public class PlayerController : DoubleObject {
     }
 
     void DawnBehavior() {
-        if (canDash&&!grounded)
+        if (canDash&&!grounded&&dashTimer>dashCoolDown)
             direction = PlayerUtilsStatic.UseDirectionCircle(arrow, gameObject,0);
 
         if (objectsInDeflectArea.Count != 0) {
@@ -454,7 +473,7 @@ public class PlayerController : DoubleObject {
         }
 
         //Si se suelta el botón izquierdo del ratón y se puede dashear, se desactiva la slowMotion y se modifica el timeScale además de poner en false canDash
-        if (Input.GetMouseButtonUp(0) && canDash) {
+        if (Input.GetMouseButtonUp(0) && canDash && dashTimer > dashCoolDown) {
             if (leftPressed&&!grounded) {
                 GameLogic.instance.SetTimeScaleLocal(1.0f);
 
@@ -485,14 +504,14 @@ public class PlayerController : DoubleObject {
                 canJumpOnImpulsor = false;
                 GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
                 Dash.DoDash(gameObject, direction, dashForce);
-                dashing = true;
+                dashTimer = 0;
                 SetCanDash(false);
                 leftPressed = false;
             }
 
             //Si se pulsa el botón izquierdo del ratón y se puede dashear, se activa la slowMotion y se modifica el timeScale de gameLogic
         }
-        else if (Input.GetMouseButtonDown(0) && canDash&& !grounded) {
+        else if (Input.GetMouseButtonDown(0) && canDash&& !grounded && dashTimer > dashCoolDown) {
             leftPressed = true;
             GameLogic.instance.SetTimeScaleLocal(slowMotionTimeScale);
         }
