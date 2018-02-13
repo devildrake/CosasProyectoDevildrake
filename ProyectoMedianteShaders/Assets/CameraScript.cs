@@ -2,22 +2,50 @@
 
 public class CameraScript : MonoBehaviour {
     public enum CameraState { CLOSE,FAR,TRANSITION}
+    public enum LevelType { STATIC, CHASE }
+
+    [Tooltip("Target que sigue la cámara en modo CameraState.CLOSE (Debería ser el personaje casi siempre)")]
     public Transform target;
+
+    [Tooltip("Offset de cámara sobre el target")]
     public Vector3 offset; //-10
+
+    [Tooltip("Posición general de vista de la escena, se ha de modificar en los niveles de LevelType Static con la variable cameraSpeed")]
     public Vector3 overViewPosition;
+
+    [Tooltip("Velocidad a la que la cámara se mueve hacia la derecha")]
+    public float cameraSpeed;
+
+    [Tooltip("Variable Size de Cámara en CameraState.FAR")]
     public float farDistance;
+
+    [Tooltip("Variable Size de Cámara en CameraState.CLOSE")]
     public float closeDistance;
+
+    [Tooltip("Lindar de transiciones de tamaño de camara")]
     public float transitionThreshold;
+
+    [Tooltip("Offset Solo en X")]
     public float OffsetX;
+
+    [Tooltip("Tiempo hasta realizar la transición inicial de cámara")]
     public float transitionTime;
+
+    [Tooltip("Contador que comprueba el tiempo hasta realizar la transición inicial de cámara")]
     public float transitionTimer;
+
+    [Tooltip("Lindar para transiciones de posición camara")]
     public float distanceThreshold;
-    //public float smoothSpeed = 10.0f;
+
+    [Tooltip("Estado actual de la cámara")]
     public CameraState cameraState;
+
+    [Tooltip("Tipo de nivel")]
+    public LevelType levelType;
     private void Start() {
         cameraState = CameraState.CLOSE;
         overViewPosition = transform.position;
-        farDistance = 10;
+        //farDistance = 10;
         closeDistance = 4.5f;
         OffsetX = 3;
         transitionTime = 2;
@@ -41,7 +69,15 @@ public class CameraScript : MonoBehaviour {
             }
         }
 
-            if (target.gameObject.GetComponent<PlayerController>().facingRight) {
+        ////////////////////////////STATICLEVEL////////////////////////////////////////
+        ////////////////////////////STATICLEVEL////////////////////////////////////////
+        ////////////////////////////STATICLEVEL////////////////////////////////////////
+        ////////////////////////////STATICLEVEL////////////////////////////////////////
+        ////////////////////////////STATICLEVEL////////////////////////////////////////
+        ////////////////////////////STATICLEVEL////////////////////////////////////////
+
+
+        if (target.gameObject.GetComponent<PlayerController>().facingRight) {
             offset.x = OffsetX;
         } else
             offset.x = -OffsetX;
@@ -81,6 +117,66 @@ public class CameraScript : MonoBehaviour {
                 transform.position = smoothedPosition;
                 break;
         }
+
+        ////////////////////////////STATICLEVEL////////////////////////////////////////
+        ////////////////////////////STATICLEVEL////////////////////////////////////////
+        ////////////////////////////STATICLEVEL////////////////////////////////////////
+        ////////////////////////////STATICLEVEL////////////////////////////////////////
+        ////////////////////////////STATICLEVEL////////////////////////////////////////
+        ////////////////////////////STATICLEVEL////////////////////////////////////////
+
+
+
+
+
+
+
+
+
+        ////////////////////////////CHASELEVEL/////////////////////////////////////////
+        ////////////////////////////CHASELEVEL/////////////////////////////////////////
+        ////////////////////////////CHASELEVEL/////////////////////////////////////////
+        ////////////////////////////CHASELEVEL/////////////////////////////////////////
+        ////////////////////////////CHASELEVEL/////////////////////////////////////////
+        ////////////////////////////CHASELEVEL/////////////////////////////////////////
+
+
+
+        if (GetComponent<Camera>().orthographicSize < farDistance) {
+            GetComponent<Camera>().orthographicSize = Mathf.Lerp(GetComponent<Camera>().orthographicSize, farDistance, Time.deltaTime * 2);
+        }
+
+        overViewPosition.x += cameraSpeed*Time.deltaTime;
+
+        if ((Vector3.Distance(transform.position, overViewPosition) > transitionThreshold)) {
+            smoothedPosition = Vector3.Lerp(transform.position, overViewPosition, Time.deltaTime * 2);
+            transform.position = smoothedPosition;
+        }
+
+
+
+
+
+
+
+
+
+
+        ////////////////////////////CHASELEVEL/////////////////////////////////////////
+        ////////////////////////////CHASELEVEL/////////////////////////////////////////
+        ////////////////////////////CHASELEVEL/////////////////////////////////////////
+        ////////////////////////////CHASELEVEL/////////////////////////////////////////
+        ////////////////////////////CHASELEVEL/////////////////////////////////////////
+        ////////////////////////////CHASELEVEL/////////////////////////////////////////
+
+
+
+
+
+
+
+
+
 
 
 
