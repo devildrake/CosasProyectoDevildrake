@@ -32,6 +32,8 @@ public class PlayerController : DoubleObject {
     public float deflectCoolDown;
     public float deflectTimer;
 
+    float timeNotMoving;
+
     //Referencia al objeto con el area de deflect
     public GameObject deflectArea;
 
@@ -108,6 +110,7 @@ public class PlayerController : DoubleObject {
 
     //Se inicializan las cosas
     void Start() {
+        timeNotMoving = 0;
         dashCoolDown = 0.5f;
         punchCoolDown = 0.5f;
         deflectCoolDown = 0.5f;
@@ -237,6 +240,8 @@ public class PlayerController : DoubleObject {
 
             }
 
+        } else {
+            Debug.Log("NullAnimator");
         }
     }
 
@@ -320,6 +325,7 @@ public class PlayerController : DoubleObject {
                     transform.Translate(Vector3.right * Input.GetAxis("Horizontal") * characterSpeed * Time.deltaTime);
                     slowedInTheAir = false;
                     if (Input.GetAxis("Horizontal") != 0) {
+                        timeNotMoving = 0;
                         moving = true;
                         if (!GetComponent<AudioSource>().isPlaying&&!crawling) {
                             GetComponent<AudioSource>().pitch = 0.3f;
@@ -333,7 +339,13 @@ public class PlayerController : DoubleObject {
                         }
                     }
                     else {
-                        moving = false;
+                        if (timeNotMoving > 0.1f) {
+                            moving = false;
+                        } else {
+                            timeNotMoving += Time.deltaTime;
+                        }
+
+
                     }
 
 
@@ -461,8 +473,16 @@ public class PlayerController : DoubleObject {
     }
 
     void DawnBehavior() {
-        if (canDash&&!grounded&&dashTimer>dashCoolDown)
-            direction = PlayerUtilsStatic.UseDirectionCircle(arrow, gameObject,0);
+
+        if (!grounded) {
+            if (canDash && dashTimer > dashCoolDown)
+                direction = PlayerUtilsStatic.UseDirectionCircle(arrow, gameObject, 0);
+        } else {
+            if (leftPressed) {
+                GameLogic.instance.SetTimeScaleLocal(1);
+                leftPressed = false;
+            }
+        }
 
         if (objectsInDeflectArea.Count != 0) {
             deflectDirection = PlayerUtilsStatic.UseDirectionCircle(arrow, gameObject, 1,-10,60);

@@ -253,7 +253,7 @@ GameObject:
   - component: {fileID: 4983188337837188}
   m_Layer: 31
   m_Name: arrow
-  m_TagString: Untagged
+  m_TagString: Arrow
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2467,7 +2467,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1028251591184920}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3.57, y: 1.41, z: -12}
+  m_LocalPosition: {x: -1.74, y: 2.83, z: -12}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4805067214027586}
@@ -3479,7 +3479,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5.51
+  orthographic size: 7.41
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -4037,7 +4037,7 @@ Animator:
   m_GameObject: {fileID: 1293225258747410}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: c4e1b5941c62b7b4ab05218436efc121, type: 3}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: a995b9dda632a544da27d144b9a27ab3, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -4343,11 +4343,14 @@ MonoBehaviour:
   objectsInDeflectArea: []
   punchCoolDown: 0
   punchTimer: 0
+  dashCoolDown: 0
+  dashTimer: 0
+  deflectCoolDown: 0
+  deflectTimer: 0
   deflectArea: {fileID: 1356939654576006}
   NearbyObjects: []
   crawling: 0
   smashing: 0
-  dashing: 0
   onImpulsor: 0
   canJumpOnImpulsor: 0
   calledImpuslorBool: 0
@@ -4396,11 +4399,14 @@ MonoBehaviour:
   objectsInDeflectArea: []
   punchCoolDown: 0
   punchTimer: 0
+  dashCoolDown: 0
+  dashTimer: 0
+  deflectCoolDown: 0
+  deflectTimer: 0
   deflectArea: {fileID: 1714379513570948}
   NearbyObjects: []
   crawling: 0
   smashing: 0
-  dashing: 0
   onImpulsor: 0
   canJumpOnImpulsor: 0
   calledImpuslorBool: 0
@@ -4780,7 +4786,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 4402962987169400}
-  offset: {x: 0, y: 0, z: -10}
+  offset: {x: 0, y: 1, z: -10}
   overViewPosition: {x: 0, y: 0, z: 0}
   cameraSpeed: 0
   farDistance: 0
@@ -5267,6 +5273,8 @@ MonoBehaviour:
   worldOffset: 0
   musicVolume: 0
   sfxVolume: 0
+  screenRefreshRate: 0
+  maxFrameRate: 0
 --- !u!114 &114861954494227166
 MonoBehaviour:
   m_ObjectHideFlags: 1
