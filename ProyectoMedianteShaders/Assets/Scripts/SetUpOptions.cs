@@ -10,6 +10,7 @@ using UnityEngine.UI;
 public class SetUpOptions : MonoBehaviour {
     public Slider music, sfx;
     public Dropdown resolution, fullscreen, refreshRate, fps;
+    
 
     private void Start() {
         music.maxValue = 1.0f;
@@ -21,7 +22,6 @@ public class SetUpOptions : MonoBehaviour {
         sfx.value = 1.0f;
 
         //Configuracion del dropdown de las resoluciones
-        //resolution.captionText.text = ""+Screen.currentResolution;
         resolution.ClearOptions();
         int currentResolution = 0;
         List<string> resolutionOptions = new List<string>();
@@ -33,11 +33,56 @@ public class SetUpOptions : MonoBehaviour {
             }
         }
         resolution.AddOptions(resolutionOptions);
+        resolution.value = currentResolution;
 
         //Configuracion del dropdown de fullscreen
+        fullscreen.ClearOptions();
+        List<string> fullscreenOptions = new List<string> { "Activada", "Desactivada" };
+        fullscreen.AddOptions(fullscreenOptions);
+        if (Screen.fullScreen) {
+            fullscreen.value = 0;
+        }
+        else {
+            fullscreen.value = 1;
+        }
 
         //Configuracion del dropdown del refresh rate de la pantalla
+        refreshRate.ClearOptions();
+        List<string> refreshRateOptions = new List<string> { "Automatico", "30Hz", "60Hz", "120Hz" };
+        refreshRate.AddOptions(refreshRateOptions);
+        refreshRate.value = 0;
 
         //Configuracion del dropdown de la limitacion de fps
+        fps.ClearOptions();
+        List<string> fpsOptions = new List<string> { "Sin limitación", "30fps", "60fps", "90fps", "120fps" };
+        fps.AddOptions(fpsOptions);
+        fps.value = 0;
+
+        //AÑADIR LISTENERS PARA LOS CAMBIOS DE LOS DROPDOWN
+        resolution.onValueChanged.AddListener(delegate {
+            GameLogic.instance.resolutionSelected = resolution.value;
+        });
+        refreshRate.onValueChanged.AddListener(delegate {
+            if(refreshRate.value == 0) {
+                GameLogic.instance.fullscreen = true;
+            }
+            else {
+                GameLogic.instance.fullscreen = false;
+            }
+        });
+        refreshRate.onValueChanged.AddListener(delegate {
+           if(refreshRate.value == 0) {
+                GameLogic.instance.screenRefreshRate = 0;
+           }
+           else if(refreshRate.value == 1) {
+                GameLogic.instance.screenRefreshRate = 30;
+           }
+           else if (refreshRate.value == 2) {
+                GameLogic.instance.screenRefreshRate = 60;
+           }
+           else if(refreshRate.value == 3) {
+                GameLogic.instance.screenRefreshRate = 120;
+           }
+        });
     }
 }

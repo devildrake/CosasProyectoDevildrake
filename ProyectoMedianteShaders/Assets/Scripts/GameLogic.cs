@@ -89,10 +89,13 @@ public class GameLogic : MonoBehaviour {
     public float sfxVolume; //modificador del volumen de los efectos de sonido
     public int screenRefreshRate; //varia los Hz de refresco de la pantalla
     public int maxFrameRate; //limita el framerate
+    public int resolutionSelected; //que resolucion de pantalla se ha escogido
+    public bool fullscreen; //controlar el fullscreen
 
     /*
      * Conjunto de metodos que se llamaran al cambiar las opciones de juego
      */
+     
 
     //=====================FINAL DE METODOS DE OPCIONES========================
 
@@ -102,7 +105,7 @@ public class GameLogic : MonoBehaviour {
 
     void Awake() {
         completedLevels = new Dictionary<int, bool>();
-        Application.targetFrameRate = 60;
+        Application.targetFrameRate = -1;
 
         currentSceneName = SceneManager.GetActiveScene().name;
 
