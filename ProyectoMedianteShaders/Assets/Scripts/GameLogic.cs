@@ -85,16 +85,20 @@ public class GameLogic : MonoBehaviour {
 
     public float worldOffset;
 
-    public float musicVolume; //modificador del volumen de la musica
-    public float sfxVolume; //modificador del volumen de los efectos de sonido
-    public int screenRefreshRate; //varia los Hz de refresco de la pantalla
-    public int maxFrameRate; //limita el framerate
-    public int resolutionSelected; //que resolucion de pantalla se ha escogido
-    public bool fullscreen; //controlar el fullscreen
+    public float musicVolume = 1; //modificador del volumen de la musica
+    public float sfxVolume = 1; //modificador del volumen de los efectos de sonido
+    public int screenRefreshRate = 0; //varia los Hz de refresco de la pantalla
+    public int maxFrameRate = -1; //limita el framerate
+    public int resolutionSelected; //que resolucion de pantalla se ha escogido. Se inicializa desde SetUpMenu
+    public bool fullscreen = Screen.fullScreen; //controlar el fullscreen
 
     /*
      * Conjunto de metodos que se llamaran al cambiar las opciones de juego
      */
+    public void changeGameSettings() {
+        Screen.SetResolution(Screen.resolutions[resolutionSelected].width, Screen.resolutions[resolutionSelected].height,fullscreen,screenRefreshRate);
+        Application.targetFrameRate = maxFrameRate;
+    }
      
 
     //=====================FINAL DE METODOS DE OPCIONES========================

@@ -10,6 +10,8 @@ using UnityEngine.UI;
 public class SetUpOptions : MonoBehaviour {
     public Slider music, sfx;
     public Dropdown resolution, fullscreen, refreshRate, fps;
+    public Button aceptar, cancelar;
+    public GameObject optionsCanvas; //referencia al canvas de todo el menu de opciones para cerrarlo despues de aceptar o cancelar.
     
 
     private void Start() {
@@ -29,7 +31,7 @@ public class SetUpOptions : MonoBehaviour {
             resolutionOptions.Add("" + Screen.resolutions[i]);
             if(Screen.resolutions[i].Equals(Screen.currentResolution)) {
                 currentResolution = i;
-                print(Screen.resolutions[i]);
+                GameLogic.instance.resolutionSelected = i;
             }
         }
         resolution.AddOptions(resolutionOptions);
@@ -83,6 +85,16 @@ public class SetUpOptions : MonoBehaviour {
            else if(refreshRate.value == 3) {
                 GameLogic.instance.screenRefreshRate = 120;
            }
+        });
+
+        aceptar.onClick.AddListener(delegate {
+            GameLogic.instance.changeGameSettings();
+            optionsCanvas.SetActive(false);
+        });
+        cancelar.onClick.AddListener(delegate {
+            //Guardar valores previos de cada opcion
+            //Si se pulsa cancelar estos valores previos se le aplican al gamelogic
+            optionsCanvas.SetActive(false);
         });
     }
 }

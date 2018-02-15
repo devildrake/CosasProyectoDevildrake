@@ -130,7 +130,7 @@ public class MenuLogic : MonoBehaviour {
     //Funcionamiento del menu cuando tienes la ventana de opciones abierta
     void State2Behavior() {
         //al pulsar escape se cierran las opciones y vuelve al menu
-        if (Input.GetAxisRaw("Cancel") == 1) {
+        if (Input.GetAxisRaw("Cancel") == 1 || !optionsCanvas.activeInHierarchy) { //pulsando boton atrás o haciendo click en cancelar
             optionsCanvas.SetActive(false);
             menuState = 1;
         }
