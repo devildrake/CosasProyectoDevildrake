@@ -15,7 +15,9 @@ public class SetUpOptions : MonoBehaviour {
 
     //valores previos de las variables
     private float prevMusic, prevSfx;
-    private int prevResolution, prevFullscreen, prevRefreshRate, prevFps;    
+    private int prevResolution, prevFullscreen, prevRefreshRate, prevFps;
+
+
 
     private void Start() {
         music.maxValue = 1.0f;
@@ -63,12 +65,13 @@ public class SetUpOptions : MonoBehaviour {
         fps.AddOptions(fpsOptions);
         fps.value = 0;
 
+        /*
         //AÑADIR LISTENERS PARA LOS CAMBIOS DE LOS DROPDOWN
         resolution.onValueChanged.AddListener(delegate {
             GameLogic.instance.resolutionSelected = resolution.value;
         });
-        refreshRate.onValueChanged.AddListener(delegate {
-            if(refreshRate.value == 0) {
+        fullscreen.onValueChanged.AddListener(delegate {
+            if(fullscreen.value == 0) {
                 GameLogic.instance.fullscreen = true;
             }
             else {
@@ -89,6 +92,7 @@ public class SetUpOptions : MonoBehaviour {
                 GameLogic.instance.screenRefreshRate = 120;
            }
         });
+        */
 
         aceptar.onClick.AddListener(delegate {
             //Los cambios de los listeners los guardo localmente en el script
@@ -97,6 +101,56 @@ public class SetUpOptions : MonoBehaviour {
             //Quiero que los valores solo se cambien en el gamelogic si pulso
             //aceptar, si no no tienen que variar y tienen que quedarse igual
             //que estaban antes.
+
+            //guardamos los valores cambiados
+            prevMusic = music.value;
+            prevSfx = sfx.value;
+            prevResolution = resolution.value;
+            prevFullscreen = fullscreen.value;
+            prevRefreshRate = refreshRate.value;
+            prevFps = fps.value;
+
+            //Añadir valores al gamelogic
+            //Resolucion
+            GameLogic.instance.resolutionSelected = resolution.value;
+            //Fullscreen
+            if (fullscreen.value == 0) {
+                GameLogic.instance.fullscreen = true;
+            }
+            else {
+                GameLogic.instance.fullscreen = false;
+            }
+            //Screen refresh rate
+            if (refreshRate.value == 0) {
+                GameLogic.instance.screenRefreshRate = 0;
+            }
+            else if (refreshRate.value == 1) {
+                GameLogic.instance.screenRefreshRate = 30;
+            }
+            else if (refreshRate.value == 2) {
+                GameLogic.instance.screenRefreshRate = 60;
+            }
+            else if (refreshRate.value == 3) {
+                GameLogic.instance.screenRefreshRate = 120;
+            }
+
+            //fps
+            if(fps.value == 0) {
+                GameLogic.instance.maxFrameRate = -1;
+            }
+            else if(fps.value == 1) {
+                GameLogic.instance.maxFrameRate = 30;
+            }
+            else if(fps.value == 2) {
+                GameLogic.instance.maxFrameRate = 60;
+            }
+            else if(fps.value == 3) {
+                GameLogic.instance.maxFrameRate = 90;
+            }
+            else if(fps.value == 4){
+                GameLogic.instance.maxFrameRate = 120;
+            }
+
             GameLogic.instance.changeGameSettings();
             optionsCanvas.SetActive(false);
         });

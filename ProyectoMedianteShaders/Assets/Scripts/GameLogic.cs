@@ -92,7 +92,7 @@ public class GameLogic : MonoBehaviour {
     [HideInInspector] public int screenRefreshRate = 0; //varia los Hz de refresco de la pantalla
     [HideInInspector] public int maxFrameRate = -1; //limita el framerate
     [HideInInspector] public int resolutionSelected; //que resolucion de pantalla se ha escogido. Se inicializa desde SetUpMenu
-    [HideInInspector] public bool fullscreen = Screen.fullScreen; //controlar el fullscreen
+    [HideInInspector] public bool fullscreen; //controlar el fullscreen
 
     /*
      * Conjunto de metodos que se llamaran al cambiar las opciones de juego
@@ -112,6 +112,7 @@ public class GameLogic : MonoBehaviour {
     void Awake() {
         completedLevels = new Dictionary<int, bool>();
         Application.targetFrameRate = -1;
+        fullscreen = Screen.fullScreen;
 
         currentSceneName = SceneManager.GetActiveScene().name;
 
