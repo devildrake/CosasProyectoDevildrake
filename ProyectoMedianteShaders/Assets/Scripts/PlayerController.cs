@@ -136,7 +136,7 @@ public class PlayerController : DoubleObject {
         rb = GetComponent<Rigidbody2D>();
         slowedInTheAir = false;
         slowMotionTimeScale = 0.3f;
-        dashForce = 8;
+        dashForce = 7;
         //Se hace esto para que UseDirectionCircle haga uso de su bool once y inicialize las cosas que le interesan
         direction = DirectionCircle.UseDirectionCircle(arrow, gameObject,0);
 
@@ -328,6 +328,10 @@ public class PlayerController : DoubleObject {
 
 
                 if (grounded) {
+                    if (dawn&&worldAssignation==world.DAWN&&Input.GetMouseButton(0)) {
+                        PlayerUtilsStatic.ResetDirectionCircle(arrow);
+                    }
+
                     //GetComponent<Rigidbody2D>().AddForce(new Vector2(-GetComponent<Rigidbody2D>().velocity.x, 0), ForceMode2D.Impulse);
                     GetComponent<Rigidbody2D>().velocity = new Vector2(0, GetComponent<Rigidbody2D>().velocity.y);
                     //Debug.Log("Se para");

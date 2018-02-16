@@ -1716,16 +1716,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 3
       objectReference: {fileID: 0}
-    - target: {fileID: 114523398886011646, guid: 0737c82e1acb50948af50e8a505c1f11,
-        type: 2}
-      propertyPath: arrow
-      value: 
-      objectReference: {fileID: 1449161504}
-    - target: {fileID: 114523398886011646, guid: 0737c82e1acb50948af50e8a505c1f11,
-        type: 2}
-      propertyPath: maskObjectScript
-      value: 
-      objectReference: {fileID: 1935262562}
     - target: {fileID: 114438638205467172, guid: 0737c82e1acb50948af50e8a505c1f11,
         type: 2}
       propertyPath: arrow
@@ -1736,11 +1726,16 @@ Prefab:
       propertyPath: maskObjectScript
       value: 
       objectReference: {fileID: 1935262562}
-    - target: {fileID: 95064722409787760, guid: 0737c82e1acb50948af50e8a505c1f11,
+    - target: {fileID: 114523398886011646, guid: 0737c82e1acb50948af50e8a505c1f11,
         type: 2}
-      propertyPath: m_Controller
+      propertyPath: arrow
       value: 
-      objectReference: {fileID: 9100000, guid: a995b9dda632a544da27d144b9a27ab3, type: 2}
+      objectReference: {fileID: 1449161504}
+    - target: {fileID: 114523398886011646, guid: 0737c82e1acb50948af50e8a505c1f11,
+        type: 2}
+      propertyPath: maskObjectScript
+      value: 
+      objectReference: {fileID: 1935262562}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0737c82e1acb50948af50e8a505c1f11, type: 2}
   m_IsPrefabParent: 0

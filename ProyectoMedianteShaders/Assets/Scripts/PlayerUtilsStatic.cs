@@ -279,10 +279,11 @@ public static class PlayerUtilsStatic {
        // return (mousePositions[1] - mousePositions[0]).normalized;
     }
 
-    public static void ResetDirectionCircle() {
+    public static void ResetDirectionCircle(GameObject arrow) {
         draw = false;
         once = true;
         Cursor.lockState = CursorLockMode.Locked;
+        arrow.SetActive(false);
     }
 
  /* ==========================================================================================

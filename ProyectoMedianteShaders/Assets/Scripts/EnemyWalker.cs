@@ -9,7 +9,7 @@ public class EnemyWalker : DoubleObject {
     public float velocity;
     float threshold = 0.2f;
     float maxSpeed = 2;
-
+    bool once;
 
     public Transform[] PatrolPoints;
     public Vector3[] VectorPatrolPoints;
@@ -26,7 +26,7 @@ public class EnemyWalker : DoubleObject {
 
 
 
-        bounceForce = 10;
+        bounceForce = 10.5f;
         velocity = 2.5f;
         InitTransformable();
         isPunchable = false;
@@ -147,15 +147,20 @@ public class EnemyWalker : DoubleObject {
 
     //Si colisiona en dawn el personaje, lo mata, si lo hace en dusk con velocidad y inferior o igual a 0, bota
     private void OnTriggerEnter2D(Collider2D other) {
+
+        //Debug.Log(other.tag);
+
         if (dawn && worldAssignation == world.DAWN) {
             if (other.tag == "Player") {
                 other.GetComponent<PlayerController>().Kill();
             }
         }else if (!dawn && worldAssignation == world.DUSK) {
             if (other.tag == "Player") {
+
                 if (other.GetComponent<Rigidbody2D>().velocity.y <= 0) {
                     other.GetComponent<Rigidbody2D>().velocity = new Vector2(other.GetComponent<Rigidbody2D>().velocity.x, 0);
                     other.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, 1 * bounceForce), ForceMode2D.Impulse);
+                    Debug.Log(other.GetComponent<Rigidbody2D>().velocity);
                 }
             }
         }
@@ -178,8 +183,20 @@ public class EnemyWalker : DoubleObject {
         }
     }
 
+
+    void Nen() {
+        if (!once) {
+            if (GameLogic.instance.transformableObjects[0].GetComponent<DoubleObject>().dawn != dawn) {
+                dawn = !dawn;
+                once = true;
+            }
+        }
+    }
+
     // Update is called once per frame
     void Update() {
+
+
         AddToGameLogicList();
         BrotherBehavior();
 
@@ -188,6 +205,9 @@ public class EnemyWalker : DoubleObject {
             DawnBehavior();
         else
             DuskBehavior();
+
+        Nen();
+
 
     }
 }
