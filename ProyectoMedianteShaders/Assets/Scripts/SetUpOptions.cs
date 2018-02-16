@@ -12,7 +12,10 @@ public class SetUpOptions : MonoBehaviour {
     public Dropdown resolution, fullscreen, refreshRate, fps;
     public Button aceptar, cancelar;
     public GameObject optionsCanvas; //referencia al canvas de todo el menu de opciones para cerrarlo despues de aceptar o cancelar.
-    
+
+    //valores previos de las variables
+    private float prevMusic, prevSfx;
+    private int prevResolution, prevFullscreen, prevRefreshRate, prevFps;    
 
     private void Start() {
         music.maxValue = 1.0f;
@@ -88,13 +91,37 @@ public class SetUpOptions : MonoBehaviour {
         });
 
         aceptar.onClick.AddListener(delegate {
+            //Los cambios de los listeners los guardo localmente en el script
+            //y cuando pulso aceptar se aplican al gamelogic y luego se llama 
+            //al metodo de cambiar
+            //Quiero que los valores solo se cambien en el gamelogic si pulso
+            //aceptar, si no no tienen que variar y tienen que quedarse igual
+            //que estaban antes.
             GameLogic.instance.changeGameSettings();
             optionsCanvas.SetActive(false);
         });
+
         cancelar.onClick.AddListener(delegate {
-            //Guardar valores previos de cada opcion
-            //Si se pulsa cancelar estos valores previos se le aplican al gamelogic
+            music.value = prevMusic;
+            sfx.value = prevSfx;
+            resolution.value = prevResolution;
+            fullscreen.value = prevFullscreen;
+            refreshRate.value = prevRefreshRate;
+            fps.value = prevFps;
             optionsCanvas.SetActive(false);
         });
+    }
+
+    /*
+     * Cuando se activa el menu se guarda el estado en el que estaba en ese
+     * momento por si se pulsa cancelar
+     */
+    private void OnEnable() {
+        prevMusic = music.value;
+        prevSfx = sfx.value;
+        prevResolution = resolution.value;
+        prevFullscreen = fullscreen.value;
+        prevRefreshRate = refreshRate.value;
+        prevFps = fps.value;
     }
 }
