@@ -13,14 +13,17 @@ public class SetUpOptions : MonoBehaviour {
     public Button aceptar, cancelar;
     public GameObject optionsCanvas; //referencia al canvas de todo el menu de opciones para cerrarlo despues de aceptar o cancelar.
     public Scrollbar scroll;
+    public float maxScroll = 50;
 
     //valores previos de las variables
     private float prevMusic, prevSfx;
     private int prevResolution, prevFullscreen, prevRefreshRate, prevFps;
 
-
+    private Vector3 initialOptionsPosition;
 
     private void Start() {
+        initialOptionsPosition = GetComponent<RectTransform>().localPosition;
+
         music.maxValue = 1.0f;
         music.minValue = 0.0f;
         music.value = 1.0f;
@@ -67,6 +70,9 @@ public class SetUpOptions : MonoBehaviour {
         fps.value = 0;
 
         //TODO on value changed para la scrollbar
+        scroll.onValueChanged.AddListener(delegate {
+            GetComponent<RectTransform>().localPosition = initialOptionsPosition + new Vector3(0, scroll.value*maxScroll, 0);
+        });
 
         aceptar.onClick.AddListener(delegate {
             //Los cambios de los listeners los guardo localmente en el script
@@ -129,6 +135,8 @@ public class SetUpOptions : MonoBehaviour {
             optionsCanvas.SetActive(false);
         });
 
+
+
         cancelar.onClick.AddListener(delegate {
             music.value = prevMusic;
             sfx.value = prevSfx;
@@ -151,5 +159,9 @@ public class SetUpOptions : MonoBehaviour {
         prevFullscreen = fullscreen.value;
         prevRefreshRate = refreshRate.value;
         prevFps = fps.value;
+        scroll.value = 0;
+
+        //Cuando se activa ponemos las opciones con el scroll a 0;
+        GetComponent<RectTransform>().localPosition = initialOptionsPosition;
     }
 }
