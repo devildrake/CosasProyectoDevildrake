@@ -26,7 +26,7 @@ public class EnemyWalker : DoubleObject {
 
 
 
-        bounceForce = 50;
+        bounceForce = 10;
         velocity = 2.5f;
         InitTransformable();
         isPunchable = false;
@@ -154,6 +154,7 @@ public class EnemyWalker : DoubleObject {
         }else if (!dawn && worldAssignation == world.DUSK) {
             if (other.tag == "Player") {
                 if (other.GetComponent<Rigidbody2D>().velocity.y <= 0) {
+                    other.GetComponent<Rigidbody2D>().velocity = new Vector2(other.GetComponent<Rigidbody2D>().velocity.x, 0);
                     other.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, 1 * bounceForce), ForceMode2D.Impulse);
                 }
             }
@@ -170,6 +171,7 @@ public class EnemyWalker : DoubleObject {
             if (other.tag == "Player") {
                 if (other.GetComponent<Rigidbody2D>().velocity.y <= 0) {
                     Debug.Log(other.GetComponent<Rigidbody2D>());
+                    other.GetComponent<Rigidbody2D>().velocity = new Vector2(other.GetComponent<Rigidbody2D>().velocity.x, 0);
                     other.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, 1 * bounceForce),ForceMode2D.Impulse);
                 }
             }

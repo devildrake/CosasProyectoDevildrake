@@ -3,10 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public static class PlayerUtilsStatic {
-    public static void DoDash(GameObject PJ, Vector2 direction, float MAX_FORCE) {
+    public static void DoDash(GameObject PJ, Vector2 direction, float MAX_FORCE, bool limitX) {
         Rigidbody2D rigidbody = PJ.GetComponent<Rigidbody2D>();
-        Debug.Log(rigidbody.bodyType);
-        rigidbody.AddForce(direction * MAX_FORCE, ForceMode2D.Impulse);
+        //Debug.Log(rigidbody.bodyType);
+        //rigidbody.AddForce(direction * MAX_FORCE, ForceMode2D.Impulse);
+        if (!limitX) {
+            rigidbody.AddForce(direction * MAX_FORCE, ForceMode2D.Impulse);
+        } else {
+            rigidbody.AddForce(new Vector2(direction.x * MAX_FORCE*0.75f,direction.y*MAX_FORCE), ForceMode2D.Impulse);
+        }
     }
     public static void Punch(Vector2 direction, float MAX_FORCE, List<GameObject>NearbyObjects) {
         foreach (GameObject g in NearbyObjects) {

@@ -23,14 +23,14 @@ public class PlayerController : DoubleObject {
     //Lista de objetos en el area de Deflect
     public List<GameObject> objectsInDeflectArea;
 
-    public float punchCoolDown;
-    public float punchTimer;
+    private float punchCoolDown;
+    private float punchTimer;
 
-    public float dashCoolDown;
-    public float dashTimer;
+    private float dashCoolDown;
+    private float dashTimer;
 
-    public float deflectCoolDown;
-    public float deflectTimer;
+    private float deflectCoolDown;
+    private float deflectTimer;
 
     float timeNotMoving;
 
@@ -122,7 +122,7 @@ public class PlayerController : DoubleObject {
         grabbableMask[1] = LayerMask.GetMask("Platform");
 
 
-        maxSpeedY = 8;
+        maxSpeedY = 20;
         originalOffsetCollider = GetComponent<BoxCollider2D>().offset;
         originalSizeCollider = GetComponent<BoxCollider2D>().size;
 
@@ -171,6 +171,10 @@ public class PlayerController : DoubleObject {
 
     }
 
+    bool isNotAlive(GameObject g) {
+        return g == null;
+    }
+
     void CoolDowns() {
         if (punchCoolDown > punchTimer) {
             punchTimer += Time.deltaTime;
@@ -183,6 +187,10 @@ public class PlayerController : DoubleObject {
         if (deflectCoolDown > deflectTimer) {
             deflectTimer += Time.deltaTime;
         }
+
+        objectsInDeflectArea.RemoveAll(isNotAlive);
+
+
     }
 
     void Update() {
@@ -320,7 +328,8 @@ public class PlayerController : DoubleObject {
 
 
                 if (grounded) {
-                    GetComponent<Rigidbody2D>().AddForce(new Vector2(-GetComponent<Rigidbody2D>().velocity.x, 0), ForceMode2D.Impulse);
+                    //GetComponent<Rigidbody2D>().AddForce(new Vector2(-GetComponent<Rigidbody2D>().velocity.x, 0), ForceMode2D.Impulse);
+                    GetComponent<Rigidbody2D>().velocity = new Vector2(0, GetComponent<Rigidbody2D>().velocity.y);
                     //Debug.Log("Se para");
                     transform.Translate(Vector3.right * Input.GetAxis("Horizontal") * characterSpeed * Time.deltaTime);
                     slowedInTheAir = false;
@@ -354,7 +363,7 @@ public class PlayerController : DoubleObject {
                 else if (changed) {
                     slowedInTheAir = true;
                     mustSlow = 0.5f;
-                    transform.Translate(Vector3.right * Input.GetAxis("Horizontal") * characterSpeed * mustSlow * Time.deltaTime);
+                    transform.Translate(Vector3.right * Input.GetAxis("Horizontal") * characterSpeed*0.75f * mustSlow * Time.deltaTime);
 
                     //Velocidad X a 0
                     rb.AddForce(new Vector2(-rb.velocity.x, 0), ForceMode2D.Impulse);
@@ -366,7 +375,7 @@ public class PlayerController : DoubleObject {
                         //rb.AddForce(new Vector2(-rb.velocity.x, 0), ForceMode2D.Impulse);
                         mustSlow = 0.5f;
                     }
-                    transform.Translate(Vector3.right * Input.GetAxis("Horizontal") * characterSpeed * mustSlow * Time.deltaTime);
+                    transform.Translate(Vector3.right * Input.GetAxis("Horizontal") * characterSpeed*0.75f * mustSlow * Time.deltaTime);
                 }
 
                 if (changed) {
@@ -414,6 +423,11 @@ public class PlayerController : DoubleObject {
             }
 
         }
+
+        //if (moving && GetComponent<Rigidbody2D>().velocity.x != 0) {
+        //    GetComponent<Rigidbody2D>().velocity = new Vector2(0, GetComponent<Rigidbody2D>().velocity.y);
+        //}
+
     }
 
     //Método que comprueba si hay algun objeto en la dirección en la que mira el personaje antes lo hacía solo quieto, pero 
@@ -523,7 +537,7 @@ public class PlayerController : DoubleObject {
                 GetComponent<AudioSource>().Play();
                 canJumpOnImpulsor = false;
                 GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
-                Dash.DoDash(gameObject, direction, dashForce);
+                PlayerUtilsStatic.DoDash(gameObject, direction, dashForce,true);
                 dashTimer = 0;
                 SetCanDash(false);
                 leftPressed = false;
@@ -557,6 +571,7 @@ public class PlayerController : DoubleObject {
 
         }
         if (Input.GetMouseButtonDown(1)&&objectsInDeflectArea.Count!=0) {
+            //objectsInDeflectArea.RemoveAll(NonExisting);
             GameLogic.instance.SetTimeScaleLocal(slowMotionTimeScale);
         }else if (Input.GetMouseButtonUp(1)&& objectsInDeflectArea.Count!=0) {
             foreach(GameObject g in objectsInDeflectArea) {
@@ -566,7 +581,7 @@ public class PlayerController : DoubleObject {
                 }
 
                 g.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
-                PlayerUtilsStatic.DoDash(g, deflectDirection, 20*g.GetComponent<Rigidbody2D>().mass/2);
+                PlayerUtilsStatic.DoDash(g, deflectDirection, 20*g.GetComponent<Rigidbody2D>().mass/2,false);
                 GetComponent<AudioSource>().clip = deflectClip;
                 GetComponent<AudioSource>().Play();
 
@@ -579,6 +594,10 @@ public class PlayerController : DoubleObject {
         }
 
     }
+
+    //bool NoneExisting() {
+    //    return false;
+    //}
 
         //Método para aglotinar comportamiento de Dusk 
         void DuskBehavior() {
