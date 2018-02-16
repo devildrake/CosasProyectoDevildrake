@@ -96,8 +96,10 @@ public class CameraScript : MonoBehaviour {
                     desiredPosition = target.position + offset;
                     smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, Time.deltaTime * 2);
                     transform.position = smoothedPosition;
-                    //transform.LookAt(target.position);
-                    if (GetComponent<Camera>().orthographicSize > closeDistance) {
+
+                //transform.LookAt(target.position);
+                if (GetComponent<Camera>().orthographicSize > closeDistance) {
+                    //Debug.Log(GetComponent<Camera>().orthographicSize - closeDistance);
                         GetComponent<Camera>().orthographicSize = Mathf.Lerp(GetComponent<Camera>().orthographicSize, closeDistance, Time.deltaTime);
                     }
 
@@ -145,16 +147,16 @@ public class CameraScript : MonoBehaviour {
 
 
 
-        if (GetComponent<Camera>().orthographicSize < farDistance) {
-            GetComponent<Camera>().orthographicSize = Mathf.Lerp(GetComponent<Camera>().orthographicSize, farDistance, Time.deltaTime * 2);
-        }
+        //if (GetComponent<Camera>().orthographicSize < farDistance) {
+        //    GetComponent<Camera>().orthographicSize = Mathf.Lerp(GetComponent<Camera>().orthographicSize, farDistance, Time.deltaTime * 2);
+        //}
 
-        overViewPosition.x += cameraSpeed*Time.deltaTime;
+        //overViewPosition.x += cameraSpeed*Time.deltaTime;
 
-        if ((Vector3.Distance(transform.position, overViewPosition) > transitionThreshold)) {
-            smoothedPosition = Vector3.Lerp(transform.position, overViewPosition, Time.deltaTime * 2);
-            transform.position = smoothedPosition;
-        }
+        //if ((Vector3.Distance(transform.position, overViewPosition) > transitionThreshold)) {
+        //    smoothedPosition = Vector3.Lerp(transform.position, overViewPosition, Time.deltaTime * 2);
+        //    transform.position = smoothedPosition;
+        //}
 
 
 

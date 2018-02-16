@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class DoubleBush : DoubleObject {
-
+    public GameObject colliderSubida;
+    float upVelocity;
 	// Use this for initialization
 	void Start () {
+        upVelocity = 2;
         InitTransformable();
         offset = GameLogic.instance.worldOffset;
         GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
@@ -38,11 +40,26 @@ public class DoubleBush : DoubleObject {
         obj.GetComponent<PlayerController>().Kill();
     }
 
+    void DuskBehavior() {
+        //if (colliderSubida.transform.localPosition.y < 0) {
+        //    colliderSubida.GetComponent<Rigidbody2D>().velocity = new Vector2(0, upVelocity);
+        //} else {
+        //    colliderSubida.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
+        //}
+
+    }
+
     // Update is called once per frame
     void Update () {
         AddToGameLogicList();
         BrotherBehavior();
+        if (!dawn && worldAssignation == world.DUSK) {
+            DuskBehavior();
+        }
+
     }
+
+
 
     public void OnTriggerEnter2D(Collider2D collision) {
         if (!dawn)
