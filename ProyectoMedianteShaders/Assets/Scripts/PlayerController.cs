@@ -44,6 +44,7 @@ public class PlayerController : DoubleObject {
     float timeToDrag;
     float timeCountToDrag;
     float maxSpeedY;
+    float timeMoving;
 
     bool leftPressed;
     public List<GameObject> NearbyObjects;
@@ -236,6 +237,7 @@ public class PlayerController : DoubleObject {
             GetComponentInChildren<Animator>().SetBool("grounded", grounded);
             GetComponentInChildren<Animator>().SetFloat("speedY", GetComponent<Rigidbody2D>().velocity.y);
             GetComponentInChildren<Animator>().SetBool("sliding", sliding);
+            GetComponentInChildren<Animator>().SetFloat("timeMoving", timeMoving);
 
             if (worldAssignation == world.DUSK) {
                 GetComponentInChildren<Animator>().SetBool("punching", punchTimer < punchCoolDown);
@@ -338,6 +340,7 @@ public class PlayerController : DoubleObject {
                     transform.Translate(Vector3.right * Input.GetAxis("Horizontal") * characterSpeed * Time.deltaTime);
                     slowedInTheAir = false;
                     if (Input.GetAxis("Horizontal") != 0) {
+                        timeMoving += Time.deltaTime;
                         timeNotMoving = 0;
                         moving = true;
                         if (!GetComponent<AudioSource>().isPlaying&&!crawling) {
@@ -352,6 +355,7 @@ public class PlayerController : DoubleObject {
                         }
                     }
                     else {
+                        timeMoving = 0;
                         if (timeNotMoving > 0.1f) {
                             moving = false;
                         } else {
@@ -431,7 +435,6 @@ public class PlayerController : DoubleObject {
         //if (moving && GetComponent<Rigidbody2D>().velocity.x != 0) {
         //    GetComponent<Rigidbody2D>().velocity = new Vector2(0, GetComponent<Rigidbody2D>().velocity.y);
         //}
-
     }
 
     //Método que comprueba si hay algun objeto en la dirección en la que mira el personaje antes lo hacía solo quieto, pero 
@@ -532,7 +535,7 @@ public class PlayerController : DoubleObject {
                         Flip();
                     }
                     //Debug.Log("Cambio de Prev");
-                    Debug.Log(direction);
+                    //Debug.Log(direction);
 
                 }
                 GetComponent<AudioSource>().pitch = 1.0f;
@@ -762,7 +765,7 @@ public class PlayerController : DoubleObject {
 
     //Método de cambio, varia con respecto a los demás ya que además modifica variables especiales
     public override void Change() {
-
+        PlayerUtilsStatic.ResetDirectionCircle(arrow);
         leftPressed = false;
         GameLogic.instance.SetTimeScaleLocal(1.0f);
 

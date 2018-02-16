@@ -400,7 +400,7 @@ public class GameLogic : MonoBehaviour {
     }
 
     public void Load() {
-        Debug.Log(Application.persistentDataPath);
+        //Debug.Log(Application.persistentDataPath);
         if (File.Exists(Application.persistentDataPath + "/playerInfoSave.dat")) {
             BinaryFormatter bf = new BinaryFormatter();
             FileStream file = File.Open(Application.persistentDataPath + "/playerInfoSave.dat",FileMode.Open);

@@ -46,7 +46,7 @@ public class CameraScript : MonoBehaviour {
         cameraState = CameraState.CLOSE;
         overViewPosition = transform.position;
         //farDistance = 10;
-        closeDistance = 4.5f;
+        //closeDistance = 4.5f;
         OffsetX = 3;
         transitionTime = 2;
         distanceThreshold = 0.3f;
@@ -76,48 +76,51 @@ public class CameraScript : MonoBehaviour {
         ////////////////////////////STATICLEVEL////////////////////////////////////////
         ////////////////////////////STATICLEVEL////////////////////////////////////////
 
-
-        if (target.gameObject.GetComponent<PlayerController>().facingRight) {
-            offset.x = OffsetX;
-        } else
-            offset.x = -OffsetX;
+        if (target.gameObject.GetComponent<PlayerController>() != null) {
+            if (target.gameObject.GetComponent<PlayerController>().facingRight) {
+                offset.x = OffsetX;
+            } else
+                offset.x = -OffsetX;
+        }
 
         Vector3 desiredPosition;
         Vector3 smoothedPosition;
-        switch (cameraState) {
-            case CameraState.CLOSE:
-                if (Input.GetKeyDown(KeyCode.Q)) {
-                    cameraState = CameraState.FAR;
-                }
-                desiredPosition = target.position + offset;
-                smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, Time.deltaTime*2);
-                transform.position = smoothedPosition;
-                //transform.LookAt(target.position);
-                if (GetComponent<Camera>().orthographicSize > closeDistance) {
-                    GetComponent<Camera>().orthographicSize = Mathf.Lerp(GetComponent<Camera>().orthographicSize, closeDistance, Time.deltaTime);
-                }
-                
-                break;
-            case CameraState.FAR:
-                if (!Input.GetKey(KeyCode.Q)) {
-                    cameraState = CameraState.CLOSE;
-                }
-                if (GetComponent<Camera>().orthographicSize < farDistance) {
-                    GetComponent<Camera>().orthographicSize = Mathf.Lerp(GetComponent<Camera>().orthographicSize, farDistance, Time.deltaTime*2);
-                }
+            switch (cameraState) {
+                case CameraState.CLOSE:
 
-                if ((Vector3.Distance(transform.position,overViewPosition) > transitionThreshold)) {
-                    smoothedPosition = Vector3.Lerp(transform.position, overViewPosition, Time.deltaTime*2);
+                if (levelType == LevelType.STATIC) {
+                    if (Input.GetKeyDown(KeyCode.Q)) {
+                        cameraState = CameraState.FAR;
+                    }
+                }
+                    desiredPosition = target.position + offset;
+                    smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, Time.deltaTime * 2);
                     transform.position = smoothedPosition;
-                }
-                break;
-            default:
-                desiredPosition = target.position + offset;
-                smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, Time.deltaTime);
-                transform.position = smoothedPosition;
-                break;
-        }
+                    //transform.LookAt(target.position);
+                    if (GetComponent<Camera>().orthographicSize > closeDistance) {
+                        GetComponent<Camera>().orthographicSize = Mathf.Lerp(GetComponent<Camera>().orthographicSize, closeDistance, Time.deltaTime);
+                    }
 
+                    break;
+                case CameraState.FAR:
+                    if (!Input.GetKey(KeyCode.Q)) {
+                        cameraState = CameraState.CLOSE;
+                    }
+                    if (GetComponent<Camera>().orthographicSize < farDistance) {
+                        GetComponent<Camera>().orthographicSize = Mathf.Lerp(GetComponent<Camera>().orthographicSize, farDistance, Time.deltaTime * 2);
+                    }
+
+                    if ((Vector3.Distance(transform.position, overViewPosition) > transitionThreshold)) {
+                        smoothedPosition = Vector3.Lerp(transform.position, overViewPosition, Time.deltaTime * 2);
+                        transform.position = smoothedPosition;
+                    }
+                    break;
+                default:
+                    desiredPosition = target.position + offset;
+                    smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, Time.deltaTime);
+                    transform.position = smoothedPosition;
+                    break;
+        }
         ////////////////////////////STATICLEVEL////////////////////////////////////////
         ////////////////////////////STATICLEVEL////////////////////////////////////////
         ////////////////////////////STATICLEVEL////////////////////////////////////////

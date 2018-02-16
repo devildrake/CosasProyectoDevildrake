@@ -9,6 +9,7 @@ public class DoubleTarget : DoubleObject {
         isBreakable = false;
         interactuableBySmash = false;
         offset = GameLogic.instance.worldOffset;
+        GetComponent<Rigidbody2D>().gravityScale = 0;
         if (worldAssignation == world.DAWN) {
             GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
             //GetComponent<SpriteRenderer>().sprite = imagenDawn;
@@ -18,7 +19,7 @@ public class DoubleTarget : DoubleObject {
         }
         float randomVal = Random.Range(1, 4);
         //Debug.Log(randomVal);
-        GetComponentInChildren<MeshRenderer>().gameObject.transform.rotation *= Quaternion.AngleAxis(randomVal * 90, new Vector3(0, 0, 1));
+        //GetComponentInChildren<MeshRenderer>().gameObject.transform.rotation *= Quaternion.AngleAxis(randomVal * 90, new Vector3(0, 0, 1));
 
 
     }
@@ -54,7 +55,12 @@ public class DoubleTarget : DoubleObject {
         }
     }
 
+    private void Update() {
+        AddToGameLogicList();
+    }
+
     public override void Change() {
+        
         //El objeto que modifica a ambos haciendo de controlador es el que pertenece a Dawn
         if (worldAssignation == world.DAWN) {
             //Si antes del cambio estaba en dawn, pasara a hacerse kinematic y al otro dynamic, además de darle su velocidad
