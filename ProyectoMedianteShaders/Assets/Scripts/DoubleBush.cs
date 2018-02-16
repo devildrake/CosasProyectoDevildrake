@@ -5,6 +5,7 @@ using UnityEngine;
 public class DoubleBush : DoubleObject {
     public GameObject colliderSubida;
     float upVelocity;
+    Vector3 initialColliderPos;
 	// Use this for initialization
 	void Start () {
         upVelocity = 2;
@@ -15,6 +16,11 @@ public class DoubleBush : DoubleObject {
         if (worldAssignation == world.DAWN) {
             GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
         }
+
+        else
+            initialColliderPos = colliderSubida.transform.position;
+
+
     }
 
     protected override void BrotherBehavior() {
@@ -41,13 +47,22 @@ public class DoubleBush : DoubleObject {
     }
 
     void DuskBehavior() {
-        //if (colliderSubida.transform.localPosition.y < 0) {
-        //    colliderSubida.GetComponent<Rigidbody2D>().velocity = new Vector2(0, upVelocity);
-        //} else {
-        //    colliderSubida.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
-        //}
+        if (colliderSubida.transform.localPosition.y < 0) {
+            colliderSubida.GetComponent<Rigidbody2D>().velocity = new Vector2(0, upVelocity);
+        } else {
+            colliderSubida.GetComponent<Rigidbody2D>().constraints=RigidbodyConstraints2D.FreezeAll;
+            colliderSubida.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
+        }
 
     }
+
+    //public override void Change() {
+    //    if (worldAssignation == world.DUSK) {
+    //        colliderSubida.transform.position = initialColliderPos;
+    //    }
+    //    base.Change();
+
+    //}
 
     // Update is called once per frame
     void Update () {
