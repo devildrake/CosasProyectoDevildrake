@@ -112,7 +112,7 @@ public class GameLogic : MonoBehaviour {
     void Awake() {
         completedLevels = new Dictionary<int, bool>();
         Application.targetFrameRate = -1;
-        fullscreen = Screen.fullScreen;
+        fullscreen = Screen.fullScreen; //¿Está la aplicacion en pantalla completa?
 
         currentSceneName = SceneManager.GetActiveScene().name;
 

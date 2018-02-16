@@ -12,6 +12,7 @@ public class SetUpOptions : MonoBehaviour {
     public Dropdown resolution, fullscreen, refreshRate, fps;
     public Button aceptar, cancelar;
     public GameObject optionsCanvas; //referencia al canvas de todo el menu de opciones para cerrarlo despues de aceptar o cancelar.
+    public Scrollbar scroll;
 
     //valores previos de las variables
     private float prevMusic, prevSfx;
@@ -65,34 +66,7 @@ public class SetUpOptions : MonoBehaviour {
         fps.AddOptions(fpsOptions);
         fps.value = 0;
 
-        /*
-        //AÑADIR LISTENERS PARA LOS CAMBIOS DE LOS DROPDOWN
-        resolution.onValueChanged.AddListener(delegate {
-            GameLogic.instance.resolutionSelected = resolution.value;
-        });
-        fullscreen.onValueChanged.AddListener(delegate {
-            if(fullscreen.value == 0) {
-                GameLogic.instance.fullscreen = true;
-            }
-            else {
-                GameLogic.instance.fullscreen = false;
-            }
-        });
-        refreshRate.onValueChanged.AddListener(delegate {
-           if(refreshRate.value == 0) {
-                GameLogic.instance.screenRefreshRate = 0;
-           }
-           else if(refreshRate.value == 1) {
-                GameLogic.instance.screenRefreshRate = 30;
-           }
-           else if (refreshRate.value == 2) {
-                GameLogic.instance.screenRefreshRate = 60;
-           }
-           else if(refreshRate.value == 3) {
-                GameLogic.instance.screenRefreshRate = 120;
-           }
-        });
-        */
+        //TODO on value changed para la scrollbar
 
         aceptar.onClick.AddListener(delegate {
             //Los cambios de los listeners los guardo localmente en el script
