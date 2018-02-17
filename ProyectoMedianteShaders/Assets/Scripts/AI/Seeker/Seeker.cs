@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Seeker : Agent {
-
+    public float visionRange = 10.0f;
+    public float coneAngle = 45.0f;
+    public Vector3 lastPlayerPosSeen;
+    public float chaseSpeed = 2;
     public Vector3 orbitPos;
     public bool rising;
     public GameObject tentacles;
@@ -14,8 +17,8 @@ public class Seeker : Agent {
     [Header("Hay que setear esto con objetos ajenos (no hijos de este)")]
     public Transform[] Path_Points = new Transform[0];
     public int currentTarget;
-    public bool playerInVisionCone;
-
+    public Transform target;
+    public float timeOutOfSight;
 
     [Header("Esto se setea por codigo")]
     public Vector3[] Path_Positions;
@@ -33,6 +36,8 @@ public class Seeker : Agent {
     }
 
     void Start() {
+        timeOutOfSight = 0;
+        visionRange = 10;
         if (worldAssignation == world.DUSK) {
             tentacleHideTimer = 0;
             tentacleHideTime = 3;
@@ -103,7 +108,19 @@ public class Seeker : Agent {
         }
     }
 
+    private void OnCollisionEnter2D(Collision2D collision) {
+        if (dawn && worldAssignation == world.DAWN) {
+            if (collision.collider.tag == "Player") {
+                GameLogic.instance.KillPlayer();
+            }
+        }
+    }
+
     public override void Change() {
+        if (GameLogic.instance.currentPlayer != null) 
+        target = GameLogic.instance.currentPlayer.transform;
+
+
         currentTarget = 0;
 
         //El objeto que modifica a ambos haciendo de controlador es el que pertenece a Dawn

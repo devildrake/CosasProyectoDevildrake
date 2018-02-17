@@ -11,6 +11,7 @@ public class SeekerPathFollowState : State {
     float followSpeed = 0;
     bool increasing;
 
+
     public override void OnEnter(Agent a) {
         increasing = true;
     }
@@ -35,8 +36,6 @@ public class SeekerPathFollowState : State {
                 followSpeed = maxSpeed - (2 - Vector2.Distance(seek.Path_Positions[currentTarget], a.transform.position));
             }
 
-            //Debug.Log(followSpeed);
-            Debug.Log((seek.Path_Positions[currentTarget] - a.transform.position));
             //SET VELOCITY A CADA FRAME
             a.gameObject.GetComponent<Rigidbody2D>().velocity = ((seek.Path_Positions[currentTarget] - a.transform.position).normalized * followSpeed);
             //Debug.Log((seek.Path_Points[currentTarget].position - a.transform.position).normalized * followSpeed);
@@ -60,10 +59,22 @@ public class SeekerPathFollowState : State {
                 }
             }
         }
-
-        if (seek.playerInVisionCone) {
-            a.SwitchState(1, new SeekerChaseState());
+        Transform target = a.GetComponent<Seeker>().target;
+            Vector2 targetDir = target.position - a.transform.position;
+            Vector2 whereTo = a.transform.right;
+        if (a.GetComponent<Rigidbody2D>().velocity.x < 0) {
+            whereTo *= -1;
         }
+
+        float angle = Vector2.Angle(targetDir, whereTo);
+        if (angle < a.GetComponent<Seeker>().coneAngle && Vector2.Distance(target.position,a.transform.position) < a.GetComponent<Seeker>().visionRange) {
+            //Debug.Log(angle);
+            a.SwitchState(0, new SeekerChaseState());
+        }
+
+        //Debug.DrawLine(a.transform.position, a.transform.position);
+
+
 
 
     }

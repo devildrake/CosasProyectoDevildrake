@@ -703,6 +703,10 @@ MonoBehaviour:
   stompedOn: 0
   touchedByPlayer: 0
   playerInArea: 0
+  visionRange: 10
+  coneAngle: 45
+  lastPlayerPosSeen: {x: 0, y: 0, z: 0}
+  chaseSpeed: 2
   orbitPos: {x: 0, y: 0, z: 0}
   rising: 0
   tentacles: {fileID: 0}
@@ -711,7 +715,9 @@ MonoBehaviour:
   - {fileID: 2065805190}
   - {fileID: 1102866933}
   currentTarget: 0
-  playerInVisionCone: 0
+  target: {fileID: 0}
+  timeOutOfSight: 0
+  Path_Positions: []
 --- !u!1 &460495754
 GameObject:
   m_ObjectHideFlags: 0
@@ -1381,6 +1387,10 @@ MonoBehaviour:
   stompedOn: 0
   touchedByPlayer: 0
   playerInArea: 0
+  visionRange: 10
+  coneAngle: 45
+  lastPlayerPosSeen: {x: 0, y: 0, z: 0}
+  chaseSpeed: 2
   orbitPos: {x: 0, y: 0, z: 0}
   rising: 0
   tentacles: {fileID: 0}
@@ -1389,7 +1399,9 @@ MonoBehaviour:
   - {fileID: 2065805190}
   - {fileID: 1102866933}
   currentTarget: 0
-  playerInVisionCone: 0
+  target: {fileID: 0}
+  timeOutOfSight: 0
+  Path_Positions: []
 --- !u!1 &1102866932
 GameObject:
   m_ObjectHideFlags: 0
