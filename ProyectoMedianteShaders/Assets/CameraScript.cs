@@ -42,7 +42,11 @@ public class CameraScript : MonoBehaviour {
 
     [Tooltip("Tipo de nivel")]
     public LevelType levelType;
+
+    float slidingMultiplier;
+
     private void Start() {
+        slidingMultiplier = 1;
         cameraState = CameraState.CLOSE;
         overViewPosition = transform.position;
         //farDistance = 10;
@@ -58,6 +62,18 @@ public class CameraScript : MonoBehaviour {
     }
 
     private void FixedUpdate() {
+
+        if (target.GetComponent<PlayerController>() != null) {
+            if (target.GetComponent<PlayerController>().sliding) {
+                slidingMultiplier=3;
+
+            } else {
+                slidingMultiplier = 1;
+
+            }
+        }
+
+
         if (GameLogic.instance.cameraTransition) {
             cameraState = CameraState.FAR;
             if (GetComponent<Camera>().orthographicSize > farDistance+distanceThreshold|| GetComponent<Camera>().orthographicSize > farDistance - distanceThreshold) {
@@ -89,12 +105,12 @@ public class CameraScript : MonoBehaviour {
                 case CameraState.CLOSE:
 
                 if (levelType == LevelType.STATIC) {
-                    if (Input.GetKeyDown(KeyCode.Q)) {
+                    if (Input.GetKey(KeyCode.Q)) {
                         cameraState = CameraState.FAR;
                     }
                 }
                     desiredPosition = target.position + offset;
-                    smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, Time.deltaTime * 2);
+                    smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, Time.deltaTime * 2 *slidingMultiplier);
                     transform.position = smoothedPosition;
 
                 //transform.LookAt(target.position);

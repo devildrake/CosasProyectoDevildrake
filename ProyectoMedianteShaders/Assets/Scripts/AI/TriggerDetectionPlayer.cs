@@ -8,7 +8,6 @@ public class TriggerDetectionPlayer : MonoBehaviour {
         if (collision.tag == "Player") {
             GameLogic.instance.KillPlayer();
         } else if(collision.tag!="Area"){
-            Debug.Log("BRUH");
             if (GetComponentInParent<Seeker>() != null) {
                 GetComponentInParent<Seeker>().HideTentacles();
             }

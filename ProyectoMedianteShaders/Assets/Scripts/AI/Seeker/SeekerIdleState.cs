@@ -9,11 +9,16 @@ public class SeekerIdleState : State {
 
     override public void OnEnter(Agent a) {
         a.GetComponent<Seeker>().rising = true;
-        a.gameObject.GetComponent<Seeker>().orbitPos = a.gameObject.transform.position;
+        a.gameObject.GetComponent<Seeker>().ResetOrbit();
+
+
         a.gameObject.GetComponent<Rigidbody2D>().gravityScale = 0;
+        //Debug.Log("OrbitPos " + a.gameObject.GetComponent<Seeker>().orbitPos)
     }
 
     override public void Update(Agent a, float dt) {
+
+
         bool rising = a.GetComponent<Seeker>().rising;
 
         Vector3 targetPos;

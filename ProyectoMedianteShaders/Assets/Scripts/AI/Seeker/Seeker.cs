@@ -9,11 +9,16 @@ public class Seeker : Agent {
     public GameObject tentacles;
     float tentacleHideTime;
     float tentacleHideTimer;
+    //[Tooltip]
+
+    [Header("Hay que setear esto con objetos ajenos (no hijos de este)")]
     public Transform[] Path_Points = new Transform[0];
     public int currentTarget;
     public bool playerInVisionCone;
 
 
+    [Header("Esto se setea por codigo")]
+    public Vector3[] Path_Positions;
     public void HideTentacles() {
         tentacleHideTimer = 0;
         if (worldAssignation == world.DUSK) {
@@ -35,7 +40,6 @@ public class Seeker : Agent {
         }
 
 
-
         rising = true;
         stompedOn = false;
         InitTransformable();
@@ -51,6 +55,21 @@ public class Seeker : Agent {
             //GetComponent<SpriteRenderer>().sprite = imagenDusk;
 
         }
+
+        if (Path_Points.Length > 0) {
+            Path_Positions = new Vector3[Path_Points.Length];
+
+            for (int i = 0; i < Path_Points.Length; i++) {
+
+                //Path_Points[i].position = new Vector3(Path_Points[i].position.x, Path_Points[i].position.y+GameLogic.instance.worldOffset, Path_Points[i].position.z);
+
+                Path_Positions[i] = new Vector3(Path_Points[i].position.x, Path_Points[i].position.y+GameLogic.instance.worldOffset, Path_Points[i].position.z);
+
+            }
+        }
+
+        //Debug.Log(Path_Points[0].position);
+
 
     }
 
@@ -85,6 +104,8 @@ public class Seeker : Agent {
     }
 
     public override void Change() {
+        currentTarget = 0;
+
         //El objeto que modifica a ambos haciendo de controlador es el que pertenece a Dawn
         if (worldAssignation == world.DAWN) {
             //Si antes del cambio estaba en dawn, pasara a hacerse kinematic y al otro dynamic, además de darle su velocidad
@@ -156,6 +177,12 @@ public class Seeker : Agent {
             DawnBehavior();
         else
             DuskBehavior();
+
+    }
+
+    public void ResetOrbit() {
+        orbitPos = gameObject.transform.position;
+        brotherObject.GetComponent<Seeker>().orbitPos = brotherObject.transform.position;
 
     }
 
