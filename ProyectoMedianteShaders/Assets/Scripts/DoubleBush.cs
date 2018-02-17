@@ -49,12 +49,34 @@ public class DoubleBush : DoubleObject {
     void DuskBehavior() {
         if (colliderSubida.transform.localPosition.y < 0) {
             colliderSubida.GetComponent<Rigidbody2D>().velocity = new Vector2(0, upVelocity);
+            colliderSubida.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
+
         } else {
             colliderSubida.GetComponent<Rigidbody2D>().constraints=RigidbodyConstraints2D.FreezeAll;
             colliderSubida.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
         }
 
     }
+
+    void DawnBehavior() {
+
+        if (brotherObject.GetComponent<DoubleBush>().colliderSubida.transform.localPosition.y > -3.29) {
+            brotherObject.GetComponent<DoubleBush>().colliderSubida.transform.localPosition = new Vector2(brotherObject.GetComponent<DoubleBush>().colliderSubida.transform.localPosition.x, -3.29f);
+
+        }
+
+        //Comentado el codigo para que baje poco a poco el collider 
+        //if (brotherObject.GetComponent<DoubleBush>().colliderSubida.transform.localPosition.y > -3.29) {
+        //    brotherObject.GetComponent<DoubleBush>().colliderSubida.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
+        //    brotherObject.GetComponent<DoubleBush>().colliderSubida.GetComponent<Rigidbody2D>().velocity = new Vector2(0, -brotherObject.GetComponent<DoubleBush>().upVelocity);
+        //} else {
+        //    brotherObject.GetComponent<DoubleBush>().colliderSubida.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
+        //    brotherObject.GetComponent<DoubleBush>().colliderSubida.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
+
+    }
+
+
+
 
     //public override void Change() {
     //    if (worldAssignation == world.DUSK) {
@@ -70,6 +92,8 @@ public class DoubleBush : DoubleObject {
         BrotherBehavior();
         if (!dawn && worldAssignation == world.DUSK) {
             DuskBehavior();
+        }else if (dawn && worldAssignation == world.DAWN) {
+            DawnBehavior();
         }
 
     }
