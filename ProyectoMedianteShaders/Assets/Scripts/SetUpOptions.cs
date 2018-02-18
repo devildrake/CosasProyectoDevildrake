@@ -13,6 +13,7 @@ public class SetUpOptions : MonoBehaviour {
     public Button aceptar, cancelar;
     public GameObject optionsCanvas; //referencia al canvas de todo el menu de opciones para cerrarlo despues de aceptar o cancelar.
     public Scrollbar scroll;
+    public Toggle mute;
     public float maxScroll = 50;
 
     //valores previos de las variables
@@ -22,7 +23,7 @@ public class SetUpOptions : MonoBehaviour {
     private Vector3 initialOptionsPosition;
 
     private void Start() {
-        initialOptionsPosition = GetComponent<RectTransform>().localPosition;
+        initialOptionsPosition = GetComponent<RectTransform>().localPosition; //para controlar el scroll
 
         music.maxValue = 1.0f;
         music.minValue = 0.0f;
@@ -31,6 +32,8 @@ public class SetUpOptions : MonoBehaviour {
         sfx.maxValue = 1.0f;
         sfx.minValue = 0.0f;
         sfx.value = 1.0f;
+
+        mute.isOn = false;
 
         //Configuracion del dropdown de las resoluciones
         resolution.ClearOptions();
@@ -75,13 +78,6 @@ public class SetUpOptions : MonoBehaviour {
         });
 
         aceptar.onClick.AddListener(delegate {
-            //Los cambios de los listeners los guardo localmente en el script
-            //y cuando pulso aceptar se aplican al gamelogic y luego se llama 
-            //al metodo de cambiar
-            //Quiero que los valores solo se cambien en el gamelogic si pulso
-            //aceptar, si no no tienen que variar y tienen que quedarse igual
-            //que estaban antes.
-
             //guardamos los valores cambiados
             prevMusic = music.value;
             prevSfx = sfx.value;
@@ -131,6 +127,15 @@ public class SetUpOptions : MonoBehaviour {
                 GameLogic.instance.maxFrameRate = 120;
             }
 
+            //music
+            GameLogic.instance.musicVolume = music.value;
+
+            //sfx
+            GameLogic.instance.sfxVolume = sfx.value;
+
+            //mute
+            GameLogic.instance.muteVolume = mute.isOn;
+
             GameLogic.instance.changeGameSettings();
             optionsCanvas.SetActive(false);
         });
@@ -163,5 +168,17 @@ public class SetUpOptions : MonoBehaviour {
 
         //Cuando se activa ponemos las opciones con el scroll a 0;
         GetComponent<RectTransform>().localPosition = initialOptionsPosition;
+    }
+
+    private void Update() {
+        if(Input.GetAxisRaw("Cancel") == 1) {
+            music.value = prevMusic;
+            sfx.value = prevSfx;
+            resolution.value = prevResolution;
+            fullscreen.value = prevFullscreen;
+            refreshRate.value = prevRefreshRate;
+            fps.value = prevFps;
+            optionsCanvas.SetActive(false);
+        }
     }
 }

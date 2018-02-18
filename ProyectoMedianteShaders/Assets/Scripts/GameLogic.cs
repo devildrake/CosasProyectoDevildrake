@@ -89,6 +89,7 @@ public class GameLogic : MonoBehaviour {
     //Se inicializan en valores por defecto para evitar errores
     [HideInInspector] public float musicVolume = 1; //modificador del volumen de la musica
     [HideInInspector] public float sfxVolume = 1; //modificador del volumen de los efectos de sonido
+    [HideInInspector] public bool muteVolume = false; //controla si todo el audio esta desactivado
     [HideInInspector] public int screenRefreshRate = 0; //varia los Hz de refresco de la pantalla
     [HideInInspector] public int maxFrameRate = -1; //limita el framerate
     [HideInInspector] public int resolutionSelected; //que resolucion de pantalla se ha escogido. Se inicializa desde SetUpMenu
@@ -98,8 +99,32 @@ public class GameLogic : MonoBehaviour {
      * Conjunto de metodos que se llamaran al cambiar las opciones de juego
      */
     public void changeGameSettings() {
+        //CONFIGURACION DE PANTALLA
         Screen.SetResolution(Screen.resolutions[resolutionSelected].width, Screen.resolutions[resolutionSelected].height,fullscreen,screenRefreshRate);
         Application.targetFrameRate = maxFrameRate;
+
+        //CONFIGURACION DE AUDIO
+        if (muteVolume){
+            foreach(GameObject g in transformableObjects) {
+                if(g.GetComponent<AudioSource>() != null) {
+                    g.GetComponent<AudioSource>().volume = 0;
+                }
+            }
+        }
+        else {
+            foreach(GameObject g in transformableObjects) {
+                if(g.GetComponent<AudioSource>() != null) {
+                    //musica del nivel
+                    if(g.GetComponent<LevelMusic>() != null) {
+                        g.GetComponent<AudioSource>().volume = musicVolume;
+                    }
+                    //efectos de sonido
+                    else {
+                        g.GetComponent<AudioSource>().volume = sfxVolume;
+                    }
+                }
+            }
+        }
     }
      
 
@@ -201,8 +226,12 @@ public class GameLogic : MonoBehaviour {
         SetWaitAFrame(false);
         SetCheckMainMenu(false);
         setSpawnPoint = false;
-        changeWorldClip = Resources.Load<AudioClip>("Sounds/ChangeWorld");
-        gameObject.GetComponent<AudioSource>().clip = changeWorldClip;
+        //Pongo esta condicion para ver si estamos en el menu principal
+        //si no me machacaba la cancion.
+        if (FindObjectOfType<MenuLogic>() == null) {
+            changeWorldClip = Resources.Load<AudioClip>("Sounds/ChangeWorld");
+            gameObject.GetComponent<AudioSource>().clip = changeWorldClip;
+        }
     }
 
     //Se comprueba si la escena se ha cambiado

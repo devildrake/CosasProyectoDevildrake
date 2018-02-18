@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LevelMusic : DoubleObject {
     AudioSource musicPlayer;
@@ -13,7 +14,10 @@ public class LevelMusic : DoubleObject {
         musicPlayer = GetComponent<AudioSource>();
 
         InitTransformable();
-        musicPlayer.clip = music;
+        //He puesto esto porque si no me machacaba la cancion del menu principal
+        if (SceneManager.GetActiveScene().buildIndex != 0) {
+            musicPlayer.clip = music;
+        }
         musicPlayer.Play();
     }
 

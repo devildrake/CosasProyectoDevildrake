@@ -47,6 +47,8 @@ public class MenuLogic : MonoBehaviour {
         selected = 0;
         highlight = state1Elements[state1Elements.Length - 1].transform;
         optionsCanvas.SetActive(false);
+
+        GameLogic.instance.transformableObjects.Add(gameObject);
 	}
 	
 	// Update is called once per frame
@@ -115,7 +117,7 @@ public class MenuLogic : MonoBehaviour {
              * Selected = 2 --> Boton opciones
              */
             if(selected == 0) {
-                SceneManager.LoadScene("NivelPrototipo");
+                SceneManager.LoadScene(1);
             }
             else if(selected == 1) {
                 Application.Quit();

@@ -16,6 +16,10 @@ public class PauseCanvas : MonoBehaviour {
 
     public GameObject blackForFade;
     public GameObject scoreScreen;
+
+    //referencia al canvas de las opciones
+    public GameObject opcionesCanvas;
+    
 	// Use this for initialization
 	void Start () {
         //blackForFade.SetActive(false);
