@@ -174,7 +174,7 @@ public class EnemyWalker : DoubleObject {
             }
         } else if (!dawn && worldAssignation == world.DUSK) {
             if (other.tag == "Player") {
-                if (other.GetComponent<Rigidbody2D>().velocity.y <= 0) {
+                if (other.GetComponent<Rigidbody2D>().velocity.y <= 0&&!other.GetComponent<PlayerController>().grounded) {
                     Debug.Log(other.GetComponent<Rigidbody2D>());
                     other.GetComponent<Rigidbody2D>().velocity = new Vector2(other.GetComponent<Rigidbody2D>().velocity.x, 0);
                     other.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, 1 * bounceForce),ForceMode2D.Impulse);

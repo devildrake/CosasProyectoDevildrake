@@ -6,7 +6,7 @@ public class DoubleProjectileThrower : DoubleObject {
     // Use this for initialization
     Rigidbody2D rb;
     public LayerMask groundMask;
-    float distanciaBordeSprite;
+    //float distanciaBordeSprite;
     float projectileGenerationTime = 4;
     float projectileTimer = 4;
 
@@ -31,7 +31,7 @@ public class DoubleProjectileThrower : DoubleObject {
         rb = GetComponent<Rigidbody2D>();
         groundMask = LayerMask.GetMask("Ground");
 
-        distanciaBordeSprite = 0.745f;
+        //distanciaBordeSprite = 0.745f;
         rb.mass = 5000;
         ProjectilePrefab = Resources.Load<GameObject>("Prefabs/DoubleProjectile");
     }

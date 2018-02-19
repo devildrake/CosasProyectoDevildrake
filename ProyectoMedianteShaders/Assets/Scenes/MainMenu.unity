@@ -1026,7 +1026,6 @@ GameObject:
   - component: {fileID: 1212409167}
   - component: {fileID: 1212409166}
   - component: {fileID: 1212409168}
-  - component: {fileID: 1212409169}
   - component: {fileID: 1212409170}
   m_Layer: 0
   m_Name: menu_logic
@@ -1147,39 +1146,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
---- !u!114 &1212409169
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1212409165}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6e1d83626cf12654f8e79b32ec4115c1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cameraTransition: 0
-  currentPlayer: {fileID: 0}
-  fragments: []
-  maxTimeToReset: 3
-  timerToReset: 0
-  timesDied: 0
-  timeElapsed: 0
-  pickedFragments: 0
-  isPaused: 0
-  levelFinished: 0
-  isInMainMenu: 1
-  pauseCanvas: {fileID: 0}
-  transformableObjects: []
-  spawnPoint: {x: 0, y: 0, z: 0}
-  worldOffset: 0
-  musicVolume: 0
-  sfxVolume: 0
-  muteVolume: 0
-  screenRefreshRate: 0
-  maxFrameRate: 0
-  resolutionSelected: 0
-  fullscreen: 0
 --- !u!114 &1212409170
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1545,6 +1511,53 @@ Prefab:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 050a511c1d03f3f4c95c7e9bf1751de7, type: 2}
+  m_IsPrefabParent: 0
+--- !u!1001 &1994047216
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4464314628085196, guid: f24129821cb800a478ae5adbbffb8bbb, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 512
+      objectReference: {fileID: 0}
+    - target: {fileID: 4464314628085196, guid: f24129821cb800a478ae5adbbffb8bbb, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 384
+      objectReference: {fileID: 0}
+    - target: {fileID: 4464314628085196, guid: f24129821cb800a478ae5adbbffb8bbb, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4464314628085196, guid: f24129821cb800a478ae5adbbffb8bbb, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4464314628085196, guid: f24129821cb800a478ae5adbbffb8bbb, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4464314628085196, guid: f24129821cb800a478ae5adbbffb8bbb, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4464314628085196, guid: f24129821cb800a478ae5adbbffb8bbb, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4464314628085196, guid: f24129821cb800a478ae5adbbffb8bbb, type: 2}
+      propertyPath: m_RootOrder
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 114203246818003584, guid: f24129821cb800a478ae5adbbffb8bbb,
+        type: 2}
+      propertyPath: isInMainMenu
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: f24129821cb800a478ae5adbbffb8bbb, type: 2}
   m_IsPrefabParent: 0
 --- !u!1 &2093069996
 GameObject:

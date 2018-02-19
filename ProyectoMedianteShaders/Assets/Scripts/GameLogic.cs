@@ -19,6 +19,7 @@ public class GameLogic : MonoBehaviour {
     bool firstOpening;
     public Dictionary<int, bool> completedLevels;
 
+    //public Dictionary<int,FragmentData> savedFragments;
 
 
     //////////////////////VARIABLES LOAD/SAVE////////////////////////////
@@ -32,7 +33,7 @@ public class GameLogic : MonoBehaviour {
     public PlayerController currentPlayer;
 
     public List<FragmentData> fragments;
-    private int lastFragmentId = -1;
+    //private int lastFragmentId = -1;
 
     //Tiempo que hay que pulsar para reinciar
     public float maxTimeToReset = 3;
@@ -72,8 +73,8 @@ public class GameLogic : MonoBehaviour {
     //Booleano que gestiona la espera de un frame para la busqueda de referencias
     private bool waitAFrame;
 
-    //Referencia a MenuScripts (Solo deja de ser null en el menu principal)
-    private MenuScripts menuScripts;
+    //Referencia a MenuLogic (Solo deja de ser null en el menu principal)
+    private MenuLogic menuScripts;
 
     //Nombre de la escena actual
     static string currentSceneName = null;
@@ -157,6 +158,8 @@ public class GameLogic : MonoBehaviour {
             //Then destroy this. This enforces our singleton pattern, meaning there can only ever be one instance of a GameManager.
             Destroy(gameObject);
 
+        transform.parent = null;
+
         //Sets this to not be destroyed when reloading scene
         DontDestroyOnLoad(gameObject);
 
@@ -236,7 +239,6 @@ public class GameLogic : MonoBehaviour {
 
     //Se comprueba si la escena se ha cambiado
     bool ChangedScene() {
-
         return currentSceneName != SceneManager.GetActiveScene().name;
     }
 
@@ -293,7 +295,7 @@ public class GameLogic : MonoBehaviour {
 
         //Una vez realizada la espera, sin haber comprobado si se esta en el menu principal
         else if (!checkMainMenu) {
-            menuScripts = FindObjectOfType<MenuScripts>();
+            menuScripts = FindObjectOfType<MenuLogic>();
             if (menuScripts != null) {
                 isInMainMenu = true;
             }
@@ -312,7 +314,7 @@ public class GameLogic : MonoBehaviour {
 
                     if (timerToReset > maxTimeToReset) {
                         timerToReset = 0;
-                        Debug.Log("Bruh");
+                        //Debug.Log("Bruh");
                         RestartScene();
                     }
 
@@ -425,11 +427,18 @@ public class GameLogic : MonoBehaviour {
         completedLevels[1] = false;
         completedLevels[2] = false;
         completedLevels[3] = false;
+        completedLevels[4] = false;
+        completedLevels[5] = false;
+        completedLevels[6] = false;
+        completedLevels[7] = false;
+        completedLevels[8] = false;
+        completedLevels[9] = false;
+        completedLevels[10] = false;
         Save();
     }
 
     public void Load() {
-        //Debug.Log(Application.persistentDataPath);
+        Debug.Log(Application.persistentDataPath);
         if (File.Exists(Application.persistentDataPath + "/playerInfoSave.dat")) {
             BinaryFormatter bf = new BinaryFormatter();
             FileStream file = File.Open(Application.persistentDataPath + "/playerInfoSave.dat",FileMode.Open);
