@@ -57,7 +57,7 @@ public class PlayerController : DoubleObject {
     //float auxTime;
 
     //Bool para determinar si esta detrás de un bush
-    public bool hidden;
+    public bool behindBush;
 
     //Bool para determinar si esta dentro del area de un impulsor
     public bool onImpulsor;
@@ -844,6 +844,7 @@ public class PlayerController : DoubleObject {
 
     //Método que reinicia la posición del personaje y aumenta la variable de muertes en GameLogic
     public override void Kill() {
+        behindBush = false;
         if (worldAssignation == world.DUSK) {
             transform.position = GameLogic.instance.spawnPoint;
         } else {

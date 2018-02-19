@@ -101,22 +101,34 @@ public class DoubleBush : DoubleObject {
 
 
     public void OnTriggerEnter2D(Collider2D collision) {
-        if (!dawn)
-        {
-            if (collision.tag == "Player")
-            {
-                Kill(collision.gameObject);
+        if (collision.tag == "Player") {
+            if (!dawn) {
+                {
+                    Kill(collision.gameObject);
+                }
+            } else {
+                collision.GetComponent<PlayerController>().behindBush = true;
+            }
+        }
+    }
+    
+
+    public void OnTriggerStay2D(Collider2D collision) {
+        if (collision.tag == "Player") {
+            if (!dawn) {
+                {
+                    Kill(collision.gameObject);
+                }
+            } else {
+                collision.GetComponent<PlayerController>().behindBush = true;
             }
         }
     }
 
-    public void OnTriggerStay2D(Collider2D collision)
-    {
-        if (!dawn)
-        {
-            if (collision.tag == "Player")
-            {
-                Kill(collision.gameObject);
+    private void OnTriggerExit2D(Collider2D collision) {
+        if (collision.tag == "Player") {
+            if (dawn) {
+                collision.GetComponent<PlayerController>().behindBush = false;
             }
         }
     }

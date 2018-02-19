@@ -19,6 +19,7 @@ public class Seeker : Agent {
     public int currentTarget;
     public Transform target;
     public float timeOutOfSight;
+    public bool increasing;
 
     [Header("Esto se setea por codigo")]
     public Vector3[] Path_Positions;
@@ -117,14 +118,15 @@ public class Seeker : Agent {
     }
 
     public override void Change() {
-        if (GameLogic.instance.currentPlayer != null) 
-        target = GameLogic.instance.currentPlayer.transform;
+        //if (GameLogic.instance.currentPlayer != null) 
+        //target = GameLogic.instance.currentPlayer.transform;
 
 
         currentTarget = 0;
 
         //El objeto que modifica a ambos haciendo de controlador es el que pertenece a Dawn
         if (worldAssignation == world.DAWN) {
+            SwitchState(0, new SeekerPathFollowState());
             //Si antes del cambio estaba en dawn, pasara a hacerse kinematic y al otro dynamic, además de darle su velocidad
             if (dawn) {
                 //dawnState = new SeedIdleState();
@@ -183,7 +185,11 @@ public class Seeker : Agent {
     void Update() {
         //GetComponent<Rigidbody2D>().gravityScale = 1;
 
-
+        if (GetComponent<Rigidbody2D>().velocity.x > 0) {
+            transform.localScale = new Vector3(1.0f,1.0f,1.0f);
+        } else {
+            transform.localScale = new Vector3(-1.0f, 1.0f, 1.0f);
+        }
 
         AddToGameLogicList();
         BrotherBehavior();

@@ -9,14 +9,16 @@ public class SeekerPathFollowState : State {
     float threshold = 0.2f;
     float slowThreshold = 2.0f;
     float followSpeed = 0;
-    bool increasing;
 
 
     public override void OnEnter(Agent a) {
-        increasing = true;
+ 
     }
 
     public override void Update(Agent a, float dt) {
+
+        if (GameLogic.instance.currentPlayer != null)
+            a.GetComponent<Seeker>().target = GameLogic.instance.currentPlayer.transform;
 
         int currentTarget = a.GetComponent<Seeker>().currentTarget;
 
@@ -42,20 +44,20 @@ public class SeekerPathFollowState : State {
             //Debug.Log(a.gameObject.GetComponent<Rigidbody2D>().velocity);
 
         } else {
-            if (increasing) {
+            if (a.GetComponent<Seeker>().increasing) {
                 if (currentTarget < seek.Path_Positions.Length - 1) {
                     currentTarget++;
                     a.GetComponent<Seeker>().currentTarget++;
 
                 } else {
-                    increasing = false;
+                    a.GetComponent<Seeker>().increasing = false;
                 }
             } else {
                 if (currentTarget > 0) {
                     currentTarget--;
                     a.GetComponent<Seeker>().currentTarget--;
                 } else {
-                    increasing = true;
+                    a.GetComponent<Seeker>().increasing = true;
                 }
             }
         }
@@ -73,7 +75,7 @@ public class SeekerPathFollowState : State {
         }
 
         //Debug.DrawLine(a.transform.position, a.transform.position);
-
+        //Debug.Log(angle);
 
 
 

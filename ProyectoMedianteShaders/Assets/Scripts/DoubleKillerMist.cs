@@ -1,24 +1,33 @@
-﻿using UnityEngine;
-using FragmentDataNamespace;
-//using System.Collections;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
-public class DoubleCrystalFragment : DoubleObject {
-    // Use this for initialization
-    FragmentData data;
+public class DoubleKillerMist : DoubleObject {
+
     Rigidbody2D rb;
+    public Transform target;
+    float currentSpeed;
+    public float MAX_Speed;
+    public float MIN_Speed;
+    public float MAX_Distance;
+
+
+
     void Start() {
         InitTransformable();
         isPunchable = false;
-        isMovable = false;
         isBreakable = false;
         interactuableBySmash = false;
         offset = GameLogic.instance.worldOffset;
         if (worldAssignation == world.DAWN) {
             GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
-        } 
+        }
+
         rb = GetComponent<Rigidbody2D>();
 
         rb.mass = 5000;
+        rb.gravityScale = 0;
+        currentSpeed = 0;
     }
 
     protected override void BrotherBehavior() {
@@ -39,16 +48,20 @@ public class DoubleCrystalFragment : DoubleObject {
 
     }
 
-    protected override void LoadResources() {
-        //if (worldAssignation == world.DAWN) {
-        //    imagenDawn = Resources.Load<Sprite>("Presentacion/DawnSprites/DawnBox");
-        //} else {
-        //    imagenDusk = Resources.Load<Sprite>("Presentacion/DuskSprites/DuskBox");
-
-        //}
+    void BecomePunchable() {
+        isPunchable = true;
     }
 
     public override void Change() {
+        if (added) {
+            if (GameLogic.instance.currentPlayer.worldAssignation == worldAssignation) {
+                target = GameLogic.instance.currentPlayer.transform;
+            } else {
+                target = GameLogic.instance.currentPlayer.brotherObject.transform;
+            }
+        }
+
+
         //El objeto que modifica a ambos haciendo de controlador es el que pertenece a Dawn
         if (worldAssignation == world.DAWN) {
             //Si antes del cambio estaba en dawn, pasara a hacerse kinematic y al otro dynamic, además de darle su velocidad
@@ -77,35 +90,14 @@ public class DoubleCrystalFragment : DoubleObject {
 
     }
 
-    private void OnTriggerEnter2D(Collider2D collision) {
-        if (collision.gameObject.tag == "Player") {
-            GameLogic.instance.GrabFragment(data);
-            GameLogic.instance.SafelyDestroy(this);
-        }
-    }
-
     protected override void AddToGameLogicList() {
         if (!added) {
             if (GameLogic.instance != null) {
                 added = true;
                 GameLogic.instance.transformableObjects.Add(gameObject);
-                offset = GameLogic.instance.worldOffset;
-                    data = new FragmentData(false,GameLogic.instance.GetCurrentLevel());
-                //Debug.Log(GameLogic.instance.GetCurrentLevel());
-                    GameLogic.instance.AddFragmentData(data);
-
-            }                Debug.Log("adding " + data.levelName + " " + data.picked);
-        }
-    }
-
-    //NIEBLA
-    //GUARDAR FRAGMENT
-
-    void CheckPick() {
-        if (data.picked) {
-            //Debug.Log(this);
-            //AQUI FALTA HACER QUE SE GUARDE 
-            GameLogic.instance.SafelyDestroy(this);
+                if (GameLogic.instance.currentPlayer != null)
+                    target = GameLogic.instance.currentPlayer.transform;
+            }
         }
     }
 
@@ -113,8 +105,23 @@ public class DoubleCrystalFragment : DoubleObject {
     void Update() {
         AddToGameLogicList();
         BrotherBehavior();
-        if (added) {
-            CheckPick();
+        //Debug.Log(currentSpeed);
+        if (target != null) { 
+        float currentDistance = Vector2.Distance(target.position, transform.position);
+        currentSpeed = Mathf.Clamp((currentDistance / MAX_Distance * MAX_Speed), MIN_Speed, MAX_Speed);
+            GetComponent<Rigidbody2D>().velocity = (((target.position - transform.position).normalized) * currentSpeed);
+            Debug.Log(GetComponent<Rigidbody2D>().velocity);
+        } else if(GameLogic.instance!=null){
+            Debug.Log("NullTarget");
+            if (GameLogic.instance.currentPlayer != null) {
+                if (GameLogic.instance.currentPlayer.worldAssignation == worldAssignation) {
+                    target = GameLogic.instance.currentPlayer.transform;
+                } else {
+                    target = GameLogic.instance.currentPlayer.brotherObject.transform;
+                }
+
+
+            }
         }
     }
 }

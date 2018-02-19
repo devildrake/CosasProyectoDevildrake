@@ -195,7 +195,11 @@ public class EnemyWalker : DoubleObject {
 
     // Update is called once per frame
     void Update() {
-
+        if (GetComponent<Rigidbody2D>().velocity.x > 0) {
+            transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
+        } else {
+            transform.localScale = new Vector3(-1.0f, 1.0f, 1.0f);
+        }
 
         AddToGameLogicList();
         BrotherBehavior();

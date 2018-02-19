@@ -8,7 +8,6 @@ public class SeekerChaseState : State {
         if (GameLogic.instance.currentPlayer != null)
             a.GetComponent<Seeker>().target = GameLogic.instance.currentPlayer.transform;
         a.GetComponent<Seeker>().timeOutOfSight = 0;
-
     }
 
     public override void Update(Agent a, float dt) {
@@ -26,9 +25,13 @@ public class SeekerChaseState : State {
             a.GetComponent<Seeker>().timeOutOfSight += Time.deltaTime;
         } else {
             a.GetComponent<Seeker>().timeOutOfSight = 0;
-            Debug.Log(Vector2.Distance(a.transform.position, target.position) + "Y " + a.GetComponent<Seeker>().visionRange);
+            //Debug.Log(Vector2.Distance(a.transform.position, target.position) + "Y " + a.GetComponent<Seeker>().visionRange);
             //Debug.Log(a.GetComponent<Seeker>().visionRange)
             //Debug.Log(Vector2.Distance(target.position, a.transform.position) > a.GetComponent<Seeker>().visionRange);
+        }
+
+        if (target.GetComponent<PlayerController>().behindBush&&target.GetComponent<PlayerController>().crawling) {
+            a.GetComponent<Seeker>().timeOutOfSight = 2.01f;
         }
 
         if (a.GetComponent<Seeker>().timeOutOfSight > 2.0f) {
@@ -39,11 +42,6 @@ public class SeekerChaseState : State {
 
         Vector3 direction = (a.GetComponent<Seeker>().lastPlayerPosSeen - a.transform.position).normalized;
         a.GetComponent<Rigidbody2D>().velocity = new Vector2(direction.x * a.GetComponent<Seeker>().chaseSpeed, direction.y * a.GetComponent<Seeker>().chaseSpeed);
-
-
-
-
-
 
     }
 
