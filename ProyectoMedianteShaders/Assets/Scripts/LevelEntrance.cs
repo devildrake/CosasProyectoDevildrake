@@ -23,11 +23,11 @@ public class LevelEntrance : DoubleObject {
             //GetComponent<SpriteRenderer>().sprite = imagenDusk;
 
         }
-        float randomVal = Random.Range(1, 4);
+        //float randomVal = Random.Range(1, 4);
         //Debug.Log(randomVal);
-        GetComponentInChildren<MeshRenderer>().gameObject.transform.rotation *= Quaternion.AngleAxis(randomVal * 90, new Vector3(0, 0, 1));
+        //GetComponentInChildren<MeshRenderer>().gameObject.transform.rotation *= Quaternion.AngleAxis(randomVal * 90, new Vector3(0, 0, 1));
 
-        if (GameLogic.instance.completedLevels[levelToLoad]) {
+        if (GameLogic.instance.completedLevels[levelToLoad-1]) {
             activated = true;
         }
 

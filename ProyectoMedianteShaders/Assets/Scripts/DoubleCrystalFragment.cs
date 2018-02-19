@@ -93,10 +93,15 @@ public class DoubleCrystalFragment : DoubleObject {
                     data = new FragmentData(false,GameLogic.instance.GetCurrentLevel());
                 //Debug.Log(GameLogic.instance.GetCurrentLevel());
                     GameLogic.instance.AddFragmentData(data);
-                
-            }
+
+            }                Debug.Log("adding " + data.levelName + " " + data.picked);
         }
     }
+
+    //MODELOS ENEMIGOS
+    //NIEBLA
+    //GUARDAR FRAGMENT
+    //HIDE BEHIND BUSH
 
     void CheckPick() {
         if (data.picked) {

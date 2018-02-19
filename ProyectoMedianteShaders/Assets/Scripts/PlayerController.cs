@@ -56,6 +56,10 @@ public class PlayerController : DoubleObject {
     //bool groundedChecker;
     //float auxTime;
 
+    //Bool para determinar si esta detrás de un bush
+    public bool hidden;
+
+    //Bool para determinar si esta dentro del area de un impulsor
     public bool onImpulsor;
     public bool canJumpOnImpulsor;
     public bool calledImpuslorBool;
