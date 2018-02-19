@@ -518,6 +518,10 @@ Prefab:
       propertyPath: m_LocalScale.z
       value: 2.8426251
       objectReference: {fileID: 0}
+    - target: {fileID: 2300000, guid: 9bbbae7cd334c88489f715f49429f719, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 5d883d90312a17a49aef8fe735f52f7c, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 9bbbae7cd334c88489f715f49429f719, type: 3}
   m_IsPrefabParent: 0
@@ -1015,6 +1019,10 @@ Prefab:
       propertyPath: m_LocalEulerAnglesHint.y
       value: 90.00001
       objectReference: {fileID: 0}
+    - target: {fileID: 2300000, guid: b811ab0a96a609547a99aa32d8eb63c7, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 5d883d90312a17a49aef8fe735f52f7c, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b811ab0a96a609547a99aa32d8eb63c7, type: 3}
   m_IsPrefabParent: 0
@@ -1140,6 +1148,10 @@ Prefab:
       propertyPath: m_Name
       value: ROCK_FBX (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 2300000, guid: b811ab0a96a609547a99aa32d8eb63c7, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 5d883d90312a17a49aef8fe735f52f7c, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b811ab0a96a609547a99aa32d8eb63c7, type: 3}
   m_IsPrefabParent: 0
