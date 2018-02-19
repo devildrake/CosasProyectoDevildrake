@@ -20,7 +20,7 @@ RenderSettings:
   m_FogDensity: 0.01
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
-  m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
+  m_AmbientSkyColor: {r: 0, g: 0, b: 0, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
   m_AmbientIntensity: 1
@@ -701,6 +701,62 @@ Prefab:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 06d5c493d5f0ca444bcbd4a3a6a01f17, type: 2}
+  m_IsPrefabParent: 0
+--- !u!1001 &297776905
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4621793007307870, guid: 281173297eb340c42a6d40b3c57c294f, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -19.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4621793007307870, guid: 281173297eb340c42a6d40b3c57c294f, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 16.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4621793007307870, guid: 281173297eb340c42a6d40b3c57c294f, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: -1.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4621793007307870, guid: 281173297eb340c42a6d40b3c57c294f, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: -0.268957
+      objectReference: {fileID: 0}
+    - target: {fileID: 4621793007307870, guid: 281173297eb340c42a6d40b3c57c294f, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: -0.40615687
+      objectReference: {fileID: 0}
+    - target: {fileID: 4621793007307870, guid: 281173297eb340c42a6d40b3c57c294f, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0.25527307
+      objectReference: {fileID: 0}
+    - target: {fileID: 4621793007307870, guid: 281173297eb340c42a6d40b3c57c294f, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: -0.8351852
+      objectReference: {fileID: 0}
+    - target: {fileID: 4621793007307870, guid: 281173297eb340c42a6d40b3c57c294f, type: 2}
+      propertyPath: m_RootOrder
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 1865857785003762, guid: 281173297eb340c42a6d40b3c57c294f, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 108954899672562070, guid: 281173297eb340c42a6d40b3c57c294f,
+        type: 2}
+      propertyPath: m_DrawHalo
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 108954899672562070, guid: 281173297eb340c42a6d40b3c57c294f,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 281173297eb340c42a6d40b3c57c294f, type: 2}
   m_IsPrefabParent: 0
 --- !u!1001 &340229747
 Prefab:
@@ -3678,6 +3734,36 @@ Prefab:
         type: 2}
       propertyPath: m_AABB.m_Extent.z
       value: 0.7436558
+      objectReference: {fileID: 0}
+    - target: {fileID: 20480535007651532, guid: 1dc1c32df61779f499b1fbfbd2ad6cee,
+        type: 2}
+      propertyPath: m_BackGroundColor.r
+      value: 0.16862746
+      objectReference: {fileID: 0}
+    - target: {fileID: 20480535007651532, guid: 1dc1c32df61779f499b1fbfbd2ad6cee,
+        type: 2}
+      propertyPath: m_BackGroundColor.g
+      value: 0.16862746
+      objectReference: {fileID: 0}
+    - target: {fileID: 20480535007651532, guid: 1dc1c32df61779f499b1fbfbd2ad6cee,
+        type: 2}
+      propertyPath: m_BackGroundColor.b
+      value: 0.16862746
+      objectReference: {fileID: 0}
+    - target: {fileID: 20576612649757950, guid: 1dc1c32df61779f499b1fbfbd2ad6cee,
+        type: 2}
+      propertyPath: m_BackGroundColor.r
+      value: 0.16862746
+      objectReference: {fileID: 0}
+    - target: {fileID: 20576612649757950, guid: 1dc1c32df61779f499b1fbfbd2ad6cee,
+        type: 2}
+      propertyPath: m_BackGroundColor.g
+      value: 0.16862746
+      objectReference: {fileID: 0}
+    - target: {fileID: 20576612649757950, guid: 1dc1c32df61779f499b1fbfbd2ad6cee,
+        type: 2}
+      propertyPath: m_BackGroundColor.b
+      value: 0.16862746
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 1dc1c32df61779f499b1fbfbd2ad6cee, type: 2}
