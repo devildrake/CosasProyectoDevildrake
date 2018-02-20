@@ -199,40 +199,45 @@ public class PlayerController : DoubleObject {
     }
 
     void Update() {
-
-        //Debug.Log(grounded);
-        //Add del transformable
         AddToGameLogicList();
 
-        if (arrow == null) {
-            arrow = GameObject.FindGameObjectWithTag("Arrow");
-        }
+        if (added) {
+            if (!GameLogic.instance.levelFinished) {
 
-        //Comportamiento sin pausar
-        if (!GameLogic.instance.isPaused) {
-            if ((worldAssignation == world.DAWN && dawn) ||(worldAssignation == world.DUSK&&!dawn)) {
-                //CheckGrounded();
-                GetComponentInChildren<GroundCheck>().CheckGrounded(this);
-                CheckObjectsInFront();
-                Move();
-                CheckInputs();
-                Smashing();
-                ClampSpeed();
+                //Debug.Log(grounded);
+                //Add del transformable
+
+                if (arrow == null) {
+                    arrow = GameObject.FindGameObjectWithTag("Arrow");
+                }
+
+                //Comportamiento sin pausar
+                if (!GameLogic.instance.isPaused) {
+                    if ((worldAssignation == world.DAWN && dawn) || (worldAssignation == world.DUSK && !dawn)) {
+                        //CheckGrounded();
+                        GetComponentInChildren<GroundCheck>().CheckGrounded(this);
+                        CheckObjectsInFront();
+                        Move();
+                        CheckInputs();
+                        Smashing();
+                        ClampSpeed();
+                    }
+                    BrotherBehavior();
+                    CoolDowns();
+                }
+
+
+
+                //Comportamiento de pausado
+                else {
+
+
+                }
+
+                SetAnimValues();
+
             }
-            BrotherBehavior();
-            CoolDowns();
         }
-
-
-
-        //Comportamiento de pausado
-        else {
-
-
-        }
-
-        SetAnimValues();
-
     }
 
     void SetAnimValues() {

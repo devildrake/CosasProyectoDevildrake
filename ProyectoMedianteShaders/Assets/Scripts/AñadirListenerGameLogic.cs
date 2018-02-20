@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+
 
 //Script para añadir un listener al método GameLogic.LoadMenu() a los botones que pertoque;
 public class AñadirListenerGameLogic : MonoBehaviour {
@@ -18,7 +20,9 @@ public class AñadirListenerGameLogic : MonoBehaviour {
                 break;
             case 1:
                 myselfButton.onClick.AddListener(() => GameLogic.instance.RestartScene());
-
+                break;
+            case 2:
+                myselfButton.onClick.AddListener(() => GameLogic.instance.LoadScene(GameLogic.instance.GetCurrentLevelIndex()+1));
                 break;
             default:
                 break;

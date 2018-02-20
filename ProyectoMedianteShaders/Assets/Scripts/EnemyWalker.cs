@@ -185,7 +185,7 @@ public class EnemyWalker : DoubleObject {
 
 
     void Nen() {
-        if (!once) {
+        if (!once&&GameLogic.instance.transformableObjects[0]!=null) {
             if (GameLogic.instance.transformableObjects[0].GetComponent<DoubleObject>().dawn != dawn) {
                 dawn = !dawn;
                 once = true;

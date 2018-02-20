@@ -117,7 +117,7 @@ public class MenuLogic : MonoBehaviour {
              * Selected = 2 --> Boton opciones
              */
             if(selected == 0) {
-                SceneManager.LoadScene(1);
+                GameLogic.instance.LoadScene(1);
             }
             else if(selected == 1) {
                 Application.Quit();

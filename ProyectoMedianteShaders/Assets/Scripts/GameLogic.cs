@@ -12,6 +12,8 @@ using System.IO;
 //si el jugador se encuentra en el menu principal 
 
 public class GameLogic : MonoBehaviour {
+
+
     //////////////////////VARIABLES LOAD/SAVE////////////////////////////
     //////////////////////VARIABLES LOAD/SAVE////////////////////////////
     //////////////////////VARIABLES LOAD/SAVE////////////////////////////
@@ -278,6 +280,8 @@ public class GameLogic : MonoBehaviour {
 
     void Update() {
 
+        transformableObjects.RemoveAll(isNull);
+
         TimeScaleStuff();
 
         //Se comprueba si ha habido cambio de escena, si lo ha habido se reinician los booleanos waitAFrame, checkMainMenu e isInManMenu además de actualizar la variable currentSceneName
@@ -353,7 +357,8 @@ public class GameLogic : MonoBehaviour {
                     }
                     //Si el juego SI esta pausado
                     else {
-
+                        Cursor.visible = true;
+                        Cursor.lockState = CursorLockMode.None; //Se puede volver a mover el cursor
 
                     }
                     //En cualquier caso se comprueba el input
