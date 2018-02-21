@@ -79,7 +79,8 @@ public class DoubleCrystalFragment : DoubleObject {
 
     private void OnTriggerEnter2D(Collider2D collision) {
         if (collision.gameObject.tag == "Player") {
-            GameLogic.instance.GrabFragment(data);
+            //GameLogic.instance.GrabFragment(data);
+            collision.GetComponent<PlayerController>().crystalFragment = data;
             GameLogic.instance.SafelyDestroy(this);
         }
     }
@@ -98,7 +99,6 @@ public class DoubleCrystalFragment : DoubleObject {
         }
     }
 
-    //NIEBLA
     //GUARDAR FRAGMENT
 
     void CheckPick() {

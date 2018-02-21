@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class DoubleKillerMist : DoubleObject {
-
+    int localKillCount;
     Rigidbody2D rb;
     public Transform target;
     float currentSpeed;
     public float MAX_Speed;
     public float MIN_Speed;
     public float MAX_Distance;
-
+    Vector3 originalPos;
 
 
     void Start() {
@@ -28,6 +28,11 @@ public class DoubleKillerMist : DoubleObject {
         rb.mass = 5000;
         rb.gravityScale = 0;
         currentSpeed = 0;
+
+        if (worldAssignation == world.DUSK) {
+            originalPos = transform.position;
+            brotherObject.GetComponent<DoubleKillerMist>().originalPos = transform.position + new Vector3(0,GameLogic.instance.worldOffset,0);
+        }
     }
 
     protected override void BrotherBehavior() {
@@ -101,6 +106,17 @@ public class DoubleKillerMist : DoubleObject {
         }
     }
 
+    private void OnTriggerEnter2D(Collider2D collision) {
+        if (collision.tag == "Player") {
+            GameLogic.instance.KillPlayer();
+        }
+    }
+
+    void ResetPos() {
+            transform.position = originalPos;
+            //brotherObject.transform.position = brotherObject.GetComponent<DoubleKillerMist>().transform.position;
+    }
+
     // Update is called once per frame
     void Update() {
         AddToGameLogicList();
@@ -123,5 +139,12 @@ public class DoubleKillerMist : DoubleObject {
 
             }
         }
+
+        if (localKillCount < GameLogic.instance.timesDied) {
+            ResetPos();
+            localKillCount++;
+        }
+
+
     }
 }
