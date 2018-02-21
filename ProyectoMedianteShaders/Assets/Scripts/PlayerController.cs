@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using FragmentDataNamespace;
 public class PlayerController : DoubleObject {
 
     //Clips de audio diferentes
@@ -19,6 +19,9 @@ public class PlayerController : DoubleObject {
 
     public Vector2 originalSizeCollider;
     public Vector2 originalOffsetCollider;
+
+    public FragmentData crystalFragment;
+    public bool savedFragment;
 
     //Lista de objetos en el area de Deflect
     public List<GameObject> objectsInDeflectArea;
@@ -202,6 +205,11 @@ public class PlayerController : DoubleObject {
         AddToGameLogicList();
 
         if (added) {
+
+            if (grounded&&worldAssignation==world.DUSK) {
+                brotherObject.GetComponent<PlayerController>().SetCanDash(true);
+            }
+
             if (!GameLogic.instance.levelFinished) {
 
                 //Debug.Log(grounded);
@@ -217,8 +225,10 @@ public class PlayerController : DoubleObject {
                         //CheckGrounded();
                         GetComponentInChildren<GroundCheck>().CheckGrounded(this);
                         CheckObjectsInFront();
-                        Move();
-                        CheckInputs();
+                        if (!GameLogic.instance.cameraTransition) {
+                            CheckInputs();
+                            Move();
+                        }
                         Smashing();
                         ClampSpeed();
                     }
@@ -236,6 +246,13 @@ public class PlayerController : DoubleObject {
 
                 SetAnimValues();
 
+            } else {
+                if (crystalFragment != null) {
+                    if (!savedFragment) {
+                        GameLogic.instance.SaveFragment(crystalFragment);
+                        savedFragment = true;
+                    }
+                }
             }
         }
     }
@@ -292,6 +309,7 @@ public class PlayerController : DoubleObject {
         Vector3 positionWithOffset;
         if (GetComponent<Rigidbody2D>().bodyType == RigidbodyType2D.Kinematic)
         {
+
             positionWithOffset = brotherObject.transform.position;
 
             if (worldAssignation == world.DAWN)

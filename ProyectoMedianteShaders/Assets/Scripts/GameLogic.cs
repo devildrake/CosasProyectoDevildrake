@@ -205,7 +205,7 @@ public class GameLogic : MonoBehaviour {
 
     }
 
-    public void GrabFragment(FragmentData a) {
+    public void SaveFragment(FragmentData a) {
         foreach (FragmentData f in fragments) {
             if (f.levelName == a.levelName) {
                 a.picked = f.picked = true;
@@ -338,7 +338,7 @@ public class GameLogic : MonoBehaviour {
                         }
 
                         //CAMBIO DE MUNDO
-                        if (Input.GetKeyDown(KeyCode.LeftShift)) {
+                        if (Input.GetKeyDown(KeyCode.LeftShift)&& !cameraTransition) {
                             if (currentPlayer != null) {
                                 if (!currentPlayer.crawling) {
                                     if (gameObject.GetComponent<AudioSource>().pitch == 1.5) {
@@ -422,6 +422,7 @@ public class GameLogic : MonoBehaviour {
 
         data.firstOpening = firstOpening;
         data.completedLevels = completedLevels;
+        data.fragments = fragments;
 
         bf.Serialize(file, data);
         file.Close();
@@ -452,20 +453,18 @@ public class GameLogic : MonoBehaviour {
 
             firstOpening = data.firstOpening;
             completedLevels = data.completedLevels;
+            fragments = data.fragments;
             //Igualar variables a cargar (Locales) a las de data
-
         } else {
             InitLoadSaveVariables();
         }
-
-
     }
 
     [Serializable]
     class PlayerData{
         public bool firstOpening;
         public Dictionary<int, bool> completedLevels;
-
+        public List<FragmentData> fragments;
     };
 
 }

@@ -76,17 +76,17 @@ public class PauseCanvas : MonoBehaviour {
 
                 Color copy = scoreScreen.GetComponent<Image>().color;
                 float alpha = copy.a;
-                Debug.Log("Alpha = " +alpha);
+                //Debug.Log("Alpha = " +alpha);
 
                 if (alpha != 1) {
                     if ((alpha + alpha * Time.deltaTime) < 1) {
-                        Debug.Log("Sumando");
+                        //Debug.Log("Sumando");
                         alpha = alpha + 1 * Time.deltaTime;
-                        Debug.Log("Sumando Alpha es = " + alpha);
+                        //Debug.Log("Sumando Alpha es = " + alpha);
 
                     } else {
 
-                        Debug.Log("Alfa a 1");
+                        //Debug.Log("Alfa a 1");
                         alpha = 1;
                     }
                     copy.a = alpha;
