@@ -7,7 +7,6 @@ public class DoubleImpulsor : DoubleObject
     // Use this for initialization
     Rigidbody2D rb;
     public LayerMask groundMask;
-    float distanciaBordeSprite;
 
     void Start()
     {
@@ -31,7 +30,6 @@ public class DoubleImpulsor : DoubleObject
         rb = GetComponent<Rigidbody2D>();
         groundMask = LayerMask.GetMask("Ground");
 
-        distanciaBordeSprite = 0.745f;
         rb.mass = 5000;
     }
 

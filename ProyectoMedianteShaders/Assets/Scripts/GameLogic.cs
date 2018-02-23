@@ -31,6 +31,7 @@ public class GameLogic : MonoBehaviour {
 
     //Flag para la transición inicial de la camara
     public bool cameraTransition;
+    public Vector3 additionalOffset;
 
     public PlayerController currentPlayer;
 
@@ -253,6 +254,8 @@ public class GameLogic : MonoBehaviour {
         DirectionCircle.SetOnce(true);
         timeElapsed = 0;
         pickedFragments = 0;
+        additionalOffset = new Vector3(0, 0, 0);
+        timesDied = 0;
     }
 
     public static bool isNull(GameObject g) {
@@ -444,7 +447,7 @@ public class GameLogic : MonoBehaviour {
     }
 
     public void Load() {
-        Debug.Log(Application.persistentDataPath);
+        Debug.Log("Cargando Archivos desde " + Application.persistentDataPath);
         if (File.Exists(Application.persistentDataPath + "/playerInfoSave.dat")) {
             BinaryFormatter bf = new BinaryFormatter();
             FileStream file = File.Open(Application.persistentDataPath + "/playerInfoSave.dat",FileMode.Open);

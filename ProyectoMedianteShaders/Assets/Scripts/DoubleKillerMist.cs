@@ -124,7 +124,7 @@ public class DoubleKillerMist : DoubleObject {
         float currentDistance = Vector2.Distance(target.position, transform.position);
         currentSpeed = Mathf.Clamp((currentDistance / MAX_Distance * MAX_Speed), MIN_Speed, MAX_Speed);
             GetComponent<Rigidbody2D>().velocity = (((target.position - transform.position).normalized) * currentSpeed);
-            Debug.Log(GetComponent<Rigidbody2D>().velocity);
+            //Debug.Log(GetComponent<Rigidbody2D>().velocity);
         } else if(GameLogic.instance!=null){
             Debug.Log("NullTarget");
             if (GameLogic.instance.currentPlayer != null) {

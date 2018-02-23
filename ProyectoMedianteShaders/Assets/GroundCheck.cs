@@ -3,12 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class GroundCheck : MonoBehaviour {
-    bool groundedChecker;
-    float auxTime;
-
 
     private void Start() {
-        auxTime = 0;
     }
 
     //Método que comprueba si la velocidad y del personaje es 0 o aprox. y actualiza el booleano grounded en consecuencia
@@ -38,8 +34,6 @@ public class GroundCheck : MonoBehaviour {
 
         } else {
             player.grounded = false;
-            groundedChecker = false;
-            auxTime = 0;
         }
         RaycastHit2D hit2DLeftO = Physics2D.Raycast(player.rb.position + new Vector2(-player.distanciaBordeSprite, 0), Vector2.down, 0.1f, player.groundMask);
         RaycastHit2D hit2DRightO = Physics2D.Raycast(player.rb.position  + new Vector2(player.distanciaBordeSprite, 0), Vector2.down, 0.1f, player.groundMask);
