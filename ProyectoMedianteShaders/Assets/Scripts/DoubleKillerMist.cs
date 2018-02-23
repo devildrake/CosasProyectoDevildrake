@@ -10,8 +10,6 @@ public class DoubleKillerMist : DoubleObject {
     public float MAX_Speed;
     public float MIN_Speed;
     public float MAX_Distance;
-    Vector3 originalPos;
-
 
     void Start() {
         InitTransformable();
