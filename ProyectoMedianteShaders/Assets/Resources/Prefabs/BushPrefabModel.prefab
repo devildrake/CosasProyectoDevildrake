@@ -123,7 +123,7 @@ GameObject:
   - component: {fileID: 4868641860200330}
   - component: {fileID: 108247198883910930}
   m_Layer: 30
-  m_Name: Area Light
+  m_Name: Iluminacion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -651,7 +651,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1454674079277376}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.051, y: 0.355, z: 0.201}
+  m_LocalPosition: {x: 0.051, y: 2.22, z: -1.6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4874228405649338}
@@ -681,7 +681,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1601903697374184}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2.559657, y: -6.7528305, z: -3.8390627}
+  m_LocalPosition: {x: -184.70006, y: -25.258461, z: -4.8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4874228405649338}
@@ -1412,9 +1412,9 @@ Light:
   m_GameObject: {fileID: 1454674079277376}
   m_Enabled: 1
   serializedVersion: 8
-  m_Type: 0
-  m_Color: {r: 0.22794116, g: 0, b: 0, a: 1}
-  m_Intensity: 2.5
+  m_Type: 2
+  m_Color: {r: 0.33138943, g: 0, b: 0, a: 1}
+  m_Intensity: 5
   m_Range: 15
   m_SpotAngle: 105
   m_CookieSize: 10

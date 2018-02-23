@@ -41,7 +41,7 @@ GameObject:
   - component: {fileID: 33756003881739272}
   - component: {fileID: 23265980888752894}
   - component: {fileID: 95384758262909194}
-  m_Layer: 0
+  m_Layer: 28
   m_Name: walkerDusk
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -56,8 +56,24 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4641789783007090}
-  m_Layer: 0
+  m_Layer: 28
   m_Name: SpiderLLeg31
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1155499508336942
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4040528198118674}
+  - component: {fileID: 108595646071457788}
+  m_Layer: 28
+  m_Name: Point light (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -71,7 +87,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4123659177518168}
-  m_Layer: 0
+  m_Layer: 28
   m_Name: SpiderRLeg21
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -86,7 +102,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4569764273253708}
-  m_Layer: 0
+  m_Layer: 28
   m_Name: SpiderLLeg32
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -116,7 +132,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4014508714423448}
-  m_Layer: 0
+  m_Layer: 28
   m_Name: SpiderLLeg11
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -132,7 +148,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4495295721831912}
   - component: {fileID: 95517660304038362}
-  m_Layer: 0
+  m_Layer: 28
   m_Name: walkerDawn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -166,7 +182,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4486570224799698}
-  m_Layer: 0
+  m_Layer: 28
   m_Name: SpiderRLeg3Platform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -181,7 +197,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4818439862735842}
-  m_Layer: 0
+  m_Layer: 28
   m_Name: SpiderLLeg1Platform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -196,7 +212,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4541865825906564}
-  m_Layer: 0
+  m_Layer: 28
   m_Name: SpiderHub
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -211,7 +227,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4969752834717876}
-  m_Layer: 0
+  m_Layer: 28
   m_Name: SpiderRLeg32
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -226,7 +242,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4718619296977982}
-  m_Layer: 0
+  m_Layer: 28
   m_Name: SpiderRLeg12
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -242,7 +258,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4994406541297556}
   - component: {fileID: 137643857128012850}
-  m_Layer: 0
+  m_Layer: 28
   m_Name: Sphere002
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -257,8 +273,24 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4601358055884916}
-  m_Layer: 0
+  m_Layer: 28
   m_Name: SpiderLLeg21
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1544838474146672
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4438561330673100}
+  - component: {fileID: 108638460364612450}
+  m_Layer: 28
+  m_Name: Point light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -272,7 +304,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4797219612216064}
-  m_Layer: 0
+  m_Layer: 28
   m_Name: SpiderRLeg2Platform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -302,7 +334,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4726302555087648}
-  m_Layer: 0
+  m_Layer: 28
   m_Name: SpiderLLeg3Platform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -317,7 +349,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4697557715095806}
-  m_Layer: 0
+  m_Layer: 28
   m_Name: SpiderLLeg22
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -332,7 +364,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4563413205243364}
-  m_Layer: 0
+  m_Layer: 28
   m_Name: SpiderRLeg31
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -347,7 +379,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4308201266042978}
-  m_Layer: 0
+  m_Layer: 28
   m_Name: SpiderRLeg22
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -377,8 +409,24 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4216632380362020}
-  m_Layer: 0
+  m_Layer: 28
   m_Name: SpiderRLeg1Platform
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1815022990814446
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4565799439169642}
+  - component: {fileID: 108774474623046372}
+  m_Layer: 10
+  m_Name: Point light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -392,7 +440,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4460230503406504}
-  m_Layer: 0
+  m_Layer: 28
   m_Name: SpiderLLeg2Platform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -407,7 +455,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4365753889076000}
-  m_Layer: 0
+  m_Layer: 28
   m_Name: SpiderRLeg11
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -422,7 +470,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4327764717965162}
-  m_Layer: 0
+  m_Layer: 28
   m_Name: SpiderLLeg12
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -450,13 +498,26 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1644740725108654}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 7.6670403, y: -3.6896014, z: -0.140625}
+  m_LocalPosition: {x: -171.34, y: -23.61, z: -3.8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4923852296007652}
   - {fileID: 4477028045123318}
   m_Father: {fileID: 0}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4040528198118674
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1155499508336942}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.65, y: 2.02, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4923852296007652}
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4123659177518168
 Transform:
@@ -479,7 +540,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1254941489860776}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.01, y: 0.48, z: 0}
+  m_LocalPosition: {x: -0.02, y: 0.48, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4923852296007652}
@@ -538,6 +599,19 @@ Transform:
   m_Father: {fileID: 4541865825906564}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4438561330673100
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1544838474146672}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.25, y: 2.02, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4923852296007652}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4460230503406504
 Transform:
   m_ObjectHideFlags: 1
@@ -562,6 +636,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4514361677078198}
+  - {fileID: 4565799439169642}
   m_Father: {fileID: 4034032032717420}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -645,6 +720,19 @@ Transform:
   m_Father: {fileID: 4541865825906564}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4565799439169642
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1815022990814446}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.56, y: 2.288, z: -1.005}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4477028045123318}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4569764273253708
 Transform:
   m_ObjectHideFlags: 1
@@ -665,7 +753,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1795415416612142}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2.89, y: 0.5, z: 0}
+  m_LocalPosition: {x: 1.39, y: 0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4923852296007652}
@@ -777,6 +865,8 @@ Transform:
   - {fileID: 4130711399080158}
   - {fileID: 4594018084578690}
   - {fileID: 4495295721831912}
+  - {fileID: 4438561330673100}
+  - {fileID: 4040528198118674}
   m_Father: {fileID: 4034032032717420}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -819,7 +909,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 59786161ab3731a4d91c80b09ed12fab, type: 2}
+  - {fileID: 2100000, guid: 7a68b2b441893e14a8d2e3009501f962, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -864,7 +954,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 7
 --- !u!50 &50668861803325026
 Rigidbody2D:
   serializedVersion: 4
@@ -884,7 +974,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 5
+  m_Constraints: 7
 --- !u!61 &61033888212849726
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -1019,6 +1109,114 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!108 &108595646071457788
+Light:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1155499508336942}
+  m_Enabled: 1
+  serializedVersion: 8
+  m_Type: 2
+  m_Color: {r: 0, g: 0.52753544, b: 0.74264705, a: 1}
+  m_Intensity: 1
+  m_Range: 10
+  m_SpotAngle: 30
+  m_CookieSize: 10
+  m_Shadows:
+    m_Type: 0
+    m_Resolution: -1
+    m_CustomResolution: -1
+    m_Strength: 1
+    m_Bias: 0.05
+    m_NormalBias: 0.4
+    m_NearPlane: 0.2
+  m_Cookie: {fileID: 0}
+  m_DrawHalo: 0
+  m_Flare: {fileID: 0}
+  m_RenderMode: 0
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 268435456
+  m_Lightmapping: 4
+  m_AreaSize: {x: 1, y: 1}
+  m_BounceIntensity: 1
+  m_ColorTemperature: 6570
+  m_UseColorTemperature: 0
+  m_ShadowRadius: 0
+  m_ShadowAngle: 0
+--- !u!108 &108638460364612450
+Light:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1544838474146672}
+  m_Enabled: 1
+  serializedVersion: 8
+  m_Type: 2
+  m_Color: {r: 0, g: 0.52753544, b: 0.74264705, a: 1}
+  m_Intensity: 2
+  m_Range: 10
+  m_SpotAngle: 30
+  m_CookieSize: 10
+  m_Shadows:
+    m_Type: 0
+    m_Resolution: -1
+    m_CustomResolution: -1
+    m_Strength: 1
+    m_Bias: 0.05
+    m_NormalBias: 0.4
+    m_NearPlane: 0.2
+  m_Cookie: {fileID: 0}
+  m_DrawHalo: 0
+  m_Flare: {fileID: 0}
+  m_RenderMode: 0
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 268435456
+  m_Lightmapping: 4
+  m_AreaSize: {x: 1, y: 1}
+  m_BounceIntensity: 1
+  m_ColorTemperature: 6570
+  m_UseColorTemperature: 0
+  m_ShadowRadius: 0
+  m_ShadowAngle: 0
+--- !u!108 &108774474623046372
+Light:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1815022990814446}
+  m_Enabled: 1
+  serializedVersion: 8
+  m_Type: 2
+  m_Color: {r: 0.84705883, g: 1, b: 0.14705884, a: 1}
+  m_Intensity: 1
+  m_Range: 10
+  m_SpotAngle: 30
+  m_CookieSize: 10
+  m_Shadows:
+    m_Type: 0
+    m_Resolution: -1
+    m_CustomResolution: -1
+    m_Strength: 1
+    m_Bias: 0.05
+    m_NormalBias: 0.4
+    m_NearPlane: 0.2
+  m_Cookie: {fileID: 0}
+  m_DrawHalo: 0
+  m_Flare: {fileID: 0}
+  m_RenderMode: 0
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 268435456
+  m_Lightmapping: 4
+  m_AreaSize: {x: 1, y: 1}
+  m_BounceIntensity: 1
+  m_ColorTemperature: 6570
+  m_UseColorTemperature: 0
+  m_ShadowRadius: 0
+  m_ShadowAngle: 0
 --- !u!114 &114134492222998970
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1041,6 +1239,7 @@ MonoBehaviour:
   activated: 0
   imagenDusk: {fileID: 0}
   imagenDawn: {fileID: 0}
+  isStatic: 1
   groundMask:
     serializedVersion: 2
     m_Bits: 0
@@ -1072,6 +1271,7 @@ MonoBehaviour:
   activated: 0
   imagenDusk: {fileID: 0}
   imagenDawn: {fileID: 0}
+  isStatic: 0
   groundMask:
     serializedVersion: 2
     m_Bits: 0
@@ -1092,7 +1292,7 @@ SkinnedMeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 59786161ab3731a4d91c80b09ed12fab, type: 2}
+  - {fileID: 2100000, guid: 6125e3b341162a74fb63145586c60607, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
