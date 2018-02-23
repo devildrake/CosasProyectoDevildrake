@@ -56,6 +56,7 @@ public class PlayerController : DoubleObject {
     bool moving;
     public bool smashing;
     bool grabbing;
+    GameObject capaObject;
     //bool groundedChecker;
     //float auxTime;
 
@@ -118,6 +119,7 @@ public class PlayerController : DoubleObject {
 
     //Se inicializan las cosas
     void Start() {
+
         timeNotMoving = 0;
         dashCoolDown = 0.5f;
         punchCoolDown = 0.5f;
@@ -174,6 +176,12 @@ public class PlayerController : DoubleObject {
                 GameLogic.instance.transformableObjects.Add(gameObject);
                 if (worldAssignation == world.DUSK)
                     GameLogic.instance.currentPlayer = this;
+
+                if(GetComponentInChildren<Cloth>()!=null)
+                capaObject = GetComponentInChildren<Cloth>().gameObject;
+
+                //Debug.Log(capaObject);
+
             }
         }
 
@@ -259,20 +267,47 @@ public class PlayerController : DoubleObject {
 
     void SetAnimValues() {
         if (GetComponentInChildren<Animator>() != null) {
-            GetComponentInChildren<Animator>().SetBool("moving", moving);
-            GetComponentInChildren<Animator>().SetBool("grounded", grounded);
-            GetComponentInChildren<Animator>().SetFloat("speedY", GetComponent<Rigidbody2D>().velocity.y);
-            GetComponentInChildren<Animator>().SetBool("sliding", sliding);
-            GetComponentInChildren<Animator>().SetFloat("timeMoving", timeMoving);
 
-            if (worldAssignation == world.DUSK) {
+            if (worldAssignation == world.DUSK&&!dawn) {
+                GetComponentInChildren<Animator>().SetBool("moving", moving);
+                GetComponentInChildren<Animator>().SetBool("grounded", grounded);
+                GetComponentInChildren<Animator>().SetFloat("speedY", GetComponent<Rigidbody2D>().velocity.y);
+                GetComponentInChildren<Animator>().SetBool("sliding", sliding);
+                GetComponentInChildren<Animator>().SetFloat("timeMoving", timeMoving);
+
+                brotherObject.GetComponentInChildren<Animator>().SetBool("moving", moving);
+                brotherObject.GetComponentInChildren<Animator>().SetBool("grounded", grounded);
+                brotherObject.GetComponentInChildren<Animator>().SetFloat("speedY", GetComponent<Rigidbody2D>().velocity.y);
+                brotherObject.GetComponentInChildren<Animator>().SetBool("sliding", sliding);
+                brotherObject.GetComponentInChildren<Animator>().SetFloat("timeMoving", timeMoving);
+
                 GetComponentInChildren<Animator>().SetBool("punching", punchTimer < punchCoolDown);
-            } else {
+                brotherObject.GetComponentInChildren<Animator>().SetBool("dashing", dashTimer < dashCoolDown);
+                brotherObject.GetComponentInChildren<Animator>().SetBool("crawling", crawling);
+                //brotherObject.GetComponentInChildren<Animator>().SetBool("dash_press", Input.GetMouseButton(0) && dashTimer >= dashCoolDown && canDash && !grounded);
+                brotherObject.GetComponentInChildren<Animator>().SetBool("deflecting", deflectTimer < deflectCoolDown);
+                //brotherObject.GetComponentInChildren<Animator>().SetBool("deflect_press", Input.GetMouseButton(1) && deflectTimer >= deflectCoolDown && objectsInDeflectArea.Count > 0);
+
+            } else if(dawn&&worldAssignation==world.DAWN){
+
+                GetComponentInChildren<Animator>().SetBool("moving", moving);
+                GetComponentInChildren<Animator>().SetBool("grounded", grounded);
+                GetComponentInChildren<Animator>().SetFloat("speedY", GetComponent<Rigidbody2D>().velocity.y);
+                GetComponentInChildren<Animator>().SetBool("sliding", sliding);
+                GetComponentInChildren<Animator>().SetFloat("timeMoving", timeMoving);
+
+                brotherObject.GetComponentInChildren<Animator>().SetBool("moving", moving);
+                brotherObject.GetComponentInChildren<Animator>().SetBool("grounded", grounded);
+                brotherObject.GetComponentInChildren<Animator>().SetFloat("speedY", GetComponent<Rigidbody2D>().velocity.y);
+                brotherObject.GetComponentInChildren<Animator>().SetBool("sliding", sliding);
+                brotherObject.GetComponentInChildren<Animator>().SetFloat("timeMoving", timeMoving);
+
                 GetComponentInChildren<Animator>().SetBool("dashing", dashTimer < dashCoolDown);
                 GetComponentInChildren<Animator>().SetBool("crawling", crawling);
                 GetComponentInChildren<Animator>().SetBool("dash_press", Input.GetMouseButton(0)&&dashTimer>=dashCoolDown&&canDash&&!grounded);
                 GetComponentInChildren<Animator>().SetBool("deflecting", deflectTimer < deflectCoolDown);
                 GetComponentInChildren<Animator>().SetBool("deflect_press", Input.GetMouseButton(1) && deflectTimer >= deflectCoolDown&&objectsInDeflectArea.Count>0);
+                brotherObject.GetComponentInChildren<Animator>().SetBool("punching", punchTimer < punchCoolDown);
 
             }
 
@@ -330,8 +365,12 @@ public class PlayerController : DoubleObject {
     public void Flip() {
         if (!grabbing) {
             Vector3 theScale = transform.localScale;
-            theScale.x *= -1;
-            transform.localScale = theScale;
+            //theScale.x *= -1;
+            //transform.localScale = theScale;
+
+            transform.Rotate(new Vector3(0, 1, 0), 180);
+
+
             facingRight = !facingRight;
 
             if (brotherObject.GetComponent<PlayerController>().facingRight != facingRight)
@@ -339,6 +378,11 @@ public class PlayerController : DoubleObject {
                 brotherObject.GetComponent<PlayerController>().Flip();
                 brotherObject.GetComponent<PlayerController>().prevHorizontalMov = prevHorizontalMov;
             }
+        }
+
+        if (capaObject != null) {
+            capaObject.SetActive(false);
+            capaObject.SetActive(true);
         }
 
     }
@@ -364,7 +408,11 @@ public class PlayerController : DoubleObject {
                     //GetComponent<Rigidbody2D>().AddForce(new Vector2(-GetComponent<Rigidbody2D>().velocity.x, 0), ForceMode2D.Impulse);
                     GetComponent<Rigidbody2D>().velocity = new Vector2(0, GetComponent<Rigidbody2D>().velocity.y);
                     //Debug.Log("Se para");
+                    if(facingRight)
                     transform.Translate(Vector3.right * Input.GetAxis("Horizontal") * characterSpeed * Time.deltaTime);
+                    else
+                        transform.Translate(Vector3.left * Input.GetAxis("Horizontal") * characterSpeed * Time.deltaTime);
+
                     slowedInTheAir = false;
                     if (Input.GetAxis("Horizontal") != 0) {
                         timeMoving += Time.deltaTime;
@@ -398,7 +446,12 @@ public class PlayerController : DoubleObject {
                 else if (changed) {
                     slowedInTheAir = true;
                     mustSlow = 0.5f;
+
+                    if(facingRight)
                     transform.Translate(Vector3.right * Input.GetAxis("Horizontal") * characterSpeed*0.75f * mustSlow * Time.deltaTime);
+                    else
+                    transform.Translate(Vector3.left * Input.GetAxis("Horizontal") * characterSpeed *0.75f*mustSlow* Time.deltaTime);
+
 
                     //Velocidad X a 0
                     rb.AddForce(new Vector2(-rb.velocity.x, 0), ForceMode2D.Impulse);
@@ -410,7 +463,13 @@ public class PlayerController : DoubleObject {
                         //rb.AddForce(new Vector2(-rb.velocity.x, 0), ForceMode2D.Impulse);
                         mustSlow = 0.5f;
                     }
+
+                    if(facingRight)
                     transform.Translate(Vector3.right * Input.GetAxis("Horizontal") * characterSpeed*0.75f * mustSlow * Time.deltaTime);
+
+                    else
+                        transform.Translate(Vector3.left * Input.GetAxis("Horizontal") * characterSpeed * 0.75f * mustSlow * Time.deltaTime);
+
                 }
 
                 if (changed) {
@@ -816,7 +875,9 @@ public class PlayerController : DoubleObject {
             //crawling = false;
 
             //activar el shader
-            if (worldAssignation == world.DAWN){
+            if (worldAssignation == world.DAWN) {
+                GetComponentInChildren<Animator>().SetBool("deflect_press", false);
+                GetComponentInChildren<Animator>().SetBool("dash_press", false);
                 GameLogic.instance.currentPlayer = brotherObject.GetComponent<PlayerController>();
                 dominantVelocity = GetComponent<Rigidbody2D>().velocity;
                 brotherObject.GetComponent<DoubleObject>().dominantVelocity = GetComponent<Rigidbody2D>().velocity;
@@ -835,6 +896,10 @@ public class PlayerController : DoubleObject {
             //newPosition.y += GameLogic.instance.worldOffset;
             //transform.position = newPosition;
             if (worldAssignation == world.DAWN){
+
+                GetComponentInChildren<Animator>().SetBool("deflect_press", false);
+                GetComponentInChildren<Animator>().SetBool("dash_press", false);
+
                 GameLogic.instance.currentPlayer = this;
                 dominantVelocity = brotherObject.GetComponent<Rigidbody2D>().velocity;
                 brotherObject.GetComponent<DoubleObject>().dominantVelocity = brotherObject.GetComponent<Rigidbody2D>().velocity;
