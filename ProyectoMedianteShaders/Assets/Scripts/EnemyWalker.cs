@@ -186,6 +186,7 @@ public class EnemyWalker : DoubleObject {
     }
 
 
+    //MËTODO PARA ARREGLAR UNA TONTERIA POR LA QUE NO VA BIEN EL WALKER (SOLO SE LLAMA UNA VES)
     void Nen() {
         if (!once&&GameLogic.instance.transformableObjects[0]!=null) {
             if (GameLogic.instance.transformableObjects[0].GetComponent<DoubleObject>().dawn != dawn) {
@@ -197,23 +198,27 @@ public class EnemyWalker : DoubleObject {
 
     // Update is called once per frame
     void Update() {
-        if (GetComponent<Rigidbody2D>().velocity.x > 0) {
-            transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
-        } else {
-            transform.localScale = new Vector3(-1.0f, 1.0f, 1.0f);
-        }
-
         AddToGameLogicList();
-        BrotherBehavior();
+
+        if (added) {
+
+            Nen();
+
+            if (GetComponent<Rigidbody2D>().velocity.x > 0) {
+                transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
+            } else {
+                transform.localScale = new Vector3(-1.0f, 1.0f, 1.0f);
+            }
+
+            BrotherBehavior();
 
 
-        if (worldAssignation == world.DAWN)
-            DawnBehavior();
-        else
-            DuskBehavior();
-
-        Nen();
+            if (worldAssignation == world.DAWN)
+                DawnBehavior();
+            else
+                DuskBehavior();
 
 
+        }
     }
 }
