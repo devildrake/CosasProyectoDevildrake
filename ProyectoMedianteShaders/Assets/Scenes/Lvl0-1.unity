@@ -15,7 +15,7 @@ RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 8
   m_Fog: 0
-  m_FogColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  m_FogColor: {r: 1, g: 1, b: 1, a: 1}
   m_FogMode: 3
   m_FogDensity: 0.01
   m_LinearFogStart: 0
@@ -353,6 +353,16 @@ Prefab:
       propertyPath: m_CullingMask.m_Bits
       value: 3758096383
       objectReference: {fileID: 0}
+    - target: {fileID: 108084025299370232, guid: 0e7e692d7949f354ea7b391db3310f09,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 108831996029644584, guid: 0e7e692d7949f354ea7b391db3310f09,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0e7e692d7949f354ea7b391db3310f09, type: 2}
   m_IsPrefabParent: 0
@@ -509,6 +519,14 @@ Prefab:
     - target: {fileID: 4746254003468500, guid: 1dc1c32df61779f499b1fbfbd2ad6cee, type: 2}
       propertyPath: m_RootOrder
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4983188337837188, guid: 1dc1c32df61779f499b1fbfbd2ad6cee, type: 2}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4179114755868514, guid: 1dc1c32df61779f499b1fbfbd2ad6cee, type: 2}
+      propertyPath: m_RootOrder
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 1dc1c32df61779f499b1fbfbd2ad6cee, type: 2}
@@ -680,6 +698,16 @@ Prefab:
       propertyPath: m_RootOrder
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 114100561039951028, guid: 281173297eb340c42a6d40b3c57c294f,
+        type: 2}
+      propertyPath: duskSkybox
+      value: 
+      objectReference: {fileID: 2100000, guid: 1407c2790b7870b42a0df8ac84066e0c, type: 2}
+    - target: {fileID: 114100561039951028, guid: 281173297eb340c42a6d40b3c57c294f,
+        type: 2}
+      propertyPath: dawnSkybox
+      value: 
+      objectReference: {fileID: 2100000, guid: 71b634fec31b38b46a30f6185273a772, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 281173297eb340c42a6d40b3c57c294f, type: 2}
   m_IsPrefabParent: 0

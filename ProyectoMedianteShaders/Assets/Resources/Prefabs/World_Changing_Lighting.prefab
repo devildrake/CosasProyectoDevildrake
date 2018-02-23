@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 108954899672562070}
   - component: {fileID: 114100561039951028}
   m_Layer: 0
-  m_Name: World_Changing_Directional_Light
+  m_Name: World_Changing_Lighting
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -103,3 +103,5 @@ MonoBehaviour:
   dawnColor: {r: 0.90588236, g: 0.8117647, b: 0.5137255, a: 1}
   duskIntensity: 0.15
   dawnIntensity: 0.25
+  duskSkybox: {fileID: 2100000, guid: 1407c2790b7870b42a0df8ac84066e0c, type: 2}
+  dawnSkybox: {fileID: 2100000, guid: 71b634fec31b38b46a30f6185273a772, type: 2}

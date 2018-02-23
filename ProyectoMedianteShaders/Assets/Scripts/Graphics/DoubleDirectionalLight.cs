@@ -6,15 +6,18 @@ public class DoubleDirectionalLight : DoubleObject {
 
     public Color duskColor, dawnColor;
     public float duskIntensity, dawnIntensity;
+    public Material duskSkybox, dawnSkybox;
 
 	void Start () {
         if (dawn) {
             GetComponent<Light>().color = dawnColor;
             GetComponent<Light>().intensity = dawnIntensity;
+            //RenderSettings.skybox = dawnSkybox;
         }
         else {
             GetComponent<Light>().color = duskColor;
             GetComponent<Light>().intensity = duskIntensity;
+            //RenderSettings.skybox = duskSkybox;
         }
 	}
 	
@@ -28,10 +31,12 @@ public class DoubleDirectionalLight : DoubleObject {
         if (dawn) {
             GetComponent<Light>().color = dawnColor;
             GetComponent<Light>().intensity = dawnIntensity;
+            //RenderSettings.skybox = dawnSkybox;
         }
         else {
             GetComponent<Light>().color = duskColor;
             GetComponent<Light>().intensity = duskIntensity;
+            //RenderSettings.skybox = duskSkybox;
         }
     }
 }
