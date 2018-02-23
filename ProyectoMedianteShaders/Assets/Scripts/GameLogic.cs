@@ -17,7 +17,7 @@ public class GameLogic : MonoBehaviour {
     //////////////////////VARIABLES LOAD/SAVE////////////////////////////
     //////////////////////VARIABLES LOAD/SAVE////////////////////////////
     //////////////////////VARIABLES LOAD/SAVE////////////////////////////
-
+    bool saved;
     bool firstOpening;
     public Dictionary<int, bool> completedLevels;
 
@@ -384,6 +384,7 @@ public class GameLogic : MonoBehaviour {
         instance.levelFinished = false;
         SceneManager.LoadScene(which);
         ResetSceneData();
+        saved = false;
     }
 
     //Método para cargar el menu desde cualquier escena
@@ -395,6 +396,7 @@ public class GameLogic : MonoBehaviour {
 
     //Método para reiniciar la escena
     public void RestartScene() {
+        saved = false;
         instance.levelFinished = false;
         SceneManager.LoadScene(currentSceneName);
         isPaused = false;
@@ -417,23 +419,26 @@ public class GameLogic : MonoBehaviour {
     }
 
     public void Save() {
-        BinaryFormatter bf = new BinaryFormatter();
-        FileStream file = File.Create(Application.persistentDataPath + "/playerInfoSave.dat");
-        PlayerData data = new PlayerData();
+        if (!saved) {
+            BinaryFormatter bf = new BinaryFormatter();
+            FileStream file = File.Create(Application.persistentDataPath + "/playerInfoSave.dat");
+            PlayerData data = new PlayerData();
 
-        //Igualar variables a cargar (Locales) a las de data
+            //Igualar variables a cargar (Locales) a las de data
 
-        data.firstOpening = firstOpening;
-        data.completedLevels = completedLevels;
-        data.fragments = fragments;
+            data.firstOpening = firstOpening;
+            data.completedLevels = completedLevels;
+            data.fragments = fragments;
 
-        bf.Serialize(file, data);
-        file.Close();
+            bf.Serialize(file, data);
+            file.Close();
+            saved = true;
+        }
     }
 
     void InitLoadSaveVariables() {
         firstOpening = true;
-        completedLevels[1] = false;
+        completedLevels[1] = true;
         completedLevels[2] = false;
         completedLevels[3] = false;
         completedLevels[4] = false;

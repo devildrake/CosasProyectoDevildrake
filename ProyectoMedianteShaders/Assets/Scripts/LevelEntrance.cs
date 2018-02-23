@@ -29,6 +29,10 @@ public class LevelEntrance : DoubleObject {
 
         if (GameLogic.instance.completedLevels[levelToLoad-1]) {
             activated = true;
+            Debug.Log("Activating Door");
+
+        } else {
+            Debug.Log("DoorShouldBeDisabled");
         }
 
         rb = GetComponent<Rigidbody2D>();
