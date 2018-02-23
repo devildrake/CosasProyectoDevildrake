@@ -216,7 +216,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &183147256
 Transform:
   m_ObjectHideFlags: 0
@@ -765,6 +765,7 @@ GameObject:
   - component: {fileID: 620248276}
   - component: {fileID: 620248278}
   - component: {fileID: 620248277}
+  - component: {fileID: 620248279}
   m_Layer: 27
   m_Name: TemporaryOffsetDusk
   m_TagString: Ground
@@ -833,6 +834,28 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.3610367, y: 1.4912384}
   m_EdgeRadius: 0
+--- !u!114 &620248279
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 620248275}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7116a6d23cdfcc44fa7fe523dea0f1cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  worldAssignation: 0
+  brotherObject: {fileID: 0}
+  dominantVelocity: {x: 0, y: 0}
+  isBreakable: 0
+  interactuableBySmash: 0
+  isPunchable: 0
+  isMovable: 0
+  dawn: 0
+  activated: 0
+  imagenDusk: {fileID: 0}
+  imagenDawn: {fileID: 0}
 --- !u!4 &653569695 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4726599100100572, guid: 0737c82e1acb50948af50e8a505c1f11,
@@ -2274,6 +2297,7 @@ GameObject:
   - component: {fileID: 1535521851}
   - component: {fileID: 1535521853}
   - component: {fileID: 1535521852}
+  - component: {fileID: 1535521854}
   m_Layer: 27
   m_Name: TemporaryOffsetDawn
   m_TagString: Ground
@@ -2342,6 +2366,28 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.3610367, y: 1.4912374}
   m_EdgeRadius: 0
+--- !u!114 &1535521854
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1535521850}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7116a6d23cdfcc44fa7fe523dea0f1cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  worldAssignation: 0
+  brotherObject: {fileID: 0}
+  dominantVelocity: {x: 0, y: 0}
+  isBreakable: 0
+  interactuableBySmash: 0
+  isPunchable: 0
+  isMovable: 0
+  dawn: 0
+  activated: 0
+  imagenDusk: {fileID: 0}
+  imagenDawn: {fileID: 0}
 --- !u!1001 &1584442608
 Prefab:
   m_ObjectHideFlags: 0
@@ -2630,6 +2676,24 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1644740725108654, guid: afaa219e4c111a74d8da6a1ed558368f, type: 2}
       propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114574717280509350, guid: afaa219e4c111a74d8da6a1ed558368f,
+        type: 2}
+      propertyPath: isStatic
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114134492222998970, guid: afaa219e4c111a74d8da6a1ed558368f,
+        type: 2}
+      propertyPath: isStatic
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4477028045123318, guid: afaa219e4c111a74d8da6a1ed558368f, type: 2}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4923852296007652, guid: afaa219e4c111a74d8da6a1ed558368f, type: 2}
+      propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

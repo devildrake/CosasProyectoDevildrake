@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyWalker : DoubleObject {
+    public bool isStatic;
     Rigidbody2D rb;
     public LayerMask groundMask;
     public float bounceForce;
@@ -113,30 +114,31 @@ public class EnemyWalker : DoubleObject {
     //Comportamiento en dawn, castea un rayo hacia donde esta moviendose y si encuentra algo con layerMask Ground, cambia su dirección
     void DawnBehavior() {
 
+        if (GetComponentInChildren<Animator>() != null) {
+            GetComponentInChildren<Animator>().SetBool("isStatic", isStatic);
+        }
 
-        if (goingA) {
-            if(Mathf.Abs(VectorPatrolPoints[0].x - transform.position.x) > threshold) {
-                velocity = VectorPatrolPoints[0].x - transform.position.x;
+        if (!isStatic) {
+            if (goingA) {
+                if (Mathf.Abs(VectorPatrolPoints[0].x - transform.position.x) > threshold) {
+                    velocity = VectorPatrolPoints[0].x - transform.position.x;
+                } else {
+                    goingA = false;
+                }
             } else {
-                goingA = false;
+                if (Mathf.Abs(VectorPatrolPoints[1].x - transform.position.x) > threshold) {
+                    velocity = VectorPatrolPoints[1].x - transform.position.x;
+                } else {
+                    goingA = true;
+                }
             }
-        } else {
-            if (Mathf.Abs(VectorPatrolPoints[1].x - transform.position.x) > threshold) {
-                velocity = VectorPatrolPoints[1].x - transform.position.x;
+
+            if (velocity > 0) {
+                GetComponent<Rigidbody2D>().velocity = new Vector2(maxSpeed, 0);
             } else {
-                goingA = true;
+                GetComponent<Rigidbody2D>().velocity = new Vector2(-maxSpeed, 0);
             }
         }
-
-        if (velocity > 0) {
-            GetComponent<Rigidbody2D>().velocity = new Vector2(maxSpeed, 0);
-        }
-        else{
-            GetComponent<Rigidbody2D>().velocity = new Vector2(-maxSpeed, 0);
-        }
-
-
-
     }
     //Velocidad a 0
     void DuskBehavior() {
