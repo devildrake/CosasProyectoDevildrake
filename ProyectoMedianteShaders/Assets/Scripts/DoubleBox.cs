@@ -6,7 +6,6 @@ public class DoubleBox : DoubleObject {
     // Use this for initialization
     Rigidbody2D rb;
     public LayerMask groundMask;
-    float distanciaBordeSprite;
     float timerToBecomePunchable;
     float timeToBecomePunchable;
 	void Start () {
@@ -31,7 +30,6 @@ public class DoubleBox : DoubleObject {
         rb = GetComponent<Rigidbody2D>();
         groundMask = LayerMask.GetMask("Ground");
 
-        distanciaBordeSprite = 0.745f;
         rb.mass = 5000;
 	}
 

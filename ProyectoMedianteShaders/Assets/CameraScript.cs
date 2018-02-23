@@ -62,60 +62,60 @@ public class CameraScript : MonoBehaviour {
     }
 
     private void FixedUpdate() {
+        if (GameLogic.instance != null) {
+            if (target.GetComponent<PlayerController>() != null) {
+                if (target.GetComponent<PlayerController>().sliding) {
+                    slidingMultiplier = 3;
 
-        if (target.GetComponent<PlayerController>() != null) {
-            if (target.GetComponent<PlayerController>().sliding) {
-                slidingMultiplier=3;
+                } else {
+                    slidingMultiplier = 1;
 
-            } else {
-                slidingMultiplier = 1;
-
-            }
-        }
-
-
-        if (GameLogic.instance.cameraTransition) {
-            cameraState = CameraState.FAR;
-            if (GetComponent<Camera>().orthographicSize > farDistance+distanceThreshold|| GetComponent<Camera>().orthographicSize > farDistance - distanceThreshold) {
-                transitionTimer += Time.deltaTime;
-                if (transitionTimer > transitionTime) {
-                    GameLogic.instance.cameraTransition = false;
-                    transitionTimer = 0;
                 }
             }
-        }
 
-        ////////////////////////////STATICLEVEL////////////////////////////////////////
-        ////////////////////////////STATICLEVEL////////////////////////////////////////
-        ////////////////////////////STATICLEVEL////////////////////////////////////////
-        ////////////////////////////STATICLEVEL////////////////////////////////////////
-        ////////////////////////////STATICLEVEL////////////////////////////////////////
-        ////////////////////////////STATICLEVEL////////////////////////////////////////
 
-        if (target.gameObject.GetComponent<PlayerController>() != null) {
-            if (target.gameObject.GetComponent<PlayerController>().facingRight) {
-                offset.x = OffsetX;
-            } else
-                offset.x = -OffsetX;
-        }
+            if (GameLogic.instance.cameraTransition) {
+                cameraState = CameraState.FAR;
+                if (GetComponent<Camera>().orthographicSize > farDistance + distanceThreshold || GetComponent<Camera>().orthographicSize > farDistance - distanceThreshold) {
+                    transitionTimer += Time.deltaTime;
+                    if (transitionTimer > transitionTime) {
+                        GameLogic.instance.cameraTransition = false;
+                        transitionTimer = 0;
+                    }
+                }
+            }
 
-        Vector3 desiredPosition;
-        Vector3 smoothedPosition;
+            ////////////////////////////STATICLEVEL////////////////////////////////////////
+            ////////////////////////////STATICLEVEL////////////////////////////////////////
+            ////////////////////////////STATICLEVEL////////////////////////////////////////
+            ////////////////////////////STATICLEVEL////////////////////////////////////////
+            ////////////////////////////STATICLEVEL////////////////////////////////////////
+            ////////////////////////////STATICLEVEL////////////////////////////////////////
+
+            if (target.gameObject.GetComponent<PlayerController>() != null) {
+                if (target.gameObject.GetComponent<PlayerController>().facingRight) {
+                    offset.x = OffsetX;
+                } else
+                    offset.x = -OffsetX;
+            }
+
+            Vector3 desiredPosition;
+            Vector3 smoothedPosition;
             switch (cameraState) {
                 case CameraState.CLOSE:
 
-                if (levelType == LevelType.STATIC) {
-                    if (Input.GetKey(KeyCode.Q)) {
-                        cameraState = CameraState.FAR;
+                    if (levelType == LevelType.STATIC) {
+                        if (Input.GetKey(KeyCode.Q)) {
+                            cameraState = CameraState.FAR;
+                        }
                     }
-                }
-                    desiredPosition = target.position + offset;
-                    smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, Time.deltaTime * 2 *slidingMultiplier);
+                    desiredPosition = target.position + offset + GameLogic.instance.additionalOffset;
+                    smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, Time.deltaTime * 2 * slidingMultiplier);
                     transform.position = smoothedPosition;
 
-                //transform.LookAt(target.position);
-                if (GetComponent<Camera>().orthographicSize > closeDistance) {
-                    //Debug.Log(GetComponent<Camera>().orthographicSize - closeDistance);
+                    //transform.LookAt(target.position);
+                    if (GetComponent<Camera>().orthographicSize > closeDistance) {
+                        //Debug.Log(GetComponent<Camera>().orthographicSize - closeDistance);
                         GetComponent<Camera>().orthographicSize = Mathf.Lerp(GetComponent<Camera>().orthographicSize, closeDistance, Time.deltaTime);
                     }
 
@@ -138,69 +138,69 @@ public class CameraScript : MonoBehaviour {
                     smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, Time.deltaTime);
                     transform.position = smoothedPosition;
                     break;
+            }
+            ////////////////////////////STATICLEVEL////////////////////////////////////////
+            ////////////////////////////STATICLEVEL////////////////////////////////////////
+            ////////////////////////////STATICLEVEL////////////////////////////////////////
+            ////////////////////////////STATICLEVEL////////////////////////////////////////
+            ////////////////////////////STATICLEVEL////////////////////////////////////////
+            ////////////////////////////STATICLEVEL////////////////////////////////////////
+
+
+
+
+
+
+
+
+
+            ////////////////////////////CHASELEVEL/////////////////////////////////////////
+            ////////////////////////////CHASELEVEL/////////////////////////////////////////
+            ////////////////////////////CHASELEVEL/////////////////////////////////////////
+            ////////////////////////////CHASELEVEL/////////////////////////////////////////
+            ////////////////////////////CHASELEVEL/////////////////////////////////////////
+            ////////////////////////////CHASELEVEL/////////////////////////////////////////
+
+
+
+            //if (GetComponent<Camera>().orthographicSize < farDistance) {
+            //    GetComponent<Camera>().orthographicSize = Mathf.Lerp(GetComponent<Camera>().orthographicSize, farDistance, Time.deltaTime * 2);
+            //}
+
+            //overViewPosition.x += cameraSpeed*Time.deltaTime;
+
+            //if ((Vector3.Distance(transform.position, overViewPosition) > transitionThreshold)) {
+            //    smoothedPosition = Vector3.Lerp(transform.position, overViewPosition, Time.deltaTime * 2);
+            //    transform.position = smoothedPosition;
+            //}
+
+
+
+
+
+
+
+
+
+
+            ////////////////////////////CHASELEVEL/////////////////////////////////////////
+            ////////////////////////////CHASELEVEL/////////////////////////////////////////
+            ////////////////////////////CHASELEVEL/////////////////////////////////////////
+            ////////////////////////////CHASELEVEL/////////////////////////////////////////
+            ////////////////////////////CHASELEVEL/////////////////////////////////////////
+            ////////////////////////////CHASELEVEL/////////////////////////////////////////
+
+
+
+
+
+
+
+
+
+
+
         }
-        ////////////////////////////STATICLEVEL////////////////////////////////////////
-        ////////////////////////////STATICLEVEL////////////////////////////////////////
-        ////////////////////////////STATICLEVEL////////////////////////////////////////
-        ////////////////////////////STATICLEVEL////////////////////////////////////////
-        ////////////////////////////STATICLEVEL////////////////////////////////////////
-        ////////////////////////////STATICLEVEL////////////////////////////////////////
-
-
-
-
-
-
-
-
-
-        ////////////////////////////CHASELEVEL/////////////////////////////////////////
-        ////////////////////////////CHASELEVEL/////////////////////////////////////////
-        ////////////////////////////CHASELEVEL/////////////////////////////////////////
-        ////////////////////////////CHASELEVEL/////////////////////////////////////////
-        ////////////////////////////CHASELEVEL/////////////////////////////////////////
-        ////////////////////////////CHASELEVEL/////////////////////////////////////////
-
-
-
-        //if (GetComponent<Camera>().orthographicSize < farDistance) {
-        //    GetComponent<Camera>().orthographicSize = Mathf.Lerp(GetComponent<Camera>().orthographicSize, farDistance, Time.deltaTime * 2);
-        //}
-
-        //overViewPosition.x += cameraSpeed*Time.deltaTime;
-
-        //if ((Vector3.Distance(transform.position, overViewPosition) > transitionThreshold)) {
-        //    smoothedPosition = Vector3.Lerp(transform.position, overViewPosition, Time.deltaTime * 2);
-        //    transform.position = smoothedPosition;
-        //}
-
-
-
-
-
-
-
-
-
-
-        ////////////////////////////CHASELEVEL/////////////////////////////////////////
-        ////////////////////////////CHASELEVEL/////////////////////////////////////////
-        ////////////////////////////CHASELEVEL/////////////////////////////////////////
-        ////////////////////////////CHASELEVEL/////////////////////////////////////////
-        ////////////////////////////CHASELEVEL/////////////////////////////////////////
-        ////////////////////////////CHASELEVEL/////////////////////////////////////////
-
-
-
-
-
-
-
-
-
-
-
-
     }
 
 }
