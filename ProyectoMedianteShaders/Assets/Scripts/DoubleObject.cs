@@ -61,7 +61,8 @@ public class DoubleObject : MonoBehaviour {
     [Tooltip("Sprite en mundo dawn")]
     public Sprite imagenDawn;
 
-    protected Vector2 originalPos;
+    
+    public Vector2 originalPos;
 
     public virtual void GetBroken() {
         Debug.Log("Calling Get Broken");

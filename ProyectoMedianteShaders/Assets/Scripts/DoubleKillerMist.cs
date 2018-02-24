@@ -30,6 +30,7 @@ public class DoubleKillerMist : DoubleObject {
         if (worldAssignation == world.DUSK) {
             originalPos = transform.position;
             brotherObject.GetComponent<DoubleKillerMist>().originalPos = transform.position + new Vector3(0,GameLogic.instance.worldOffset,0);
+            //Debug.Log(transform.position + new Vector3(0, GameLogic.instance.worldOffset, 0));
         }
     }
 
@@ -111,8 +112,11 @@ public class DoubleKillerMist : DoubleObject {
     }
 
     void ResetPos() {
+
+        if (worldAssignation == world.DAWN) {
+            transform.position = brotherObject.GetComponent<DoubleKillerMist>().originalPos + new Vector2(0, GameLogic.instance.worldOffset);
+        } else
             transform.position = originalPos;
-            //brotherObject.transform.position = brotherObject.GetComponent<DoubleKillerMist>().transform.position;
     }
 
     // Update is called once per frame

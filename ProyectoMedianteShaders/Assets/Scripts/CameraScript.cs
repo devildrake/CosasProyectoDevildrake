@@ -54,12 +54,16 @@ public class CameraScript : MonoBehaviour {
         OffsetX = 3;
         transitionTime = 2;
         distanceThreshold = 0.3f;
+        transform.Rotate(new Vector3(1, 1, 0), 2.50f);
+
     }
 
     public void ResetCamera() {
         transform.position = overViewPosition;
         GetComponent<Camera>().orthographicSize = farDistance;
     }
+
+    bool once;
 
     private void FixedUpdate() {
         if (GameLogic.instance != null) {
@@ -71,6 +75,8 @@ public class CameraScript : MonoBehaviour {
                     slidingMultiplier = 1;
 
                 }
+
+
             }
 
 
