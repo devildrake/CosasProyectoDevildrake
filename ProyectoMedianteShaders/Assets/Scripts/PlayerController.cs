@@ -886,10 +886,13 @@ public class PlayerController : DoubleObject {
                 OnlyFreezeRotation();
                 brotherObject.GetComponent<Rigidbody2D>().velocity = dominantVelocity;
                 GetComponent<Rigidbody2D>().velocity = new Vector2(0.0f, 0.0f);
+                brotherObject.GetComponent<PlayerController>().prevHorizontalMov = prevHorizontalMov;
             }
             maskObjectScript.change = false;
         }
         else {
+            prevHorizontalMov = brotherObject.GetComponent<PlayerController>().prevHorizontalMov;
+
             //GetComponent<SpriteRenderer>().sprite = imagenDawn;
             dawn = true;
             //newPosition = transform.position;
