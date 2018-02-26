@@ -16,9 +16,9 @@ public class DoubleBreakableBox : DoubleObject {
         LoadResources();
         if (worldAssignation == world.DAWN) {
             GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
-            GetComponent<SpriteRenderer>().sprite = imagenDawn;
+            //GetComponent<SpriteRenderer>().sprite = imagenDawn;
         }else {
-            GetComponent<SpriteRenderer>().sprite = imagenDusk;
+            //GetComponent<SpriteRenderer>().sprite = imagenDusk;
         }
         InitTransformable();
 
