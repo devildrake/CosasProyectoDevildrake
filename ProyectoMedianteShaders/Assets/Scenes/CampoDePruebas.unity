@@ -381,6 +381,7 @@ MonoBehaviour:
   activated: 0
   imagenDusk: {fileID: 0}
   imagenDawn: {fileID: 0}
+  originalPos: {x: 0, y: 0}
   level: 0
 --- !u!4 &278913697
 Transform:
@@ -1191,6 +1192,7 @@ MonoBehaviour:
   activated: 0
   imagenDusk: {fileID: 0}
   imagenDawn: {fileID: 0}
+  originalPos: {x: 0, y: 0}
   stompedOn: 0
   touchedByPlayer: 0
   playerInArea: 0
@@ -1597,6 +1599,7 @@ MonoBehaviour:
   activated: 0
   imagenDusk: {fileID: 0}
   imagenDawn: {fileID: 0}
+  originalPos: {x: 0, y: 0}
   stompedOn: 0
   touchedByPlayer: 0
   playerInArea: 0
@@ -1754,7 +1757,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1059032109401816, guid: 877c887b73610ce41b41b22d7c134c7f, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 877c887b73610ce41b41b22d7c134c7f, type: 2}
@@ -2333,6 +2336,10 @@ Prefab:
     - target: {fileID: 1416911798091242, guid: 9f171819d18420f4b8b916801ef52c82, type: 2}
       propertyPath: m_Name
       value: KillerMist
+      objectReference: {fileID: 0}
+    - target: {fileID: 1416911798091242, guid: 9f171819d18420f4b8b916801ef52c82, type: 2}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 9f171819d18420f4b8b916801ef52c82, type: 2}

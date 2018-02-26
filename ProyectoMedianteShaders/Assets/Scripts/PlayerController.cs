@@ -487,7 +487,14 @@ public class PlayerController : DoubleObject {
 
                         }
                         else if (timeCountToDrag < timeToRest + timeToDrag) {
-                            transform.Translate(Vector3.right * Input.GetAxis("Horizontal") * characterSpeed / 2 * Time.deltaTime);
+
+                            if (facingRight)
+                                transform.Translate(Vector3.right * Input.GetAxis("Horizontal") * characterSpeed / 2 * Time.deltaTime);
+
+                            else
+                                transform.Translate(Vector3.left * Input.GetAxis("Horizontal") * characterSpeed / 2 * Time.deltaTime);
+
+
                             NearbyObjects[0].transform.position = transform.position - distanceToGrabbedObject;
                             Debug.Log(distanceToGrabbedObject);
                             if (!GetComponent<AudioSource>().isPlaying) {
