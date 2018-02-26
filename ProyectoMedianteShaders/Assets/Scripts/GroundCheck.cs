@@ -63,10 +63,10 @@ public class GroundCheck : MonoBehaviour {
                     player.prevHorizontalMov = -1.0f;
 
                 }
-                Debug.Log(hit2DLeftO.collider.gameObject.transform.rotation.z);
+                //Debug.Log(hit2DLeftO.collider.gameObject.transform.rotation.z);
                 player.sliding = true;
                 player.rb.velocity = new Vector2(player.rb.velocity.x, -10);
-                Debug.Log("BothHit");
+                //Debug.Log("BothHit");
             }
         } else {
             player.sliding = false;

@@ -162,7 +162,7 @@ public class EnemyWalker : DoubleObject {
                 if (other.GetComponent<Rigidbody2D>().velocity.y <= 0) {
                     other.GetComponent<Rigidbody2D>().velocity = new Vector2(other.GetComponent<Rigidbody2D>().velocity.x, 0);
                     other.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, 1 * bounceForce), ForceMode2D.Impulse);
-                    Debug.Log(other.GetComponent<Rigidbody2D>().velocity);
+                    //Debug.Log(other.GetComponent<Rigidbody2D>().velocity);
                 }
             }
         }

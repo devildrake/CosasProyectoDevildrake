@@ -210,6 +210,13 @@ public class PlayerController : DoubleObject {
     }
 
     void Update() {
+
+        if (rb.velocity.y < 0) {
+            rb.gravityScale = 1.5f;
+        } else {
+            rb.gravityScale = 1;
+        }
+
         AddToGameLogicList();
 
         if (added) {
@@ -396,6 +403,7 @@ public class PlayerController : DoubleObject {
                 float mustSlow = 1;
                 if (Input.GetAxisRaw("Horizontal") != (float)prevHorizontalMov && Input.GetAxisRaw("Horizontal") != 0.0f) {
                     changed = true;
+                    Debug.Log("CHANGE");
                     prevHorizontalMov = Input.GetAxisRaw("Horizontal");
                 }
 
