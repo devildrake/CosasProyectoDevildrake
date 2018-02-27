@@ -82,7 +82,11 @@ public class DoubleBush : DoubleObject {
     public override void Change() {
         if (worldAssignation == world.DAWN) {
             brotherObject.SetActive(false);
-            brotherObject.SetActive(true);
+
+            if (dawn) {
+                brotherObject.SetActive(true);
+
+            }
         }
         dawn = !dawn;
     }

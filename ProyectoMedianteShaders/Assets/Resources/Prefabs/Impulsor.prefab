@@ -88,8 +88,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4519682304286258}
   - component: {fileID: 212358289626765768}
-  - component: {fileID: 61738982292326984}
-  - component: {fileID: 50880441214641094}
   - component: {fileID: 82270318367460892}
   - component: {fileID: 114674719415664276}
   m_Layer: 10
@@ -123,8 +121,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4293201080273490}
   - component: {fileID: 212441748811258166}
-  - component: {fileID: 61862016428828576}
-  - component: {fileID: 50622974644239656}
   - component: {fileID: 114822958245758956}
   m_Layer: 10
   m_Name: ImpulsorDawn
@@ -166,7 +162,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1665509412406200}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 17.16, y: -8.1, z: 0}
+  m_LocalPosition: {x: -18.544437, y: -6.1412377, z: 0}
   m_LocalScale: {x: 6.8991466, y: 6.899152, z: 6.899152}
   m_Children:
   - {fileID: 4519682304286258}
@@ -230,46 +226,6 @@ Transform:
   m_Father: {fileID: 4519682304286258}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!50 &50622974644239656
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1882846006565752}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 5
---- !u!50 &50880441214641094
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1529333316156792}
-  m_BodyType: 1
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 5
 --- !u!61 &61375865409220358
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -295,31 +251,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 33.428368, y: 91.5189}
   m_EdgeRadius: 0
---- !u!61 &61738982292326984
-BoxCollider2D:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1529333316156792}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0.028345585, y: -0.01776123}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 25.6, y: 14.4}
-    newSize: {x: 25.6, y: 14.4}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 20.55555, y: 11.59395}
-  m_EdgeRadius: 0
 --- !u!61 &61790435019609366
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -344,31 +275,6 @@ BoxCollider2D:
   m_AutoTiling: 0
   serializedVersion: 2
   m_Size: {x: 21.451805, y: 91.5189}
-  m_EdgeRadius: 0
---- !u!61 &61862016428828576
-BoxCollider2D:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1882846006565752}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0.028345585, y: -0.01776123}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 25.6, y: 14.4}
-    newSize: {x: 25.6, y: 14.4}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 20.55555, y: 11.59395}
   m_EdgeRadius: 0
 --- !u!82 &82270318367460892
 AudioSource:
@@ -501,12 +407,10 @@ MonoBehaviour:
   isPunchable: 0
   isMovable: 0
   dawn: 0
-  activated: 0
+  activated: 1
   imagenDusk: {fileID: 0}
   imagenDawn: {fileID: 0}
-  groundMask:
-    serializedVersion: 2
-    m_Bits: 0
+  originalPos: {x: 0, y: 0}
 --- !u!114 &114822958245758956
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -526,12 +430,10 @@ MonoBehaviour:
   isPunchable: 0
   isMovable: 0
   dawn: 0
-  activated: 0
+  activated: 1
   imagenDusk: {fileID: 0}
   imagenDawn: {fileID: 0}
-  groundMask:
-    serializedVersion: 2
-    m_Bits: 0
+  originalPos: {x: 0, y: 0}
 --- !u!198 &198381368471590050
 ParticleSystem:
   m_ObjectHideFlags: 1
@@ -3715,7 +3617,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -1897092538
+  randomSeed: 59420322
   InitialModule:
     serializedVersion: 3
     enabled: 1
