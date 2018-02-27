@@ -55,7 +55,7 @@ public class ImpulsingAir : MonoBehaviour{
                 }
             }
             else{
-                if (windSpeed > 0.4f){
+                if (windSpeed > 1f){
                     //Debug.Log("Pasa a sumar");
                     rising = true;
                 }
