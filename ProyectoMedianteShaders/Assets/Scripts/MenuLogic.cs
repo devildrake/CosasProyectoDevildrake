@@ -136,13 +136,16 @@ public class MenuLogic : MonoBehaviour {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if(Physics.Raycast(ray, out hit, 100.0f)) {
                 if(hit.transform.gameObject.name == "jugar") {
+                    selected = 0;
                     GameLogic.instance.LoadScene(1);
                 }
                 else if(hit.transform.gameObject.name == "opciones") {
+                    selected = 2;
                     optionsCanvas.SetActive(true);
                     menuState = 2;
                 }
                 else if(hit.transform.gameObject.name == "salir") {
+                    selected = 1;
                     Application.Quit();
                 }
             }

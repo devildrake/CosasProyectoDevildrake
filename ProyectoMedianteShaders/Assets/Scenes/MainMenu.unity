@@ -1168,6 +1168,7 @@ MonoBehaviour:
   activated: 0
   imagenDusk: {fileID: 0}
   imagenDawn: {fileID: 0}
+  originalPos: {x: 0, y: 0}
   level: 0
 --- !u!1 &1214385791 stripped
 GameObject:
@@ -1489,22 +1490,22 @@ Prefab:
       propertyPath: m_AnchorMax.y
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 224796018680722166, guid: 050a511c1d03f3f4c95c7e9bf1751de7,
-        type: 2}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 224440917999025634, guid: 050a511c1d03f3f4c95c7e9bf1751de7,
-        type: 2}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 224034865196932872, guid: 050a511c1d03f3f4c95c7e9bf1751de7,
         type: 2}
       propertyPath: m_AnchorMax.y
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 224760931919281138, guid: 050a511c1d03f3f4c95c7e9bf1751de7,
+        type: 2}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224796018680722166, guid: 050a511c1d03f3f4c95c7e9bf1751de7,
+        type: 2}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224440917999025634, guid: 050a511c1d03f3f4c95c7e9bf1751de7,
         type: 2}
       propertyPath: m_AnchorMax.y
       value: 1
