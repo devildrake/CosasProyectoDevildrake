@@ -88,6 +88,7 @@ public class MenuLogic : MonoBehaviour {
 	}
 
     private void State1Behavior() {
+        //MOVIMIENTO ENTRE LAS OPCIONES
         if (Input.GetAxisRaw("Vertical") == -1) {
             if (!axisInUse) {
                 axisInUse = true;
@@ -110,6 +111,7 @@ public class MenuLogic : MonoBehaviour {
         }
         highlight.position = new Vector3(highlight.position.x, state1Elements[selected].transform.position.y, highlight.position.z);
 
+        //SELECCION
         if(Input.GetAxisRaw("Select") == 1) {
             /*
              * Selected = 0 --> Boton jugar
@@ -125,6 +127,24 @@ public class MenuLogic : MonoBehaviour {
             else if(selected == 2) {
                 optionsCanvas.SetActive(true);
                 menuState = 2;
+            }
+        }
+
+        //CLICK CON EL RATON
+        if (Input.GetMouseButtonDown(0)) {
+            RaycastHit hit;
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            if(Physics.Raycast(ray, out hit, 100.0f)) {
+                if(hit.transform.gameObject.name == "jugar") {
+                    GameLogic.instance.LoadScene(1);
+                }
+                else if(hit.transform.gameObject.name == "opciones") {
+                    optionsCanvas.SetActive(true);
+                    menuState = 2;
+                }
+                else if(hit.transform.gameObject.name == "salir") {
+                    Application.Quit();
+                }
             }
         }
     }
