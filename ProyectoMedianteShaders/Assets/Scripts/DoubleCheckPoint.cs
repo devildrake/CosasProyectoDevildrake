@@ -102,27 +102,31 @@ public class DoubleCheckPoint : DoubleObject
     public void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Player") {
-            collision.gameObject.GetComponent<PlayerController>().interactableObject = gameObject.GetComponent<DoubleObject>();
-            if(interactionSprite!=null)
-            interactionSprite.SetActive(true);
+            //collision.gameObject.GetComponent<PlayerController>().interactableObject = gameObject.GetComponent<DoubleObject>();
+            //if(interactionSprite!=null)
+            //interactionSprite.SetActive(true);
+
+            if(!interacted)
+            Interact();
         }
     }
 
-    public void OnTriggerStay2D(Collider2D collision) {
-        if (collision.gameObject.tag == "Player") {
-            collision.gameObject.GetComponent<PlayerController>().interactableObject = gameObject.GetComponent<DoubleObject>();
-            if (interactionSprite != null)
-                interactionSprite.SetActive(true);
+    //public void OnTriggerStay2D(Collider2D collision) {
+    //    if (collision.gameObject.tag == "Player") {
+    //        //collision.gameObject.GetComponent<PlayerController>().interactableObject = gameObject.GetComponent<DoubleObject>();
+    //        //if (interactionSprite != null)
+    //        //   interactionSprite.SetActive(true);
+    //        Interact();
 
-        }
-    }
+    //    }
+    //}
 
     public void OnTriggerExit2D(Collider2D collision) {
-        if (collision.gameObject.tag == "Player") {
-            collision.gameObject.GetComponent<PlayerController>().interactableObject = null;
-            if (interactionSprite != null)
-                interactionSprite.SetActive(false);
-        }
+        //if (collision.gameObject.tag == "Player") {
+        //    collision.gameObject.GetComponent<PlayerController>().interactableObject = null;
+        //    if (interactionSprite != null)
+        //        interactionSprite.SetActive(false);
+        //}
     }
 
     protected override void LoadResources() {

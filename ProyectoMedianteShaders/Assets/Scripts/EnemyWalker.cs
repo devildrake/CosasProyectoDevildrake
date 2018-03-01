@@ -16,6 +16,7 @@ public class EnemyWalker : DoubleObject {
     public Vector3[] VectorPatrolPoints;
     bool goingA;
 
+
     void Start() {
         if (worldAssignation == world.DAWN) {
             VectorPatrolPoints = new Vector3[2];
@@ -24,7 +25,6 @@ public class EnemyWalker : DoubleObject {
             Destroy(PatrolPoints[0].gameObject);
             Destroy(PatrolPoints[1].gameObject);
         }
-
 
 
         bounceForce = 10.5f;
@@ -48,7 +48,7 @@ public class EnemyWalker : DoubleObject {
         rb = GetComponent<Rigidbody2D>();
         groundMask = LayerMask.GetMask("Ground");
 
-        rb.mass = 1;
+        rb.mass = 5000;
     }
 
     protected override void BrotherBehavior() {
@@ -119,6 +119,20 @@ public class EnemyWalker : DoubleObject {
         }
 
         if (!isStatic) {
+
+            RaycastHit2D hit2D;
+
+            if (GetComponent<Rigidbody2D>().velocity.x > 0) {
+                hit2D = Physics2D.Raycast(transform.position+new Vector3(0,0.5f,0), Vector3.right, 1, LayerMask.GetMask("Platform"));
+            } else {
+                hit2D = Physics2D.Raycast(transform.position+ new Vector3(0, 0.5f, 0), Vector3.left, 1, LayerMask.GetMask("Platform"));
+            }
+            if (hit2D){
+                goingA = !goingA;
+            }
+
+
+
             if (goingA) {
                 if (Mathf.Abs(VectorPatrolPoints[0].x - transform.position.x) > threshold) {
                     velocity = VectorPatrolPoints[0].x - transform.position.x;
@@ -162,7 +176,13 @@ public class EnemyWalker : DoubleObject {
                 if (other.GetComponent<Rigidbody2D>().velocity.y <= 0) {
                     other.GetComponent<Rigidbody2D>().velocity = new Vector2(other.GetComponent<Rigidbody2D>().velocity.x, 0);
                     other.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, 1 * bounceForce), ForceMode2D.Impulse);
+                    other.GetComponent<PlayerController>().SetCanDash(true);
                     //Debug.Log(other.GetComponent<Rigidbody2D>().velocity);
+                }
+            } else if (other.GetComponent<DoubleObject>() != null) {
+                if (other.GetComponent<DoubleObject>().canBounce) {
+                    other.GetComponent<Rigidbody2D>().velocity = new Vector2(other.GetComponent<Rigidbody2D>().velocity.x, 0);
+                    other.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, other.GetComponent<Rigidbody2D>().mass * bounceForce), ForceMode2D.Impulse);
                 }
             }
         }

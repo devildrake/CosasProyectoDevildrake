@@ -17,6 +17,11 @@ public class SeedPathFollowState : State {
 
     public override void Update(Agent a, float dt) {
 
+
+            a.GetComponent<FlyingSeed>().Spin(1500.0f);
+        
+
+
         int currentTarget = a.GetComponent<FlyingSeed>().currentTarget;
 
         FlyingSeed fs = a.gameObject.GetComponent<FlyingSeed>();

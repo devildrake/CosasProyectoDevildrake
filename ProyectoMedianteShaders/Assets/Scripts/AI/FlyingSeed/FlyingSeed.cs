@@ -11,6 +11,7 @@ public class FlyingSeed : Agent {
     public float timeOnTheGround=0;
     public bool rising;
 
+    public GameObject rabitoGiratorio;
     public GameObject grabbedObject;
     public Vector2 grabOffset;
     public GameObject detectStompObject;
@@ -184,10 +185,16 @@ public class FlyingSeed : Agent {
         }
     }
 
+    public void Spin(float angularSpeed) {
+        if (GetComponent<FlyingSeed>().rabitoGiratorio != null) {
+            rabitoGiratorio.transform.Rotate(new Vector3(0, 0, 1), angularSpeed * Time.deltaTime);
+        }
+    }
 
 
     // Update is called once per frame
     void Update() {
+
 
         if(duskState!=null)
         print(duskState.ToString());
