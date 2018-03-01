@@ -75,7 +75,7 @@ public class PlayerController : DoubleObject {
 
     //Booleano privado que maneja que el personaje pueda utilizar el dash, se pone en true a la vez que el grounded y en false cuando se usa el Dash
     [SerializeField]
-    private bool canDash;
+    public bool canDash;
 
     //Vector dirección para el dash/Hit
     private Vector2 direction;
@@ -343,6 +343,7 @@ public class PlayerController : DoubleObject {
     //Método setter para canDash
     public void SetCanDash(bool a) {
         canDash = a;
+        brotherObject.GetComponent<PlayerController>().canDash = true;
     }
 
     //Método virtual que modifica la posicio del objeto dominado con la del dominante
@@ -951,6 +952,7 @@ public class PlayerController : DoubleObject {
     //Método que reinicia la posición del personaje y aumenta la variable de muertes en GameLogic
     public override void Kill() {
         behindBush = false;
+        sliding = false;
         if (worldAssignation == world.DUSK) {
             transform.position = GameLogic.instance.spawnPoint;
         } else {

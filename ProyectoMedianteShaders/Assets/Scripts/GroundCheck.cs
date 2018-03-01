@@ -28,11 +28,11 @@ public class GroundCheck : MonoBehaviour {
         //RaycastHit2D hit2DRight = Physics2D.Raycast(rb.position - new Vector2(0f, 0.5f) + new Vector2(distanciaBordeSprite, 0), Vector2.down, 0.1f, groundMask);
         // If the raycast hit something
         if (hit2D || hit2DLeft || hit2DRight) {
-            if (player.GetComponent<Rigidbody2D>().velocity.y == 0) {
+            //if (player.GetComponent<Rigidbody2D>().velocity.y == 0) {
                 player.grounded = true;
                 //player.dashing = false;
                 player.SetCanDash(true);
-            }
+            //}
         } else {
             player.grounded = false;
         }

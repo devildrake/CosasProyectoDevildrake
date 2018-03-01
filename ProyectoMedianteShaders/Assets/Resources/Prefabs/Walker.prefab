@@ -498,7 +498,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1644740725108654}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -171.34, y: -23.61, z: -3.8}
+  m_LocalPosition: {x: -2.4, y: -7.730738, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4923852296007652}
@@ -540,7 +540,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1254941489860776}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.02, y: 0.48, z: 0}
+  m_LocalPosition: {x: -3.35, y: 0.48, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4923852296007652}
@@ -753,7 +753,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1795415416612142}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.39, y: 0.5, z: 0}
+  m_LocalPosition: {x: 3.18, y: 0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4923852296007652}
@@ -1012,7 +1012,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.31502533, y: 0.34761262}
+  m_Offset: {x: 0.3482253, y: 0.7260909}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -1023,7 +1023,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.46746826, y: 0.64051914}
+  m_Size: {x: 0.87914646, y: 1.3709164}
   m_EdgeRadius: 0
 --- !u!61 &61275123257781454
 BoxCollider2D:
@@ -1037,7 +1037,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.31565285, y: 0.4713775}
+  m_Offset: {x: 0.34885263, y: 0.71373606}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -1048,7 +1048,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.5666237, y: 0.7962773}
+  m_Size: {x: 1.1907811, y: 1.5067539}
   m_EdgeRadius: 0
 --- !u!61 &61671291162047760
 BoxCollider2D:
@@ -1237,9 +1237,11 @@ MonoBehaviour:
   isMovable: 0
   dawn: 0
   activated: 0
+  canBounce: 0
   imagenDusk: {fileID: 0}
   imagenDawn: {fileID: 0}
-  isStatic: 1
+  originalPos: {x: 0, y: 0}
+  isStatic: 0
   groundMask:
     serializedVersion: 2
     m_Bits: 0
@@ -1269,9 +1271,11 @@ MonoBehaviour:
   isMovable: 0
   dawn: 0
   activated: 0
+  canBounce: 0
   imagenDusk: {fileID: 0}
   imagenDawn: {fileID: 0}
-  isStatic: 0
+  originalPos: {x: 0, y: 0}
+  isStatic: 1
   groundMask:
     serializedVersion: 2
     m_Bits: 0

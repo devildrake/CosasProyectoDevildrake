@@ -9,6 +9,7 @@ public class DoubleBox : DoubleObject {
     float timerToBecomePunchable;
     float timeToBecomePunchable;
 	void Start () {
+        canBounce = true;
         InitTransformable();
         isPunchable = true;
         isBreakable = false;

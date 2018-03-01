@@ -54,6 +54,8 @@ public class DoubleObject : MonoBehaviour {
     [Tooltip("Si este objeto ha sido activado")]
     public bool activated;
 
+    public bool canBounce=false;
+
     //Sprites distintos para cada mundo
 
     [Tooltip("Sprite en mundo dusk")]
