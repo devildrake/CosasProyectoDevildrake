@@ -14,10 +14,15 @@ public class SeedBlowUpState : State {
     }
 
     public override void Update(Agent a, float dt) {
+
+        a.GetComponent<FlyingSeed>().Spin(500.0f);
+
         //Esta casteando explosión
         if (a.GetComponent<FlyingSeed>().timeCastingBlowUp < timeToExplode) {
             a.GetComponent<FlyingSeed>().timeCastingBlowUp += dt;
         }
+
+
         //Explota
         else {
 
