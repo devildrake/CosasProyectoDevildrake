@@ -519,7 +519,7 @@ public class PlayerController : DoubleObject {
                     }
                 }
                 else {
-
+                    grabbing = false;
                 }
 
             }
