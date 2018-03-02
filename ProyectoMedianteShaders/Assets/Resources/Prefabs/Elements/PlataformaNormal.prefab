@@ -173,8 +173,11 @@ MonoBehaviour:
   isMovable: 0
   dawn: 0
   activated: 0
+  canBounce: 0
   imagenDusk: {fileID: 0}
   imagenDawn: {fileID: 0}
+  originalPos: {x: 0, y: 0}
+  isSlider: 0
 --- !u!114 &114951529654544142
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -195,8 +198,11 @@ MonoBehaviour:
   isMovable: 0
   dawn: 0
   activated: 0
+  canBounce: 0
   imagenDusk: {fileID: 0}
   imagenDawn: {fileID: 0}
+  originalPos: {x: 0, y: 0}
+  isSlider: 0
 --- !u!212 &212011123096048782
 SpriteRenderer:
   m_ObjectHideFlags: 1

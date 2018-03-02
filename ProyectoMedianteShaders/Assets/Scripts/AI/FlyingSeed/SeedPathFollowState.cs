@@ -12,7 +12,7 @@ public class SeedPathFollowState : State {
     
     public override void OnEnter(Agent a) {
         increasing = true;
-        Debug.Log("PathFollow");
+        //Debug.Log("PathFollow");
     }
 
     public override void Update(Agent a, float dt) {
@@ -20,9 +20,7 @@ public class SeedPathFollowState : State {
 
             a.GetComponent<FlyingSeed>().Spin(1500.0f);
         
-        for(int i = 0; i < a.GetComponent<FlyingSeed>().VectorPatrolPoints.Length; i++) {
-            Debug.Log(a.GetComponent<FlyingSeed>().VectorPatrolPoints[i]);
-        }
+
 
         int currentTarget = a.GetComponent<FlyingSeed>().currentTarget;
         FlyingSeed fs = a.gameObject.GetComponent<FlyingSeed>();

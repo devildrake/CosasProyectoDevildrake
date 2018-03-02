@@ -5,7 +5,6 @@ using UnityEngine;
 public class DoubleHidableWall : DoubleObject {
     public GameObject wall;
     public GameObject trigger1;
-    public GameObject trigger2;
 
 
     void Start() {
@@ -16,7 +15,7 @@ public class DoubleHidableWall : DoubleObject {
         interactuableBySmash = false;
         offset = GameLogic.instance.worldOffset;
         if (worldAssignation == world.DAWN) {
-            GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
+            //GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
             //GetComponent<SpriteRenderer>().sprite = imagenDawn;
         } else {
             //GetComponent<SpriteRenderer>().sprite = imagenDusk;
@@ -48,13 +47,29 @@ public class DoubleHidableWall : DoubleObject {
 
     }
 
+    public void HideWall() {
+        wall.SetActive(false);
+        //wall.GetComponent<MeshRenderer>().material.color = new Color(wall.GetComponent<MeshRenderer>().material.color.r, wall.GetComponent<MeshRenderer>().material.color.g, wall.GetComponent<MeshRenderer>().material.color.b,0.5f);
+    }
+
+    public void ShowWall() {
+        wall.SetActive(true);
+        //wall.GetComponent<MeshRenderer>().material.color = new Color(wall.GetComponent<MeshRenderer>().material.color.r, wall.GetComponent<MeshRenderer>().material.color.g, wall.GetComponent<MeshRenderer>().material.color.b, 1);
+
+    }
 
     // Update is called once per frame
     void Update() {
         AddToGameLogicList();
         BrotherBehavior();
 
-        //if()
+        if (trigger1.GetComponent<TriggerDetectionPlayer>().playerInArea || brotherObject.GetComponent<DoubleHidableWall>().trigger1.GetComponent<TriggerDetectionPlayer>().playerInArea) {
+            HideWall();
+            brotherObject.GetComponent<DoubleHidableWall>().HideWall();
+        } else {
+            brotherObject.GetComponent<DoubleHidableWall>().ShowWall();
+            ShowWall();
+        }
 
     }
 }

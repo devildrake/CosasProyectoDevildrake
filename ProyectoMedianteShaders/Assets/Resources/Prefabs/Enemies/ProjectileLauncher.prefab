@@ -163,8 +163,10 @@ MonoBehaviour:
   isMovable: 0
   dawn: 0
   activated: 1
+  canBounce: 0
   imagenDusk: {fileID: 0}
   imagenDawn: {fileID: 0}
+  originalPos: {x: 0, y: 0}
   groundMask:
     serializedVersion: 2
     m_Bits: 0
@@ -189,8 +191,10 @@ MonoBehaviour:
   isMovable: 0
   dawn: 0
   activated: 1
+  canBounce: 0
   imagenDusk: {fileID: 0}
   imagenDawn: {fileID: 0}
+  originalPos: {x: 0, y: 0}
   groundMask:
     serializedVersion: 2
     m_Bits: 0

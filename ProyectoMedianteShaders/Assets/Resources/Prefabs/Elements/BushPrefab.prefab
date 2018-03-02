@@ -238,9 +238,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96029354d8d2a7141b5143b039724bb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dawn: 0
-  imagenDusk: {fileID: 0}
-  imagenDawn: {fileID: 0}
   worldAssignation: 0
   brotherObject: {fileID: 1449723595667270}
   dominantVelocity: {x: 0, y: 0}
@@ -248,6 +245,12 @@ MonoBehaviour:
   interactuableBySmash: 0
   isPunchable: 0
   isMovable: 0
+  dawn: 0
+  activated: 0
+  canBounce: 0
+  imagenDusk: {fileID: 0}
+  imagenDawn: {fileID: 0}
+  originalPos: {x: 0, y: 0}
 --- !u!114 &114989339229671518
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -259,9 +262,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96029354d8d2a7141b5143b039724bb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dawn: 0
-  imagenDusk: {fileID: 0}
-  imagenDawn: {fileID: 0}
   worldAssignation: 1
   brotherObject: {fileID: 1328721289101834}
   dominantVelocity: {x: 0, y: 0}
@@ -269,6 +269,12 @@ MonoBehaviour:
   interactuableBySmash: 0
   isPunchable: 0
   isMovable: 0
+  dawn: 0
+  activated: 0
+  canBounce: 0
+  imagenDusk: {fileID: 0}
+  imagenDawn: {fileID: 0}
+  originalPos: {x: 0, y: 0}
 --- !u!212 &212191252931339996
 SpriteRenderer:
   m_ObjectHideFlags: 1

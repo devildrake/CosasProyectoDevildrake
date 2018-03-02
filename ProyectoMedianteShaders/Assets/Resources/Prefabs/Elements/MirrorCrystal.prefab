@@ -347,8 +347,12 @@ MonoBehaviour:
   isMovable: 0
   dawn: 0
   activated: 0
+  canBounce: 0
   imagenDusk: {fileID: 0}
   imagenDawn: {fileID: 0}
+  originalPos: {x: 0, y: 0}
+  angularSpeed: 0
+  mesh: {fileID: 0}
 --- !u!114 &114610007300297702
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -369,5 +373,9 @@ MonoBehaviour:
   isMovable: 0
   dawn: 0
   activated: 0
+  canBounce: 0
   imagenDusk: {fileID: 0}
   imagenDawn: {fileID: 0}
+  originalPos: {x: 0, y: 0}
+  angularSpeed: 0
+  mesh: {fileID: 0}

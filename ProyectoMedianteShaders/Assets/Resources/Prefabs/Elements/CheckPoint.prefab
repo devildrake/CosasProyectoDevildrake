@@ -1151,8 +1151,10 @@ MonoBehaviour:
   isMovable: 0
   dawn: 0
   activated: 0
+  canBounce: 0
   imagenDusk: {fileID: 0}
   imagenDawn: {fileID: 0}
+  originalPos: {x: 0, y: 0}
   endLevel: 0
   interactionSprite: {fileID: 1152472465000956}
   interactSound: {fileID: 0}
@@ -1177,8 +1179,10 @@ MonoBehaviour:
   isMovable: 0
   dawn: 0
   activated: 0
+  canBounce: 0
   imagenDusk: {fileID: 0}
   imagenDawn: {fileID: 0}
+  originalPos: {x: 0, y: 0}
   endLevel: 0
   interactionSprite: {fileID: 1838633353695442}
   interactSound: {fileID: 0}
