@@ -5,6 +5,7 @@ using UnityEngine;
 public class FlyingSeed : Agent {
     //static public int totalPathPoints;
     public Transform[] Path_Points = new Transform[0];
+    public Vector3[] VectorPatrolPoints;
     public int currentTarget;
     public Vector3 orbitPos;
     //public bool stompedOn;
@@ -65,7 +66,7 @@ public class FlyingSeed : Agent {
         GameObject ProjectilePrefab = Resources.Load<GameObject>("Prefabs/DoubleProjectile");
 
 
-        Vector2 direction;
+        Vector3 direction;
 
         if (!dawn)
             direction = ((GameLogic.instance.currentPlayer.gameObject.transform.position - gameObject.transform.position).normalized);
@@ -85,6 +86,20 @@ public class FlyingSeed : Agent {
 
 
     void Start() {
+
+
+        if (Path_Points.Length != 0) {
+            if (Path_Points[0] != null) {
+                VectorPatrolPoints = new Vector3[Path_Points.Length];
+
+                for (int i = 0; i < VectorPatrolPoints.Length; i++) {
+                    VectorPatrolPoints[i] = new Vector3(Path_Points[i].position.x, Path_Points[i].position.y, Path_Points[i].position.z);
+                    Destroy(Path_Points[i].gameObject);
+                }
+            }
+        }
+
+
         stompedOn = false;
         currentTarget = 0;
         InitTransformable();
@@ -196,8 +211,8 @@ public class FlyingSeed : Agent {
     void Update() {
 
 
-        if(duskState!=null)
-        print(duskState.ToString());
+        //if(duskState!=null)
+        //print(duskState.ToString());
 
         AddToGameLogicList();
         BrotherBehavior();
