@@ -66,7 +66,7 @@ public class FlyingSeed : Agent {
         GameObject ProjectilePrefab = Resources.Load<GameObject>("Prefabs/DoubleProjectile");
 
 
-        Vector2 direction;
+        Vector3 direction;
 
         if (!dawn)
             direction = ((GameLogic.instance.currentPlayer.gameObject.transform.position - gameObject.transform.position).normalized);
