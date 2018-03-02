@@ -20,29 +20,30 @@ public class SeedPathFollowState : State {
 
             a.GetComponent<FlyingSeed>().Spin(1500.0f);
         
-
+        for(int i = 0; i < a.GetComponent<FlyingSeed>().VectorPatrolPoints.Length; i++) {
+            Debug.Log(a.GetComponent<FlyingSeed>().VectorPatrolPoints[i]);
+        }
 
         int currentTarget = a.GetComponent<FlyingSeed>().currentTarget;
-
         FlyingSeed fs = a.gameObject.GetComponent<FlyingSeed>();
         a.GetComponent<Rigidbody2D>().gravityScale = 0;
-        if (Vector2.Distance(fs.Path_Points[currentTarget].position, a.transform.position) > threshold) {
+        if (Vector2.Distance(fs.VectorPatrolPoints[currentTarget], a.transform.position) > threshold) {
             //ATENUACIÓN SE SPEED CUANDO ESTA LLEGANDO
-            if(Vector2.Distance(fs.Path_Points[currentTarget].position, a.transform.position) > slowThreshold) {
+            if(Vector2.Distance(fs.VectorPatrolPoints[currentTarget], a.transform.position) > slowThreshold) {
                 followSpeed = Mathf.Clamp(followSpeed+Time.deltaTime,minSpeed,maxSpeed);
             } 
             //RECUPERA LA SPEED NORMAL SI NO ESTA LLEGANDO
             else {
-                followSpeed = maxSpeed - (2 - Vector2.Distance(fs.Path_Points[currentTarget].position, a.transform.position));
+                followSpeed = maxSpeed - (2 - Vector2.Distance(fs.VectorPatrolPoints[currentTarget], a.transform.position));
             }
 
             
 
             //SET VELOCITY A CADA FRAME
-            a.gameObject.GetComponent<Rigidbody2D>().velocity = ((fs.Path_Points[currentTarget].position-a.transform.position).normalized * followSpeed);
+            a.gameObject.GetComponent<Rigidbody2D>().velocity = ((fs.VectorPatrolPoints[currentTarget]-a.transform.position).normalized * followSpeed);
         } else {
             if (increasing) {
-                if (currentTarget < fs.Path_Points.Length - 1) {
+                if (currentTarget < fs.VectorPatrolPoints.Length - 1) {
                     currentTarget++;
                     a.GetComponent<FlyingSeed>().currentTarget++;
 

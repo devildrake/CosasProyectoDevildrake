@@ -404,7 +404,7 @@ public class PlayerController : DoubleObject {
                 float mustSlow = 1;
                 if (Input.GetAxisRaw("Horizontal") != (float)prevHorizontalMov && Input.GetAxisRaw("Horizontal") != 0.0f) {
                     changed = true;
-                    Debug.Log("CHANGE");
+                    //Debug.Log("CHANGE");
                     prevHorizontalMov = Input.GetAxisRaw("Horizontal");
                 }
 
