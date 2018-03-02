@@ -31,6 +31,7 @@ public class DoubleBreakableBox : DoubleObject {
         isBreakable = true;
         interactuableBySmash = false;
         broken = false;
+        rb.gravityScale = 0;
     }
 
     protected override void BrotherBehavior() {
