@@ -672,17 +672,17 @@ Prefab:
     - target: {fileID: 137479573745986324, guid: 1dc1c32df61779f499b1fbfbd2ad6cee,
         type: 2}
       propertyPath: m_AABB.m_Center.x
-      value: -0.008221358
+      value: -0.008220911
       objectReference: {fileID: 0}
     - target: {fileID: 137479573745986324, guid: 1dc1c32df61779f499b1fbfbd2ad6cee,
         type: 2}
       propertyPath: m_AABB.m_Center.y
-      value: 0.19516802
+      value: 0.19510984
       objectReference: {fileID: 0}
     - target: {fileID: 137479573745986324, guid: 1dc1c32df61779f499b1fbfbd2ad6cee,
         type: 2}
       propertyPath: m_AABB.m_Center.z
-      value: -0.105959296
+      value: -0.10598159
       objectReference: {fileID: 0}
     - target: {fileID: 137479573745986324, guid: 1dc1c32df61779f499b1fbfbd2ad6cee,
         type: 2}
@@ -701,17 +701,17 @@ Prefab:
     - target: {fileID: 137580113668498854, guid: 1dc1c32df61779f499b1fbfbd2ad6cee,
         type: 2}
       propertyPath: m_AABB.m_Center.x
-      value: 0.000000013038516
+      value: 0.000000011175871
       objectReference: {fileID: 0}
     - target: {fileID: 137580113668498854, guid: 1dc1c32df61779f499b1fbfbd2ad6cee,
         type: 2}
       propertyPath: m_AABB.m_Center.y
-      value: 0.00003194809
+      value: -0.000010967255
       objectReference: {fileID: 0}
     - target: {fileID: 137580113668498854, guid: 1dc1c32df61779f499b1fbfbd2ad6cee,
         type: 2}
       propertyPath: m_AABB.m_Center.z
-      value: 0.000028252602
+      value: 0.000019192696
       objectReference: {fileID: 0}
     - target: {fileID: 137580113668498854, guid: 1dc1c32df61779f499b1fbfbd2ad6cee,
         type: 2}
@@ -1236,6 +1236,91 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4899079776961396, guid: 5ce16f901e7aad54d830bef6cfd8c6d4, type: 2}
       propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 198106591462726182, guid: 5ce16f901e7aad54d830bef6cfd8c6d4,
+        type: 2}
+      propertyPath: NoiseModule.enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 198106591462726182, guid: 5ce16f901e7aad54d830bef6cfd8c6d4,
+        type: 2}
+      propertyPath: randomSeed
+      value: 186667382
+      objectReference: {fileID: 0}
+    - target: {fileID: 198106591462726182, guid: 5ce16f901e7aad54d830bef6cfd8c6d4,
+        type: 2}
+      propertyPath: NoiseModule.strength.scalar
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 198106591462726182, guid: 5ce16f901e7aad54d830bef6cfd8c6d4,
+        type: 2}
+      propertyPath: NoiseModule.frequency
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 198106591462726182, guid: 5ce16f901e7aad54d830bef6cfd8c6d4,
+        type: 2}
+      propertyPath: NoiseModule.scrollSpeed.scalar
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 198106591462726182, guid: 5ce16f901e7aad54d830bef6cfd8c6d4,
+        type: 2}
+      propertyPath: NoiseModule.quality
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 198106591462726182, guid: 5ce16f901e7aad54d830bef6cfd8c6d4,
+        type: 2}
+      propertyPath: NoiseModule.damping
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 198106591462726182, guid: 5ce16f901e7aad54d830bef6cfd8c6d4,
+        type: 2}
+      propertyPath: NoiseModule.separateAxes
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 198106591462726182, guid: 5ce16f901e7aad54d830bef6cfd8c6d4,
+        type: 2}
+      propertyPath: NoiseModule.octaves
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 198106591462726182, guid: 5ce16f901e7aad54d830bef6cfd8c6d4,
+        type: 2}
+      propertyPath: NoiseModule.octaveMultiplier
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 198106591462726182, guid: 5ce16f901e7aad54d830bef6cfd8c6d4,
+        type: 2}
+      propertyPath: TrailModule.enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 199470713501283826, guid: 5ce16f901e7aad54d830bef6cfd8c6d4,
+        type: 2}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 7af415e28ef30e641a3fdf5a57bbed25, type: 2}
+    - target: {fileID: 198106591462726182, guid: 5ce16f901e7aad54d830bef6cfd8c6d4,
+        type: 2}
+      propertyPath: TrailModule.lifetime.scalar
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 198106591462726182, guid: 5ce16f901e7aad54d830bef6cfd8c6d4,
+        type: 2}
+      propertyPath: TrailModule.ratio
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 198106591462726182, guid: 5ce16f901e7aad54d830bef6cfd8c6d4,
+        type: 2}
+      propertyPath: TrailModule.textureMode
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 198106591462726182, guid: 5ce16f901e7aad54d830bef6cfd8c6d4,
+        type: 2}
+      propertyPath: TrailModule.minVertexDistance
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 198106591462726182, guid: 5ce16f901e7aad54d830bef6cfd8c6d4,
+        type: 2}
+      propertyPath: LightsModule.enabled
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

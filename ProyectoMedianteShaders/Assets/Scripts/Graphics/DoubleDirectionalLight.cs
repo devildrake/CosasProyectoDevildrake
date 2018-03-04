@@ -12,12 +12,12 @@ public class DoubleDirectionalLight : DoubleObject {
         if (dawn) {
             GetComponent<Light>().color = dawnColor;
             GetComponent<Light>().intensity = dawnIntensity;
-            //RenderSettings.skybox = dawnSkybox;
+            RenderSettings.skybox = dawnSkybox;
         }
         else {
             GetComponent<Light>().color = duskColor;
             GetComponent<Light>().intensity = duskIntensity;
-            //RenderSettings.skybox = duskSkybox;
+            RenderSettings.skybox = duskSkybox;
         }
 	}
 	
@@ -31,12 +31,12 @@ public class DoubleDirectionalLight : DoubleObject {
         if (dawn) {
             GetComponent<Light>().color = dawnColor;
             GetComponent<Light>().intensity = dawnIntensity;
-            //RenderSettings.skybox = dawnSkybox;
+            RenderSettings.skybox = dawnSkybox;
         }
         else {
             GetComponent<Light>().color = duskColor;
             GetComponent<Light>().intensity = duskIntensity;
-            //RenderSettings.skybox = duskSkybox;
+            RenderSettings.skybox = duskSkybox;
         }
     }
 }
