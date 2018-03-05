@@ -6,7 +6,6 @@ public class DoubleHidableWall : DoubleObject {
     public GameObject wall;
     public GameObject trigger1;
 
-
     void Start() {
         canBounce = true;
         InitTransformable();
@@ -25,17 +24,9 @@ public class DoubleHidableWall : DoubleObject {
     }
 
     protected override void BrotherBehavior() {
-        Vector3 positionWithOffset;
-        positionWithOffset = brotherObject.transform.position;
-
-        if (worldAssignation == world.DAWN)
-            positionWithOffset.y += offset;
-        else {
-            positionWithOffset.y -= offset;
+        if (worldAssignation == world.DAWN) {
+            transform.position = new Vector3(brotherObject.transform.position.x, brotherObject.transform.position.y + GameLogic.instance.worldOffset, brotherObject.transform.position.z);
         }
-
-        transform.position = positionWithOffset;
-        transform.rotation = brotherObject.transform.rotation;
     }
 
     protected override void LoadResources() {
@@ -61,6 +52,7 @@ public class DoubleHidableWall : DoubleObject {
     // Update is called once per frame
     void Update() {
         AddToGameLogicList();
+
         BrotherBehavior();
 
         if (trigger1.GetComponent<TriggerDetectionPlayer>().playerInArea || brotherObject.GetComponent<DoubleHidableWall>().trigger1.GetComponent<TriggerDetectionPlayer>().playerInArea) {
