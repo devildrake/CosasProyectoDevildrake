@@ -7342,6 +7342,7 @@ MonoBehaviour:
   prevHorizontalMov: 0
   slowedInTheAir: 0
   maskObjectScript: {fileID: 114639644145870700}
+  dawnDeflectPS: {fileID: 0}
 --- !u!114 &114120057378442316
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7582,6 +7583,7 @@ MonoBehaviour:
   prevHorizontalMov: 0
   slowedInTheAir: 0
   maskObjectScript: {fileID: 114639644145870700}
+  dawnDeflectPS: {fileID: 198378960394305710}
 --- !u!114 &114184290945405734
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -18770,7 +18772,7 @@ ParticleSystem:
   m_GameObject: {fileID: 1097961471338176}
   serializedVersion: 5
   lengthInSec: 5
-  simulationSpeed: 1
+  simulationSpeed: 3
   looping: 1
   prewarm: 0
   playOnAwake: 1
@@ -18819,7 +18821,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 460762217
+  randomSeed: 445311120
   InitialModule:
     serializedVersion: 3
     enabled: 1

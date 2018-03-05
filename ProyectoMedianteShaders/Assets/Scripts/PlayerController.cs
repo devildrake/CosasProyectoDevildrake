@@ -115,10 +115,17 @@ public class PlayerController : DoubleObject {
 
     //Referencia al script que controla la mascara alfa que se utiliza para el shader de mundos.
     //Queremos acceder a este script para cambiar un flag y activar la transición de un mundo a otro.
-    public Change_Scale maskObjectScript; 
+    public Change_Scale maskObjectScript;
+
+    //Referencia al sistema de particulas de dawn para el deflect.
+    public ParticleSystem dawnDeflectPS;
 
     //Se inicializan las cosas
     void Start() {
+        //El sistema de particulas de Dawn del deflect se inicia desactivado.
+        if (dawnDeflectPS != null) {
+            dawnDeflectPS.Stop();
+        }
 
         timeNotMoving = 0;
         dashCoolDown = 0.5f;
@@ -251,12 +258,8 @@ public class PlayerController : DoubleObject {
                     CoolDowns();
                 }
 
-
-
                 //Comportamiento de pausado
                 else {
-
-
                 }
 
                 SetAnimValues();
@@ -680,10 +683,17 @@ public class PlayerController : DoubleObject {
 
 
         }
+        //Empieza el deflect
         if (Input.GetMouseButtonDown(1)&&objectsInDeflectArea.Count!=0) {
             //objectsInDeflectArea.RemoveAll(NonExisting);
+            if (dawnDeflectPS != null) {
+                dawnDeflectPS.Play(); //Se inicia el sistema de particulas del deflect
+            }
             GameLogic.instance.SetTimeScaleLocal(slowMotionTimeScale);
         }else if (Input.GetMouseButtonUp(1)&& objectsInDeflectArea.Count!=0) {
+            if (dawnDeflectPS != null) {
+                dawnDeflectPS.Stop(); //Se detiene el sistema de particulas del deflect
+            }
             foreach(GameObject g in objectsInDeflectArea) {
 
                 if (g.GetComponent<Trampler>() != null) {
