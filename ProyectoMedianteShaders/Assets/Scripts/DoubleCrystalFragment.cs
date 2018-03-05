@@ -57,6 +57,7 @@ public class DoubleCrystalFragment : DoubleObject {
         }
         transform.Rotate(new Vector3(1, 0, 0), 90);
         transform.localScale = new Vector3(2,2,2);
+        //<CircleCollider2D>().radius
     }
 
     public override void Change() {
