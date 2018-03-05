@@ -20,7 +20,7 @@ public class GameLogic : MonoBehaviour {
     bool saved;
     bool firstOpening;
     public Dictionary<int, bool> completedLevels;
-
+    public float currentSequenceMaxTime;
     //public Dictionary<int,FragmentData> savedFragments;
 
 
@@ -380,6 +380,13 @@ public class GameLogic : MonoBehaviour {
         }
     }
 
+    public void LoadScene(Scene which) {
+        instance.levelFinished = false;
+        SceneManager.LoadScene(which.name);
+        ResetSceneData();
+        saved = false;
+    }
+
     public void LoadScene(int which) {
         instance.levelFinished = false;
         SceneManager.LoadScene(which);
@@ -438,16 +445,11 @@ public class GameLogic : MonoBehaviour {
 
     void InitLoadSaveVariables() {
         firstOpening = true;
-        completedLevels[1] = true;
-        completedLevels[2] = false;
-        completedLevels[3] = false;
-        completedLevels[4] = false;
-        completedLevels[5] = false;
-        completedLevels[6] = false;
-        completedLevels[7] = false;
-        completedLevels[8] = false;
-        completedLevels[9] = false;
-        completedLevels[10] = false;
+
+        for(int i = 1; i < 30; i++) {
+            completedLevels[i] = true;
+        }
+
         Save();
     }
 

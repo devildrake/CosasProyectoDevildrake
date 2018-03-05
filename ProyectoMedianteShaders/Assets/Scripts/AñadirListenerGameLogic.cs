@@ -22,7 +22,8 @@ public class AñadirListenerGameLogic : MonoBehaviour {
                 myselfButton.onClick.AddListener(() => GameLogic.instance.RestartScene());
                 break;
             case 2:
-                myselfButton.onClick.AddListener(() => GameLogic.instance.LoadScene(GameLogic.instance.GetCurrentLevelIndex()+1));
+                Debug.Log("NEXTLEVELUIS " + GameLogic.instance.pauseCanvas.nextSceneIndex);
+                myselfButton.onClick.AddListener(() => GameLogic.instance.LoadScene(GameLogic.instance.pauseCanvas.nextSceneIndex));//(GameLogic.instance.GetCurrentLevelIndex()+1));
                 break;
             default:
                 break;

@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class PauseCanvas : MonoBehaviour {
 
+    public int nextSceneIndex;
     public GameObject salir;
     public GameObject comprovacion;
     public GameObject Barra;

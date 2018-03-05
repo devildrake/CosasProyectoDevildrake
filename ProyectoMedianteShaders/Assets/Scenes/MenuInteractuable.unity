@@ -163,10 +163,11 @@ MonoBehaviour:
   isMovable: 0
   dawn: 0
   activated: 1
+  canBounce: 0
   imagenDusk: {fileID: 0}
   imagenDawn: {fileID: 0}
   originalPos: {x: 0, y: 0}
-  levelToLoad: 4
+  levelToLoad: 6
   interactionSprite: {fileID: 1578527239}
 --- !u!50 &88350968
 Rigidbody2D:
@@ -1337,10 +1338,11 @@ MonoBehaviour:
   isMovable: 0
   dawn: 0
   activated: 1
+  canBounce: 0
   imagenDusk: {fileID: 0}
   imagenDawn: {fileID: 0}
   originalPos: {x: 0, y: 0}
-  levelToLoad: 5
+  levelToLoad: 9
   interactionSprite: {fileID: 1360766912}
 --- !u!50 &726387445
 Rigidbody2D:
@@ -2045,6 +2047,7 @@ MonoBehaviour:
   isMovable: 0
   dawn: 0
   activated: 1
+  canBounce: 0
   imagenDusk: {fileID: 0}
   imagenDawn: {fileID: 0}
   originalPos: {x: 0, y: 0}
@@ -2671,10 +2674,11 @@ MonoBehaviour:
   isMovable: 0
   dawn: 0
   activated: 1
+  canBounce: 0
   imagenDusk: {fileID: 0}
   imagenDawn: {fileID: 0}
   originalPos: {x: 0, y: 0}
-  levelToLoad: 6
+  levelToLoad: 12
   interactionSprite: {fileID: 951442214}
 --- !u!50 &1298263401
 Rigidbody2D:
@@ -3282,10 +3286,11 @@ MonoBehaviour:
   isMovable: 0
   dawn: 0
   activated: 1
+  canBounce: 0
   imagenDusk: {fileID: 0}
   imagenDawn: {fileID: 0}
   originalPos: {x: 0, y: 0}
-  levelToLoad: 5
+  levelToLoad: 9
   interactionSprite: {fileID: 180224664}
 --- !u!50 &1440936722
 Rigidbody2D:
@@ -3565,6 +3570,7 @@ MonoBehaviour:
   isMovable: 0
   dawn: 0
   activated: 1
+  canBounce: 0
   imagenDusk: {fileID: 0}
   imagenDawn: {fileID: 0}
   originalPos: {x: 0, y: 0}
@@ -3675,10 +3681,11 @@ MonoBehaviour:
   isMovable: 0
   dawn: 0
   activated: 1
+  canBounce: 0
   imagenDusk: {fileID: 0}
   imagenDawn: {fileID: 0}
   originalPos: {x: 0, y: 0}
-  levelToLoad: 4
+  levelToLoad: 6
   interactionSprite: {fileID: 978073172}
 --- !u!50 &1474767103
 Rigidbody2D:
@@ -4546,10 +4553,11 @@ MonoBehaviour:
   isMovable: 0
   dawn: 0
   activated: 1
+  canBounce: 0
   imagenDusk: {fileID: 0}
   imagenDawn: {fileID: 0}
   originalPos: {x: 0, y: 0}
-  levelToLoad: 6
+  levelToLoad: 12
   interactionSprite: {fileID: 1091995379}
 --- !u!50 &1821007525
 Rigidbody2D:
@@ -4841,17 +4849,17 @@ Prefab:
     - target: {fileID: 137479573745986324, guid: 1dc1c32df61779f499b1fbfbd2ad6cee,
         type: 2}
       propertyPath: m_AABB.m_Center.x
-      value: -0.00822103
+      value: -0.008221321
       objectReference: {fileID: 0}
     - target: {fileID: 137479573745986324, guid: 1dc1c32df61779f499b1fbfbd2ad6cee,
         type: 2}
       propertyPath: m_AABB.m_Center.y
-      value: 0.19507837
+      value: 0.19507456
       objectReference: {fileID: 0}
     - target: {fileID: 137479573745986324, guid: 1dc1c32df61779f499b1fbfbd2ad6cee,
         type: 2}
       propertyPath: m_AABB.m_Center.z
-      value: -0.105962515
+      value: -0.105965614
       objectReference: {fileID: 0}
     - target: {fileID: 137479573745986324, guid: 1dc1c32df61779f499b1fbfbd2ad6cee,
         type: 2}
@@ -4865,6 +4873,26 @@ Prefab:
     - target: {fileID: 1623952278002454, guid: 1dc1c32df61779f499b1fbfbd2ad6cee, type: 2}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 137580113668498854, guid: 1dc1c32df61779f499b1fbfbd2ad6cee,
+        type: 2}
+      propertyPath: m_AABB.m_Center.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 137580113668498854, guid: 1dc1c32df61779f499b1fbfbd2ad6cee,
+        type: 2}
+      propertyPath: m_AABB.m_Center.y
+      value: -0.00010061264
+      objectReference: {fileID: 0}
+    - target: {fileID: 137580113668498854, guid: 1dc1c32df61779f499b1fbfbd2ad6cee,
+        type: 2}
+      propertyPath: m_AABB.m_Center.z
+      value: -0.000004529953
+      objectReference: {fileID: 0}
+    - target: {fileID: 137580113668498854, guid: 1dc1c32df61779f499b1fbfbd2ad6cee,
+        type: 2}
+      propertyPath: m_AABB.m_Extent.z
+      value: 0.35687175
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 1dc1c32df61779f499b1fbfbd2ad6cee, type: 2}

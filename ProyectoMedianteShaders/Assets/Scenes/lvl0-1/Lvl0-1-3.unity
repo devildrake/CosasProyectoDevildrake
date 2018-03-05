@@ -1722,16 +1722,16 @@ Transform:
   - {fileID: 185036211}
   - {fileID: 340229748}
   - {fileID: 497390831}
-  - {fileID: 1745177632}
-  - {fileID: 1338947600}
-  - {fileID: 1275578799}
   - {fileID: 312209117}
-  - {fileID: 1666157102}
   - {fileID: 674177601}
+  - {fileID: 1275578799}
+  - {fileID: 1338947600}
+  - {fileID: 1666157102}
+  - {fileID: 1354511713}
   - {fileID: 1680075003}
   - {fileID: 2024004796}
+  - {fileID: 1745177632}
   - {fileID: 111516197}
-  - {fileID: 1354511713}
   - {fileID: 557298205}
   m_Father: {fileID: 0}
   m_RootOrder: 9
@@ -2744,6 +2744,11 @@ Prefab:
     - target: {fileID: 4838749102562552, guid: 63021cf7b8851aa4ca95fb0b77c03287, type: 2}
       propertyPath: m_RootOrder
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 114506745500389186, guid: 63021cf7b8851aa4ca95fb0b77c03287,
+        type: 2}
+      propertyPath: nextSceneIndex
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 63021cf7b8851aa4ca95fb0b77c03287, type: 2}
@@ -4535,17 +4540,17 @@ Prefab:
     - target: {fileID: 137479573745986324, guid: 1dc1c32df61779f499b1fbfbd2ad6cee,
         type: 2}
       propertyPath: m_AABB.m_Center.x
-      value: -0.008220911
+      value: -0.008222066
       objectReference: {fileID: 0}
     - target: {fileID: 137479573745986324, guid: 1dc1c32df61779f499b1fbfbd2ad6cee,
         type: 2}
       propertyPath: m_AABB.m_Center.y
-      value: 0.19512224
+      value: 0.19517326
       objectReference: {fileID: 0}
     - target: {fileID: 137479573745986324, guid: 1dc1c32df61779f499b1fbfbd2ad6cee,
         type: 2}
       propertyPath: m_AABB.m_Center.z
-      value: -0.10594416
+      value: -0.105963945
       objectReference: {fileID: 0}
     - target: {fileID: 137479573745986324, guid: 1dc1c32df61779f499b1fbfbd2ad6cee,
         type: 2}
@@ -4607,6 +4612,16 @@ Prefab:
     - target: {fileID: 4372491155938580, guid: 1dc1c32df61779f499b1fbfbd2ad6cee, type: 2}
       propertyPath: m_LocalPosition.z
       value: -36.07
+      objectReference: {fileID: 0}
+    - target: {fileID: 137580113668498854, guid: 1dc1c32df61779f499b1fbfbd2ad6cee,
+        type: 2}
+      propertyPath: m_AABB.m_Center.y
+      value: -0.000008583069
+      objectReference: {fileID: 0}
+    - target: {fileID: 137580113668498854, guid: 1dc1c32df61779f499b1fbfbd2ad6cee,
+        type: 2}
+      propertyPath: m_AABB.m_Center.z
+      value: 0.000002861023
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 1dc1c32df61779f499b1fbfbd2ad6cee, type: 2}

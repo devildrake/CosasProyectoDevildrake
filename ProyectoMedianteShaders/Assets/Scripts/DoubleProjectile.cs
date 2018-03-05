@@ -43,6 +43,10 @@ public class DoubleProjectile : DoubleObject {
 
     public void BeDeflected() {
         GetComponent<Rigidbody2D>().gravityScale = 0;
+        transform.rotation = Quaternion.identity;
+
+        angleToRot = Vector3.Angle(Vector2.right, GetComponent<Rigidbody2D>().velocity);
+        transform.Rotate(new Vector3(0, 0, 1), angleToRot);
 
     }
 

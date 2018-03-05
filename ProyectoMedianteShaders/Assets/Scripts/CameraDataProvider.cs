@@ -3,11 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class CameraDataProvider : MonoBehaviour {
-
+    bool done;
+    public string levelName;
     public float farDistance;
     public float closeDistance;
     public Vector3 offset;
     CameraScript[] cameraScripts;
+
+    public int nextSceneIndex;
+    public float sceneMaxTime;
 
     private void Awake() {
         cameraScripts = new CameraScript[2];
@@ -25,7 +29,6 @@ public class CameraDataProvider : MonoBehaviour {
         cameraScripts[1].offset = offset;
         cameraScripts[1].OffsetX = offset.x;
 
-        Destroy(gameObject);
     }
 
     // Use this for initialization
@@ -35,6 +38,11 @@ public class CameraDataProvider : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
-	}
+        if (!done && GameLogic.instance != null) {
+            GameLogic.instance.pauseCanvas.nextSceneIndex = nextSceneIndex;
+            GameLogic.instance.currentSequenceMaxTime = sceneMaxTime;
+            Destroy(gameObject);
+
+        }
+    }
 }
