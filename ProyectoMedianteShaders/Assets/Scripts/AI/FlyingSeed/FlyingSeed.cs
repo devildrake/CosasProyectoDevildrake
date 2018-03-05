@@ -77,7 +77,8 @@ public class FlyingSeed : Agent {
 
         DoubleProjectile[] projectiles = temp.GetComponentsInChildren<DoubleProjectile>();
 
-
+        projectiles[0].gameObject.GetComponent<DoubleProjectile>().initialSpeed = direction * 2;// * Time.deltaTime;
+        projectiles[1].gameObject.GetComponent<DoubleProjectile>().initialSpeed = direction * 2;// * Time.deltaTime;
         projectiles[0].gameObject.GetComponent<Rigidbody2D>().velocity = direction * 2;// * Time.deltaTime;
         projectiles[1].gameObject.GetComponent<Rigidbody2D>().velocity = direction * 2;// * Time.deltaTime;
         projectiles[0].gameObject.GetComponent<Rigidbody2D>().gravityScale = 0;

@@ -25,21 +25,9 @@ public class DoubleCrystalFragment : DoubleObject {
     }
 
     protected override void BrotherBehavior() {
-        Vector3 positionWithOffset;
-        //if (GetComponent<Rigidbody2D>().bodyType == RigidbodyType2D.Kinematic) {
-            positionWithOffset = brotherObject.transform.position;
-
-            if (worldAssignation == world.DAWN)
-                positionWithOffset.y += offset;
-            else {
-                positionWithOffset.y -= offset;
-            }
-
-            transform.position = positionWithOffset;
-            transform.rotation = brotherObject.transform.rotation;
-
-        //}
-
+        if (worldAssignation == world.DAWN) {
+            transform.position = new Vector3(brotherObject.transform.position.x, brotherObject.transform.position.y + GameLogic.instance.worldOffset, brotherObject.transform.position.z);
+        }
     }
 
     protected override void LoadResources() {

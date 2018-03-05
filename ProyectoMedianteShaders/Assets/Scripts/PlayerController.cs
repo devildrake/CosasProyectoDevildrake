@@ -266,6 +266,7 @@ public class PlayerController : DoubleObject {
                     if (!savedFragment) {
                         GameLogic.instance.SaveFragment(crystalFragment);
                         savedFragment = true;
+                        brotherObject.GetComponent<PlayerController>().savedFragment = true;
                     }
                 }
             }
@@ -694,9 +695,10 @@ public class PlayerController : DoubleObject {
                 GetComponent<AudioSource>().clip = deflectClip;
                 GetComponent<AudioSource>().Play();
 
-                if (g.tag == "Projectile")
-                g.GetComponent<Rigidbody2D>().gravityScale = 0;
-
+                if (g.tag == "Projectile") {
+                    //g.GetComponent<Rigidbody2D>().gravityScale = 0;
+                    g.GetComponent<DoubleProjectile>().BeDeflected();
+                }
 
             }
             GameLogic.instance.SetTimeScaleLocal(1f);

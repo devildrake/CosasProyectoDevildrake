@@ -7,20 +7,25 @@ public class DetectPlayer : MonoBehaviour {
     float recordedTimesDied;
     private void OnTriggerEnter2D(Collider2D collision) {
         if (collision.tag == "Player") {
-            GetComponentInParent<Agent>().playerInArea = true;
+            if (GetComponentInParent<Agent>() != null) {
+                GetComponentInParent<Agent>().playerInArea = true;
+            }
         }
     }
 
     private void OnTriggerStay2D(Collider2D collision) {
         if (collision.tag == "Player") {
-            GetComponentInParent<Agent>().playerInArea = true;
-
+            if (GetComponentInParent<Agent>() != null) {
+                GetComponentInParent<Agent>().playerInArea = true;
+            }
         }
     }
 
     private void OnTriggerExit2D(Collider2D other) {
-        if (other.tag == "Player") {
-            GetComponentInParent<Agent>().playerInArea = false;
+        if (GetComponentInParent<Agent>() != null) {
+            if (other.tag == "Player") {
+                GetComponentInParent<Agent>().playerInArea = false;
+            }
         }
     }
 
@@ -29,9 +34,12 @@ public class DetectPlayer : MonoBehaviour {
     }
 
     private void Update() {
+
         if (recordedTimesDied < GameLogic.instance.timesDied) {
             recordedTimesDied++;
-            GetComponentInParent<Agent>().playerInArea = false;
+            if (GetComponentInParent<Agent>() != null) {
+                GetComponentInParent<Agent>().playerInArea = false;
+            }
         }
     }
 

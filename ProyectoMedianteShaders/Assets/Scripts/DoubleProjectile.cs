@@ -6,6 +6,7 @@ public class DoubleProjectile : DoubleObject {
     // Use this for initialization
     Rigidbody2D rb;
     public Vector2 initialSpeed;
+    float angleToRot;
     float maxTimeAlive;
     float timeAlive;
     private void Awake()
@@ -26,6 +27,7 @@ public class DoubleProjectile : DoubleObject {
             GetComponent<Rigidbody2D>().velocity = initialSpeed;
             GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
 
+
             //GetComponent<SpriteRenderer>().sprite = imagenDusk;
 
         }
@@ -34,6 +36,13 @@ public class DoubleProjectile : DoubleObject {
 
     void Start() {
         offset = GameLogic.instance.worldOffset;
+        angleToRot = Vector3.Angle(Vector2.right, GetComponent<Rigidbody2D>().velocity);
+        transform.Rotate(new Vector3(0, 0, 1), -angleToRot);
+        Debug.Log(angleToRot);
+    }
+
+    public void BeDeflected() {
+        GetComponent<Rigidbody2D>().gravityScale = 0;
 
     }
 
