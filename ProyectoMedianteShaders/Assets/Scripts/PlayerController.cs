@@ -115,13 +115,18 @@ public class PlayerController : DoubleObject {
     public Change_Scale maskObjectScript;
 
     //Referencia al sistema de particulas de dawn para el deflect.
-    public ParticleSystem dawnDeflectPS;
+    public ParticleSystem dawnDeflectCastPS, dawnDeflectReleasePS;
 
     //Se inicializan las cosas
     void Start() {
         //El sistema de particulas de Dawn del deflect se inicia desactivado.
-        if (dawnDeflectPS != null) {
-            dawnDeflectPS.Stop();
+        print(dawnDeflectCastPS);
+        if (dawnDeflectCastPS != null) {
+            dawnDeflectCastPS.Stop();
+            print(dawnDeflectCastPS.isStopped);
+        }
+        if(dawnDeflectReleasePS != null) {
+            dawnDeflectReleasePS.Stop();
         }
 
         timeNotMoving = 0;
@@ -684,13 +689,16 @@ public class PlayerController : DoubleObject {
         }
         //Empieza el deflect
         if (Input.GetMouseButtonDown(1)&&objectsInDeflectArea.Count!=0) {
-            if (dawnDeflectPS != null) {
-                dawnDeflectPS.Play(); //Se inicia el sistema de particulas del deflect
+            if (dawnDeflectCastPS != null) {
+                dawnDeflectCastPS.Play(); //Se inicia el sistema de particulas del deflect
             }
             GameLogic.instance.SetTimeScaleLocal(slowMotionTimeScale);
         }else if (Input.GetMouseButtonUp(1)&& objectsInDeflectArea.Count!=0) {
-            if (dawnDeflectPS != null) {
-                dawnDeflectPS.Stop(); //Se detiene el sistema de particulas del deflect
+            if (dawnDeflectCastPS != null) {
+                dawnDeflectCastPS.Stop(); //Se detiene el sistema de particulas del deflect
+            }
+            if(dawnDeflectReleasePS != null) {
+                dawnDeflectReleasePS.Play();
             }
             foreach(GameObject g in objectsInDeflectArea) {
 
