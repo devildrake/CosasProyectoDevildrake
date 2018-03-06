@@ -22,9 +22,9 @@ GameObject:
   - component: {fileID: 61086274352078498}
   - component: {fileID: 50402331852646642}
   - component: {fileID: 114188157379134674}
-  m_Layer: 27
+  m_Layer: 2
   m_Name: TemporaryOffsetDawn
-  m_TagString: Ground
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -37,7 +37,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4881370331168590}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: TemporaryOffset
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -55,9 +55,9 @@ GameObject:
   - component: {fileID: 61088537787148282}
   - component: {fileID: 50822539718039144}
   - component: {fileID: 114000971247961062}
-  m_Layer: 27
+  m_Layer: 2
   m_Name: TemporaryOffsetDusk
-  m_TagString: Ground
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -95,8 +95,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1571285730695344}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.89, y: -7.46, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -3.98, y: 3.56, z: 0}
+  m_LocalScale: {x: 1, y: 4.391558, z: 1}
   m_Children:
   - {fileID: 4637598392339186}
   - {fileID: 4368467026507222}
@@ -217,7 +217,8 @@ MonoBehaviour:
   imagenDusk: {fileID: 0}
   imagenDawn: {fileID: 0}
   originalPos: {x: 0, y: 0}
-  additionalOffset: {x: 0, y: 4, z: 0}
+  additionalOffset: {x: 3, y: -3, z: -2}
+  temporalCameraAttenuation: 0
 --- !u!114 &114188157379134674
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -242,4 +243,5 @@ MonoBehaviour:
   imagenDusk: {fileID: 0}
   imagenDawn: {fileID: 0}
   originalPos: {x: 0, y: 0}
-  additionalOffset: {x: 0, y: 4, z: 0}
+  additionalOffset: {x: 3, y: -3, z: -2}
+  temporalCameraAttenuation: 0

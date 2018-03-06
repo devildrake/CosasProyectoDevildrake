@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using FragmentDataNamespace;
 using System;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
@@ -32,10 +31,12 @@ public class GameLogic : MonoBehaviour {
     //Flag para la transición inicial de la camara
     public bool cameraTransition;
     public Vector3 additionalOffset;
+    public float cameraAttenuation;
+
 
     public PlayerController currentPlayer;
 
-    public List<FragmentData> fragments;
+    public Dictionary<int,bool> fragments;
     //private int lastFragmentId = -1;
 
     //Tiempo que hay que pulsar para reinciar
@@ -139,13 +140,16 @@ public class GameLogic : MonoBehaviour {
     }
 
     void Awake() {
+        cameraAttenuation = 1;
         completedLevels = new Dictionary<int, bool>();
+        fragments = new Dictionary<int, bool>();
+
         Application.targetFrameRate = -1;
         fullscreen = Screen.fullScreen; //¿Está la aplicacion en pantalla completa?
 
         currentSceneName = SceneManager.GetActiveScene().name;
 
-        fragments = new List<FragmentData>();
+        //fragments = new List<FragmentData>();
 
         worldOffset = 300;
 
@@ -189,30 +193,13 @@ public class GameLogic : MonoBehaviour {
         return currentSceneName;
     }
 
-    public void AddFragmentData(FragmentData a) {
+    public void SaveFragment(bool a) {
 
-        bool temp = false;
-        foreach (FragmentData saved in fragments) {
-            if (saved.levelName == a.levelName) {
-                a.picked = saved.picked;
-                temp = true;
-            }
+        fragments[GetCurrentLevelIndex()] = a;
+        Debug.Log("Saving Fragment " + GetCurrentLevelIndex() + " as " + a);
+        if (a) {
+            pickedFragments++;
         }
-        if (!temp) {
-            a.picked = false;
-            fragments.Add(a);
-            //Debug.Log("Adding a Fragment");
-        }
-
-    }
-
-    public void SaveFragment(FragmentData a) {
-        foreach (FragmentData f in fragments) {
-            if (f.levelName == a.levelName) {
-                a.picked = f.picked = true;
-            }
-        }
-        pickedFragments++;
     }
 
 
@@ -247,12 +234,14 @@ public class GameLogic : MonoBehaviour {
 
     //Método que reinicia la espera del frame para buscar referencias y reinicia el booleano isInMainMenu
     public void ResetSceneData() {
+        cameraAttenuation = 1;
         cameraTransition = true;
         SetWaitAFrame(false);
         isInMainMenu = false;
         currentSceneName = SceneManager.GetActiveScene().name;
         DirectionCircle.SetOnce(true);
         timeElapsed = 0;
+        Debug.Log("RESET");
         pickedFragments = 0;
         additionalOffset = new Vector3(0, 0, 0);
         timesDied = 0;
@@ -368,7 +357,7 @@ public class GameLogic : MonoBehaviour {
                     CheckPauseInput();
                 } else {
                     //LevelFinishStuff
-                    Save();
+                    //Save();
 
 
                 }
@@ -426,7 +415,11 @@ public class GameLogic : MonoBehaviour {
     }
 
     public void Save() {
+
+
         if (!saved) {
+
+            Debug.Log("SAVE");
             BinaryFormatter bf = new BinaryFormatter();
             FileStream file = File.Create(Application.persistentDataPath + "/playerInfoSave.dat");
             PlayerData data = new PlayerData();
@@ -447,7 +440,11 @@ public class GameLogic : MonoBehaviour {
         firstOpening = true;
 
         for(int i = 1; i < 30; i++) {
-            completedLevels[i] = true;
+            completedLevels[i] = false;
+        }
+
+        for (int i = 1; i < 30; i++) {
+            fragments[i] = false;
         }
 
         Save();
@@ -474,7 +471,7 @@ public class GameLogic : MonoBehaviour {
     class PlayerData{
         public bool firstOpening;
         public Dictionary<int, bool> completedLevels;
-        public List<FragmentData> fragments;
+        public Dictionary<int, bool> fragments;
     };
 
 }

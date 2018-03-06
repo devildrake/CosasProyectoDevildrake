@@ -87,13 +87,13 @@ public class DoubleCheckPoint : DoubleObject
             //SceneManager.LoadScene(0);
             GameLogic.instance.completedLevels[GameLogic.instance.GetCurrentLevelIndex()] = true;
             GameLogic.instance.levelFinished = true;
-            Debug.Log(GameLogic.instance.levelFinished);
+            //Debug.Log(GameLogic.instance.levelFinished);
         }
         if (GetComponent<AudioSource>() != null) {
             GetComponent<AudioSource>().clip = interactSound;
             GetComponent<AudioSource>().Play();
         } else {
-            Debug.Log("No Audio Source");
+            //Debug.Log("No Audio Source");
         }
         
 

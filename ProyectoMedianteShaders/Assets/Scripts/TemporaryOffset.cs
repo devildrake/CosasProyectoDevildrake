@@ -7,6 +7,7 @@ public class TemporaryOffset : DoubleObject {
     public Vector3 additionalOffset;
     Rigidbody2D rb;
     GameObject player;
+    public float temporalCameraAttenuation;
 
     void Start() {
         localKillCount = 0;
@@ -83,17 +84,18 @@ public class TemporaryOffset : DoubleObject {
     void Update() {
         AddToGameLogicList();
         BrotherBehavior();
-        if (localKillCount < GameLogic.instance.timesDied) {
-            player = null;
-            ResetOffset();
-            localKillCount = GameLogic.instance.timesDied;
-        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision) {
         if (collision.tag == "Player") {
             GameLogic.instance.additionalOffset = additionalOffset;
             player = collision.gameObject;
+            if (temporalCameraAttenuation != 0) {
+                GameLogic.instance.cameraAttenuation = temporalCameraAttenuation;
+            } else {
+                GameLogic.instance.cameraAttenuation = 1;
+            }
+
         }   
     }
 
@@ -103,20 +105,24 @@ public class TemporaryOffset : DoubleObject {
             if (collision.tag == "Player") {
                 GameLogic.instance.additionalOffset = additionalOffset;
                 player = collision.gameObject;
+                if (temporalCameraAttenuation != 0) {
+                    GameLogic.instance.cameraAttenuation = temporalCameraAttenuation;
+                } else {
+                    GameLogic.instance.cameraAttenuation = 1;
+                }
             }
         }
     }
 
     public void ResetOffset() {
         GameLogic.instance.additionalOffset = new Vector3(0, 0, 0);
-
     }
 
-    private void OnTriggerExit2D(Collider2D collision) {
-        if (collision.tag == "Player") {
-            ResetOffset();
-            player = null;
-        }
-    }
+    //private void OnTriggerExit2D(Collider2D collision) {
+    //    if (collision.tag == "Player") {
+    //        ResetOffset();
+    //        player = null;
+    //    }
+    //}
 
 }

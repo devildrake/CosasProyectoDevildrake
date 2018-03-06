@@ -14,22 +14,32 @@ public class DoublePlatform : DoubleObject {
         isPunchable = false;
 
         if (worldAssignation == world.DAWN) {
-            //GetComponent<SpriteRenderer>().sprite = imagenDawn;
             Vector2 positionWithOffset = brotherObject.transform.position;
             positionWithOffset.y += offset;
-            //print("offset " + offset);
             transform.position = positionWithOffset;
             transform.rotation = brotherObject.transform.rotation;
         }
-        else {
-            //GetComponent<SpriteRenderer>().sprite = imagenDusk;
+
+
+
+    }
+
+    protected override void AddToGameLogicList() {
+        if (!added) {
+            if (GameLogic.instance != null) {
+                added = true;
+                GameLogic.instance.transformableObjects.Add(gameObject);
+                //COMPROVACIÓN DE QUE NO SEA EL CAMPO DE PRUEBAS, LAS MESH SE HABILITAN EN ESTE CAMPO DE PRUEBAS POR DEBUGGING REASONS
+                if (GetComponentInChildren<MeshRenderer>() != null && GameLogic.instance.GetCurrentLevel() != "CampoDePruebas") {
+                    GetComponentInChildren<MeshRenderer>().enabled = false;
+                }
+            }
         }
+
     }
 
     protected override void LoadResources() {
-        
-        //Debug.Log("Loading Resources");
-        if (gameObject.tag == "Slide") {
+            if (gameObject.tag == "Slide") {
             imagenDawn = Resources.Load<Sprite>("Presentacion/DawnSprites/DawnPlatformSlide");
             imagenDusk = Resources.Load<Sprite>("Presentacion/DuskSprites/DuskPlatformSlide");
         }

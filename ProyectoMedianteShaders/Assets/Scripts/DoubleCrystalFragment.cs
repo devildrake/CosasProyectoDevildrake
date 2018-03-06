@@ -1,13 +1,12 @@
 ﻿using UnityEngine;
-using FragmentDataNamespace;
-//using System.Collections;
 
 public class DoubleCrystalFragment : DoubleObject {
-    // Use this for initialization
-    FragmentData data;
-    //Rigidbody2D rb;
+    //Velocidad angular para el giro bonico del fragmento
     public float angularSpeed;
+
+    //Referencia al Mesh
     public Mesh mesh;
+
     void Start() {
         angularSpeed = 20;
         InitTransformable();
@@ -16,27 +15,17 @@ public class DoubleCrystalFragment : DoubleObject {
         isBreakable = false;
         interactuableBySmash = false;
         offset = GameLogic.instance.worldOffset;
-       // if (worldAssignation == world.DAWN) {
-           // GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
-       // } 
-        //rb = GetComponent<Rigidbody2D>();
-
-        //rb.mass = 5000;
     }
 
+    //OFFSET
     protected override void BrotherBehavior() {
         if (worldAssignation == world.DAWN) {
             transform.position = new Vector3(brotherObject.transform.position.x, brotherObject.transform.position.y + GameLogic.instance.worldOffset, brotherObject.transform.position.z);
         }
     }
 
+    //Carga un modelo Random de todos los que hay 
     protected override void LoadResources() {
-        //if (worldAssignation == world.DAWN) {
-        //    imagenDawn = Resources.Load<Sprite>("Presentacion/DawnSprites/DawnBox");
-        //} else {
-        //    imagenDusk = Resources.Load<Sprite>("Presentacion/DuskSprites/DuskBox");
-
-        //}
         if (worldAssignation == world.DAWN) {
             int randomVal = Random.Range(1, 25);
             mesh = Resources.Load<Mesh>("Models/MirrorFrags/frag" + (randomVal.ToString()));
@@ -45,21 +34,18 @@ public class DoubleCrystalFragment : DoubleObject {
         }
         transform.Rotate(new Vector3(1, 0, 0), 90);
         transform.localScale = new Vector3(2,2,2);
-        //<CircleCollider2D>().radius
     }
 
+    //El objeto que modifica a ambos haciendo de controlador es el que pertenece a Dawn
     public override void Change() {
-        //El objeto que modifica a ambos haciendo de controlador es el que pertenece a Dawn
-
-
             dawn = !dawn;
             brotherObject.GetComponent<DoubleObject>().dawn = !brotherObject.GetComponent<DoubleObject>().dawn;
         }
 
+    //Colision de trigger para coger el Fragmento
     private void OnTriggerEnter2D(Collider2D collision) {
         if (collision.gameObject.tag == "Player") {
-            //GameLogic.instance.GrabFragment(data);
-            collision.GetComponent<PlayerController>().crystalFragment = data;
+            collision.GetComponent<PlayerController>().hasACrystal = true;
             GameLogic.instance.SafelyDestroy(this);
         }
     }
@@ -70,20 +56,13 @@ public class DoubleCrystalFragment : DoubleObject {
                 added = true;
                 GameLogic.instance.transformableObjects.Add(gameObject);
                 offset = GameLogic.instance.worldOffset;
-                    data = new FragmentData(false,GameLogic.instance.GetCurrentLevel());
-                //Debug.Log(GameLogic.instance.GetCurrentLevel());
-                    GameLogic.instance.AddFragmentData(data);
-
-            }                Debug.Log("adding " + data.levelName + " " + data.picked);
+            }
         }
     }
 
-    //GUARDAR FRAGMENT
-
+    //Comprovación de que este fragmento no haya sido cogido ya con anterioridad
     void CheckPick() {
-        if (data.picked) {
-            //Debug.Log(this);
-            //AQUI FALTA HACER QUE SE GUARDE 
+        if (GameLogic.instance.fragments[GameLogic.instance.GetCurrentLevelIndex()]) {
             GameLogic.instance.SafelyDestroy(this);
         }
     }
@@ -92,10 +71,12 @@ public class DoubleCrystalFragment : DoubleObject {
     void Update() {
         AddToGameLogicList();
         BrotherBehavior();
+        
         if (added) {
             CheckPick();
         }
 
+        //Rotación over time para que quede bonito
         transform.Rotate(new Vector3(0, 0, 1), angularSpeed * Time.deltaTime);
 
     }

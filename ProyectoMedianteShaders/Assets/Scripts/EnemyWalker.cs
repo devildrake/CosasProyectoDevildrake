@@ -3,7 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyWalker : DoubleObject {
+    ///Objeto de la mesh
+    public GameObject meshObject;
+
+    ///Bool que regula si este es estático o patrulla
     public bool isStatic;
+
     Rigidbody2D rb;
     public LayerMask groundMask;
     public float bounceForce;
@@ -16,7 +21,7 @@ public class EnemyWalker : DoubleObject {
     public Vector3[] VectorPatrolPoints;
     bool goingA;
 
-
+    //El Objeto que esta en DAWN pilla las posiciones de los patrolPoints y los destruye
     void Start() {
         if (worldAssignation == world.DAWN) {
             VectorPatrolPoints = new Vector3[2];
@@ -36,14 +41,7 @@ public class EnemyWalker : DoubleObject {
         offset = GameLogic.instance.worldOffset;
         if (worldAssignation == world.DAWN) {
             GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
-            //GetComponent<SpriteRenderer>().sprite = imagenDawn;
-        } else {
-            //GetComponent<SpriteRenderer>().sprite = imagenDusk;
-
-        }
-        float randomVal = Random.Range(1, 4);
-        //Debug.Log(randomVal);
-        //GetComponentInChildren<MeshRenderer>().gameObject.transform.rotation *= Quaternion.AngleAxis(randomVal * 90, new Vector3(0, 0, 1));
+        } 
 
         rb = GetComponent<Rigidbody2D>();
         groundMask = LayerMask.GetMask("Ground");
@@ -67,10 +65,6 @@ public class EnemyWalker : DoubleObject {
 
         }
 
-    }
-
-    void BecomePunchable() {
-        isPunchable = true;
     }
 
     protected override void LoadResources() {
@@ -154,7 +148,8 @@ public class EnemyWalker : DoubleObject {
             }
         }
     }
-    //Velocidad a 0
+
+    //Velocidad a 0 si es el de Dusk
     void DuskBehavior() {
         if (!dawn) {
             GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
@@ -222,12 +217,17 @@ public class EnemyWalker : DoubleObject {
 
         if (added) {
 
+            //Este método es una mierda que he tenido que meter, es una guarrada pero hace ByPass de un problemilla que solo está en este script
             Nen();
 
-            if (GetComponent<Rigidbody2D>().velocity.x > 0) {
-                transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
-            } else {
-                transform.localScale = new Vector3(-1.0f, 1.0f, 1.0f);
+            //Se rota de forma que haga lo que deberia en funcion de la velociad que lleva
+            if (meshObject != null) {
+                if (GetComponent<Rigidbody2D>().velocity.x > 0) {
+                    meshObject.transform.rotation = Quaternion.identity;
+                    meshObject.transform.rotation = Quaternion.identity * Quaternion.AngleAxis(90, new Vector3(0, 1, 0));
+                } else if (GetComponent<Rigidbody2D>().velocity.x < 0) {
+                    meshObject.transform.rotation = Quaternion.identity * Quaternion.AngleAxis(270, new Vector3(0, 1, 0));
+                }
             }
 
             BrotherBehavior();
@@ -237,7 +237,6 @@ public class EnemyWalker : DoubleObject {
                 DawnBehavior();
             else
                 DuskBehavior();
-
 
         }
     }

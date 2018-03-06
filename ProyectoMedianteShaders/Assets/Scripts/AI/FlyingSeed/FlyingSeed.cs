@@ -12,6 +12,8 @@ public class FlyingSeed : Agent {
     public float timeOnTheGround=0;
     public bool rising;
 
+    public float fallTimer;
+    public float fallTime;
     public GameObject rabitoGiratorio;
     public GameObject grabbedObject;
     public Vector2 grabOffset;
@@ -24,6 +26,7 @@ public class FlyingSeed : Agent {
             grabOffset = new Vector2(0, 0);
             brotherObject.GetComponent<FlyingSeed>().grabbedObject = null;
             brotherObject.GetComponent<FlyingSeed>().grabOffset = new Vector2(0, 0);
+
         }
     }
 
@@ -87,7 +90,7 @@ public class FlyingSeed : Agent {
 
 
     void Start() {
-
+        fallTime = 1.0f;
 
         if (Path_Points.Length != 0) {
             if (Path_Points[0] != null) {
@@ -203,6 +206,8 @@ public class FlyingSeed : Agent {
 
     public void Spin(float angularSpeed) {
         if (GetComponent<FlyingSeed>().rabitoGiratorio != null) {
+            Debug.Log("Spin");
+
             rabitoGiratorio.transform.Rotate(new Vector3(0, 0, 1), angularSpeed * Time.deltaTime);
         }
     }

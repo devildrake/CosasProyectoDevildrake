@@ -6,10 +6,25 @@ public class LevelEntrance : DoubleObject {
     // Use this for initialization
     Rigidbody2D rb;
     public int levelToLoad;
+    public int sequenceLength;
     public GameObject interactionSprite;
     bool available;
 
+    public GameObject spriteTime;
+    public GameObject spriteFragments;
+    public GameObject spriteLevelNumb;
+
+
+
     void Start() {
+
+        spriteTime.SetActive(false);
+        spriteLevelNumb.SetActive(true);
+        ///////////////
+
+
+
+
         interactionSprite.SetActive(false);
         InitTransformable();
         isPunchable = true;
@@ -28,6 +43,11 @@ public class LevelEntrance : DoubleObject {
         //GetComponentInChildren<MeshRenderer>().gameObject.transform.rotation *= Quaternion.AngleAxis(randomVal * 90, new Vector3(0, 0, 1));
 
         if (GameLogic.instance.completedLevels[levelToLoad-1]) {
+
+
+            Debug.Log(GameLogic.instance.completedLevels);
+
+
             activated = true;
             Debug.Log("Activating Door");
 
@@ -40,6 +60,25 @@ public class LevelEntrance : DoubleObject {
         rb.mass = 5000;
         rb.gravityScale = 0;
     }
+
+    protected override void AddToGameLogicList() {
+        if (!added) {
+            if (GameLogic.instance != null) {
+                added = true;
+                GameLogic.instance.transformableObjects.Add(gameObject);
+
+                //for (int i = levelToLoad; i < (levelToLoad + sequenceLength); i++) {
+                //    bool temp = true;
+                //    if (!GameLogic.instance.fragments[i].picked) {
+                //        temp = false;
+                //    }
+
+                //    spriteFragments.SetActive(temp);
+                //}
+
+            }
+    }
+}
 
     protected override void BrotherBehavior() {
         Vector3 positionWithOffset;

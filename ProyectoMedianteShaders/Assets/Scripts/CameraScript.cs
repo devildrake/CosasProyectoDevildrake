@@ -43,6 +43,7 @@ public class CameraScript : MonoBehaviour {
     [Tooltip("Tipo de nivel")]
     public LevelType levelType;
 
+
     float slidingMultiplier;
 
     private void Start() {
@@ -116,7 +117,7 @@ public class CameraScript : MonoBehaviour {
                         }
                     }
                     desiredPosition = target.position + offset + GameLogic.instance.additionalOffset;
-                    smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, Time.deltaTime * 2 * slidingMultiplier);
+                    smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, Time.deltaTime * 2 * slidingMultiplier * GameLogic.instance.cameraAttenuation);
                     transform.position = smoothedPosition;
 
                     //transform.LookAt(target.position);

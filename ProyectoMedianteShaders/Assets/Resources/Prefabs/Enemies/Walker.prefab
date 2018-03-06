@@ -498,7 +498,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1644740725108654}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2.4, y: -7.730738, z: 0}
+  m_LocalPosition: {x: 17.9, y: -7.730738, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4923852296007652}
@@ -1241,6 +1241,7 @@ MonoBehaviour:
   imagenDusk: {fileID: 0}
   imagenDawn: {fileID: 0}
   originalPos: {x: 0, y: 0}
+  meshObject: {fileID: 1289238652371882}
   isStatic: 0
   groundMask:
     serializedVersion: 2
@@ -1275,6 +1276,7 @@ MonoBehaviour:
   imagenDusk: {fileID: 0}
   imagenDawn: {fileID: 0}
   originalPos: {x: 0, y: 0}
+  meshObject: {fileID: 0}
   isStatic: 1
   groundMask:
     serializedVersion: 2

@@ -189,6 +189,7 @@ GameObject:
   - component: {fileID: 114672265090593480}
   - component: {fileID: 50868233798873960}
   - component: {fileID: 61512418439678546}
+  - component: {fileID: 61569931056282944}
   m_Layer: 28
   m_Name: SemillaDawn
   m_TagString: Untagged
@@ -631,6 +632,31 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.8594837, y: 0.84300804}
   m_EdgeRadius: 0
+--- !u!61 &61569931056282944
+BoxCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1975352700925836}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.02827096, y: 0.4876752}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1.8764024, y: 0.1660049}
+  m_EdgeRadius: 0
 --- !u!61 &61985584328664210
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -643,7 +669,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.032426834, y: 0.316536}
+  m_Offset: {x: 0.043028355, y: 0.4260863}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -654,7 +680,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.67573166, y: 0.19185126}
+  m_Size: {x: 1.9267244, y: 0.1565125}
   m_EdgeRadius: 0
 --- !u!95 &95166992761005062
 Animator:
@@ -737,6 +763,9 @@ MonoBehaviour:
   orbitPos: {x: 0, y: 0, z: 0}
   timeOnTheGround: 0
   rising: 0
+  originalQuat: {x: 0, y: 0, z: 0, w: 0}
+  fallTimer: 0
+  fallTime: 0
   rabitoGiratorio: {fileID: 1017891991828478}
   grabbedObject: {fileID: 0}
   grabOffset: {x: 0, y: 0}
@@ -790,7 +819,10 @@ MonoBehaviour:
   orbitPos: {x: 0, y: 0, z: 0}
   timeOnTheGround: 0
   rising: 0
-  rabitoGiratorio: {fileID: 0}
+  originalQuat: {x: 0, y: 0, z: 0, w: 0}
+  fallTimer: 0
+  fallTime: 0
+  rabitoGiratorio: {fileID: 1429766889433996}
   grabbedObject: {fileID: 0}
   grabOffset: {x: 0, y: 0}
   detectStompObject: {fileID: 1068604424234854}

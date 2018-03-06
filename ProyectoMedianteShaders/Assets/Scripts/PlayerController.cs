@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using FragmentDataNamespace;
 public class PlayerController : DoubleObject {
 
     //Clips de audio diferentes
@@ -20,7 +19,7 @@ public class PlayerController : DoubleObject {
     public Vector2 originalSizeCollider;
     public Vector2 originalOffsetCollider;
 
-    public FragmentData crystalFragment;
+    public bool hasACrystal;
     public bool savedFragment;
 
     //Lista de objetos en el area de Deflect
@@ -52,13 +51,11 @@ public class PlayerController : DoubleObject {
     bool leftPressed;
     public List<GameObject> NearbyObjects;
 
-    public bool crawling; //iiiiin my craaaaaawl
+    public bool crawling; 
     bool moving;
     public bool smashing;
     bool grabbing;
     GameObject capaObject;
-    //bool groundedChecker;
-    //float auxTime;
 
     //Bool para determinar si esta detrás de un bush
     public bool behindBush;
@@ -265,11 +262,19 @@ public class PlayerController : DoubleObject {
                 SetAnimValues();
 
             } else {
-                if (crystalFragment != null) {
+                if (hasACrystal) {
                     if (!savedFragment) {
-                        GameLogic.instance.SaveFragment(crystalFragment);
+                        Debug.Log("SavingFragment?");
+                        //crystalFragment.picked = true;
+                        GameLogic.instance.SaveFragment(hasACrystal);
                         savedFragment = true;
                         brotherObject.GetComponent<PlayerController>().savedFragment = true;
+                        GameLogic.instance.Save();
+
+                        for (int i = 1; i < 30; i++) {
+                            Debug.Log(i + " --- " + GameLogic.instance.fragments[i]);
+                        }
+
                     }
                 }
             }
@@ -640,8 +645,6 @@ public class PlayerController : DoubleObject {
                         prevHorizontalMov = -1.0f;
                         Flip();
                     }
-                    //Debug.Log("Cambio de Prev");
-                    //Debug.Log(direction);
 
                 }
                 GetComponent<AudioSource>().pitch = 1.0f;
@@ -672,20 +675,15 @@ public class PlayerController : DoubleObject {
 
             GetComponent<BoxCollider2D>().size = newSize;
             GetComponent<BoxCollider2D>().offset -= newOffset;
-
-
         }
         else if (Input.GetKeyUp(KeyCode.LeftControl)) {
             GetComponent<BoxCollider2D>().size = originalSizeCollider;
             GetComponent<BoxCollider2D>().offset = originalOffsetCollider;
 
             crawling = false;
-
-
         }
         //Empieza el deflect
         if (Input.GetMouseButtonDown(1)&&objectsInDeflectArea.Count!=0) {
-            //objectsInDeflectArea.RemoveAll(NonExisting);
             if (dawnDeflectPS != null) {
                 dawnDeflectPS.Play(); //Se inicia el sistema de particulas del deflect
             }
@@ -706,7 +704,6 @@ public class PlayerController : DoubleObject {
                 GetComponent<AudioSource>().Play();
 
                 if (g.tag == "Projectile") {
-                    //g.GetComponent<Rigidbody2D>().gravityScale = 0;
                     g.GetComponent<DoubleProjectile>().BeDeflected();
                 }
 
@@ -715,10 +712,6 @@ public class PlayerController : DoubleObject {
         }
 
     }
-
-    //bool NoneExisting() {
-    //    return false;
-    //}
 
         //Método para aglotinar comportamiento de Dusk 
         void DuskBehavior() {
@@ -832,7 +825,6 @@ public class PlayerController : DoubleObject {
         }
 
         if (onImpulsor) {
-            //GetComponent<Rigidbody2D>().gravityScale = 0;
 
             if (someRayCastChecks && Input.GetKeyDown(KeyCode.Space)) {
                 if (!calledImpuslorBool) {
@@ -893,14 +885,8 @@ public class PlayerController : DoubleObject {
 
 
         if (dawn) {
-            //GetComponent<SpriteRenderer>().sprite = imagenDusk;
             dawn = false;
             GameLogic.instance.SetTimeScaleLocal(1.0f);
-
-            //newPosition = transform.position;
-            //newPosition.y -= GameLogic.instance.worldOffset;
-            //transform.position = newPosition;
-            //crawling = false;
 
             //activar el shader
             if (worldAssignation == world.DAWN) {
@@ -965,6 +951,9 @@ public class PlayerController : DoubleObject {
     public override void Kill() {
         behindBush = false;
         sliding = false;
+
+        GameLogic.instance.additionalOffset = new Vector3(0, 0, 0);
+
         if (worldAssignation == world.DUSK) {
             transform.position = GameLogic.instance.spawnPoint;
         } else {
