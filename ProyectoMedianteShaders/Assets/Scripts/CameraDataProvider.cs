@@ -41,6 +41,7 @@ public class CameraDataProvider : MonoBehaviour {
         if (!done && GameLogic.instance != null) {
             GameLogic.instance.pauseCanvas.nextSceneIndex = nextSceneIndex;
             GameLogic.instance.currentSequenceMaxTime = sceneMaxTime;
+            GameLogic.instance.levelName = levelName;
             Destroy(gameObject);
 
         }

@@ -17,7 +17,13 @@ public class LevelName : MonoBehaviour {
     // Update is called once per frame
     void Update () {
         if (GameLogic.instance != null&&levelNameObject!=null) {
-            levelNameObject.GetComponent<Text>().text = GameLogic.instance.GetCurrentLevel();
+
+            if(GameLogic.instance.levelName!= "NonSet") {
+                levelNameObject.GetComponent<Text>().text = GameLogic.instance.levelName;
+            } else {
+                levelNameObject.GetComponent<Text>().text = GameLogic.instance.GetCurrentLevel();
+            }
+
             timer += Time.deltaTime;
 
             if (timer > timeToStartFade) {

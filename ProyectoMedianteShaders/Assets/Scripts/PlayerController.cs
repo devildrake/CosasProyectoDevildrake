@@ -230,9 +230,7 @@ public class PlayerController : DoubleObject {
 
         if (added) {
 
-            if (grounded&&worldAssignation==world.DUSK) {
-                brotherObject.GetComponent<PlayerController>().SetCanDash(true);
-            }
+
 
             if (!GameLogic.instance.levelFinished) {
 
@@ -246,6 +244,11 @@ public class PlayerController : DoubleObject {
                 //Comportamiento sin pausar
                 if (!GameLogic.instance.isPaused) {
                     if ((worldAssignation == world.DAWN && dawn) || (worldAssignation == world.DUSK && !dawn)) {
+
+                        if (grounded && worldAssignation == world.DUSK) {
+                            brotherObject.GetComponent<PlayerController>().SetCanDash(true);
+                        }
+
                         //CheckGrounded();
                         GetComponentInChildren<GroundCheck>().CheckGrounded(this);
                         CheckObjectsInFront();

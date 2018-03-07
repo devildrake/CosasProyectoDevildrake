@@ -27,6 +27,7 @@ public class GameLogic : MonoBehaviour {
     //////////////////////VARIABLES LOAD/SAVE////////////////////////////
     //////////////////////VARIABLES LOAD/SAVE////////////////////////////
 
+    public string levelName = "NonSet";
 
     //Flag para la transición inicial de la camara
     public bool cameraTransition;
@@ -234,6 +235,7 @@ public class GameLogic : MonoBehaviour {
 
     //Método que reinicia la espera del frame para buscar referencias y reinicia el booleano isInMainMenu
     public void ResetSceneData() {
+        levelName = "NonSet";
         cameraAttenuation = 1;
         cameraTransition = true;
         SetWaitAFrame(false);
