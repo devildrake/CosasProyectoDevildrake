@@ -3296,7 +3296,7 @@ Prefab:
     - target: {fileID: 137479573745986324, guid: 1dc1c32df61779f499b1fbfbd2ad6cee,
         type: 2}
       propertyPath: m_AABB.m_Center.x
-      value: -0.00822112
+      value: -0.008221254
       objectReference: {fileID: 0}
     - target: {fileID: 137479573745986324, guid: 1dc1c32df61779f499b1fbfbd2ad6cee,
         type: 2}
@@ -3306,7 +3306,7 @@ Prefab:
     - target: {fileID: 137479573745986324, guid: 1dc1c32df61779f499b1fbfbd2ad6cee,
         type: 2}
       propertyPath: m_AABB.m_Center.z
-      value: -0.105968475
+      value: -0.10595584
       objectReference: {fileID: 0}
     - target: {fileID: 137479573745986324, guid: 1dc1c32df61779f499b1fbfbd2ad6cee,
         type: 2}
@@ -3335,12 +3335,12 @@ Prefab:
     - target: {fileID: 137580113668498854, guid: 1dc1c32df61779f499b1fbfbd2ad6cee,
         type: 2}
       propertyPath: m_AABB.m_Center.y
-      value: -0.00008010864
+      value: -0.000120162964
       objectReference: {fileID: 0}
     - target: {fileID: 137580113668498854, guid: 1dc1c32df61779f499b1fbfbd2ad6cee,
         type: 2}
       propertyPath: m_AABB.m_Center.z
-      value: 0.00003194809
+      value: 0.00001859665
       objectReference: {fileID: 0}
     - target: {fileID: 137580113668498854, guid: 1dc1c32df61779f499b1fbfbd2ad6cee,
         type: 2}
@@ -3350,7 +3350,12 @@ Prefab:
     - target: {fileID: 137580113668498854, guid: 1dc1c32df61779f499b1fbfbd2ad6cee,
         type: 2}
       propertyPath: m_AABB.m_Center.x
-      value: 0.000000009313226
+      value: 0.000000007450581
+      objectReference: {fileID: 0}
+    - target: {fileID: 114555770194730824, guid: 1dc1c32df61779f499b1fbfbd2ad6cee,
+        type: 2}
+      propertyPath: nextSceneIndex
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 1dc1c32df61779f499b1fbfbd2ad6cee, type: 2}

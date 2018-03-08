@@ -117,17 +117,30 @@ public class PlayerController : DoubleObject {
     //Referencia al sistema de particulas de dawn para el deflect.
     public ParticleSystem dawnDeflectCastPS, dawnDeflectReleasePS;
 
+    AudioSource audioSource;
+    GroundCheck groundCheck;
+    PlayerController brotherScript;
+    Animator myAnimator;
+    Animator brotherAnimator;
+    BoxCollider2D myBoxCollider;
+
     //Se inicializan las cosas
     void Start() {
         //El sistema de particulas de Dawn del deflect se inicia desactivado.
-        print(dawnDeflectCastPS);
+        //print(dawnDeflectCastPS);
         if (dawnDeflectCastPS != null) {
             dawnDeflectCastPS.Stop();
-            print(dawnDeflectCastPS.isStopped);
+            //print(dawnDeflectCastPS.isStopped);
         }
         if(dawnDeflectReleasePS != null) {
             dawnDeflectReleasePS.Stop();
         }
+        audioSource = GetComponent<AudioSource>();
+        groundCheck = GetComponentInChildren<GroundCheck>();
+        brotherScript = brotherObject.GetComponent<PlayerController>();
+        myBoxCollider = GetComponent<BoxCollider2D>(); 
+        myAnimator = GetComponentInChildren<Animator>();
+        brotherAnimator = brotherObject.GetComponentInChildren<Animator>();
 
         timeNotMoving = 0;
         dashCoolDown = 0.5f;
@@ -246,11 +259,11 @@ public class PlayerController : DoubleObject {
                     if ((worldAssignation == world.DAWN && dawn) || (worldAssignation == world.DUSK && !dawn)) {
 
                         if (grounded && worldAssignation == world.DUSK) {
-                            brotherObject.GetComponent<PlayerController>().SetCanDash(true);
+                            brotherScript.SetCanDash(true);
                         }
 
                         //CheckGrounded();
-                        GetComponentInChildren<GroundCheck>().CheckGrounded(this);
+                        groundCheck.CheckGrounded(this);
                         CheckObjectsInFront();
                         if (!GameLogic.instance.cameraTransition) {
                             CheckInputs();
@@ -276,7 +289,7 @@ public class PlayerController : DoubleObject {
                         //crystalFragment.picked = true;
                         GameLogic.instance.SaveFragment(hasACrystal);
                         savedFragment = true;
-                        brotherObject.GetComponent<PlayerController>().savedFragment = true;
+                        brotherScript.savedFragment = true;
                         GameLogic.instance.Save();
 
                         for (int i = 1; i < 30; i++) {
@@ -290,48 +303,46 @@ public class PlayerController : DoubleObject {
     }
 
     void SetAnimValues() {
-        if (GetComponentInChildren<Animator>() != null) {
+        if (myAnimator != null) {
 
             if (worldAssignation == world.DUSK&&!dawn) {
-                GetComponentInChildren<Animator>().SetBool("moving", moving);
-                GetComponentInChildren<Animator>().SetBool("grounded", grounded);
-                GetComponentInChildren<Animator>().SetFloat("speedY", GetComponent<Rigidbody2D>().velocity.y);
-                GetComponentInChildren<Animator>().SetBool("sliding", sliding);
-                GetComponentInChildren<Animator>().SetFloat("timeMoving", timeMoving);
+                myAnimator.SetBool("moving", moving);
+                myAnimator.SetBool("grounded", grounded);
+                myAnimator.SetFloat("speedY", rb.velocity.y);
+                myAnimator.SetBool("sliding", sliding);
+                myAnimator.SetFloat("timeMoving", timeMoving);
 
-                brotherObject.GetComponentInChildren<Animator>().SetBool("moving", moving);
-                brotherObject.GetComponentInChildren<Animator>().SetBool("grounded", grounded);
-                brotherObject.GetComponentInChildren<Animator>().SetFloat("speedY", GetComponent<Rigidbody2D>().velocity.y);
-                brotherObject.GetComponentInChildren<Animator>().SetBool("sliding", sliding);
-                brotherObject.GetComponentInChildren<Animator>().SetFloat("timeMoving", timeMoving);
+                brotherAnimator.SetBool("moving", moving);
+                brotherAnimator.SetBool("grounded", grounded);
+                brotherAnimator.SetFloat("speedY", rb.velocity.y);
+                brotherAnimator.SetBool("sliding", sliding);
+                brotherAnimator.SetFloat("timeMoving", timeMoving);
 
-                GetComponentInChildren<Animator>().SetBool("punching", punchTimer < punchCoolDown);
-                brotherObject.GetComponentInChildren<Animator>().SetBool("dashing", dashTimer < dashCoolDown);
-                brotherObject.GetComponentInChildren<Animator>().SetBool("crawling", crawling);
-                //brotherObject.GetComponentInChildren<Animator>().SetBool("dash_press", Input.GetMouseButton(0) && dashTimer >= dashCoolDown && canDash && !grounded);
-                brotherObject.GetComponentInChildren<Animator>().SetBool("deflecting", deflectTimer < deflectCoolDown);
-                //brotherObject.GetComponentInChildren<Animator>().SetBool("deflect_press", Input.GetMouseButton(1) && deflectTimer >= deflectCoolDown && objectsInDeflectArea.Count > 0);
+                myAnimator.SetBool("punching", punchTimer < punchCoolDown);
+                brotherAnimator.SetBool("dashing", dashTimer < dashCoolDown);
+                brotherAnimator.SetBool("crawling", crawling);
+                brotherAnimator.SetBool("deflecting", deflectTimer < deflectCoolDown);
 
             } else if(dawn&&worldAssignation==world.DAWN){
 
-                GetComponentInChildren<Animator>().SetBool("moving", moving);
-                GetComponentInChildren<Animator>().SetBool("grounded", grounded);
-                GetComponentInChildren<Animator>().SetFloat("speedY", GetComponent<Rigidbody2D>().velocity.y);
-                GetComponentInChildren<Animator>().SetBool("sliding", sliding);
-                GetComponentInChildren<Animator>().SetFloat("timeMoving", timeMoving);
+                myAnimator.SetBool("moving", moving);
+                myAnimator.SetBool("grounded", grounded);
+                myAnimator.SetFloat("speedY", rb.velocity.y);
+                myAnimator.SetBool("sliding", sliding);
+                myAnimator.SetFloat("timeMoving", timeMoving);
 
-                brotherObject.GetComponentInChildren<Animator>().SetBool("moving", moving);
-                brotherObject.GetComponentInChildren<Animator>().SetBool("grounded", grounded);
-                brotherObject.GetComponentInChildren<Animator>().SetFloat("speedY", GetComponent<Rigidbody2D>().velocity.y);
-                brotherObject.GetComponentInChildren<Animator>().SetBool("sliding", sliding);
-                brotherObject.GetComponentInChildren<Animator>().SetFloat("timeMoving", timeMoving);
+                brotherAnimator.SetBool("moving", moving);
+                brotherAnimator.SetBool("grounded", grounded);
+                brotherAnimator.SetFloat("speedY", rb.velocity.y);
+                brotherAnimator.SetBool("sliding", sliding);
+                brotherAnimator.SetFloat("timeMoving", timeMoving);
 
-                GetComponentInChildren<Animator>().SetBool("dashing", dashTimer < dashCoolDown);
-                GetComponentInChildren<Animator>().SetBool("crawling", crawling);
-                GetComponentInChildren<Animator>().SetBool("dash_press", Input.GetMouseButton(0)&&dashTimer>=dashCoolDown&&canDash&&!grounded);
-                GetComponentInChildren<Animator>().SetBool("deflecting", deflectTimer < deflectCoolDown);
-                GetComponentInChildren<Animator>().SetBool("deflect_press", Input.GetMouseButton(1) && deflectTimer >= deflectCoolDown&&objectsInDeflectArea.Count>0);
-                brotherObject.GetComponentInChildren<Animator>().SetBool("punching", punchTimer < punchCoolDown);
+                myAnimator.SetBool("dashing", dashTimer < dashCoolDown);
+                myAnimator.SetBool("crawling", crawling);
+                myAnimator.SetBool("dash_press", Input.GetMouseButton(0)&&dashTimer>=dashCoolDown&&canDash&&!grounded);
+                myAnimator.SetBool("deflecting", deflectTimer < deflectCoolDown);
+                myAnimator.SetBool("deflect_press", Input.GetMouseButton(1) && deflectTimer >= deflectCoolDown&&objectsInDeflectArea.Count>0);
+                brotherAnimator.SetBool("punching", punchTimer < punchCoolDown);
 
             }
 
@@ -342,8 +353,12 @@ public class PlayerController : DoubleObject {
 
     //Clampeo de la velocidad del personaje
     void ClampSpeed() {
-        if (GetComponent<Rigidbody2D>().velocity.y > maxSpeedY) {
-            GetComponent<Rigidbody2D>().velocity = new Vector2(GetComponent<Rigidbody2D>().velocity.x,maxSpeedY);
+        if (rb != null) {
+            if (rb.velocity.y > maxSpeedY) {
+                rb.velocity = new Vector2(rb.velocity.x, maxSpeedY);
+            }
+        } else {
+            rb = GetComponent<Rigidbody2D>();
         }
     }
 
@@ -360,14 +375,14 @@ public class PlayerController : DoubleObject {
     //Método setter para canDash
     public void SetCanDash(bool a) {
         canDash = a;
-        brotherObject.GetComponent<PlayerController>().canDash = true;
+        brotherScript.canDash = true;
     }
 
     //Método virtual que modifica la posicio del objeto dominado con la del dominante
     protected override void BrotherBehavior()
     {
         Vector3 positionWithOffset;
-        if (GetComponent<Rigidbody2D>().bodyType == RigidbodyType2D.Kinematic)
+        if (rb.bodyType == RigidbodyType2D.Kinematic)
         {
 
             positionWithOffset = brotherObject.transform.position;
@@ -398,10 +413,10 @@ public class PlayerController : DoubleObject {
 
             facingRight = !facingRight;
 
-            if (brotherObject.GetComponent<PlayerController>().facingRight != facingRight)
+            if (brotherScript.facingRight != facingRight)
             {
-                brotherObject.GetComponent<PlayerController>().Flip();
-                brotherObject.GetComponent<PlayerController>().prevHorizontalMov = prevHorizontalMov;
+                brotherScript.Flip();
+                brotherScript.prevHorizontalMov = prevHorizontalMov;
             }
         }
 
@@ -431,8 +446,7 @@ public class PlayerController : DoubleObject {
                         PlayerUtilsStatic.ResetDirectionCircle(arrow);
                     }
 
-                    //GetComponent<Rigidbody2D>().AddForce(new Vector2(-GetComponent<Rigidbody2D>().velocity.x, 0), ForceMode2D.Impulse);
-                    GetComponent<Rigidbody2D>().velocity = new Vector2(0, GetComponent<Rigidbody2D>().velocity.y);
+                    rb.velocity = new Vector2(0, rb.velocity.y);
                     //Debug.Log("Se para");
                     if(facingRight)
                     transform.Translate(Vector3.right * Input.GetAxis("Horizontal") * characterSpeed * Time.deltaTime);
@@ -444,15 +458,15 @@ public class PlayerController : DoubleObject {
                         timeMoving += Time.deltaTime;
                         timeNotMoving = 0;
                         moving = true;
-                        if (!GetComponent<AudioSource>().isPlaying&&!crawling) {
-                            GetComponent<AudioSource>().pitch = 0.3f;
-                            GetComponent<AudioSource>().clip = walkClip;
-                            GetComponent<AudioSource>().Play();
+                        if (audioSource.isPlaying&&!crawling) {
+                            audioSource.pitch = 0.3f;
+                            audioSource.clip = walkClip;
+                            audioSource.Play();
                         }
                         else if(crawling){
-                            GetComponent<AudioSource>().pitch = 0.3f;
-                            GetComponent<AudioSource>().clip = crawlClip;
-                            GetComponent<AudioSource>().Play();
+                            audioSource.pitch = 0.3f;
+                            audioSource.clip = crawlClip;
+                            audioSource.Play();
                         }
                     }
                     else {
@@ -523,9 +537,9 @@ public class PlayerController : DoubleObject {
 
                             NearbyObjects[0].transform.position = transform.position - distanceToGrabbedObject;
                             Debug.Log(distanceToGrabbedObject);
-                            if (!GetComponent<AudioSource>().isPlaying) {
-                                GetComponent<AudioSource>().clip = grabClip;
-                                GetComponent<AudioSource>().Play();
+                            if (!audioSource.isPlaying) {
+                                audioSource.clip = grabClip;
+                                audioSource.Play();
                             }
                         }else {
                             timeCountToDrag = 0;
@@ -544,16 +558,13 @@ public class PlayerController : DoubleObject {
             if (rb.velocity.y > 0) {
                 sliding = false;
             }
-            if (!GetComponent<AudioSource>().isPlaying) {
-                GetComponent<AudioSource>().clip = slideClip;
-                GetComponent<AudioSource>().Play();
+            if (!audioSource.isPlaying) {
+                audioSource.clip = slideClip;
+                audioSource.Play();
             }
 
         }
 
-        //if (moving && GetComponent<Rigidbody2D>().velocity.x != 0) {
-        //    GetComponent<Rigidbody2D>().velocity = new Vector2(0, GetComponent<Rigidbody2D>().velocity.y);
-        //}
     }
 
     //Método que comprueba si hay algun objeto en la dirección en la que mira el personaje antes lo hacía solo quieto, pero 
@@ -603,12 +614,12 @@ public class PlayerController : DoubleObject {
 
     //Metodo que añade una fuerza al personaje para simular un salto
     void Jump() {
-        GetComponent<Rigidbody2D>().velocity= new Vector2(0,0);
-        GetComponent<AudioSource>().pitch = 1.0f;
+        rb.velocity= new Vector2(0,0);
+        audioSource.pitch = 1.0f;
 
-        GetComponent<Rigidbody2D>().AddForce(transform.up * jumpStrenght, ForceMode2D.Impulse);
-        GetComponent<AudioSource>().clip = jumpClip;
-        GetComponent<AudioSource>().Play();
+        rb.AddForce(transform.up * jumpStrenght, ForceMode2D.Impulse);
+        audioSource.clip = jumpClip;
+        audioSource.Play();
         sliding = false;
     }
 
@@ -655,12 +666,12 @@ public class PlayerController : DoubleObject {
                     }
 
                 }
-                GetComponent<AudioSource>().pitch = 1.0f;
+                audioSource.pitch = 1.0f;
 
-                GetComponent<AudioSource>().clip = dashClip;
-                GetComponent<AudioSource>().Play();
+                audioSource.clip = dashClip;
+                audioSource.Play();
                 canJumpOnImpulsor = false;
-                GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
+                rb.velocity = new Vector2(0, 0);
                 PlayerUtilsStatic.DoDash(gameObject, direction, dashForce,true);
                 dashTimer = 0;
                 SetCanDash(false);
@@ -676,10 +687,13 @@ public class PlayerController : DoubleObject {
 
         if (Input.GetKeyDown(KeyCode.LeftControl)) {
             crawling = true;
-            Vector2 newSize = GetComponent<BoxCollider2D>().size;
+            Vector2 newSize = myBoxCollider.size;
             newSize.y /= 2;
-            Vector2 newOffset = GetComponent<BoxCollider2D>().offset;
+            Vector2 newOffset = myBoxCollider.offset;
             newOffset.y = newSize.y / 2;
+
+
+
 
             GetComponent<BoxCollider2D>().size = newSize;
             GetComponent<BoxCollider2D>().offset -= newOffset;
@@ -711,8 +725,8 @@ public class PlayerController : DoubleObject {
 
                 g.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
                 PlayerUtilsStatic.DoDash(g, deflectDirection, 20*g.GetComponent<Rigidbody2D>().mass/2,false);
-                GetComponent<AudioSource>().clip = deflectClip;
-                GetComponent<AudioSource>().Play();
+                audioSource.clip = deflectClip;
+                audioSource.Play();
 
                 if (g.tag == "Projectile") {
                     g.GetComponent<DoubleProjectile>().BeDeflected();
@@ -735,8 +749,8 @@ public class PlayerController : DoubleObject {
                 if (grounded) {
                     Punch(direction, 40000);
                     punchTimer = 0;
-                    GetComponent<AudioSource>().clip = punchClip;
-                    GetComponent<AudioSource>().Play();
+                    audioSource.clip = punchClip;
+                    audioSource.Play();
                 }
 
                 leftPressed = false;
@@ -770,10 +784,10 @@ public class PlayerController : DoubleObject {
         }
         if (Input.GetKeyDown(KeyCode.LeftControl)&&!grounded) {
             Smash();
-            GetComponent<AudioSource>().pitch = 1.0f;
+            audioSource.pitch = 1.0f;
 
-            GetComponent<AudioSource>().clip = GetComponent<PlayerController>().smashClip;
-            GetComponent<AudioSource>().Play();
+            audioSource.clip = smashClip;
+            audioSource.Play();
         }
 
     }
@@ -782,10 +796,10 @@ public class PlayerController : DoubleObject {
     void Smash() {
         if (!smashing) {
             rb.AddForce(new Vector2(-rb.velocity.x,0),ForceMode2D.Impulse);
-            GetComponent<AudioSource>().clip = smashClip;
-            GetComponent<AudioSource>().pitch = 1.0f;
+            audioSource.clip = smashClip;
+            audioSource.pitch = 1.0f;
 
-            GetComponent<AudioSource>().Play();
+            audioSource.Play();
             rb.velocity = new Vector2(0, 0);
             rb.AddForce(new Vector2(0, -700));
             smashing = true;
@@ -901,40 +915,39 @@ public class PlayerController : DoubleObject {
 
             //activar el shader
             if (worldAssignation == world.DAWN) {
-                GetComponentInChildren<Animator>().SetBool("deflect_press", false);
-                GetComponentInChildren<Animator>().SetBool("dash_press", false);
-                GameLogic.instance.currentPlayer = brotherObject.GetComponent<PlayerController>();
-                dominantVelocity = GetComponent<Rigidbody2D>().velocity;
-                brotherObject.GetComponent<DoubleObject>().dominantVelocity = GetComponent<Rigidbody2D>().velocity;
-                brotherObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
-                GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
+                myAnimator.SetBool("deflect_press", false);
+                myAnimator.SetBool("dash_press", false);
+                GameLogic.instance.currentPlayer = brotherScript;
+                dominantVelocity = rb.velocity;
+                brotherScript.dominantVelocity = rb.velocity;
+                brotherScript.rb.bodyType = RigidbodyType2D.Dynamic;
+                rb.bodyType = RigidbodyType2D.Kinematic;
                 OnlyFreezeRotation();
-                brotherObject.GetComponent<Rigidbody2D>().velocity = dominantVelocity;
-                GetComponent<Rigidbody2D>().velocity = new Vector2(0.0f, 0.0f);
-                brotherObject.GetComponent<PlayerController>().prevHorizontalMov = prevHorizontalMov;
+                brotherScript.rb.velocity = dominantVelocity;
+                rb.velocity = new Vector2(0.0f, 0.0f);
+                brotherScript.prevHorizontalMov = prevHorizontalMov;
             }
             maskObjectScript.change = false;
         }
         else {
-            prevHorizontalMov = brotherObject.GetComponent<PlayerController>().prevHorizontalMov;
+            prevHorizontalMov = brotherScript.prevHorizontalMov;
 
-            //GetComponent<SpriteRenderer>().sprite = imagenDawn;
             dawn = true;
             //newPosition = transform.position;
             //newPosition.y += GameLogic.instance.worldOffset;
             //transform.position = newPosition;
             if (worldAssignation == world.DAWN){
 
-                GetComponentInChildren<Animator>().SetBool("deflect_press", false);
-                GetComponentInChildren<Animator>().SetBool("dash_press", false);
+                myAnimator.SetBool("deflect_press", false);
+                myAnimator.SetBool("dash_press", false);
 
                 GameLogic.instance.currentPlayer = this;
-                dominantVelocity = brotherObject.GetComponent<Rigidbody2D>().velocity;
-                brotherObject.GetComponent<DoubleObject>().dominantVelocity = brotherObject.GetComponent<Rigidbody2D>().velocity;
-                GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
-                brotherObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
-                brotherObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0.0f, 0.0f);
-                GetComponent<Rigidbody2D>().velocity = dominantVelocity;
+                dominantVelocity = brotherScript.rb.velocity;
+                brotherScript.dominantVelocity = brotherScript.rb.velocity;
+                rb.bodyType = RigidbodyType2D.Dynamic;
+                brotherScript.rb.bodyType = RigidbodyType2D.Kinematic;
+                brotherScript.rb.velocity = new Vector2(0.0f, 0.0f);
+                rb.velocity = dominantVelocity;
             }
 
             //activar el shader
@@ -972,11 +985,11 @@ public class PlayerController : DoubleObject {
             transform.position = GameLogic.instance.spawnPoint + new Vector3(0, GameLogic.instance.worldOffset, 0);
         }
 
-        if (GetComponent<Rigidbody2D>() != null) {
-            GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
+        if (rb != null) {
+            rb.velocity = new Vector2(0, 0);
         }
-        GetComponent<AudioSource>().clip = dieClip;
-        GetComponent<AudioSource>().Play();
+        audioSource.clip = dieClip;
+        audioSource.Play();
         GameLogic.instance.timesDied++;
     }
 

@@ -3,14 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class DoubleBush : DoubleObject {
-	// Use this for initialization
+    // Use this for initialization
+    Rigidbody2D rb;
 	void Start () {
+        rb = GetComponent<Rigidbody2D>();
         InitTransformable();
         offset = GameLogic.instance.worldOffset;
-        GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
+        rb.constraints = RigidbodyConstraints2D.FreezeAll;
 
         if (worldAssignation == world.DAWN) {
-            GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
+           rb.bodyType = RigidbodyType2D.Kinematic;
         }
 
 
@@ -18,7 +20,7 @@ public class DoubleBush : DoubleObject {
 
     protected override void BrotherBehavior() {
         Vector3 positionWithOffset;
-        if (GetComponent<Rigidbody2D>().bodyType == RigidbodyType2D.Kinematic) {
+        if (rb.bodyType == RigidbodyType2D.Kinematic) {
             positionWithOffset = brotherObject.transform.position;
 
             if (worldAssignation == world.DAWN)
@@ -80,11 +82,19 @@ public class DoubleBush : DoubleObject {
     //}
 
     public override void Change() {
-        if (worldAssignation == world.DAWN) {
+        if (rb == null)
+            rb = GetComponent<Rigidbody2D>();
+
+            if (worldAssignation == world.DAWN) {
             brotherObject.SetActive(false);
 
             if (dawn) {
                 brotherObject.SetActive(true);
+                rb.isKinematic = true;
+                brotherObject.GetComponent<Rigidbody2D>().isKinematic = false;
+            } else {
+                rb.isKinematic = false;
+                brotherObject.GetComponent<Rigidbody2D>().isKinematic = true;
 
             }
         }

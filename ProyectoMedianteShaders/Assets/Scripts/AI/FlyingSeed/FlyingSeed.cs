@@ -20,12 +20,15 @@ public class FlyingSeed : Agent {
     public GameObject detectStompObject;
     public float timeCastingBlowUp;
 
+    FlyingSeed brotherScript;
+    Rigidbody2D rb;
+
     public void DropObject() {
         if (grabbedObject != null) {
             grabbedObject = null;
             grabOffset = new Vector2(0, 0);
-            brotherObject.GetComponent<FlyingSeed>().grabbedObject = null;
-            brotherObject.GetComponent<FlyingSeed>().grabOffset = new Vector2(0, 0);
+            brotherScript.grabbedObject = null;
+            brotherScript.grabOffset = new Vector2(0, 0);
 
         }
     }
@@ -33,11 +36,12 @@ public class FlyingSeed : Agent {
     public void GrabObject(GameObject g){
         GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
         grabbedObject = g;
+        DoubleObject grabbedDoubleObject = g.GetComponent<DoubleObject>();
+
         grabOffset = g.transform.position - gameObject.transform.position;
 
-
-        brotherObject.GetComponent<FlyingSeed>().grabbedObject = g.GetComponent<DoubleObject>().brotherObject;
-        brotherObject.GetComponent<FlyingSeed>().grabOffset = g.GetComponent<DoubleObject>().brotherObject.transform.position - brotherObject.transform.position;
+        brotherScript.grabbedObject = grabbedDoubleObject.brotherObject;
+        brotherScript.grabOffset = grabbedDoubleObject.brotherObject.transform.position - brotherObject.transform.position;
 
     }
 
@@ -90,6 +94,8 @@ public class FlyingSeed : Agent {
 
 
     void Start() {
+        rb = GetComponent<Rigidbody2D>();
+        brotherScript = brotherObject.GetComponent<FlyingSeed>();
         fallTime = 1.0f;
 
         if (Path_Points.Length != 0) {
@@ -113,10 +119,8 @@ public class FlyingSeed : Agent {
         interactuableBySmash = false;
         offset = GameLogic.instance.worldOffset;
         if (worldAssignation == world.DAWN) {
-            GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
-            //GetComponent<SpriteRenderer>().sprite = imagenDawn;
+            rb.bodyType = RigidbodyType2D.Kinematic;
         } else {
-            //GetComponent<SpriteRenderer>().sprite = imagenDusk;
 
         }
 
@@ -127,7 +131,7 @@ public class FlyingSeed : Agent {
 
     protected override void BrotherBehavior() {
         Vector3 positionWithOffset;
-        if (GetComponent<Rigidbody2D>().bodyType == RigidbodyType2D.Kinematic) {
+        if (rb.bodyType == RigidbodyType2D.Kinematic) {
             positionWithOffset = brotherObject.transform.position;
 
             if (worldAssignation == world.DAWN)
@@ -161,34 +165,34 @@ public class FlyingSeed : Agent {
             //Si antes del cambio estaba en dawn, pasara a hacerse kinematic y al otro dynamic, además de darle su velocidad
             if (dawn) {
                 dawnState = new SeedIdleState();
-                dominantVelocity = GetComponent<Rigidbody2D>().velocity;
-                brotherObject.GetComponent<DoubleObject>().dominantVelocity = GetComponent<Rigidbody2D>().velocity;
-                brotherObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
-                GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
+                dominantVelocity = rb.velocity;
+                brotherScript.dominantVelocity = rb.velocity;
+                brotherScript.rb.bodyType = RigidbodyType2D.Dynamic;
+                rb.bodyType = RigidbodyType2D.Kinematic;
                 OnlyFreezeRotation();
-                brotherObject.GetComponent<Rigidbody2D>().velocity = dominantVelocity;
-                GetComponent<Rigidbody2D>().velocity = new Vector2(0.0f, 0.0f);
+                brotherScript.rb.velocity = dominantVelocity;
+                rb.velocity = new Vector2(0.0f, 0.0f);
                 if (duskState != null)
                     duskState.OnEnter(this);
 
             }
             //Si antes del cambio estaba en dusk, pasara a hacerse dynamic y al otro kinematic, además de darle su velocidad 
             else {
-                brotherObject.GetComponent<FlyingSeed>().SwitchState(1, new SeedPathFollowState());
+                brotherScript.SwitchState(1, new SeedPathFollowState());
                 touchedByPlayer = false;
-                dominantVelocity = brotherObject.GetComponent<Rigidbody2D>().velocity;
-                brotherObject.GetComponent<DoubleObject>().dominantVelocity = brotherObject.GetComponent<Rigidbody2D>().velocity;
-                GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
-                brotherObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
-                brotherObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0.0f, 0.0f);
-                GetComponent<Rigidbody2D>().velocity = dominantVelocity;
+                dominantVelocity = brotherScript.rb.velocity;
+                brotherScript.dominantVelocity = brotherScript.rb.velocity;
+                rb.bodyType = RigidbodyType2D.Dynamic;
+                brotherScript.rb.bodyType = RigidbodyType2D.Kinematic;
+                brotherScript.rb.velocity = new Vector2(0.0f, 0.0f);
+                rb.velocity = dominantVelocity;
                 if (dawnState != null)
                     dawnState.OnEnter(this);
 
             }
 
             dawn = !dawn;
-            brotherObject.GetComponent<DoubleObject>().dawn = !brotherObject.GetComponent<DoubleObject>().dawn;
+            brotherScript.dawn = !brotherScript.dawn;
         }
 
     }
@@ -205,9 +209,8 @@ public class FlyingSeed : Agent {
     }
 
     public void Spin(float angularSpeed) {
-        if (GetComponent<FlyingSeed>().rabitoGiratorio != null) {
+        if (rabitoGiratorio != null) {
             Debug.Log("Spin");
-
             rabitoGiratorio.transform.Rotate(new Vector3(0, 0, 1), angularSpeed * Time.deltaTime);
         }
     }

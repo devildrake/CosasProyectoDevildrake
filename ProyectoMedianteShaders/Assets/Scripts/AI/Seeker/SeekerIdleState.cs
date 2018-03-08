@@ -8,8 +8,11 @@ public class SeekerIdleState : State {
     float idleOffset = 0.2f;
 
     override public void OnEnter(Agent a) {
-        a.GetComponent<Seeker>().rising = true;
-        a.gameObject.GetComponent<Seeker>().ResetOrbit();
+
+        Seeker agentScript = a.GetComponent<Seeker>();
+
+        agentScript.rising = true;
+        agentScript.ResetOrbit();
 
 
         a.gameObject.GetComponent<Rigidbody2D>().gravityScale = 0;
@@ -17,15 +20,15 @@ public class SeekerIdleState : State {
     }
 
     override public void Update(Agent a, float dt) {
+        Seeker agentScript = a.GetComponent<Seeker>();
 
-
-        bool rising = a.GetComponent<Seeker>().rising;
+        bool rising = agentScript.rising;
 
         Vector3 targetPos;
         if (rising) {
-            targetPos = a.GetComponent<Seeker>().orbitPos + new Vector3(0, idleOffset, 0);
+            targetPos = agentScript.orbitPos + new Vector3(0, idleOffset, 0);
         } else {
-            targetPos = a.GetComponent<Seeker>().orbitPos - new Vector3(0, idleOffset, 0);
+            targetPos = agentScript.orbitPos - new Vector3(0, idleOffset, 0);
         }
 
         if (Vector2.Distance(targetPos, a.transform.position) > idleThreshold) {

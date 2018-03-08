@@ -8,24 +8,27 @@ public class SeedGoUpState : State {
     float stompTimer=0;
     float stompTime = 0.2f;
     override public void OnEnter(Agent a) {
-        a.GetComponent<FlyingSeed>().timeOnTheGround = 0;
+        FlyingSeed agentScript = a.GetComponent<FlyingSeed>();
+
+        agentScript.timeOnTheGround = 0;
         a.GetComponent<Rigidbody2D>().gravityScale = 0;
-        a.GetComponent<FlyingSeed>().stompedOn = false;
-        a.GetComponent<FlyingSeed>().detectStompObject.GetComponent<DetectStomp>().active = true;
+        agentScript.stompedOn = false;
+        agentScript.detectStompObject.GetComponent<DetectStomp>().active = true;
     }
 
 
 
     override public void Update(Agent a, float dt) {
+        FlyingSeed agentScript = a.GetComponent<FlyingSeed>();
 
-        if(a.GetComponent<FlyingSeed>().grabbedObject==null)
-        a.GetComponent<FlyingSeed>().CheckForObjects();
+        if (agentScript.grabbedObject==null)
+            agentScript.CheckForObjects();
 
         if (stompTime>stompTimer)
         stompTimer += dt;
 
         //Lleva el tiempo establecido en el suelo, así que sube hasta alcanzar speed>1
-        if (a.GetComponent<FlyingSeed>().timeOnTheGround > maxTimeOnTheGround) {
+        if (agentScript.timeOnTheGround > maxTimeOnTheGround) {
             if (a.GetComponent<Rigidbody2D>().velocity.y < 1) {
                 a.GetComponent<Rigidbody2D>().velocity = new Vector2(0, a.GetComponent<Rigidbody2D>().velocity.y + speedUp * Time.deltaTime);
             } else {
@@ -33,12 +36,12 @@ public class SeedGoUpState : State {
             }
         //Falta tiempo en el suelo
         } else {
-            a.GetComponent<FlyingSeed>().timeOnTheGround += Time.deltaTime;
+            agentScript.timeOnTheGround += Time.deltaTime;
         }
 
         //Comprobación de cambio de estado
-        if (a.GetComponent<FlyingSeed>().stompedOn&&stompTimer>stompTime&&a.GetComponent<FlyingSeed>().timeOnTheGround>maxTimeOnTheGround) {
-            a.GetComponent<FlyingSeed>().SwitchState(0, new SeedFallState());
+        if (agentScript.stompedOn&&stompTimer>stompTime&& agentScript.timeOnTheGround>maxTimeOnTheGround) {
+            agentScript.SwitchState(0, new SeedFallState());
             stompTimer = 0;
         }
     }

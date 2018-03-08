@@ -9,8 +9,12 @@ public class TramplerStunnedState : State {
     }
 
     public override void Update(Agent a, float dt) {
-        a.GetComponent<Trampler>().timeStunned += dt;
-        if (a.GetComponent<Trampler>().stunDuration < a.GetComponent<Trampler>().timeStunned) {
+
+        Trampler agentScript = a.GetComponent<Trampler>();
+
+
+        agentScript.timeStunned += dt;
+        if (agentScript.stunDuration < agentScript.timeStunned) {
             a.SwitchState(0, new TramplerIdleState());
         }
     }

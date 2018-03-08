@@ -10,13 +10,13 @@ public class DoubleDirectionalLight : DoubleObject {
 
 	void Start () {
         if (dawn) {
-            GetComponent<Light>().color = dawnColor;
-            GetComponent<Light>().intensity = dawnIntensity;
+            //GetComponent<Light>().color = dawnColor;
+            //GetComponent<Light>().intensity = dawnIntensity;
             RenderSettings.skybox = dawnSkybox;
         }
         else {
-            GetComponent<Light>().color = duskColor;
-            GetComponent<Light>().intensity = duskIntensity;
+            //GetComponent<Light>().color = duskColor;
+            //GetComponent<Light>().intensity = duskIntensity;
             RenderSettings.skybox = duskSkybox;
         }
 	}
@@ -29,13 +29,13 @@ public class DoubleDirectionalLight : DoubleObject {
         base.Change();
 
         if (dawn) {
-            GetComponent<Light>().color = dawnColor;
-            GetComponent<Light>().intensity = dawnIntensity;
+            //GetComponent<Light>().color = dawnColor;
+            //GetComponent<Light>().intensity = dawnIntensity;
             RenderSettings.skybox = dawnSkybox;
         }
         else {
-            GetComponent<Light>().color = duskColor;
-            GetComponent<Light>().intensity = duskIntensity;
+            //GetComponent<Light>().color = duskColor;
+            //GetComponent<Light>().intensity = duskIntensity;
             RenderSettings.skybox = duskSkybox;
         }
     }

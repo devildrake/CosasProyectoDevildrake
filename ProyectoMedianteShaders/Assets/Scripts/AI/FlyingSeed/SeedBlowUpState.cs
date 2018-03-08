@@ -14,21 +14,19 @@ public class SeedBlowUpState : State {
     }
 
     public override void Update(Agent a, float dt) {
+        FlyingSeed agentScript = a.GetComponent<FlyingSeed>();
 
-        a.GetComponent<FlyingSeed>().Spin(500.0f);
+        agentScript.Spin(500.0f);
 
         //Esta casteando explosión
-        if (a.GetComponent<FlyingSeed>().timeCastingBlowUp < timeToExplode) {
-            a.GetComponent<FlyingSeed>().timeCastingBlowUp += dt;
+        if (agentScript.timeCastingBlowUp < timeToExplode) {
+            agentScript.timeCastingBlowUp += dt;
         }
 
 
         //Explota
         else {
-
-
-
-            a.GetComponent<FlyingSeed>().BlowUp();
+            agentScript.BlowUp();
             a.SwitchState(1, new SeedPathFollowState());
         }
     }

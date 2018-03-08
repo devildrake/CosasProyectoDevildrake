@@ -17,47 +17,48 @@ public class SeekerPathFollowState : State {
 
     public override void Update(Agent a, float dt) {
 
+        Seeker agentScript = a.GetComponent<Seeker>();
+
+
         if (GameLogic.instance.currentPlayer != null)
-            a.GetComponent<Seeker>().target = GameLogic.instance.currentPlayer.transform;
+            agentScript.target = GameLogic.instance.currentPlayer.transform;
 
-        int currentTarget = a.GetComponent<Seeker>().currentTarget;
-
-        Seeker seek = a.gameObject.GetComponent<Seeker>();
+        int currentTarget = agentScript.currentTarget;
 
         //Debug.Log(currentTarget);
         //Debug.Log(Vector2.Distance(seek.Path_Points[currentTarget].position, a.transform.position));
 
         a.GetComponent<Rigidbody2D>().gravityScale = 0;
-        if (Vector2.Distance(seek.Path_Positions[currentTarget], a.transform.position) > threshold) {
+        if (Vector2.Distance(agentScript.Path_Positions[currentTarget], a.transform.position) > threshold) {
             //ATENUACIÓN SE SPEED CUANDO ESTA LLEGANDO
-            if (Vector2.Distance(seek.Path_Positions[currentTarget], a.transform.position) > slowThreshold) {
+            if (Vector2.Distance(agentScript.Path_Positions[currentTarget], a.transform.position) > slowThreshold) {
                 followSpeed = Mathf.Clamp(followSpeed + Time.deltaTime, minSpeed, maxSpeed);
             }
             //RECUPERA LA SPEED NORMAL SI NO ESTA LLEGANDO
             else {
-                followSpeed = maxSpeed - (2 - Vector2.Distance(seek.Path_Positions[currentTarget], a.transform.position));
+                followSpeed = maxSpeed - (2 - Vector2.Distance(agentScript.Path_Positions[currentTarget], a.transform.position));
             }
 
             //SET VELOCITY A CADA FRAME
-            a.gameObject.GetComponent<Rigidbody2D>().velocity = ((seek.Path_Positions[currentTarget] - a.transform.position).normalized * followSpeed);
+            a.gameObject.GetComponent<Rigidbody2D>().velocity = ((agentScript.Path_Positions[currentTarget] - a.transform.position).normalized * followSpeed);
             //Debug.Log((seek.Path_Points[currentTarget].position - a.transform.position).normalized * followSpeed);
             //Debug.Log(a.gameObject.GetComponent<Rigidbody2D>().velocity);
 
         } else {
             if (a.GetComponent<Seeker>().increasing) {
-                if (currentTarget < seek.Path_Positions.Length - 1) {
+                if (currentTarget < agentScript.Path_Positions.Length - 1) {
                     currentTarget++;
-                    a.GetComponent<Seeker>().currentTarget++;
+                    agentScript.currentTarget++;
 
                 } else {
-                    a.GetComponent<Seeker>().increasing = false;
+                    agentScript.increasing = false;
                 }
             } else {
                 if (currentTarget > 0) {
                     currentTarget--;
-                    a.GetComponent<Seeker>().currentTarget--;
+                    agentScript.currentTarget--;
                 } else {
-                    a.GetComponent<Seeker>().increasing = true;
+                    agentScript.increasing = true;
                 }
             }
         }
@@ -69,7 +70,7 @@ public class SeekerPathFollowState : State {
         }
 
         float angle = Vector2.Angle(targetDir, whereTo);
-        if (angle < a.GetComponent<Seeker>().coneAngle && Vector2.Distance(target.position,a.transform.position) < a.GetComponent<Seeker>().visionRange) {
+        if (angle < agentScript.coneAngle && Vector2.Distance(target.position,a.transform.position) < agentScript.visionRange) {
             //Debug.Log(angle);
             a.SwitchState(0, new SeekerChaseState());
         }

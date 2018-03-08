@@ -16,6 +16,10 @@ public class Trampler : Agent {
     public int whereTo;
     public LayerMask[] masks;
     public bool mustStop;
+
+    Trampler brotherScript;
+    Rigidbody2D rb;
+
     public void ResetPoints() {
         if (worldAssignation == world.DAWN) {
             pointA = new Vector3(objectA.transform.position.x, objectA.transform.position.y, objectA.transform.position.z);
@@ -24,6 +28,9 @@ public class Trampler : Agent {
     }
 
     void Start() {
+        brotherScript = brotherObject.GetComponent<Trampler>();
+        rb = GetComponent<Rigidbody2D>();
+
         masks = new LayerMask[2];
 
         masks[0] = LayerMask.GetMask("Ground");
@@ -43,10 +50,8 @@ public class Trampler : Agent {
         interactuableBySmash = false;
         offset = GameLogic.instance.worldOffset;
         if (worldAssignation == world.DAWN) {
-            GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
-            //GetComponent<SpriteRenderer>().sprite = imagenDawn;
+            rb.bodyType = RigidbodyType2D.Kinematic;
         } else {
-            //GetComponent<SpriteRenderer>().sprite = imagenDusk;
 
         }
 
@@ -57,7 +62,7 @@ public class Trampler : Agent {
 
     protected override void BrotherBehavior() {
         Vector3 positionWithOffset;
-        if (GetComponent<Rigidbody2D>().bodyType == RigidbodyType2D.Kinematic) {
+        if (rb.bodyType == RigidbodyType2D.Kinematic) {
             positionWithOffset = brotherObject.transform.position;
 
             if (worldAssignation == world.DAWN)
@@ -91,34 +96,33 @@ public class Trampler : Agent {
             //Si antes del cambio estaba en dawn, pasara a hacerse kinematic y al otro dynamic, además de darle su velocidad
             if (dawn) {
                 //dawnState = new SeedIdleState();
-                dominantVelocity = GetComponent<Rigidbody2D>().velocity;
-                brotherObject.GetComponent<DoubleObject>().dominantVelocity = GetComponent<Rigidbody2D>().velocity;
-                brotherObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
-                GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
+                dominantVelocity = rb.velocity;
+                brotherScript.dominantVelocity = rb.velocity;
+                brotherScript.rb.bodyType = RigidbodyType2D.Dynamic;
+                rb.bodyType = RigidbodyType2D.Kinematic;
                 OnlyFreezeRotation();
-                brotherObject.GetComponent<Rigidbody2D>().velocity = dominantVelocity;
-                GetComponent<Rigidbody2D>().velocity = new Vector2(0.0f, 0.0f);
+                brotherScript.rb.velocity = dominantVelocity;
+                rb.velocity = new Vector2(0.0f, 0.0f);
                 if (duskState != null)
                     duskState.OnEnter(this);
 
             }
             //Si antes del cambio estaba en dusk, pasara a hacerse dynamic y al otro kinematic, además de darle su velocidad 
             else {
-                //brotherObject.GetComponent<FlyingSeed>().SwitchState(1, new SeedPathFollowState());
                 touchedByPlayer = false;
-                dominantVelocity = brotherObject.GetComponent<Rigidbody2D>().velocity;
-                brotherObject.GetComponent<DoubleObject>().dominantVelocity = brotherObject.GetComponent<Rigidbody2D>().velocity;
-                GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
-                brotherObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
-                brotherObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0.0f, 0.0f);
-                GetComponent<Rigidbody2D>().velocity = dominantVelocity;
+                dominantVelocity = brotherScript.rb.velocity;
+                brotherScript.dominantVelocity = brotherScript.rb.velocity;
+                rb.bodyType = RigidbodyType2D.Dynamic;
+                rb.bodyType = RigidbodyType2D.Kinematic;
+                brotherScript.rb.velocity = new Vector2(0.0f, 0.0f);
+                rb.velocity = dominantVelocity;
                 if (dawnState != null)
                     dawnState.OnEnter(this);
 
             }
 
             dawn = !dawn;
-            brotherObject.GetComponent<DoubleObject>().dawn = !brotherObject.GetComponent<DoubleObject>().dawn;
+            brotherScript.dawn = !brotherScript.dawn;
         }
 
     }
@@ -138,7 +142,7 @@ public class Trampler : Agent {
 
     // Update is called once per frame
     void Update() {
-        GetComponent<Rigidbody2D>().gravityScale = 1;
+        rb.gravityScale = 1;
         //if(dawnState!=null&&dawn&&worldAssignation==world.DAWN)
         //Debug.Log(dawnState.ToString());
 

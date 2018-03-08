@@ -10,26 +10,28 @@ public class SeedFallState : State {
     }
 
     override public void Update(Agent a,float dt) {
+        FlyingSeed agentScript = a.GetComponent<FlyingSeed>();
 
-        if (a.GetComponent<FlyingSeed>().fallTimer > a.GetComponent<FlyingSeed>().fallTime) {
 
-            a.GetComponent<FlyingSeed>().Spin(-1500.0f);
+        if (agentScript.fallTimer > a.GetComponent<FlyingSeed>().fallTime) {
 
-            a.GetComponent<FlyingSeed>().DropObject();
+            agentScript.Spin(-1500.0f);
+
+            agentScript.DropObject();
 
             a.GetComponent<Rigidbody2D>().gravityScale = 0.5f;
-            a.GetComponent<FlyingSeed>().DropObject();
+            agentScript.DropObject();
 
 
             if (a.GetComponent<Rigidbody2D>().velocity.y == 0) {
                 a.SwitchState(0, new SeedGoUpState());
-                a.GetComponent<FlyingSeed>().rabitoGiratorio.transform.rotation = Quaternion.identity;
-                a.GetComponent<FlyingSeed>().rabitoGiratorio.transform.Rotate(new Vector3(1, 0, 0), -90);
+                agentScript.rabitoGiratorio.transform.rotation = Quaternion.identity;
+                agentScript.rabitoGiratorio.transform.Rotate(new Vector3(1, 0, 0), -90);
 
-                a.GetComponent<FlyingSeed>().fallTimer = 0;
+                agentScript.fallTimer = 0;
             }
         } else {
-            a.GetComponent<FlyingSeed>().fallTimer += Time.deltaTime;
+            agentScript.fallTimer += Time.deltaTime;
         }
     }
 

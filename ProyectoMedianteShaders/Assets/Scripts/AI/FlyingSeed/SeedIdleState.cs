@@ -10,24 +10,29 @@ public class SeedIdleState : State {
 
     override public void OnEnter(Agent a) {
 
-        a.gameObject.GetComponent<FlyingSeed>().orbitPos = a.gameObject.transform.position;
+        FlyingSeed agentScript = a.GetComponent<FlyingSeed>();
+
+        agentScript.orbitPos = a.gameObject.transform.position;
         a.gameObject.GetComponent<Rigidbody2D>().gravityScale = 0;
         //Debug.Log("Changing orbit pos");
         a.GetComponent<Agent>().stompedOn = false;
 
-        a.GetComponent<FlyingSeed>().detectStompObject.GetComponent<DetectStomp>().active = true;
+        agentScript.detectStompObject.GetComponent<DetectStomp>().active = true;
 
     }
 
     override public void Update(Agent a, float dt) {
-        bool rising = a.GetComponent<FlyingSeed>().rising;
+        FlyingSeed agentScript = a.GetComponent<FlyingSeed>();
+
+
+        bool rising = agentScript.rising;
         Agent agent = a.gameObject.GetComponent<Agent>();
 
         Vector3 targetPos;
         if (rising) {
-            targetPos = agent.GetComponent<FlyingSeed>().orbitPos + new Vector3(0, idleOffset, 0);
+            targetPos = agentScript.orbitPos + new Vector3(0, idleOffset, 0);
         } else {
-            targetPos = agent.GetComponent<FlyingSeed>().orbitPos - new Vector3(0, idleOffset, 0);
+            targetPos = agentScript.orbitPos - new Vector3(0, idleOffset, 0);
         }
 
         if (Vector2.Distance(targetPos, agent.transform.position) > idleThreshold) {

@@ -17,33 +17,33 @@ public class SeedPathFollowState : State {
 
     public override void Update(Agent a, float dt) {
 
-
-            a.GetComponent<FlyingSeed>().Spin(1500.0f);
+        FlyingSeed agentScript = a.GetComponent<FlyingSeed>();
+        agentScript.Spin(1500.0f);
         
 
 
-        int currentTarget = a.GetComponent<FlyingSeed>().currentTarget;
-        FlyingSeed fs = a.gameObject.GetComponent<FlyingSeed>();
+        int currentTarget = agentScript.currentTarget;
         a.GetComponent<Rigidbody2D>().gravityScale = 0;
-        if (Vector2.Distance(fs.VectorPatrolPoints[currentTarget], a.transform.position) > threshold) {
+
+        if (Vector2.Distance(agentScript.VectorPatrolPoints[currentTarget], a.transform.position) > threshold) {
             //ATENUACIÓN SE SPEED CUANDO ESTA LLEGANDO
-            if(Vector2.Distance(fs.VectorPatrolPoints[currentTarget], a.transform.position) > slowThreshold) {
+            if(Vector2.Distance(agentScript.VectorPatrolPoints[currentTarget], a.transform.position) > slowThreshold) {
                 followSpeed = Mathf.Clamp(followSpeed+Time.deltaTime,minSpeed,maxSpeed);
             } 
             //RECUPERA LA SPEED NORMAL SI NO ESTA LLEGANDO
             else {
-                followSpeed = maxSpeed - (2 - Vector2.Distance(fs.VectorPatrolPoints[currentTarget], a.transform.position));
+                followSpeed = maxSpeed - (2 - Vector2.Distance(agentScript.VectorPatrolPoints[currentTarget], a.transform.position));
             }
 
             
 
             //SET VELOCITY A CADA FRAME
-            a.gameObject.GetComponent<Rigidbody2D>().velocity = ((fs.VectorPatrolPoints[currentTarget]-a.transform.position).normalized * followSpeed);
+            a.gameObject.GetComponent<Rigidbody2D>().velocity = ((agentScript.VectorPatrolPoints[currentTarget]-a.transform.position).normalized * followSpeed);
         } else {
             if (increasing) {
-                if (currentTarget < fs.VectorPatrolPoints.Length - 1) {
+                if (currentTarget < agentScript.VectorPatrolPoints.Length - 1) {
                     currentTarget++;
-                    a.GetComponent<FlyingSeed>().currentTarget++;
+                    agentScript.currentTarget++;
 
                 } else {
                     increasing = false;
@@ -51,7 +51,7 @@ public class SeedPathFollowState : State {
             } else {
                 if (currentTarget > 0) {
                     currentTarget--;
-                    a.GetComponent<FlyingSeed>().currentTarget--;
+                    agentScript.currentTarget--;
                 } else {
                     increasing = true;
                 }

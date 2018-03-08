@@ -107,6 +107,7 @@ GameObject:
   - component: {fileID: 114935226277517074}
   - component: {fileID: 114529939531789792}
   - component: {fileID: 114868974441209776}
+  - component: {fileID: 114707292028170350}
   m_Layer: 0
   m_Name: Dusk_Camera
   m_TagString: MainCamera
@@ -3496,6 +3497,7 @@ GameObject:
   - component: {fileID: 114475717537003352}
   - component: {fileID: 114887351576509894}
   - component: {fileID: 114071577315115362}
+  - component: {fileID: 114074255514805672}
   m_Layer: 0
   m_Name: Dawn_Camera
   m_TagString: MainCamera
@@ -4035,7 +4037,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1908880177461704}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 285.6, y: 41, z: -23.2}
+  m_LocalPosition: {x: 268.2, y: 68.8, z: -23.2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4756514964883718}
@@ -4244,7 +4246,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1666293796172694}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -518.9, y: -380.62, z: -0.04}
+  m_LocalPosition: {x: -518.9, y: -380.55, z: -0.04}
   m_LocalScale: {x: 0.1, y: 0.10000001, z: 0.1}
   m_Children:
   - {fileID: 4402962987169400}
@@ -4326,7 +4328,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1028251591184920}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.45, y: 3.4, z: -13.44}
+  m_LocalPosition: {x: 4.3, y: 6.71, z: -20.29}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4805067214027586}
@@ -5447,12 +5449,12 @@ Camera:
   far clip plane: 500
   field of view: 60
   orthographic: 0
-  orthographic size: 6.5
+  orthographic size: 20.5
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_RenderingPath: -1
+  m_RenderingPath: 3
   m_TargetTexture: {fileID: 8400000, guid: 5843bf75df8bbd041b8ccc6fd0a63d72, type: 2}
   m_TargetDisplay: 0
   m_TargetEye: 3
@@ -5519,12 +5521,12 @@ Camera:
   far clip plane: 500
   field of view: 60
   orthographic: 0
-  orthographic size: 8.58
+  orthographic size: 20.5
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_RenderingPath: -1
+  m_RenderingPath: 3
   m_TargetTexture: {fileID: 8400000, guid: 6530e291bd59d9d4a8483d41f006d416, type: 2}
   m_TargetDisplay: 0
   m_TargetEye: 3
@@ -7095,6 +7097,18 @@ MonoBehaviour:
   blurIterations: 1
   blurType: 0
   fastBloomShader: {fileID: 4800000, guid: 68a00c837b82e4c6d92e7da765dc5f1d, type: 3}
+--- !u!114 &114074255514805672
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1912617004924058}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff26db721962cdf4a8edcdfa9a767d2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  profile: {fileID: 11400000, guid: 1e5c047a100e94e448abb44b426245ae, type: 2}
 --- !u!114 &114088422047228078
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -9113,7 +9127,7 @@ MonoBehaviour:
   offset: {x: 0, y: 2, z: -10}
   overViewPosition: {x: 0, y: 0, z: 0}
   cameraSpeed: 0
-  farDistance: 8.58
+  farDistance: 20.5
   closeDistance: 5
   transitionThreshold: 0
   OffsetX: 0
@@ -9395,7 +9409,7 @@ MonoBehaviour:
   offset: {x: 0, y: 2, z: -10}
   overViewPosition: {x: 0, y: 0, z: 0}
   cameraSpeed: 0
-  farDistance: 8.58
+  farDistance: 20.5
   closeDistance: 5
   transitionThreshold: 0
   OffsetX: 0
@@ -10304,6 +10318,18 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114707292028170350
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1028251591184920}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff26db721962cdf4a8edcdfa9a767d2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  profile: {fileID: 11400000, guid: 4ad68775bda729444afe8478ccff6eb5, type: 2}
 --- !u!114 &114711062683949020
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -10845,7 +10871,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1028251591184920}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4975a6e437fc3b149a8cd508ce5bdd69, type: 3}
   m_Name: 
@@ -11596,7 +11622,7 @@ SkinnedMeshRenderer:
   m_BlendShapeWeights: []
   m_RootBone: {fileID: 0}
   m_AABB:
-    m_Center: {x: -0.00822179, y: 0.19518471, z: -0.10594106}
+    m_Center: {x: -0.008222066, y: 0.19517326, z: -0.105963945}
     m_Extent: {x: 0.3619067, y: 0.4003947, z: 0.7436558}
   m_DirtyAABB: 0
 --- !u!137 &137580113668498854
@@ -11640,7 +11666,7 @@ SkinnedMeshRenderer:
   m_BlendShapeWeights: []
   m_RootBone: {fileID: 0}
   m_AABB:
-    m_Center: {x: 0.000000007450581, y: -0.000034332275, z: 0.000011920929}
+    m_Center: {x: 0.000000007450581, y: -0.000008583069, z: 0.000002861023}
     m_Extent: {x: 0.31087235, y: 0.18791716, z: 0.35687187}
   m_DirtyAABB: 0
 --- !u!137 &137857310011618188
