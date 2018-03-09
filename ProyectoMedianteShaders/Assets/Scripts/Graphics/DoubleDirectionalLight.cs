@@ -4,19 +4,15 @@ using UnityEngine;
 
 public class DoubleDirectionalLight : DoubleObject {
 
-    public Color duskColor, dawnColor;
-    public float duskIntensity, dawnIntensity;
+    [SerializeField]private float lightIntensity;
     public Material duskSkybox, dawnSkybox;
 
 	void Start () {
+        GetComponent<Light>().intensity = lightIntensity;
         if (dawn) {
-            //GetComponent<Light>().color = dawnColor;
-            //GetComponent<Light>().intensity = dawnIntensity;
             RenderSettings.skybox = dawnSkybox;
         }
         else {
-            //GetComponent<Light>().color = duskColor;
-            //GetComponent<Light>().intensity = duskIntensity;
             RenderSettings.skybox = duskSkybox;
         }
 	}

@@ -51,7 +51,7 @@ Light:
   serializedVersion: 8
   m_Type: 1
   m_Color: {r: 0.9044118, g: 0.8124113, b: 0.5120567, a: 1}
-  m_Intensity: 0.2
+  m_Intensity: 0.4
   m_Range: 10
   m_SpotAngle: 30
   m_CookieSize: 10
@@ -97,11 +97,10 @@ MonoBehaviour:
   isMovable: 0
   dawn: 0
   activated: 0
+  canBounce: 0
   imagenDusk: {fileID: 0}
   imagenDawn: {fileID: 0}
-  duskColor: {r: 0.32156864, g: 0.3882353, b: 0.62352943, a: 1}
-  dawnColor: {r: 0.90588236, g: 0.8117647, b: 0.5137255, a: 1}
-  duskIntensity: 0.15
-  dawnIntensity: 0.25
+  originalPos: {x: 0, y: 0}
+  lightIntensity: 1
   duskSkybox: {fileID: 2100000, guid: 1407c2790b7870b42a0df8ac84066e0c, type: 2}
   dawnSkybox: {fileID: 2100000, guid: 71b634fec31b38b46a30f6185273a772, type: 2}

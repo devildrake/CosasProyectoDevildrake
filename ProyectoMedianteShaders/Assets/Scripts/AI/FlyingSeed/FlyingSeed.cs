@@ -160,6 +160,14 @@ public class FlyingSeed : Agent {
     }
 
     public override void Change() {
+        if (rb == null) {
+            rb = GetComponent<Rigidbody2D>();
+        }
+        if (brotherScript.rb == null) {
+            brotherScript.rb = brotherObject.GetComponent<Rigidbody2D>();
+        }
+
+
         //El objeto que modifica a ambos haciendo de controlador es el que pertenece a Dawn
         if (worldAssignation == world.DAWN) {
             //Si antes del cambio estaba en dawn, pasara a hacerse kinematic y al otro dynamic, además de darle su velocidad

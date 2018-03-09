@@ -113,6 +113,7 @@ public class PlayerController : DoubleObject {
 
     //Referencia al sistema de particulas de dawn para el deflect.
     public ParticleSystem PSdawnDeflectCast, PSdawnDeflectRelease, PSdawnDash1, PSdawnDash2, PSdawnDeflectFeedback;
+    private ParticleSystem.EmissionModule emmissionModuleDash1, emmissionModuleDash2;
 
     AudioSource audioSource;
     GroundCheck groundCheck;
@@ -131,10 +132,12 @@ public class PlayerController : DoubleObject {
             PSdawnDeflectRelease.Stop();
         }
         if (PSdawnDash1 != null) {
-            PSdawnDash1.Stop();
+            emmissionModuleDash1 = PSdawnDash1.emission;
+            emmissionModuleDash1.enabled = false;
         }
         if(PSdawnDash2 != null) {
-            PSdawnDash2.Stop();
+            emmissionModuleDash2 = PSdawnDash2.emission;
+            emmissionModuleDash2.enabled = false;
         }
         if(PSdawnDeflectFeedback != null) {
             PSdawnDeflectFeedback.Stop();
@@ -631,25 +634,29 @@ public class PlayerController : DoubleObject {
                 if (PSdawnDash1 != null) {
                     ParticleSystem.MainModule main = PSdawnDash1.main;
                     main.simulationSpeed = 1;
-                    PSdawnDash1.Play();
+                    //PSdawnDash1.Play();
+                    emmissionModuleDash1.enabled = true;
                 }
                 if (PSdawnDash2 != null) {
                     ParticleSystem.MainModule main = PSdawnDash2.main;
                     main.simulationSpeed = 1;
-                    PSdawnDash2.Play();
+                    //PSdawnDash2.Play();
+                    emmissionModuleDash2.enabled = true;
                 }
                 
             }
         } else {
             if (PSdawnDash1 != null) {
-                PSdawnDash1.Stop();
+                //PSdawnDash1.Stop();
                 ParticleSystem.MainModule main = PSdawnDash1.main;
                 main.simulationSpeed = 8;
+                emmissionModuleDash1.enabled = false;
             }
             if (PSdawnDash2 != null) {
-                PSdawnDash2.Stop();
+                //PSdawnDash2.Stop();
                 ParticleSystem.MainModule main = PSdawnDash2.main;
                 main.simulationSpeed = 8;
+                emmissionModuleDash2.enabled = false;
             }
             if (leftPressed) {
                 GameLogic.instance.SetTimeScaleLocal(1);
