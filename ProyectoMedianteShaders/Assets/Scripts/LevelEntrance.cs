@@ -8,6 +8,7 @@ public class LevelEntrance : DoubleObject {
     public int levelToLoad;
     public int sequenceLength;
     public GameObject interactionSprite;
+    public float timeForSequence;
     bool available;
 
     public GameObject spriteTime;
@@ -17,6 +18,8 @@ public class LevelEntrance : DoubleObject {
 
 
     void Start() {
+
+        timeForSequence = 500;
 
         spriteTime.SetActive(false);
         spriteLevelNumb.SetActive(true);
@@ -42,10 +45,10 @@ public class LevelEntrance : DoubleObject {
         //Debug.Log(randomVal);
         //GetComponentInChildren<MeshRenderer>().gameObject.transform.rotation *= Quaternion.AngleAxis(randomVal * 90, new Vector3(0, 0, 1));
 
-        if (GameLogic.instance.completedLevels[levelToLoad-1]) {
+        if (GameLogic.instance.levelsData[levelToLoad-1].completed) {
 
 
-            Debug.Log(GameLogic.instance.completedLevels);
+            //Debug.Log(GameLogic.instance.completedLevels);
 
 
             activated = true;
@@ -61,23 +64,54 @@ public class LevelEntrance : DoubleObject {
         rb.gravityScale = 0;
     }
 
+    void FragmentsCheck() {
+        for (int i = levelToLoad; i < (levelToLoad + sequenceLength); i++) {
+            bool temp = true;
+            if (!GameLogic.instance.levelsData[i].fragment) {
+                temp = false;
+            }
+
+            spriteFragments.SetActive(temp);
+            Debug.Log(GameLogic.instance.levelsData[i].fragment);
+
+        }
+
+
+    }
+
+    void ActivatedCheck() {
+        spriteLevelNumb.SetActive(GameLogic.instance.levelsData[levelToLoad - 1].completed);
+        if (spriteLevelNumb.activeInHierarchy)
+            Debug.Log("AHAHSDHASDS " + GameLogic.instance.levelsData[levelToLoad].completed);
+
+    }
+
+    void TimeCheck() {
+        if ((GameLogic.instance.levelsData[levelToLoad].completed)) {
+            float total = 0.0f;
+            for (int i = levelToLoad; i < levelToLoad + sequenceLength - 1; i++) {
+                total += GameLogic.instance.levelsData[i].timeLapse;
+            }
+
+            spriteTime.SetActive(timeForSequence > total);
+
+            Debug.Log("Total = " + total);
+
+        }
+    }
+
     protected override void AddToGameLogicList() {
         if (!added) {
             if (GameLogic.instance != null) {
                 added = true;
                 GameLogic.instance.transformableObjects.Add(gameObject);
 
-                //for (int i = levelToLoad; i < (levelToLoad + sequenceLength); i++) {
-                //    bool temp = true;
-                //    if (!GameLogic.instance.fragments[i].picked) {
-                //        temp = false;
-                //    }
-
-                //    spriteFragments.SetActive(temp);
-                //}
+                FragmentsCheck();
+                ActivatedCheck();
+                TimeCheck();
 
             }
-    }
+        }
 }
 
     protected override void BrotherBehavior() {

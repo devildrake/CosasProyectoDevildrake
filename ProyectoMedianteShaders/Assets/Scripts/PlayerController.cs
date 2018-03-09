@@ -281,22 +281,23 @@ public class PlayerController : DoubleObject {
 
                 SetAnimValues();
 
-            } else {
-                if (hasACrystal) {
+            } else if(!GameLogic.instance.saved){
+                if (hasACrystal||brotherScript.hasACrystal) {
                     if (!savedFragment) {
                         Debug.Log("SavingFragment?");
                         //crystalFragment.picked = true;
-                        GameLogic.instance.SaveFragment(hasACrystal);
+                        GameLogic.instance.SaveFragment(true);
                         savedFragment = true;
                         brotherScript.savedFragment = true;
-                        GameLogic.instance.Save();
 
                         for (int i = 1; i < 30; i++) {
-                            Debug.Log(i + " --- " + GameLogic.instance.fragments[i]);
+                            if(GameLogic.instance.levelsData[i].fragment)
+                            Debug.Log(i + " --- " + GameLogic.instance.levelsData[i].fragment);
                         }
 
                     }
                 }
+                GameLogic.instance.Save();
             }
         }
     }

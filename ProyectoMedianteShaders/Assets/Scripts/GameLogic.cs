@@ -7,8 +7,15 @@ using System;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 
+[Serializable]
+public class LevelData {
+    public bool fragment;
+    public bool completed;
+    public float timeLapse;
+}
+
 //Clase singleton (solo debe existir uno) referenciable a partir de una instancia estatica a si mismo que gestiona
-//si el jugador se encuentra en el menu principal 
+//si el jugador se encuentra en el menu 
 
 public class GameLogic : MonoBehaviour {
 
@@ -16,11 +23,12 @@ public class GameLogic : MonoBehaviour {
     //////////////////////VARIABLES LOAD/SAVE////////////////////////////
     //////////////////////VARIABLES LOAD/SAVE////////////////////////////
     //////////////////////VARIABLES LOAD/SAVE////////////////////////////
-    bool saved;
+    public bool saved;
     bool firstOpening;
-    public Dictionary<int, bool> completedLevels;
-    public float currentSequenceMaxTime;
-    //public Dictionary<int,FragmentData> savedFragments;
+    //public Dictionary<int, bool> completedLevels;
+    //public Dictionary<int, bool> fragments;
+    public Dictionary<int, LevelData> levelsData;
+        //public Dictionary<int,FragmentData> savedFragments;
 
 
     //////////////////////VARIABLES LOAD/SAVE////////////////////////////
@@ -37,7 +45,6 @@ public class GameLogic : MonoBehaviour {
 
     public PlayerController currentPlayer;
 
-    public Dictionary<int,bool> fragments;
     //private int lastFragmentId = -1;
 
     //Tiempo que hay que pulsar para reinciar
@@ -142,8 +149,9 @@ public class GameLogic : MonoBehaviour {
 
     void Awake() {
         cameraAttenuation = 1;
-        completedLevels = new Dictionary<int, bool>();
-        fragments = new Dictionary<int, bool>();
+        //completedLevels = new Dictionary<int, bool>();
+        //fragments = new Dictionary<int, bool>();
+        levelsData = new Dictionary<int, LevelData>();
 
         Application.targetFrameRate = -1;
         fullscreen = Screen.fullScreen; //¿Está la aplicacion en pantalla completa?
@@ -196,7 +204,9 @@ public class GameLogic : MonoBehaviour {
 
     public void SaveFragment(bool a) {
 
-        fragments[GetCurrentLevelIndex()] = a;
+        //fragments[GetCurrentLevelIndex()] = a;
+        levelsData[GetCurrentLevelIndex()].fragment = a;
+
         Debug.Log("Saving Fragment " + GetCurrentLevelIndex() + " as " + a);
         if (a) {
             pickedFragments++;
@@ -235,6 +245,7 @@ public class GameLogic : MonoBehaviour {
 
     //Método que reinicia la espera del frame para buscar referencias y reinicia el booleano isInMainMenu
     public void ResetSceneData() {
+        timeElapsed = 0;
         levelName = "NonSet";
         cameraAttenuation = 1;
         cameraTransition = true;
@@ -242,7 +253,7 @@ public class GameLogic : MonoBehaviour {
         isInMainMenu = false;
         currentSceneName = SceneManager.GetActiveScene().name;
         DirectionCircle.SetOnce(true);
-        timeElapsed = 0;
+        //timeElapsed = 0;
         Debug.Log("RESET");
         pickedFragments = 0;
         additionalOffset = new Vector3(0, 0, 0);
@@ -420,6 +431,9 @@ public class GameLogic : MonoBehaviour {
 
 
         if (!saved) {
+            levelsData[GetCurrentLevelIndex()].completed = levelFinished;
+            levelsData[GetCurrentLevelIndex()].timeLapse = timeElapsed;
+
 
             Debug.Log("SAVE");
             BinaryFormatter bf = new BinaryFormatter();
@@ -429,9 +443,10 @@ public class GameLogic : MonoBehaviour {
             //Igualar variables a cargar (Locales) a las de data
 
             data.firstOpening = firstOpening;
-            data.completedLevels = completedLevels;
-            data.fragments = fragments;
+            //data.completedLevels = completedLevels;
+            //data.fragments = fragments;
 
+            data.levelData = levelsData;
             bf.Serialize(file, data);
             file.Close();
             saved = true;
@@ -441,13 +456,17 @@ public class GameLogic : MonoBehaviour {
     void InitLoadSaveVariables() {
         firstOpening = true;
 
-        for(int i = 1; i < 30; i++) {
-            completedLevels[i] = false;
+        for (int i = 0; i < 30; i++) {
+            //fragments[i] = false;
+            //completedLevels[i] = false;
+            levelsData[i] = new LevelData();
+            levelsData[i].completed = false;
+            levelsData[i].fragment = false;
+            levelsData[i].timeLapse = 0.0f;
         }
+        //completedLevels[2] = true;
+        levelsData[2].completed = true;
 
-        for (int i = 1; i < 30; i++) {
-            fragments[i] = false;
-        }
 
         Save();
     }
@@ -461,9 +480,16 @@ public class GameLogic : MonoBehaviour {
             file.Close();
 
             firstOpening = data.firstOpening;
-            completedLevels = data.completedLevels;
-            fragments = data.fragments;
+            //completedLevels = data.completedLevels;
+            //fragments = data.fragments;
+            levelsData = data.levelData;
             //Igualar variables a cargar (Locales) a las de data
+
+            //for(int i=2;i<30;i++) {
+            //    Debug.Log("Level->  " + i + " " + levelsData[i].timeLapse + " " + levelsData[i].completed);
+            //}
+
+
         } else {
             InitLoadSaveVariables();
         }
@@ -472,8 +498,9 @@ public class GameLogic : MonoBehaviour {
     [Serializable]
     class PlayerData{
         public bool firstOpening;
-        public Dictionary<int, bool> completedLevels;
-        public Dictionary<int, bool> fragments;
+        public Dictionary<int, LevelData> levelData;
+        //public Dictionary<int, bool> completedLevels;
+        //public Dictionary<int, bool> fragments;
     };
 
 }

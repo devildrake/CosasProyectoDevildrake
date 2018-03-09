@@ -62,7 +62,7 @@ public class DoubleCrystalFragment : DoubleObject {
 
     //Comprovación de que este fragmento no haya sido cogido ya con anterioridad
     void CheckPick() {
-        if (GameLogic.instance.fragments[GameLogic.instance.GetCurrentLevelIndex()]) {
+        if (GameLogic.instance.levelsData[GameLogic.instance.GetCurrentLevelIndex()].fragment) {
             GameLogic.instance.SafelyDestroy(this);
         }
     }

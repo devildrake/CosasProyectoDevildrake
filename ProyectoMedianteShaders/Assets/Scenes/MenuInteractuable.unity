@@ -170,6 +170,7 @@ MonoBehaviour:
   levelToLoad: 6
   sequenceLength: 0
   interactionSprite: {fileID: 1578527239}
+  timeForSequence: 0
   spriteTime: {fileID: 0}
   spriteFragments: {fileID: 0}
   spriteLevelNumb: {fileID: 0}
@@ -1342,6 +1343,7 @@ MonoBehaviour:
   levelToLoad: 9
   sequenceLength: 0
   interactionSprite: {fileID: 1360766912}
+  timeForSequence: 0
   spriteTime: {fileID: 0}
   spriteFragments: {fileID: 0}
   spriteLevelNumb: {fileID: 0}
@@ -1553,6 +1555,18 @@ Prefab:
         type: 2}
       propertyPath: levelToLoad
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1066412234967660, guid: a113aabf8a79f3f468e4ced9566c08a4, type: 2}
+      propertyPath: m_Name
+      value: Time
+      objectReference: {fileID: 0}
+    - target: {fileID: 1457557983280644, guid: a113aabf8a79f3f468e4ced9566c08a4, type: 2}
+      propertyPath: m_Name
+      value: Fragments
+      objectReference: {fileID: 0}
+    - target: {fileID: 1844191563629748, guid: a113aabf8a79f3f468e4ced9566c08a4, type: 2}
+      propertyPath: m_Name
+      value: LevelNumb
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a113aabf8a79f3f468e4ced9566c08a4, type: 2}
@@ -2512,6 +2526,7 @@ MonoBehaviour:
   levelToLoad: 12
   sequenceLength: 0
   interactionSprite: {fileID: 951442214}
+  timeForSequence: 0
   spriteTime: {fileID: 0}
   spriteFragments: {fileID: 0}
   spriteLevelNumb: {fileID: 0}
@@ -3055,6 +3070,7 @@ MonoBehaviour:
   levelToLoad: 9
   sequenceLength: 0
   interactionSprite: {fileID: 180224664}
+  timeForSequence: 0
   spriteTime: {fileID: 0}
   spriteFragments: {fileID: 0}
   spriteLevelNumb: {fileID: 0}
@@ -3346,6 +3362,7 @@ MonoBehaviour:
   levelToLoad: 6
   sequenceLength: 0
   interactionSprite: {fileID: 978073172}
+  timeForSequence: 0
   spriteTime: {fileID: 0}
   spriteFragments: {fileID: 0}
   spriteLevelNumb: {fileID: 0}
@@ -4252,6 +4269,7 @@ MonoBehaviour:
   levelToLoad: 12
   sequenceLength: 0
   interactionSprite: {fileID: 1091995379}
+  timeForSequence: 0
   spriteTime: {fileID: 0}
   spriteFragments: {fileID: 0}
   spriteLevelNumb: {fileID: 0}
