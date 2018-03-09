@@ -115,7 +115,7 @@ public class PlayerController : DoubleObject {
     public Change_Scale maskObjectScript;
 
     //Referencia al sistema de particulas de dawn para el deflect.
-    public ParticleSystem dawnDeflectCastPS, dawnDeflectReleasePS;
+    public ParticleSystem dawnDeflectCastPS, dawnDeflectReleasePS, dawnDashPS1, dawnDashPS2;
 
     AudioSource audioSource;
     GroundCheck groundCheck;
@@ -134,6 +134,12 @@ public class PlayerController : DoubleObject {
         }
         if(dawnDeflectReleasePS != null) {
             dawnDeflectReleasePS.Stop();
+        }
+        if (dawnDashPS1 != null) {
+            dawnDashPS1.Stop();
+        }
+        if(dawnDashPS2 != null) {
+            dawnDashPS2.Stop();
         }
         audioSource = GetComponent<AudioSource>();
         groundCheck = GetComponentInChildren<GroundCheck>();
@@ -242,11 +248,7 @@ public class PlayerController : DoubleObject {
         AddToGameLogicList();
 
         if (added) {
-
-
-
             if (!GameLogic.instance.levelFinished) {
-
                 //Debug.Log(grounded);
                 //Add del transformable
 
@@ -627,9 +629,14 @@ public class PlayerController : DoubleObject {
     void DawnBehavior() {
 
         if (!grounded) {
-            if (canDash && dashTimer > dashCoolDown)
+            if (canDash && dashTimer > dashCoolDown) {
                 direction = PlayerUtilsStatic.UseDirectionCircle(arrow, gameObject, 0);
+                dawnDashPS1.Play();
+                dawnDashPS2.Play();
+            }
         } else {
+            dawnDashPS1.Stop();
+            dawnDashPS2.Stop();
             if (leftPressed) {
                 GameLogic.instance.SetTimeScaleLocal(1);
                 leftPressed = false;
