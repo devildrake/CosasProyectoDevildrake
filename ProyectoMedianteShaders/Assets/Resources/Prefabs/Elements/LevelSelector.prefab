@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4713219936132880}
   - component: {fileID: 212472484931180836}
   m_Layer: 0
-  m_Name: New Sprite
+  m_Name: Time
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -54,7 +54,7 @@ GameObject:
   - component: {fileID: 4667833073005342}
   - component: {fileID: 212318485343944404}
   m_Layer: 0
-  m_Name: New Sprite
+  m_Name: Time
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -70,7 +70,7 @@ GameObject:
   - component: {fileID: 4408396551515920}
   - component: {fileID: 212463809075677508}
   m_Layer: 0
-  m_Name: New Sprite (2)
+  m_Name: LevelNumb
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -156,7 +156,7 @@ GameObject:
   - component: {fileID: 4545262888879426}
   - component: {fileID: 212054669090701938}
   m_Layer: 0
-  m_Name: New Sprite (1)
+  m_Name: Fragments
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -189,7 +189,7 @@ GameObject:
   - component: {fileID: 4639283401455592}
   - component: {fileID: 212718985385999054}
   m_Layer: 0
-  m_Name: New Sprite (1)
+  m_Name: Fragments
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -387,7 +387,7 @@ GameObject:
   - component: {fileID: 4071681109281856}
   - component: {fileID: 212042642757099124}
   m_Layer: 0
-  m_Name: New Sprite (2)
+  m_Name: LevelNumb
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -671,7 +671,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1594755954670994}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.871916, y: 0.71876204, z: 0}
+  m_LocalPosition: {x: -2.96, y: -2.15, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4338274905802556}
@@ -1391,8 +1391,10 @@ MonoBehaviour:
   imagenDusk: {fileID: 0}
   imagenDawn: {fileID: 0}
   originalPos: {x: 0, y: 0}
-  levelToLoad: 6
+  levelToLoad: 3
+  sequenceLength: 3
   interactionSprite: {fileID: 1964951909856270}
+  timeForSequence: 0
   spriteTime: {fileID: 1152722786635280}
   spriteFragments: {fileID: 1497847350696348}
   spriteLevelNumb: {fileID: 1167725975799130}
@@ -1420,8 +1422,10 @@ MonoBehaviour:
   imagenDusk: {fileID: 0}
   imagenDawn: {fileID: 0}
   originalPos: {x: 0, y: 0}
-  levelToLoad: 6
+  levelToLoad: 3
+  sequenceLength: 3
   interactionSprite: {fileID: 1515239583943730}
+  timeForSequence: 0
   spriteTime: {fileID: 1066412234967660}
   spriteFragments: {fileID: 1457557983280644}
   spriteLevelNumb: {fileID: 1844191563629748}
