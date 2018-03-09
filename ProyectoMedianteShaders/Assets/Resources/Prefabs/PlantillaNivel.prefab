@@ -431,7 +431,6 @@ GameObject:
   - component: {fileID: 114070629918874660}
   - component: {fileID: 114555770194730824}
   - component: {fileID: 225008317401148546}
-  - component: {fileID: 114512799982914352}
   m_Layer: 5
   m_Name: PauseCanvas
   m_TagString: Untagged
@@ -1307,7 +1306,6 @@ GameObject:
   - component: {fileID: 61170421474704514}
   - component: {fileID: 50135031274244864}
   - component: {fileID: 82349351023516306}
-  - component: {fileID: 114016617340166414}
   m_Layer: 29
   m_Name: Dawn
   m_TagString: Player
@@ -1962,7 +1960,6 @@ GameObject:
   - component: {fileID: 61636583587002008}
   - component: {fileID: 50149989434425552}
   - component: {fileID: 82358037776890076}
-  - component: {fileID: 114918398335204932}
   m_Layer: 29
   m_Name: Dusk
   m_TagString: Player
@@ -2951,6 +2948,22 @@ GameObject:
   - component: {fileID: 136712708234410932}
   m_Layer: 29
   m_Name: DuskModel
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1772714143784692
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4186754883843834}
+  - component: {fileID: 114842677144131516}
+  m_Layer: 0
+  m_Name: InputManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4154,6 +4167,19 @@ Transform:
   m_Father: {fileID: 4509292357773168}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4186754883843834
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1772714143784692}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4746254003468500}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4195174299531918
 Transform:
   m_ObjectHideFlags: 1
@@ -4872,6 +4898,7 @@ Transform:
   - {fileID: 4294831168362050}
   - {fileID: 4470069438603836}
   - {fileID: 224214613115449540}
+  - {fileID: 4186754883843834}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -6744,19 +6771,6 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.ScrollRect+ScrollRectEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
---- !u!114 &114016617340166414
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1310752243737936}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 558ec551b12734949a975d154ab04c46, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  button1: 0
-  button2: 0
 --- !u!114 &114020574723427050
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7471,7 +7485,6 @@ MonoBehaviour:
   imagenDusk: {fileID: 21300000, guid: 56d34cd31f9899541bec469041dc2754, type: 3}
   imagenDawn: {fileID: 21300000, guid: d197577acb4423a46939ec134c5aa2ff, type: 3}
   originalPos: {x: 0, y: 0}
-  inputManager: {fileID: 0}
   originalSizeCollider: {x: 0, y: 0}
   originalOffsetCollider: {x: 0, y: 0}
   hasACrystal: 0
@@ -7714,7 +7727,6 @@ MonoBehaviour:
   imagenDusk: {fileID: 0}
   imagenDawn: {fileID: 21300000, guid: d197577acb4423a46939ec134c5aa2ff, type: 3}
   originalPos: {x: 0, y: 0}
-  inputManager: {fileID: 0}
   originalSizeCollider: {x: 0, y: 0}
   originalOffsetCollider: {x: 0, y: 0}
   hasACrystal: 0
@@ -9433,19 +9445,6 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.ScrollRect+ScrollRectEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
---- !u!114 &114512799982914352
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1122411440025978}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 558ec551b12734949a975d154ab04c46, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  button1: 0
-  button2: 0
 --- !u!114 &114527037023098868
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -10873,6 +10872,33 @@ MonoBehaviour:
   maxFrameRate: 0
   resolutionSelected: 0
   fullscreen: 0
+--- !u!114 &114842677144131516
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1772714143784692}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 558ec551b12734949a975d154ab04c46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prevDashButton: 0
+  prevDeflectButton: 0
+  prevCrawlButton: 0
+  prevJumpButton: 0
+  prevChangeButton: 0
+  prevPauseButton: 0
+  prevSelectButton: 0
+  prevInteractButton: 0
+  dashButton: 0
+  deflectButton: 0
+  crawlButton: 0
+  jumpButton: 0
+  changeButton: 0
+  pauseButton: 0
+  selectButton: 0
+  interactButton: 0
 --- !u!114 &114861954494227166
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -11221,19 +11247,6 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
---- !u!114 &114918398335204932
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1490667491111644}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 558ec551b12734949a975d154ab04c46, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  button1: 0
-  button2: 0
 --- !u!114 &114930136057696368
 MonoBehaviour:
   m_ObjectHideFlags: 1

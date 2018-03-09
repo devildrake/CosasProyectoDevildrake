@@ -29,14 +29,14 @@ public static class DirectionCircle {
                     once = false;
                     mousePositions = new Vector2[2];
                 }
-                if (Input.GetMouseButtonDown(0)) {
+                if (/*Input.GetMouseButtonDown(0)*/InputManager.instance.dashButton&& !InputManager.instance.prevDashButton) {
                     Cursor.lockState = CursorLockMode.None; //Se puede volver a mover el cursor
                     mousePositions[1] = Input.mousePosition; //posicion donde se ha hecho click
                                                              //se activan la linea y la flecha para que se pinten en la pantalla.
                     draw = true;
                     arrowAnchor.SetActive(true);
 
-                } else if (Input.GetMouseButtonUp(0)) {
+                } else if (/*Input.GetMouseButtonUp(0)*/!InputManager.instance.dashButton && InputManager.instance.prevDashButton) {
                     Cursor.lockState = CursorLockMode.Locked; //se vuelve a bloquear el raton en el centro
                     draw = false;
                     arrowAnchor.SetActive(false);
@@ -71,14 +71,14 @@ public static class DirectionCircle {
                     once = false;
                     mousePositions = new Vector2[2];
                 }
-                if (Input.GetMouseButtonDown(1)) {
+                if (/*Input.GetMouseButtonDown(1)*/InputManager.instance.deflectButton && !InputManager.instance.prevDeflectButton) {
                     Cursor.lockState = CursorLockMode.None; //Se puede volver a mover el cursor
                     mousePositions[1] = Input.mousePosition; //posicion donde se ha hecho click
                                                              //se activan la linea y la flecha para que se pinten en la pantalla.
                     draw = true;
                     arrowAnchor.SetActive(true);
 
-                } else if (Input.GetMouseButtonUp(1)) {
+                } else if (/*Input.GetMouseButtonUp(1)*/!InputManager.instance.deflectButton && InputManager.instance.prevDeflectButton) {
                     Cursor.lockState = CursorLockMode.Locked; //se vuelve a bloquear el raton en el centro
                     draw = false;
                     arrowAnchor.SetActive(false);

@@ -15,8 +15,6 @@ public class PlayerController : DoubleObject {
     AudioClip dieClip;
     AudioClip punchClip;
 
-    public InputManager inputManager;
-
     public Vector2 originalSizeCollider;
     public Vector2 originalOffsetCollider;
 
@@ -125,7 +123,7 @@ public class PlayerController : DoubleObject {
 
     //Se inicializan las cosas
     void Start() {
-        inputManager = GetComponent<InputManager>();
+        
         //El sistema de particulas de Dawn del deflect se inicia desactivado
         if (PSdawnDeflectCast != null) {
             PSdawnDeflectCast.Stop();
@@ -240,9 +238,6 @@ public class PlayerController : DoubleObject {
     }
 
     void Update() {
-        if (inputManager == null) {
-            inputManager = GetComponent<InputManager>();
-        }
 
         if (rb.velocity.y < 0) {
             rb.gravityScale = 1.5f;
@@ -308,6 +303,7 @@ public class PlayerController : DoubleObject {
                 GameLogic.instance.Save();
             }
         }
+        InputManager.instance.UpdatePrevious();
     }
 
     void SetAnimValues() {
@@ -347,9 +343,9 @@ public class PlayerController : DoubleObject {
 
                 myAnimator.SetBool("dashing", dashTimer < dashCoolDown);
                 myAnimator.SetBool("crawling", crawling);
-                myAnimator.SetBool("dash_press", Input.GetMouseButton(0)&&dashTimer>=dashCoolDown&&canDash&&!grounded);
+                myAnimator.SetBool("dash_press", InputManager.instance.dashButton&&dashTimer>=dashCoolDown&&canDash&&!grounded);
                 myAnimator.SetBool("deflecting", deflectTimer < deflectCoolDown);
-                myAnimator.SetBool("deflect_press", Input.GetMouseButton(1) && deflectTimer >= deflectCoolDown&&objectsInDeflectArea.Count>0);
+                myAnimator.SetBool("deflect_press", InputManager.instance.deflectButton && deflectTimer >= deflectCoolDown&&objectsInDeflectArea.Count>0);
                 brotherAnimator.SetBool("punching", punchTimer < punchCoolDown);
 
             }
@@ -450,7 +446,7 @@ public class PlayerController : DoubleObject {
 
 
                 if (grounded) {
-                    if (dawn&&worldAssignation==world.DAWN&&Input.GetMouseButton(0)) {
+                    if (dawn&&worldAssignation==world.DAWN&& InputManager.instance.dashButton) {
                         PlayerUtilsStatic.ResetDirectionCircle(arrow);
                     }
 
@@ -678,7 +674,7 @@ public class PlayerController : DoubleObject {
         }
 
         //Si se suelta el botón izquierdo del ratón y se puede dashear, se desactiva la slowMotion y se modifica el timeScale además de poner en false canDash
-        if (Input.GetMouseButtonUp(0) && canDash && dashTimer > dashCoolDown) {
+        if (/*Input.GetMouseButtonUp(0)*/!InputManager.instance.dashButton&& InputManager.instance.prevDashButton && canDash && dashTimer > dashCoolDown) {
             if (leftPressed&&!grounded) {
                 GameLogic.instance.SetTimeScaleLocal(1.0f);
 
@@ -714,12 +710,12 @@ public class PlayerController : DoubleObject {
 
             //Si se pulsa el botón izquierdo del ratón y se puede dashear, se activa la slowMotion y se modifica el timeScale de gameLogic
         }
-        else if (Input.GetMouseButtonDown(0) && canDash&& !grounded && dashTimer > dashCoolDown) {
+        else if (/*Input.GetMouseButtonDown(0)*/InputManager.instance.dashButton && !InputManager.instance.prevDashButton && canDash&& !grounded && dashTimer > dashCoolDown) {
             leftPressed = true;
             GameLogic.instance.SetTimeScaleLocal(slowMotionTimeScale);
         }
 
-        if (Input.GetKeyDown(KeyCode.LeftControl)) {
+        if (/*Input.GetKeyDown(KeyCode.LeftControl)*/InputManager.instance.crawlButton&&!InputManager.instance.prevCrawlButton) {
             crawling = true;
             Vector2 newSize = myBoxCollider.size;
             newSize.y /= 2;
@@ -732,19 +728,19 @@ public class PlayerController : DoubleObject {
             GetComponent<BoxCollider2D>().size = newSize;
             GetComponent<BoxCollider2D>().offset -= newOffset;
         }
-        else if (Input.GetKeyUp(KeyCode.LeftControl)) {
+        else if (/*Input.GetKeyUp(KeyCode.LeftControl)*/!InputManager.instance.crawlButton && InputManager.instance.prevCrawlButton) {
             GetComponent<BoxCollider2D>().size = originalSizeCollider;
             GetComponent<BoxCollider2D>().offset = originalOffsetCollider;
 
             crawling = false;
         }
         //Empieza el deflect
-        if (Input.GetMouseButtonDown(1)&&objectsInDeflectArea.Count!=0) {
+        if (/*Input.GetMouseButtonDown(1)*/InputManager.instance.deflectButton && !InputManager.instance.prevDeflectButton && objectsInDeflectArea.Count!=0) {
             if (PSdawnDeflectCast != null) {
                 PSdawnDeflectCast.Play(); //Se inicia el sistema de particulas del deflect
             }
             GameLogic.instance.SetTimeScaleLocal(slowMotionTimeScale);
-        }else if (Input.GetMouseButtonUp(1)&& objectsInDeflectArea.Count!=0) {
+        }else if (/*Input.GetMouseButtonUp(1)*/!InputManager.instance.deflectButton && InputManager.instance.prevDeflectButton && objectsInDeflectArea.Count!=0) {
             if (PSdawnDeflectCast != null) {
                 PSdawnDeflectCast.Stop(); //Se detiene el sistema de particulas del deflect
             }
@@ -777,7 +773,7 @@ public class PlayerController : DoubleObject {
 
         //Si se suelta el botón izquierdo del ratón y se habia pulsado previamente, el tiempo pasa a cero
         //En caso de estar grounded Se hace una llamada a Punch
-        if (Input.GetMouseButtonUp(0)&& punchTimer > punchCoolDown) {
+        if (/*Input.GetMouseButtonUp(0)*/!InputManager.instance.dashButton && InputManager.instance.prevDashButton && punchTimer > punchCoolDown) {
             if (leftPressed) {
                 GameLogic.instance.SetTimeScaleLocal(1.0f);
                 if (grounded) {
@@ -792,7 +788,7 @@ public class PlayerController : DoubleObject {
         }
 
         //En caso de pulsar el botón izquierdo del ratón y estar grounded, se pone el timepo a 0.5
-        else if (Input.GetMouseButtonDown(0) && grounded&&punchTimer>punchCoolDown) {
+        else if (/*Input.GetMouseButtonDown(0)*/InputManager.instance.dashButton&&!InputManager.instance.prevDashButton && grounded&&punchTimer>punchCoolDown) {
             GameLogic.instance.SetTimeScaleLocal(slowMotionTimeScale);
             leftPressed = true;
         }
@@ -804,7 +800,7 @@ public class PlayerController : DoubleObject {
         //Se renderizan las flechas en caso de clicar solo si esta en el suelo
         else {
             direction = PlayerUtilsStatic.UseDirectionCircle(arrow, gameObject,0,0,60);
-            if (Input.GetMouseButtonDown(1)) {
+            if (/*Input.GetMouseButtonDown(1)*/InputManager.instance.deflectButton && !InputManager.instance.prevDeflectButton) {
                 foreach (GameObject g in NearbyObjects) {
                     if (g.GetComponent<DoubleObject>().isMovable) {
                         distanceToGrabbedObject = transform.position - NearbyObjects[0].transform.position;
@@ -812,11 +808,11 @@ public class PlayerController : DoubleObject {
 
                     }
                 }
-            }else if(Input.GetMouseButtonUp(1)){
+            }else if(/*Input.GetMouseButtonUp(1)*/!InputManager.instance.deflectButton && InputManager.instance.prevDeflectButton) {
                 grabbing = false;
             }
         }
-        if (Input.GetKeyDown(KeyCode.LeftControl)&&!grounded) {
+        if (/*Input.GetKeyDown(KeyCode.LeftControl)*/InputManager.instance.crawlButton && !InputManager.instance.prevCrawlButton && !grounded) {
             Smash();
             audioSource.pitch = 1.0f;
 
@@ -879,13 +875,13 @@ public class PlayerController : DoubleObject {
             
 
         //BARRA ESPACIADORA = SALTO
-        if (Input.GetKeyDown(KeyCode.Space) && grounded&&!crawling||Input.GetKeyDown(KeyCode.Space) && sliding) {
+        if (/*Input.GetKeyDown(KeyCode.Space)*/InputManager.instance.jumpButton&& !InputManager.instance.prevJumpButton && grounded&&!crawling||/*Input.GetKeyDown(KeyCode.Space)*/InputManager.instance.jumpButton && !InputManager.instance.prevJumpButton && sliding) {
             Jump();
         }
 
         if (onImpulsor) {
 
-            if (someRayCastChecks && Input.GetKeyDown(KeyCode.Space)) {
+            if (someRayCastChecks && /*Input.GetKeyDown(KeyCode.Space)*/InputManager.instance.jumpButton && !InputManager.instance.prevJumpButton) {
                 if (!calledImpuslorBool) {
                     Invoke("ImpulsorBool", 0.2f);
                     calledImpuslorBool = true;
@@ -907,7 +903,7 @@ public class PlayerController : DoubleObject {
         }
 
         if (interactableObject != null) {
-            if (Input.GetKeyDown(KeyCode.E)) {
+            if (/*Input.GetKeyDown(KeyCode.E)*/InputManager.instance.interactButton && !InputManager.instance.prevInteractButton) {
                 interactableObject.Interact();
             }
         }

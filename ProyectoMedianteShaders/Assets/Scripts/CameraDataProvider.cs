@@ -38,7 +38,7 @@ public class CameraDataProvider : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (!done && GameLogic.instance != null) {
+        if (!done && GameLogic.instance != null&&GameLogic.instance.pauseCanvas!=null) {
             GameLogic.instance.pauseCanvas.nextSceneIndex = nextSceneIndex;
             GameLogic.instance.levelName = levelName;
             Destroy(gameObject);
