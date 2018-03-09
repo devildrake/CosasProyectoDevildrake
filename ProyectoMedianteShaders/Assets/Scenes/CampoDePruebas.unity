@@ -9885,6 +9885,7 @@ GameObject:
   - component: {fileID: 1165208443}
   - component: {fileID: 1165208442}
   - component: {fileID: 1165208441}
+  - component: {fileID: 1165208446}
   m_Layer: 29
   m_Name: Dawn
   m_TagString: Player
@@ -10064,12 +10065,12 @@ MonoBehaviour:
   imagenDusk: {fileID: 0}
   imagenDawn: {fileID: 21300000, guid: d197577acb4423a46939ec134c5aa2ff, type: 3}
   originalPos: {x: 0, y: 0}
+  inputManager: {fileID: 0}
   originalSizeCollider: {x: 0, y: 0}
   originalOffsetCollider: {x: 0, y: 0}
   hasACrystal: 0
   savedFragment: 0
   objectsInDeflectArea: []
-  deflectArea: {fileID: 1035881123}
   NearbyObjects: []
   crawling: 0
   smashing: 0
@@ -10095,8 +10096,11 @@ MonoBehaviour:
   prevHorizontalMov: 0
   slowedInTheAir: 0
   maskObjectScript: {fileID: 1935262562}
-  dawnDeflectCastPS: {fileID: 934815547}
-  dawnDeflectReleasePS: {fileID: 953262873}
+  PSdawnDeflectCast: {fileID: 0}
+  PSdawnDeflectRelease: {fileID: 0}
+  PSdawnDash1: {fileID: 0}
+  PSdawnDash2: {fileID: 0}
+  PSdawnDeflectFeedback: {fileID: 0}
 --- !u!212 &1165208445
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -10139,6 +10143,21 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
+--- !u!114 &1165208446
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1165208439}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 558ec551b12734949a975d154ab04c46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dashButton: 0
+  deflectButton: 0
+  crawlButton: 0
+  jumpButton: 0
 --- !u!1 &1182214244
 GameObject:
   m_ObjectHideFlags: 0
@@ -16958,6 +16977,7 @@ GameObject:
   - component: {fileID: 1865071510}
   - component: {fileID: 1865071509}
   - component: {fileID: 1865071508}
+  - component: {fileID: 1865071514}
   m_Layer: 29
   m_Name: Dusk
   m_TagString: Player
@@ -17118,12 +17138,12 @@ MonoBehaviour:
   imagenDusk: {fileID: 21300000, guid: 56d34cd31f9899541bec469041dc2754, type: 3}
   imagenDawn: {fileID: 21300000, guid: d197577acb4423a46939ec134c5aa2ff, type: 3}
   originalPos: {x: 0, y: 0}
+  inputManager: {fileID: 0}
   originalSizeCollider: {x: 0, y: 0}
   originalOffsetCollider: {x: 0, y: 0}
   hasACrystal: 0
   savedFragment: 0
   objectsInDeflectArea: []
-  deflectArea: {fileID: 546180999}
   NearbyObjects: []
   crawling: 0
   smashing: 0
@@ -17149,8 +17169,11 @@ MonoBehaviour:
   prevHorizontalMov: 0
   slowedInTheAir: 0
   maskObjectScript: {fileID: 1935262562}
-  dawnDeflectCastPS: {fileID: 0}
-  dawnDeflectReleasePS: {fileID: 0}
+  PSdawnDeflectCast: {fileID: 0}
+  PSdawnDeflectRelease: {fileID: 0}
+  PSdawnDash1: {fileID: 0}
+  PSdawnDash2: {fileID: 0}
+  PSdawnDeflectFeedback: {fileID: 0}
 --- !u!212 &1865071512
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -17212,6 +17235,21 @@ Transform:
   m_Father: {fileID: 1049225010}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1865071514
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1865071507}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 558ec551b12734949a975d154ab04c46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dashButton: 0
+  deflectButton: 0
+  crawlButton: 0
+  jumpButton: 0
 --- !u!1001 &1865448939
 Prefab:
   m_ObjectHideFlags: 0
