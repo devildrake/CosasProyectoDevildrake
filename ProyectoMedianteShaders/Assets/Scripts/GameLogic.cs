@@ -10,8 +10,11 @@ using System.IO;
 [Serializable]
 public class LevelData {
     public bool fragment;
+    public bool fragmentFeedBack;
     public bool completed;
+    public bool completedFeedBack;
     public float timeLapse;
+    public float timeLapseFeedBack;
 }
 
 //Clase singleton (solo debe existir uno) referenciable a partir de una instancia estatica a si mismo que gestiona

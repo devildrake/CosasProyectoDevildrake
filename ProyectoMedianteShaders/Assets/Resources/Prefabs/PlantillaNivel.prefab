@@ -431,6 +431,7 @@ GameObject:
   - component: {fileID: 114070629918874660}
   - component: {fileID: 114555770194730824}
   - component: {fileID: 225008317401148546}
+  - component: {fileID: 114512799982914352}
   m_Layer: 5
   m_Name: PauseCanvas
   m_TagString: Untagged
@@ -1306,6 +1307,7 @@ GameObject:
   - component: {fileID: 61170421474704514}
   - component: {fileID: 50135031274244864}
   - component: {fileID: 82349351023516306}
+  - component: {fileID: 114016617340166414}
   m_Layer: 29
   m_Name: Dawn
   m_TagString: Player
@@ -1960,6 +1962,7 @@ GameObject:
   - component: {fileID: 61636583587002008}
   - component: {fileID: 50149989434425552}
   - component: {fileID: 82358037776890076}
+  - component: {fileID: 114918398335204932}
   m_Layer: 29
   m_Name: Dusk
   m_TagString: Player
@@ -6741,6 +6744,19 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.ScrollRect+ScrollRectEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &114016617340166414
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1310752243737936}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 558ec551b12734949a975d154ab04c46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  button1: 0
+  button2: 0
 --- !u!114 &114020574723427050
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7455,6 +7471,7 @@ MonoBehaviour:
   imagenDusk: {fileID: 21300000, guid: 56d34cd31f9899541bec469041dc2754, type: 3}
   imagenDawn: {fileID: 21300000, guid: d197577acb4423a46939ec134c5aa2ff, type: 3}
   originalPos: {x: 0, y: 0}
+  inputManager: {fileID: 0}
   originalSizeCollider: {x: 0, y: 0}
   originalOffsetCollider: {x: 0, y: 0}
   hasACrystal: 0
@@ -7697,6 +7714,7 @@ MonoBehaviour:
   imagenDusk: {fileID: 0}
   imagenDawn: {fileID: 21300000, guid: d197577acb4423a46939ec134c5aa2ff, type: 3}
   originalPos: {x: 0, y: 0}
+  inputManager: {fileID: 0}
   originalSizeCollider: {x: 0, y: 0}
   originalOffsetCollider: {x: 0, y: 0}
   hasACrystal: 0
@@ -9415,6 +9433,19 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.ScrollRect+ScrollRectEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &114512799982914352
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1122411440025978}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 558ec551b12734949a975d154ab04c46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  button1: 0
+  button2: 0
 --- !u!114 &114527037023098868
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -10817,7 +10848,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e1d83626cf12654f8e79b32ec4115c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentSequenceMaxTime: 0
+  saved: 0
   levelName: NonSet
   cameraTransition: 0
   additionalOffset: {x: 0, y: 0, z: 0}
@@ -11190,6 +11221,19 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &114918398335204932
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1490667491111644}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 558ec551b12734949a975d154ab04c46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  button1: 0
+  button2: 0
 --- !u!114 &114930136057696368
 MonoBehaviour:
   m_ObjectHideFlags: 1

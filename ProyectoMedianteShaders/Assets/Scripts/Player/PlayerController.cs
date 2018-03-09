@@ -15,6 +15,7 @@ public class PlayerController : DoubleObject {
     AudioClip dieClip;
     AudioClip punchClip;
 
+    public InputManager inputManager;
 
     public Vector2 originalSizeCollider;
     public Vector2 originalOffsetCollider;
@@ -113,7 +114,7 @@ public class PlayerController : DoubleObject {
 
     //Referencia al sistema de particulas de dawn para el deflect.
     public ParticleSystem PSdawnDeflectCast, PSdawnDeflectRelease, PSdawnDash1, PSdawnDash2, PSdawnDeflectFeedback;
-    private ParticleSystem.EmissionModule emmissionModuleDash1, emmissionModuleDash2;
+    private ParticleSystem.EmissionModule emissionModuleDash1, emissionModuleDash2;
 
     AudioSource audioSource;
     GroundCheck groundCheck;
@@ -124,6 +125,7 @@ public class PlayerController : DoubleObject {
 
     //Se inicializan las cosas
     void Start() {
+        inputManager = GetComponent<InputManager>();
         //El sistema de particulas de Dawn del deflect se inicia desactivado
         if (PSdawnDeflectCast != null) {
             PSdawnDeflectCast.Stop();
@@ -132,12 +134,12 @@ public class PlayerController : DoubleObject {
             PSdawnDeflectRelease.Stop();
         }
         if (PSdawnDash1 != null) {
-            emmissionModuleDash1 = PSdawnDash1.emission;
-            emmissionModuleDash1.enabled = false;
+            emissionModuleDash1 = PSdawnDash1.emission;
+            emissionModuleDash1.enabled = false;
         }
         if(PSdawnDash2 != null) {
-            emmissionModuleDash2 = PSdawnDash2.emission;
-            emmissionModuleDash2.enabled = false;
+            emissionModuleDash2 = PSdawnDash2.emission;
+            emissionModuleDash2.enabled = false;
         }
         if(PSdawnDeflectFeedback != null) {
             PSdawnDeflectFeedback.Stop();
@@ -238,6 +240,9 @@ public class PlayerController : DoubleObject {
     }
 
     void Update() {
+        if (inputManager == null) {
+            inputManager = GetComponent<InputManager>();
+        }
 
         if (rb.velocity.y < 0) {
             rb.gravityScale = 1.5f;
@@ -634,29 +639,25 @@ public class PlayerController : DoubleObject {
                 if (PSdawnDash1 != null) {
                     ParticleSystem.MainModule main = PSdawnDash1.main;
                     main.simulationSpeed = 1;
-                    //PSdawnDash1.Play();
-                    emmissionModuleDash1.enabled = true;
+                    emissionModuleDash1.enabled = true;
                 }
                 if (PSdawnDash2 != null) {
                     ParticleSystem.MainModule main = PSdawnDash2.main;
                     main.simulationSpeed = 1;
-                    //PSdawnDash2.Play();
-                    emmissionModuleDash2.enabled = true;
+                    emissionModuleDash2.enabled = true;
                 }
-                
+
             }
         } else {
             if (PSdawnDash1 != null) {
-                //PSdawnDash1.Stop();
+                emissionModuleDash1.enabled = false;
                 ParticleSystem.MainModule main = PSdawnDash1.main;
                 main.simulationSpeed = 8;
-                emmissionModuleDash1.enabled = false;
             }
             if (PSdawnDash2 != null) {
-                //PSdawnDash2.Stop();
+                emissionModuleDash2.enabled = false;
                 ParticleSystem.MainModule main = PSdawnDash2.main;
                 main.simulationSpeed = 8;
-                emmissionModuleDash2.enabled = false;
             }
             if (leftPressed) {
                 GameLogic.instance.SetTimeScaleLocal(1);
