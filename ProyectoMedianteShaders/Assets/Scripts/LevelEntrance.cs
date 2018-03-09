@@ -18,6 +18,8 @@ public class LevelEntrance : DoubleObject {
 
 
     void Start() {
+        if(levelToLoad-1==2)
+        GameLogic.instance.levelsData[2].completed = true;
 
         timeForSequence = 500;
 
@@ -81,8 +83,12 @@ public class LevelEntrance : DoubleObject {
 
     void ActivatedCheck() {
         spriteLevelNumb.SetActive(GameLogic.instance.levelsData[levelToLoad - 1].completed);
-        if (spriteLevelNumb.activeInHierarchy)
+        if (spriteLevelNumb.activeInHierarchy) {
             Debug.Log("AHAHSDHASDS " + GameLogic.instance.levelsData[levelToLoad].completed);
+        } else {
+            Debug.Log(levelToLoad - 1 + "NO ESTA COMPLETADO -> " + GameLogic.instance.levelsData[levelToLoad - 1].completed);
+        }
+
 
     }
 
@@ -109,6 +115,11 @@ public class LevelEntrance : DoubleObject {
                 FragmentsCheck();
                 ActivatedCheck();
                 TimeCheck();
+                if (spriteFragments.activeInHierarchy && spriteLevelNumb.activeInHierarchy && spriteTime.activeInHierarchy) {
+                    spriteLevelNumb.GetComponent<SpriteRenderer>().color = Color.yellow;
+                }
+
+
 
             }
         }
@@ -175,8 +186,9 @@ public class LevelEntrance : DoubleObject {
     }
 
     public override void Interact() {
-        if(activated)
-        GameLogic.instance.LoadScene(levelToLoad);
+        if (activated) {
+            GameLogic.instance.LoadScene(levelToLoad);
+        }
     }
 
     public void OnTriggerEnter2D(Collider2D collision) {
