@@ -14,7 +14,7 @@ public class LevelEntrance : DoubleObject {
     public GameObject spriteTime;
     public GameObject spriteFragments;
     public GameObject spriteLevelNumb;
-
+    public GameObject portalEffect;
 
 
     void Start() {
@@ -83,6 +83,7 @@ public class LevelEntrance : DoubleObject {
 
     void ActivatedCheck() {
         spriteLevelNumb.SetActive(GameLogic.instance.levelsData[levelToLoad - 1].completed);
+        portalEffect.SetActive(GameLogic.instance.levelsData[levelToLoad - 1].completed);
         if (spriteLevelNumb.activeInHierarchy) {
             Debug.Log("AHAHSDHASDS " + GameLogic.instance.levelsData[levelToLoad].completed);
         } else {

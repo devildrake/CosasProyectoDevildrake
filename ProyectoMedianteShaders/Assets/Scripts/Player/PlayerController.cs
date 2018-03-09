@@ -274,7 +274,7 @@ public class PlayerController : DoubleObject {
                         Smashing();
                         ClampSpeed();
                     }
-                    BrotherBehavior();
+                    //BrotherBehavior();
                     CoolDowns();
                 }
 
@@ -303,7 +303,10 @@ public class PlayerController : DoubleObject {
                 GameLogic.instance.Save();
             }
         }
-        InputManager.instance.UpdatePrevious();
+        BrotherBehavior();
+
+
+
     }
 
     void SetAnimValues() {
@@ -401,6 +404,10 @@ public class PlayerController : DoubleObject {
             transform.position = positionWithOffset;
             transform.rotation = brotherObject.transform.rotation;
 
+        } else {
+
+
+            InputManager.instance.UpdatePrevious();
         }
 
     }
@@ -877,6 +884,8 @@ public class PlayerController : DoubleObject {
         //BARRA ESPACIADORA = SALTO
         if (/*Input.GetKeyDown(KeyCode.Space)*/InputManager.instance.jumpButton&& !InputManager.instance.prevJumpButton && grounded&&!crawling||/*Input.GetKeyDown(KeyCode.Space)*/InputManager.instance.jumpButton && !InputManager.instance.prevJumpButton && sliding) {
             Jump();
+        } else {
+            Debug.Log("Should be true, false, true, false" + InputManager.instance.jumpButton + InputManager.instance.prevJumpButton + grounded + crawling);
         }
 
         if (onImpulsor) {

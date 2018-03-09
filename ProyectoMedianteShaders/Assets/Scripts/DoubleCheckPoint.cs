@@ -86,6 +86,7 @@ public class DoubleCheckPoint : DoubleObject
             //CODIGO DE ACABAR NIVEL
             //SceneManager.LoadScene(0);
             //GameLogic.instance.levelsData[GameLogic.instance.GetCurrentLevelIndex()].fragment = true;
+            InputManager.BlockInput();
             GameLogic.instance.levelFinished = true;
             //Debug.Log(GameLogic.instance.levelFinished);
         }

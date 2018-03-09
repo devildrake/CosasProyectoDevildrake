@@ -248,6 +248,11 @@ public class GameLogic : MonoBehaviour {
 
     //Método que reinicia la espera del frame para buscar referencias y reinicia el booleano isInMainMenu
     public void ResetSceneData() {
+
+        if (InputManager.instance != null) {
+            InputManager.UnBlockInput();
+        }
+
         timeElapsed = 0;
         levelName = "NonSet";
         cameraAttenuation = 1;
