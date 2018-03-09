@@ -36,9 +36,6 @@ public class PlayerController : DoubleObject {
 
     float timeNotMoving;
 
-    //Referencia al objeto con el area de deflect
-    public GameObject deflectArea;
-
     float slowMotionTimeScale;
     float dashForce;
 
@@ -115,7 +112,7 @@ public class PlayerController : DoubleObject {
     public Change_Scale maskObjectScript;
 
     //Referencia al sistema de particulas de dawn para el deflect.
-    public ParticleSystem dawnDeflectCastPS, dawnDeflectReleasePS, dawnDashPS1, dawnDashPS2;
+    public ParticleSystem PSdawnDeflectCast, PSdawnDeflectRelease, PSdawnDash1, PSdawnDash2, PSdawnDeflectFeedback;
 
     AudioSource audioSource;
     GroundCheck groundCheck;
@@ -126,20 +123,21 @@ public class PlayerController : DoubleObject {
 
     //Se inicializan las cosas
     void Start() {
-        //El sistema de particulas de Dawn del deflect se inicia desactivado.
-        //print(dawnDeflectCastPS);
-        if (dawnDeflectCastPS != null) {
-            dawnDeflectCastPS.Stop();
-            //print(dawnDeflectCastPS.isStopped);
+        //El sistema de particulas de Dawn del deflect se inicia desactivado
+        if (PSdawnDeflectCast != null) {
+            PSdawnDeflectCast.Stop();
         }
-        if(dawnDeflectReleasePS != null) {
-            dawnDeflectReleasePS.Stop();
+        if(PSdawnDeflectRelease != null) {
+            PSdawnDeflectRelease.Stop();
         }
-        if (dawnDashPS1 != null) {
-            dawnDashPS1.Stop();
+        if (PSdawnDash1 != null) {
+            PSdawnDash1.Stop();
         }
-        if(dawnDashPS2 != null) {
-            dawnDashPS2.Stop();
+        if(PSdawnDash2 != null) {
+            PSdawnDash2.Stop();
+        }
+        if(PSdawnDeflectFeedback != null) {
+            PSdawnDeflectFeedback.Stop();
         }
         audioSource = GetComponent<AudioSource>();
         groundCheck = GetComponentInChildren<GroundCheck>();
@@ -190,7 +188,6 @@ public class PlayerController : DoubleObject {
             //GetComponent<SpriteRenderer>().sprite = imagenDusk;
 
         originalPos = GameLogic.instance.spawnPoint;
-        deflectArea.SetActive(false);
         timeToDrag = 0.8f;
         timeToRest = 0.2f;
         timeCountToDrag = 0;
@@ -630,12 +627,29 @@ public class PlayerController : DoubleObject {
         if (!grounded) {
             if (canDash && dashTimer > dashCoolDown) {
                 direction = PlayerUtilsStatic.UseDirectionCircle(arrow, gameObject, 0);
-                dawnDashPS1.Play();
-                dawnDashPS2.Play();
+                if (PSdawnDash1 != null) {
+                    ParticleSystem.MainModule main = PSdawnDash1.main;
+                    main.simulationSpeed = 1;
+                    PSdawnDash1.Play();
+                }
+                if (PSdawnDash2 != null) {
+                    ParticleSystem.MainModule main = PSdawnDash2.main;
+                    main.simulationSpeed = 1;
+                    PSdawnDash2.Play();
+                }
+                
             }
         } else {
-            dawnDashPS1.Stop();
-            dawnDashPS2.Stop();
+            if (PSdawnDash1 != null) {
+                PSdawnDash1.Stop();
+                ParticleSystem.MainModule main = PSdawnDash1.main;
+                main.simulationSpeed = 8;
+            }
+            if (PSdawnDash2 != null) {
+                PSdawnDash2.Stop();
+                ParticleSystem.MainModule main = PSdawnDash2.main;
+                main.simulationSpeed = 8;
+            }
             if (leftPressed) {
                 GameLogic.instance.SetTimeScaleLocal(1);
                 leftPressed = false;
@@ -644,10 +658,14 @@ public class PlayerController : DoubleObject {
 
         if (objectsInDeflectArea.Count != 0) {
             deflectDirection = PlayerUtilsStatic.UseDirectionCircle(arrow, gameObject, 1,-10,60);
-            deflectArea.SetActive(true);
+            if (PSdawnDeflectFeedback != null) {
+                PSdawnDeflectFeedback.Play();
+            }
         }
         else {
-            deflectArea.SetActive(false);
+            if (PSdawnDeflectFeedback != null) {
+                PSdawnDeflectFeedback.Stop();
+            }
         }
 
         //Si se suelta el botón izquierdo del ratón y se puede dashear, se desactiva la slowMotion y se modifica el timeScale además de poner en false canDash
@@ -713,16 +731,16 @@ public class PlayerController : DoubleObject {
         }
         //Empieza el deflect
         if (Input.GetMouseButtonDown(1)&&objectsInDeflectArea.Count!=0) {
-            if (dawnDeflectCastPS != null) {
-                dawnDeflectCastPS.Play(); //Se inicia el sistema de particulas del deflect
+            if (PSdawnDeflectCast != null) {
+                PSdawnDeflectCast.Play(); //Se inicia el sistema de particulas del deflect
             }
             GameLogic.instance.SetTimeScaleLocal(slowMotionTimeScale);
         }else if (Input.GetMouseButtonUp(1)&& objectsInDeflectArea.Count!=0) {
-            if (dawnDeflectCastPS != null) {
-                dawnDeflectCastPS.Stop(); //Se detiene el sistema de particulas del deflect
+            if (PSdawnDeflectCast != null) {
+                PSdawnDeflectCast.Stop(); //Se detiene el sistema de particulas del deflect
             }
-            if(dawnDeflectReleasePS != null) {
-                dawnDeflectReleasePS.Play();
+            if(PSdawnDeflectRelease != null) {
+                PSdawnDeflectRelease.Play();
             }
             foreach(GameObject g in objectsInDeflectArea) {
 
