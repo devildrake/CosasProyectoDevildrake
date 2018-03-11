@@ -341,10 +341,23 @@ public class GameLogic : MonoBehaviour {
 
                         if (!setSpawnPoint) {
                             GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
+                            GameObject startingPoint = GameObject.FindGameObjectWithTag("Start");
                             if (playerObject.GetComponent<PlayerController>().worldAssignation == DoubleObject.world.DUSK) {
-                                spawnPoint = playerObject.transform.position;
+                                if (startingPoint != null) {
+                                    spawnPoint = startingPoint.transform.position;
+                                } else {
+                                    spawnPoint = playerObject.transform.position;
+                                }
                             } else {
-                                spawnPoint = playerObject.transform.position - new Vector3(0, worldOffset);
+                                if (startingPoint != null) {
+                                    //spawnPoint = startingPoint.transform.position;
+                                    spawnPoint = startingPoint.transform.position - new Vector3(0, worldOffset);
+                                } else {
+                                    //spawnPoint = playerObject.transform.position;
+                                    spawnPoint = playerObject.transform.position - new Vector3(0, worldOffset);
+                                }
+
+                                //spawnPoint = playerObject.transform.position - new Vector3(0, worldOffset);
 
                             }
                             setSpawnPoint = true;

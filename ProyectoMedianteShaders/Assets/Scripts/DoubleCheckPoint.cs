@@ -78,16 +78,18 @@ public class DoubleCheckPoint : DoubleObject
         interacted = true;
         if (!endLevel) {
             if (worldAssignation == world.DAWN) {
-                GameLogic.instance.SetSpawnPoint(brotherObject.gameObject.transform.position);
+                //GameLogic.instance.SetSpawnPoint(brotherObject.gameObject.transform.position);
             } else {
-                GameLogic.instance.SetSpawnPoint(gameObject.transform.position);
+                //GameLogic.instance.SetSpawnPoint(gameObject.transform.position);
             }
         } else {
             //CODIGO DE ACABAR NIVEL
             //SceneManager.LoadScene(0);
             //GameLogic.instance.levelsData[GameLogic.instance.GetCurrentLevelIndex()].fragment = true;
+            GameLogic.instance.additionalOffset = new Vector3(-2, 0, 3);
+
             InputManager.BlockInput();
-            GameLogic.instance.levelFinished = true;
+            //GameLogic.instance.levelFinished = true;
             //Debug.Log(GameLogic.instance.levelFinished);
         }
         if (GetComponent<AudioSource>() != null) {
@@ -97,18 +99,46 @@ public class DoubleCheckPoint : DoubleObject
             //Debug.Log("No Audio Source");
         }
         
+    }
 
+    private void OnTriggerStay2D(Collider2D collision) {
+        if (collision.gameObject.tag == "Player") {
+            PlayerController localPlayer = collision.gameObject.GetComponent<PlayerController>();
+            if (localPlayer.grounded) {
+                //collision.gameObject.GetComponent<PlayerController>().interactableObject = gameObject.GetComponent<DoubleObject>();
+                //if(interactionSprite!=null)
+                //interactionSprite.SetActive(true);
+                localPlayer.placeToGo = gameObject;
+                localPlayer.brotherScript.placeToGo = gameObject;
+                //Debug.Log(gameObject.tag);
+
+                localPlayer.mustEnd = true;
+                localPlayer.brotherScript.mustEnd = true;
+
+                if (!interacted)
+                    Interact();
+            }
+        }
     }
 
     public void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Player") {
-            //collision.gameObject.GetComponent<PlayerController>().interactableObject = gameObject.GetComponent<DoubleObject>();
-            //if(interactionSprite!=null)
-            //interactionSprite.SetActive(true);
+            PlayerController localPlayer = collision.gameObject.GetComponent<PlayerController>();
+            if (localPlayer.grounded) {
+                //collision.gameObject.GetComponent<PlayerController>().interactableObject = gameObject.GetComponent<DoubleObject>();
+                //if(interactionSprite!=null)
+                //interactionSprite.SetActive(true);
+                localPlayer.placeToGo = gameObject;
+                localPlayer.brotherScript.placeToGo = gameObject;
+                //Debug.Log(gameObject.tag);
 
-            if(!interacted)
-            Interact();
+                localPlayer.mustEnd = true;
+                localPlayer.brotherScript.mustEnd = true;
+
+                if (!interacted)
+                    Interact();
+            }
         }
     }
 

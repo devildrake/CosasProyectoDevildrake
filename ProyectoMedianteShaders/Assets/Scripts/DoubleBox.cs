@@ -20,11 +20,15 @@ public class DoubleBox : DoubleObject {
         timeToBecomePunchable = 0.5f;
         offset = GameLogic.instance.worldOffset;
         if (worldAssignation == world.DAWN) {
-            GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
+            //GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
             //GetComponent<SpriteRenderer>().sprite = imagenDawn;
-        }
-        else {
+            GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
+            transform.position += new Vector3(0,GameLogic.instance.worldOffset);
+
+        } else {
             //GetComponent<SpriteRenderer>().sprite = imagenDusk;
+            // GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
+            GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
 
         }
         float randomVal = Random.Range(1, 4);
@@ -40,14 +44,17 @@ public class DoubleBox : DoubleObject {
     protected override void BrotherBehavior() {
         Vector3 positionWithOffset;
 
-        if(rb==null)
-        rb = GetComponent<Rigidbody2D>();
+        if (rb == null)
+            rb = GetComponent<Rigidbody2D>();
 
         if (rb.bodyType == RigidbodyType2D.Kinematic) {
+            Debug.Log(worldAssignation);
+
+
             positionWithOffset = brotherObject.transform.position;
 
-            if(worldAssignation==world.DAWN)
-            positionWithOffset.y += offset;
+            if (worldAssignation == world.DAWN)
+                positionWithOffset.y += offset;
             else {
                 positionWithOffset.y -= offset;
             }
@@ -56,7 +63,17 @@ public class DoubleBox : DoubleObject {
             transform.rotation = brotherObject.transform.rotation;
 
         }
-        
+
+        //if (rb.bodyType == RigidbodyType2D.Kinematic) {
+        //    if (worldAssignation == world.DAWN) {
+        //        transform.position = brotherObject.transform.position + new Vector3(0, GameLogic.instance.worldOffset);
+        //    } else {
+        //        transform.position = brotherObject.transform.position - new Vector3(0, GameLogic.instance.worldOffset);
+        //    }
+        //}
+
+
+
     }
 
     void BecomePunchable() {
@@ -105,6 +122,18 @@ public class DoubleBox : DoubleObject {
             brotherScript.dawn = !brotherScript.dawn;
         }
 
+    }
+
+    protected override void AddToGameLogicList() {
+        if (!added) {
+            if (GameLogic.instance != null) {
+                added = true;
+                GameLogic.instance.transformableObjects.Add(gameObject);
+                if (worldAssignation == world.DUSK) {
+                    rb.isKinematic = false;
+                }
+            }
+        }
     }
 
 

@@ -34,6 +34,7 @@ public class PlayerController : DoubleObject {
     public float whichX;
     //Objeto con el transform de la posición a la que queremos que llegue el pj
     public GameObject placeToGo;
+    public bool mustEnd;
 
     private float dashTimer;
 
@@ -124,7 +125,7 @@ public class PlayerController : DoubleObject {
 
     AudioSource audioSource;
     GroundCheck groundCheck;
-    PlayerController brotherScript;
+    public PlayerController brotherScript;
     Animator myAnimator;
     Animator brotherAnimator;
     BoxCollider2D myBoxCollider;
@@ -249,7 +250,8 @@ public class PlayerController : DoubleObject {
         if (InputManager.instance != null) {
             if (InputManager.GetBlocked() && !GameLogic.instance.cameraTransition) {
                 if (placeToGo != null) {
-                    if (placeToGo.transform.position.x != transform.position.x) {
+                    if (/*placeToGo.transform.position.x != transform.position.x*/Mathf.Abs(placeToGo.transform.position.x-transform.position.x)>0.01f) {
+
                         if (whichX == 0) {
                             if (placeToGo.transform.position.x - transform.position.x > 0) {
                                 whichX = 1.0f;
@@ -281,9 +283,30 @@ public class PlayerController : DoubleObject {
                             }
                         }
                     } else {
-                        InputManager.UnBlockInput();
-                        if(placeToGo!=null)
-                        Destroy(placeToGo.gameObject);
+
+                        if(placeToGo.tag == "Finish") {
+                            myAnimator.gameObject.transform.rotation = Quaternion.identity;
+                            //brotherAnimator.gameObject.transform.rotation = q;
+
+                            myAnimator.SetBool("grounded", true);
+                            myAnimator.SetBool("moving", true);
+                            myAnimator.SetFloat("timeMoving", 1.0f);
+                            transform.Translate(Vector3.forward * 1.4f * Time.deltaTime);
+
+                            Debug.Log(transform.position.z);
+                            if (transform.position.z > 1.8f) {
+                                //InputManager.UnBlockInput();
+                                GameLogic.instance.levelFinished = true;
+                            }
+
+
+                        } else {
+                            InputManager.UnBlockInput();
+                            if (placeToGo != null)
+                                Destroy(placeToGo.gameObject);
+                        }
+
+
                     }
                 } else {
                     InputManager.UnBlockInput();
@@ -414,7 +437,7 @@ public class PlayerController : DoubleObject {
             }
 
         } else {
-            Debug.Log("NullAnimator or Block in progress");
+            //Debug.Log("NullAnimator or Block in progress");
         }
     }
 
