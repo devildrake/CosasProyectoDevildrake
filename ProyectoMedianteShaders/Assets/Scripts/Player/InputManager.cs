@@ -16,7 +16,7 @@ public class InputManager : MonoBehaviour {
     public bool prevCrawlButton;
     [HideInInspector]
     public bool prevJumpButton;
-    [HideInInspector]
+    //[HideInInspector]
     public bool prevChangeButton;
     [HideInInspector]
     public bool prevPauseButton;
@@ -24,6 +24,10 @@ public class InputManager : MonoBehaviour {
     public bool prevSelectButton;
     [HideInInspector]
     public bool prevInteractButton;
+    [HideInInspector]
+    public bool prevResetButton;
+    [HideInInspector]
+    public float prevHorizontalAxis;
 
     public bool dashButton;
     public bool deflectButton;
@@ -33,6 +37,9 @@ public class InputManager : MonoBehaviour {
     public bool pauseButton;
     public bool selectButton;
     public bool interactButton;
+    public bool resetButton;
+    public float horizontalAxis;
+
 
     private void Awake() {
         if (instance == null)
@@ -45,12 +52,18 @@ public class InputManager : MonoBehaviour {
 
             //Then destroy this. This enforces our singleton pattern, meaning there can only ever be one instance of a GameManager.
             Destroy(gameObject);
+
+        BlockInput();
     }
 
     // Use this for initialization
     void Start () {
 		
 	}
+
+    public static bool GetBlocked() {
+        return blocked;
+    }
 
     public static void BlockInput() {
 
@@ -62,6 +75,21 @@ public class InputManager : MonoBehaviour {
         instance.changeButton = false;
         instance.selectButton = false;
         instance.interactButton = false;
+        instance.resetButton = false;
+        instance.horizontalAxis = 0;
+
+        instance.prevDashButton = false;
+        instance.prevDeflectButton = false;
+        instance.prevCrawlButton = false;
+        instance.prevJumpButton = false;
+        instance.prevChangeButton = false;
+        instance.prevPauseButton = false;
+        instance.prevSelectButton = false;
+        instance.prevInteractButton = false;
+        instance.prevResetButton = false;
+        instance.prevHorizontalAxis = 0;
+
+
 
         blocked = true;
     }
@@ -69,17 +97,21 @@ public class InputManager : MonoBehaviour {
     public static void UnBlockInput() {
         blocked = false;
     }
-	
-    public void UpdatePrevious() {
+
+    public void UpdatePreviousGameLogic() {
+        prevSelectButton = selectButton;
+        prevChangeButton = changeButton;
+    }
+
+    public void UpdatePreviousPlayer() {
         if (!blocked) {
             prevDashButton = dashButton;
             prevDeflectButton = deflectButton;
             prevCrawlButton = crawlButton;
             prevJumpButton = jumpButton;
-            prevChangeButton = changeButton;
             prevPauseButton = pauseButton;
-            prevSelectButton = selectButton;
             prevInteractButton = interactButton;
+            prevHorizontalAxis = horizontalAxis;
         }
 }
 
@@ -92,8 +124,11 @@ public class InputManager : MonoBehaviour {
             jumpButton = (Input.GetAxisRaw("Jump") == 1.0);
             pauseButton = (Input.GetAxisRaw("Pause") == 1.0);
             changeButton = (Input.GetAxisRaw("Change") == 1.0);
-            selectButton = (Input.GetAxis("Select") == 1.0);
-            interactButton = (Input.GetAxis("Interact") == 1.0);
+            selectButton = (Input.GetAxisRaw("Select") == 1.0);
+            interactButton = (Input.GetAxisRaw("Interact") == 1.0);
+            horizontalAxis = Input.GetAxisRaw("Horizontal");
+            resetButton = Input.GetAxisRaw("Reset")==1.0;
+
         }
     }
 }

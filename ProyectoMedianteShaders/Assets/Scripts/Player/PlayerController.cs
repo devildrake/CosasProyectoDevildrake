@@ -24,14 +24,22 @@ public class PlayerController : DoubleObject {
     //Lista de objetos en el area de Deflect
     public List<GameObject> objectsInDeflectArea;
 
+    //COOLDOWNS
     private float punchCoolDown;
     private float punchTimer;
-
     private float dashCoolDown;
+
+    //Float que indica si el personaje ha de ir hacia la derecha o hacia la izquierda en su transición inicial, de todas formas
+    //Se ha de setear a 0 para que haga la comprovación en un principio.
+    public float whichX;
+    //Objeto con el transform de la posición a la que queremos que llegue el pj
+    public GameObject placeToGo;
+
     private float dashTimer;
 
     private float deflectCoolDown;
     private float deflectTimer;
+
 
     float timeNotMoving;
 
@@ -237,6 +245,54 @@ public class PlayerController : DoubleObject {
 
     }
 
+    void MoveEvents() {
+        if (InputManager.instance != null) {
+            if (InputManager.GetBlocked() && !GameLogic.instance.cameraTransition) {
+                if (placeToGo != null) {
+                    if (placeToGo.transform.position.x != transform.position.x) {
+                        if (whichX == 0) {
+                            if (placeToGo.transform.position.x - transform.position.x > 0) {
+                                whichX = 1.0f;
+                            } else {
+                                whichX = -1.0f;
+                            }
+                        } else {
+                            if (whichX > 0) {
+                                if (transform.position.x > placeToGo.transform.position.x) {
+                                    transform.position = new Vector3(placeToGo.transform.position.x, transform.position.y, transform.position.z);
+
+                                } else {
+                                    transform.Translate(Vector3.right * 2.0f * Time.deltaTime);
+                                    myAnimator.SetBool("grounded", true);
+                                    myAnimator.SetBool("moving", true);
+                                    myAnimator.SetFloat("timeMoving", 1.0f);
+
+                                }
+
+                            } else {
+                                if (transform.position.x < placeToGo.transform.position.x) {
+                                    transform.position = new Vector3(placeToGo.transform.position.x, transform.position.y, transform.position.z);
+                                } else {
+                                    transform.Translate(Vector3.left * 2.0f * Time.deltaTime);
+                                    myAnimator.SetBool("grounded", true);
+                                    myAnimator.SetBool("moving", true);
+                                    myAnimator.SetFloat("timeMoving", 1.0f);
+                                }
+                            }
+                        }
+                    } else {
+                        InputManager.UnBlockInput();
+                        if(placeToGo!=null)
+                        Destroy(placeToGo.gameObject);
+                    }
+                } else {
+                    InputManager.UnBlockInput();
+                    Debug.Log("UNBLOCKBRUH");
+                }
+            }
+        }
+    }
+
     void Update() {
 
         if (rb.velocity.y < 0) {
@@ -248,6 +304,10 @@ public class PlayerController : DoubleObject {
         AddToGameLogicList();
 
         if (added) {
+
+            MoveEvents();
+
+
             if (!GameLogic.instance.levelFinished) {
                 //Debug.Log(grounded);
                 //Add del transformable
@@ -310,7 +370,7 @@ public class PlayerController : DoubleObject {
     }
 
     void SetAnimValues() {
-        if (myAnimator != null) {
+        if (myAnimator != null&&!InputManager.GetBlocked()) {
 
             if (worldAssignation == world.DUSK&&!dawn) {
                 myAnimator.SetBool("moving", moving);
@@ -354,7 +414,7 @@ public class PlayerController : DoubleObject {
             }
 
         } else {
-            Debug.Log("NullAnimator");
+            Debug.Log("NullAnimator or Block in progress");
         }
     }
 
@@ -407,7 +467,7 @@ public class PlayerController : DoubleObject {
         } else {
 
 
-            InputManager.instance.UpdatePrevious();
+            InputManager.instance.UpdatePreviousPlayer();
         }
 
     }
@@ -445,7 +505,7 @@ public class PlayerController : DoubleObject {
                 timeCountToDrag = 0;
                 bool changed = false;
                 float mustSlow = 1;
-                if (Input.GetAxisRaw("Horizontal") != (float)prevHorizontalMov && Input.GetAxisRaw("Horizontal") != 0.0f) {
+                if (Input.GetAxisRaw("Horizontal") != (float)prevHorizontalMov && Input.GetAxisRaw("Horizontal") != 0.0f&&!InputManager.GetBlocked()) {
                     changed = true;
                     //Debug.Log("CHANGE");
                     prevHorizontalMov = Input.GetAxisRaw("Horizontal");
@@ -459,17 +519,17 @@ public class PlayerController : DoubleObject {
 
                     rb.velocity = new Vector2(0, rb.velocity.y);
                     //Debug.Log("Se para");
-                    if(facingRight)
-                    transform.Translate(Vector3.right * Input.GetAxis("Horizontal") * characterSpeed * Time.deltaTime);
+                    if (facingRight)
+                        transform.Translate(Vector3.right * InputManager.instance.horizontalAxis * characterSpeed * Time.deltaTime);
                     else
-                        transform.Translate(Vector3.left * Input.GetAxis("Horizontal") * characterSpeed * Time.deltaTime);
+                        transform.Translate(Vector3.left * InputManager.instance.horizontalAxis * characterSpeed * Time.deltaTime);
 
                     slowedInTheAir = false;
-                    if (Input.GetAxis("Horizontal") != 0) {
+                    if (InputManager.instance.horizontalAxis != 0) {
                         timeMoving += Time.deltaTime;
                         timeNotMoving = 0;
                         moving = true;
-                        if (audioSource.isPlaying&&!crawling) {
+                        if (!audioSource.isPlaying&&!crawling) {
                             audioSource.pitch = 0.3f;
                             audioSource.clip = walkClip;
                             audioSource.Play();
@@ -499,9 +559,9 @@ public class PlayerController : DoubleObject {
                     mustSlow = 0.5f;
 
                     if(facingRight)
-                    transform.Translate(Vector3.right * Input.GetAxis("Horizontal") * characterSpeed*0.75f * mustSlow * Time.deltaTime);
+                    transform.Translate(Vector3.right * InputManager.instance.horizontalAxis * characterSpeed*0.75f * mustSlow * Time.deltaTime);
                     else
-                    transform.Translate(Vector3.left * Input.GetAxis("Horizontal") * characterSpeed *0.75f*mustSlow* Time.deltaTime);
+                    transform.Translate(Vector3.left * InputManager.instance.horizontalAxis * characterSpeed *0.75f*mustSlow* Time.deltaTime);
 
 
                     //Velocidad X a 0
@@ -516,10 +576,10 @@ public class PlayerController : DoubleObject {
                     }
 
                     if(facingRight)
-                    transform.Translate(Vector3.right * Input.GetAxis("Horizontal") * characterSpeed*0.75f * mustSlow * Time.deltaTime);
+                    transform.Translate(Vector3.right * InputManager.instance.horizontalAxis * characterSpeed*0.75f * mustSlow * Time.deltaTime);
 
                     else
-                        transform.Translate(Vector3.left * Input.GetAxis("Horizontal") * characterSpeed * 0.75f * mustSlow * Time.deltaTime);
+                        transform.Translate(Vector3.left * InputManager.instance.horizontalAxis * characterSpeed * 0.75f * mustSlow * Time.deltaTime);
 
                 }
 
@@ -540,10 +600,10 @@ public class PlayerController : DoubleObject {
                         else if (timeCountToDrag < timeToRest + timeToDrag) {
 
                             if (facingRight)
-                                transform.Translate(Vector3.right * Input.GetAxis("Horizontal") * characterSpeed / 2 * Time.deltaTime);
+                                transform.Translate(Vector3.right * InputManager.instance.horizontalAxis * characterSpeed / 2 * Time.deltaTime);
 
                             else
-                                transform.Translate(Vector3.left * Input.GetAxis("Horizontal") * characterSpeed / 2 * Time.deltaTime);
+                                transform.Translate(Vector3.left * InputManager.instance.horizontalAxis * characterSpeed / 2 * Time.deltaTime);
 
 
                             NearbyObjects[0].transform.position = transform.position - distanceToGrabbedObject;
@@ -884,8 +944,6 @@ public class PlayerController : DoubleObject {
         //BARRA ESPACIADORA = SALTO
         if (/*Input.GetKeyDown(KeyCode.Space)*/InputManager.instance.jumpButton&& !InputManager.instance.prevJumpButton && grounded&&!crawling||/*Input.GetKeyDown(KeyCode.Space)*/InputManager.instance.jumpButton && !InputManager.instance.prevJumpButton && sliding) {
             Jump();
-        } else {
-            Debug.Log("Should be true, false, true, false" + InputManager.instance.jumpButton + InputManager.instance.prevJumpButton + grounded + crawling);
         }
 
         if (onImpulsor) {

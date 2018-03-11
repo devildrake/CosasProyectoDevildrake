@@ -323,7 +323,7 @@ public class GameLogic : MonoBehaviour {
         else {
             if (!isInMainMenu) {
                 if (!levelFinished) {
-                    if (Input.GetKey(KeyCode.R)) {
+                    if (/*Input.GetKey(KeyCode.R)*/InputManager.instance.resetButton) {
                         timerToReset += Time.deltaTime;
                     } else {
                         timerToReset = 0;
@@ -351,7 +351,7 @@ public class GameLogic : MonoBehaviour {
                         }
 
                         //CAMBIO DE MUNDO
-                        if (Input.GetKeyDown(KeyCode.LeftShift)&& !cameraTransition) {
+                        if (InputManager.instance.changeButton&&!InputManager.instance.prevChangeButton && !cameraTransition) {
                             if (currentPlayer != null) {
                                 if (!currentPlayer.crawling) {
                                     if (gameObject.GetComponent<AudioSource>().pitch == 1.5) {
@@ -388,6 +388,12 @@ public class GameLogic : MonoBehaviour {
                 Cursor.lockState = CursorLockMode.None; //Se puede volver a mover el cursor
             }
         }
+
+        if (InputManager.instance != null) {
+            InputManager.instance.UpdatePreviousGameLogic();
+        }
+
+
     }
 
     public void LoadScene(Scene which) {
