@@ -9,15 +9,15 @@ public class LevelEntrance : DoubleObject {
     public int sequenceLength;
     public GameObject interactionSprite;
     public float timeForSequence;
-    bool available;
-
+    public bool tryMovePlayer;
     public GameObject spriteTime;
     public GameObject spriteFragments;
     public GameObject spriteLevelNumb;
     public GameObject portalEffect;
-
+    public LevelEntrance brotherScript;
 
     void Start() {
+        brotherScript = brotherObject.GetComponent<LevelEntrance>();
         if(levelToLoad-1==2)
         GameLogic.instance.levelsData[2].completed = true;
 
@@ -213,6 +213,48 @@ public class LevelEntrance : DoubleObject {
     // Update is called once per frame
     void Update() {
         AddToGameLogicList();
+
+        if (added) {
+            if (!tryMovePlayer) {
+                if (worldAssignation == world.DAWN) {
+                    if (dawn) {
+                        if (GameLogic.instance.currentPlayer.worldAssignation == world.DAWN) {
+                            GameLogic.instance.currentPlayer.transform.position = gameObject.transform.position;
+                            GameLogic.instance.currentPlayer.brotherObject.transform.position = brotherObject.transform.position;
+                            GameLogic.instance.SetSpawnPoint(gameObject.transform.position);
+
+                        } else {
+                            GameLogic.instance.currentPlayer.transform.position = gameObject.transform.position - new Vector3(0, GameLogic.instance.worldOffset);
+                            GameLogic.instance.currentPlayer.brotherObject.transform.position = brotherObject.transform.position;
+                            GameLogic.instance.SetSpawnPoint (gameObject.transform.position - new Vector3(0, GameLogic.instance.worldOffset));
+
+                        }
+                    }
+                } else {
+                    if (!dawn) {
+                        if (GameLogic.instance.currentPlayer.worldAssignation == world.DUSK) {
+                            GameLogic.instance.currentPlayer.transform.position = gameObject.transform.position;
+                            GameLogic.instance.currentPlayer.brotherObject.transform.position = brotherObject.transform.position;
+
+                            GameLogic.instance.SetSpawnPoint(gameObject.transform.position);
+
+                        } else {
+                            GameLogic.instance.currentPlayer.transform.position = gameObject.transform.position + new Vector3(0, GameLogic.instance.worldOffset);
+                            GameLogic.instance.currentPlayer.brotherObject.transform.position = brotherObject.transform.position;
+                            GameLogic.instance.SetSpawnPoint(gameObject.transform.position + new Vector3(0, GameLogic.instance.worldOffset));
+                        }
+                    }
+
+                }
+
+                Debug.Log(GameLogic.instance.currentPlayer.transform.position);
+                tryMovePlayer = true;
+                brotherScript.tryMovePlayer = true;
+            }
+
+
+        }
+
         BrotherBehavior();
     }
 }
