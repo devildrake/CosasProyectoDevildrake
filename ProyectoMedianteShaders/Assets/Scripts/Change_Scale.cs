@@ -13,7 +13,8 @@ public class Change_Scale : MonoBehaviour {
     [HideInInspector]public bool change;
     public float velocity = 50;
     public float maxScale = 25;
-    [SerializeField] private ParticleSystem psChangeToDawn, psChangeToDusk;
+    [SerializeField] private ParticleSystem psChangeWorld;
+    [SerializeField] private int particlesToDawn = 150, particlesToDusk = 150;
     [SerializeField] private Material dawnParticlesMat, duskParticlesMat;
     private bool emissionToDawn;
     private ParticleSystemRenderer particleSystemRenderer;
@@ -23,11 +24,15 @@ public class Change_Scale : MonoBehaviour {
     void Start() {
         transform.localScale = new Vector3(0, 0, 0);
         emissionToDawn = true;
-        psChangeToDawn.Play();
-        //psChangeToDusk.Play();
-        particleSystemRenderer = psChangeToDawn.GetComponent<ParticleSystemRenderer>();
-        psMainModule = psChangeToDawn.main;
-        psShapeModule = psChangeToDawn.shape;
+        if (psChangeWorld != null) {
+            psChangeWorld.Play();
+            particleSystemRenderer = psChangeWorld.GetComponent<ParticleSystemRenderer>();
+            psMainModule = psChangeWorld.main;
+            psShapeModule = psChangeWorld.shape;
+        }
+        else {
+            print("Sistema de particulas de cambio de mundo no asignado");
+        }
     }
 
     void Update() { 
@@ -36,28 +41,25 @@ public class Change_Scale : MonoBehaviour {
                 transform.localScale += new Vector3(1.0f, 1.0f, 1.0f) * velocity * Time.deltaTime;
             }
 
-            if (emissionToDawn) { //particulas hacia fuera, cambia a dawn
-                //psChangeWorld.Play();
+            if (emissionToDawn && psChangeWorld != null) { //particulas hacia fuera, cambia a dawn
                 particleSystemRenderer.material = dawnParticlesMat;
                 particleSystemRenderer.trailMaterial = dawnParticlesMat;
                 psMainModule.startLifetime = 0.3f;
                 psMainModule.startSpeed = 50;
                 psShapeModule.radius = 0.01f;
-                psChangeToDawn.Emit(300);
-                print("Play to dawn");
+                psChangeWorld.Emit(particlesToDawn);
                 emissionToDawn = false;
             }
         } else { //DECRECER
             if (transform.localScale.x > 1) {
                 transform.localScale -= new Vector3(1.0f, 1.0f, 1.0f) * velocity * Time.deltaTime;
-                if (!emissionToDawn) { //particulas hacia dentro
-                    //psChangeWorld.Play();
+                if (!emissionToDawn && psChangeWorld != null) { //particulas hacia dentro
                     particleSystemRenderer.material = duskParticlesMat;
                     particleSystemRenderer.trailMaterial = duskParticlesMat;
                     psMainModule.startLifetime = 0.25f;
                     psMainModule.startSpeed = -50;
                     psShapeModule.radius = 10.5f;
-                    psChangeToDawn.Emit(300);
+                    psChangeWorld.Emit(particlesToDusk);
                     print("play to dusk");
                     emissionToDawn = true;
                 }
