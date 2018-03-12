@@ -35,7 +35,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1865857785003762}
   m_LocalRotation: {x: -0.268957, y: -0.40615687, z: 0.25527307, w: -0.8351852}
-  m_LocalPosition: {x: -18.91, y: 16.84, z: -0.9609375}
+  m_LocalPosition: {x: -19.2, y: 16.5, z: -1.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -51,7 +51,7 @@ Light:
   serializedVersion: 8
   m_Type: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 1
+  m_Intensity: 0.6
   m_Range: 10
   m_SpotAngle: 30
   m_CookieSize: 10
@@ -101,6 +101,7 @@ MonoBehaviour:
   imagenDusk: {fileID: 0}
   imagenDawn: {fileID: 0}
   originalPos: {x: 0, y: 0}
-  lightIntensity: 1
+  dawnLighIntensity: 1
+  duskLightIntensity: 0.8
   duskSkybox: {fileID: 2100000, guid: 1407c2790b7870b42a0df8ac84066e0c, type: 2}
   dawnSkybox: {fileID: 2100000, guid: 71b634fec31b38b46a30f6185273a772, type: 2}
