@@ -186,7 +186,7 @@ public class PlayerController : DoubleObject {
         slowMotionTimeScale = 0.3f;
         dashForce = 7;
         //Se hace esto para que UseDirectionCircle haga uso de su bool once y inicialize las cosas que le interesan
-        direction = DirectionCircle.UseDirectionCircle(arrow, gameObject,0);
+        //direction = DirectionCircle.UseDirectionCircle(arrow, gameObject,0);
 
 
         //Start del transformable
@@ -427,7 +427,7 @@ public class PlayerController : DoubleObject {
 
                 myAnimator.SetBool("dashing", dashTimer < dashCoolDown);
                 myAnimator.SetBool("crawling", crawling);
-                myAnimator.SetBool("dash_press", InputManager.instance.dashButton&&dashTimer>=dashCoolDown&&canDash&&!grounded);
+                myAnimator.SetBool("dash_press", InputManager.instance.dashButtonPlayer && dashTimer>=dashCoolDown&&canDash&&!grounded);
                 myAnimator.SetBool("deflecting", deflectTimer < deflectCoolDown);
                 myAnimator.SetBool("deflect_press", InputManager.instance.deflectButton && deflectTimer >= deflectCoolDown&&objectsInDeflectArea.Count>0);
                 brotherAnimator.SetBool("punching", punchTimer < punchCoolDown);
@@ -526,15 +526,15 @@ public class PlayerController : DoubleObject {
                 timeCountToDrag = 0;
                 bool changed = false;
                 float mustSlow = 1;
-                if (Input.GetAxisRaw("Horizontal") != (float)prevHorizontalMov && Input.GetAxisRaw("Horizontal") != 0.0f&&!InputManager.GetBlocked()) {
+                if (InputManager.instance.horizontalAxis * (float)prevHorizontalMov < 0  && InputManager.instance.horizontalAxis != 0.0f&&!InputManager.GetBlocked()) {
                     changed = true;
                     //Debug.Log("CHANGE");
-                    prevHorizontalMov = Input.GetAxisRaw("Horizontal");
+                    prevHorizontalMov = InputManager.instance.horizontalAxis;
                 }
 
 
                 if (grounded) {
-                    if (dawn&&worldAssignation==world.DAWN&& InputManager.instance.dashButton) {
+                    if (dawn&&worldAssignation==world.DAWN&& InputManager.instance.dashButtonPlayer) {
                         PlayerUtilsStatic.ResetDirectionCircle(arrow);
                     }
 
@@ -720,6 +720,7 @@ public class PlayerController : DoubleObject {
         if (!grounded) {
             if (canDash && dashTimer > dashCoolDown) {
                 direction = PlayerUtilsStatic.UseDirectionCircle(arrow, gameObject, 0);
+
                 if (PSdawnDash1 != null) {
                     ParticleSystem.MainModule main = PSdawnDash1.main;
                     main.simulationSpeed = 1;
@@ -762,14 +763,14 @@ public class PlayerController : DoubleObject {
         }
 
         //Si se suelta el botón izquierdo del ratón y se puede dashear, se desactiva la slowMotion y se modifica el timeScale además de poner en false canDash
-        if (/*Input.GetMouseButtonUp(0)*/!InputManager.instance.dashButton&& InputManager.instance.prevDashButton && canDash && dashTimer > dashCoolDown) {
+        if (/*Input.GetMouseButtonUp(0)*/!InputManager.instance.dashButtonPlayer && InputManager.instance.prevDashButtonPlayer && canDash && dashTimer > dashCoolDown) {
             if (leftPressed&&!grounded) {
                 GameLogic.instance.SetTimeScaleLocal(1.0f);
 
                 //En caso de ser la dirección hacia la derecha se comprueba si la prevHorizontalMov no era 1, en caso de no serlo, significa que el personaje antes estaba 
                 //mirando a la izquierda, por tanto se hace un flip y se cambia prevHorizontalMov al que corresponde.
                 if (direction.x > 0) {
-                    if (prevHorizontalMov != 1.0f) {
+                    if (prevHorizontalMov <0) {
                         prevHorizontalMov = 1.0f;
                         Flip();
                     }
@@ -778,7 +779,7 @@ public class PlayerController : DoubleObject {
 
                 //En este else se hace lo mismo pero hacia la izquierda
                 else if(direction.x<0){
-                    if (prevHorizontalMov != -1.0f) {
+                    if (prevHorizontalMov >0) {
                         prevHorizontalMov = -1.0f;
                         Flip();
                     }
@@ -790,6 +791,7 @@ public class PlayerController : DoubleObject {
                 audioSource.Play();
                 canJumpOnImpulsor = false;
                 rb.velocity = new Vector2(0, 0);
+                Debug.Log(direction);
                 PlayerUtilsStatic.DoDash(gameObject, direction, dashForce,true);
                 dashTimer = 0;
                 SetCanDash(false);
@@ -798,7 +800,7 @@ public class PlayerController : DoubleObject {
 
             //Si se pulsa el botón izquierdo del ratón y se puede dashear, se activa la slowMotion y se modifica el timeScale de gameLogic
         }
-        else if (/*Input.GetMouseButtonDown(0)*/InputManager.instance.dashButton && !InputManager.instance.prevDashButton && canDash&& !grounded && dashTimer > dashCoolDown) {
+        else if (/*Input.GetMouseButtonDown(0)*/InputManager.instance.dashButtonPlayer && !InputManager.instance.prevDashButtonPlayer && canDash&& !grounded && dashTimer > dashCoolDown) {
             leftPressed = true;
             GameLogic.instance.SetTimeScaleLocal(slowMotionTimeScale);
         }
@@ -861,7 +863,7 @@ public class PlayerController : DoubleObject {
 
         //Si se suelta el botón izquierdo del ratón y se habia pulsado previamente, el tiempo pasa a cero
         //En caso de estar grounded Se hace una llamada a Punch
-        if (/*Input.GetMouseButtonUp(0)*/!InputManager.instance.dashButton && InputManager.instance.prevDashButton && punchTimer > punchCoolDown) {
+        if (/*Input.GetMouseButtonUp(0)*/!InputManager.instance.dashButtonPlayer && InputManager.instance.prevDashButtonPlayer && punchTimer > punchCoolDown) {
             if (leftPressed) {
                 GameLogic.instance.SetTimeScaleLocal(1.0f);
                 if (grounded) {
@@ -876,7 +878,7 @@ public class PlayerController : DoubleObject {
         }
 
         //En caso de pulsar el botón izquierdo del ratón y estar grounded, se pone el timepo a 0.5
-        else if (/*Input.GetMouseButtonDown(0)*/InputManager.instance.dashButton&&!InputManager.instance.prevDashButton && grounded&&punchTimer>punchCoolDown) {
+        else if (/*Input.GetMouseButtonDown(0)*/InputManager.instance.dashButtonPlayer && !InputManager.instance.prevDashButtonPlayer && grounded&&punchTimer>punchCoolDown) {
             GameLogic.instance.SetTimeScaleLocal(slowMotionTimeScale);
             leftPressed = true;
         }
@@ -888,7 +890,7 @@ public class PlayerController : DoubleObject {
         //Se renderizan las flechas en caso de clicar solo si esta en el suelo
         else {
             direction = PlayerUtilsStatic.UseDirectionCircle(arrow, gameObject,0,0,60);
-            if (/*Input.GetMouseButtonDown(1)*/InputManager.instance.deflectButton && !InputManager.instance.prevDeflectButton) {
+            if (/*Input.GetMouseButtonDown(1)*/InputManager.instance.deflectButtonPlayer && !InputManager.instance.prevDeflectButtonPlayer) {
                 foreach (GameObject g in NearbyObjects) {
                     if (g.GetComponent<DoubleObject>().isMovable) {
                         distanceToGrabbedObject = transform.position - NearbyObjects[0].transform.position;
@@ -896,7 +898,7 @@ public class PlayerController : DoubleObject {
 
                     }
                 }
-            }else if(/*Input.GetMouseButtonUp(1)*/!InputManager.instance.deflectButton && InputManager.instance.prevDeflectButton) {
+            }else if(/*Input.GetMouseButtonUp(1)*/!InputManager.instance.deflectButtonPlayer && InputManager.instance.prevDeflectButtonPlayer) {
                 grabbing = false;
             }
         }

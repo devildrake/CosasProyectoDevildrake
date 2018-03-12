@@ -65,7 +65,7 @@ public class MenuLogic : MonoBehaviour {
 
         case 0:
             Blink(pressAnyKeyObj);
-            if (Input.anyKey) {
+            if (Input.anyKeyDown) {
                 menuState = 1;
                 pressAnyKeyObj.SetActive(false);
                 foreach (GameObject go in state1Elements) {
@@ -89,7 +89,7 @@ public class MenuLogic : MonoBehaviour {
 
     private void State1Behavior() {
         //MOVIMIENTO ENTRE LAS OPCIONES
-        if (Input.GetAxisRaw("Vertical") == -1) {
+        if (Input.GetAxisRaw("Vertical") < 0) {
             if (!axisInUse) {
                 axisInUse = true;
                 selected--;
@@ -97,7 +97,7 @@ public class MenuLogic : MonoBehaviour {
                     selected = state1Elements.Length - 2;
                 }
             }
-        } else if(Input.GetAxisRaw("Vertical") == 1) {
+        } else if(Input.GetAxisRaw("Vertical") > 0) {
             if (!axisInUse) {
                 axisInUse = true;
                 selected++;

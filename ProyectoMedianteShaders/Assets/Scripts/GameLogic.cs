@@ -444,7 +444,7 @@ public class GameLogic : MonoBehaviour {
     //Método que controla cuando se le da al escape para pausar, a su vez activa y desactiva el cursor en función de si 
     //Se abre el menú in game y se modificar la variable isPaused
     void CheckPauseInput() {
-        if (Input.GetKeyDown(KeyCode.Escape)) {
+        if (InputManager.instance.pauseButton&&!InputManager.instance.prevPauseButton) {
             if (isPaused) {
                 Cursor.visible = false;
                 Cursor.lockState = CursorLockMode.None; //Se engancha el cursor en el centro de la pantalla.
