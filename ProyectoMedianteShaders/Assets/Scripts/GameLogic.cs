@@ -31,6 +31,8 @@ public class GameLogic : MonoBehaviour {
     //public Dictionary<int, bool> completedLevels;
     //public Dictionary<int, bool> fragments;
     public Dictionary<int, LevelData> levelsData;
+    public int lastEntranceIndex;
+
         //public Dictionary<int,FragmentData> savedFragments;
 
 
@@ -472,6 +474,8 @@ public class GameLogic : MonoBehaviour {
             data.firstOpening = firstOpening;
             //data.completedLevels = completedLevels;
             //data.fragments = fragments;
+            data.lastEntranceIndex = lastEntranceIndex;
+
 
             data.levelData = levelsData;
             bf.Serialize(file, data);
@@ -493,7 +497,7 @@ public class GameLogic : MonoBehaviour {
         }
         //completedLevels[2] = true;
         levelsData[2].completed = true;
-
+        lastEntranceIndex = 3;
 
         Save();
     }
@@ -510,6 +514,8 @@ public class GameLogic : MonoBehaviour {
             //completedLevels = data.completedLevels;
             //fragments = data.fragments;
             levelsData = data.levelData;
+
+            lastEntranceIndex = data.lastEntranceIndex;
             //Igualar variables a cargar (Locales) a las de data
 
             //for(int i=2;i<30;i++) {
@@ -526,6 +532,7 @@ public class GameLogic : MonoBehaviour {
     class PlayerData{
         public bool firstOpening;
         public Dictionary<int, LevelData> levelData;
+        public int lastEntranceIndex;
         //public Dictionary<int, bool> completedLevels;
         //public Dictionary<int, bool> fragments;
     };

@@ -287,16 +287,15 @@ public class PlayerController : DoubleObject {
                         if(placeToGo.tag == "Finish") {
                             myAnimator.gameObject.transform.rotation = Quaternion.identity;
                             //brotherAnimator.gameObject.transform.rotation = q;
-
-                            myAnimator.SetBool("grounded", true);
-                            myAnimator.SetBool("moving", true);
-                            myAnimator.SetFloat("timeMoving", 1.0f);
-                            transform.Translate(Vector3.forward * 1.4f * Time.deltaTime);
-
                             Debug.Log(transform.position.z);
                             if (transform.position.z > 1.8f) {
                                 //InputManager.UnBlockInput();
                                 GameLogic.instance.levelFinished = true;
+                            } else {
+                                myAnimator.SetBool("grounded", true);
+                                myAnimator.SetBool("moving", true);
+                                myAnimator.SetFloat("timeMoving", 1.0f);
+                                transform.Translate(Vector3.forward * 1.4f * Time.deltaTime);
                             }
 
 
