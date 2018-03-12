@@ -287,7 +287,6 @@ public class PlayerController : DoubleObject {
                         if(placeToGo.tag == "Finish") {
                             myAnimator.gameObject.transform.rotation = Quaternion.identity;
                             //brotherAnimator.gameObject.transform.rotation = q;
-                            Debug.Log(transform.position.z);
                             if (transform.position.z > 1.8f) {
                                 //InputManager.UnBlockInput();
                                 GameLogic.instance.levelFinished = true;

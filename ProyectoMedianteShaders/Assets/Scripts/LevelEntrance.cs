@@ -215,41 +215,28 @@ public class LevelEntrance : DoubleObject {
         AddToGameLogicList();
 
         if (added) {
-            if (!tryMovePlayer) {
+            if (!tryMovePlayer&&levelToLoad==GameLogic.instance.lastEntranceIndex) {
                 if (worldAssignation == world.DAWN) {
-                    if (dawn) {
                         if (GameLogic.instance.currentPlayer.worldAssignation == world.DAWN) {
-                            GameLogic.instance.currentPlayer.transform.position = gameObject.transform.position;
-                            GameLogic.instance.currentPlayer.brotherObject.transform.position = brotherObject.transform.position;
+                            GameLogic.instance.currentPlayer.transform.position = gameObject.transform.position+new Vector3(0, 0.55f, 0);
+                            GameLogic.instance.currentPlayer.brotherObject.transform.position = brotherObject.transform.position + new Vector3(0, 0.55f, 0);
                             GameLogic.instance.SetSpawnPoint(gameObject.transform.position);
 
                         } else {
-                            GameLogic.instance.currentPlayer.transform.position = gameObject.transform.position - new Vector3(0, GameLogic.instance.worldOffset);
-                            GameLogic.instance.currentPlayer.brotherObject.transform.position = brotherObject.transform.position;
-                            GameLogic.instance.SetSpawnPoint (gameObject.transform.position - new Vector3(0, GameLogic.instance.worldOffset));
+                        GameLogic.instance.currentPlayer.transform.position = brotherObject.transform.position + new Vector3(0, 0.55f, 0);
+                        GameLogic.instance.currentPlayer.brotherObject.transform.position = transform.position + new Vector3(0, 0.55f, 0);
+                        GameLogic.instance.SetSpawnPoint(brotherObject.transform.position);
 
                         }
-                    }
-                } else {
-                    if (!dawn) {
-                        if (GameLogic.instance.currentPlayer.worldAssignation == world.DUSK) {
-                            GameLogic.instance.currentPlayer.transform.position = gameObject.transform.position;
-                            GameLogic.instance.currentPlayer.brotherObject.transform.position = brotherObject.transform.position;
+                        tryMovePlayer = true;
+                        brotherScript.tryMovePlayer = true;
 
-                            GameLogic.instance.SetSpawnPoint(gameObject.transform.position);
-
-                        } else {
-                            GameLogic.instance.currentPlayer.transform.position = gameObject.transform.position + new Vector3(0, GameLogic.instance.worldOffset);
-                            GameLogic.instance.currentPlayer.brotherObject.transform.position = brotherObject.transform.position;
-                            GameLogic.instance.SetSpawnPoint(gameObject.transform.position + new Vector3(0, GameLogic.instance.worldOffset));
-                        }
-                    }
 
                 }
-
+                Debug.Log(transform.position);
                 Debug.Log(GameLogic.instance.currentPlayer.transform.position);
                 tryMovePlayer = true;
-                brotherScript.tryMovePlayer = true;
+                //brotherScript.tryMovePlayer = true;
             }
 
 

@@ -64,7 +64,7 @@ public class PauseCanvas : MonoBehaviour {
             }
 
             if (GameLogic.instance.levelFinished) {
-                Debug.Log("LevelFinish");
+                //Debug.Log("LevelFinish");
                 if (!textSet) {
                     textSet = true;
                     texts[1].text = "Fragmentos: " + GameLogic.instance.pickedFragments + "/1";
