@@ -54,10 +54,10 @@ public class LevelEntrance : DoubleObject {
 
 
             activated = true;
-            Debug.Log("Activating Door");
+            //Debug.Log("Activating Door");
 
         } else {
-            Debug.Log("DoorShouldBeDisabled");
+            //Debug.Log("DoorShouldBeDisabled");
         }
 
         rb = GetComponent<Rigidbody2D>();
@@ -74,7 +74,7 @@ public class LevelEntrance : DoubleObject {
             }
 
             spriteFragments.SetActive(temp);
-            Debug.Log(GameLogic.instance.levelsData[i].fragment);
+            //Debug.Log(GameLogic.instance.levelsData[i].fragment);
 
         }
 
@@ -85,9 +85,9 @@ public class LevelEntrance : DoubleObject {
         spriteLevelNumb.SetActive(GameLogic.instance.levelsData[levelToLoad - 1].completed);
         portalEffect.SetActive(GameLogic.instance.levelsData[levelToLoad - 1].completed);
         if (spriteLevelNumb.activeInHierarchy) {
-            Debug.Log("AHAHSDHASDS " + GameLogic.instance.levelsData[levelToLoad].completed);
+            //Debug.Log("AHAHSDHASDS " + GameLogic.instance.levelsData[levelToLoad].completed);
         } else {
-            Debug.Log(levelToLoad - 1 + "NO ESTA COMPLETADO -> " + GameLogic.instance.levelsData[levelToLoad - 1].completed);
+            //Debug.Log(levelToLoad - 1 + "NO ESTA COMPLETADO -> " + GameLogic.instance.levelsData[levelToLoad - 1].completed);
         }
 
 
@@ -188,6 +188,7 @@ public class LevelEntrance : DoubleObject {
 
     public override void Interact() {
         if (activated) {
+            GameLogic.instance.lastEntranceIndex = levelToLoad;
             GameLogic.instance.LoadScene(levelToLoad);
         }
     }
@@ -218,13 +219,13 @@ public class LevelEntrance : DoubleObject {
             if (!tryMovePlayer&&levelToLoad==GameLogic.instance.lastEntranceIndex) {
                 if (worldAssignation == world.DAWN) {
                         if (GameLogic.instance.currentPlayer.worldAssignation == world.DAWN) {
-                            GameLogic.instance.currentPlayer.transform.position = gameObject.transform.position+new Vector3(0, 0.55f, 0);
-                            GameLogic.instance.currentPlayer.brotherObject.transform.position = brotherObject.transform.position + new Vector3(0, 0.55f, 0);
+                            GameLogic.instance.currentPlayer.transform.position = gameObject.transform.position+new Vector3(0, 0.55f, 2);
+                            GameLogic.instance.currentPlayer.brotherObject.transform.position = brotherObject.transform.position + new Vector3(0, 0.55f, 2);
                             GameLogic.instance.SetSpawnPoint(gameObject.transform.position);
 
                         } else {
-                        GameLogic.instance.currentPlayer.transform.position = brotherObject.transform.position + new Vector3(0, 0.55f, 0);
-                        GameLogic.instance.currentPlayer.brotherObject.transform.position = transform.position + new Vector3(0, 0.55f, 0);
+                        GameLogic.instance.currentPlayer.transform.position = brotherObject.transform.position + new Vector3(0, 0.55f, 2);
+                        GameLogic.instance.currentPlayer.brotherObject.transform.position = transform.position + new Vector3(0, 0.55f, 2);
                         GameLogic.instance.SetSpawnPoint(brotherObject.transform.position);
 
                         }
@@ -233,8 +234,8 @@ public class LevelEntrance : DoubleObject {
 
 
                 }
-                Debug.Log(transform.position);
-                Debug.Log(GameLogic.instance.currentPlayer.transform.position);
+                //Debug.Log(transform.position);
+                //Debug.Log(GameLogic.instance.currentPlayer.transform.position);
                 tryMovePlayer = true;
                 //brotherScript.tryMovePlayer = true;
             }

@@ -250,7 +250,7 @@ public class PlayerController : DoubleObject {
         if (InputManager.instance != null) {
             if (InputManager.GetBlocked() && !GameLogic.instance.cameraTransition) {
                 if (placeToGo != null) {
-                    if (/*placeToGo.transform.position.x != transform.position.x*/Mathf.Abs(placeToGo.transform.position.x-transform.position.x)>0.01f) {
+                    if (/*placeToGo.transform.position.x != transform.position.x*/Mathf.Abs(placeToGo.transform.position.x - transform.position.x) > 0.01f) {
 
                         if (whichX == 0) {
                             if (placeToGo.transform.position.x - transform.position.x > 0) {
@@ -284,7 +284,7 @@ public class PlayerController : DoubleObject {
                         }
                     } else {
 
-                        if(placeToGo.tag == "Finish") {
+                        if (placeToGo.tag == "Finish") {
                             myAnimator.gameObject.transform.rotation = Quaternion.identity;
                             //brotherAnimator.gameObject.transform.rotation = q;
                             if (transform.position.z > 1.8f) {
@@ -306,9 +306,39 @@ public class PlayerController : DoubleObject {
 
 
                     }
+                } else if (GameLogic.instance.GetCurrentLevel() == "MenuInteractuable") {
+                    if (transform.position.z > 0) {
+
+                        Quaternion q = Quaternion.AngleAxis(180, new Vector3(0, 1, 0));
+
+                        myAnimator.transform.rotation = q;
+                        brotherAnimator.transform.rotation = q;
+
+                        transform.Translate(Vector3.back * 1.2f * Time.deltaTime);
+
+
+
+                    } else if (transform.position.z > 0.1f || transform.position.z < -0.1f) {
+                        Debug.Log(transform.position.z);
+
+                        transform.position = new Vector3(transform.position.x, transform.position.y, 0);
+                        brotherObject.transform.position = new Vector3(brotherObject.transform.position.x, brotherObject.transform.position.y, 0);
+                        Debug.Log("DeSPUES " + transform.position);
+
+
+
+                    } else {
+                        InputManager.UnBlockInput();
+                        Quaternion q = Quaternion.AngleAxis(90, new Vector3(0, 1, 0));
+
+                        myAnimator.transform.rotation = q;
+                        brotherAnimator.transform.rotation = q;
+                        Debug.Log("UNBLOCKBRUH");
+                    }
+
                 } else {
-                    InputManager.UnBlockInput();
-                    Debug.Log("UNBLOCKBRUH");
+                InputManager.UnBlockInput();
+                Debug.Log("UNBLOCKBRUH");
                 }
             }
         }

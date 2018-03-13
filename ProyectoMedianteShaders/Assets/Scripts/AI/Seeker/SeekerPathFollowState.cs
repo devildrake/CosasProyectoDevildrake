@@ -72,7 +72,9 @@ public class SeekerPathFollowState : State {
         float angle = Vector2.Angle(targetDir, whereTo);
         if (angle < agentScript.coneAngle && Vector2.Distance(target.position,a.transform.position) < agentScript.visionRange) {
             //Debug.Log(angle);
-            a.SwitchState(0, new SeekerChaseState());
+            //if (target.gameObject.GetComponent<PlayerController>().)
+            if (!target.GetComponent<PlayerController>().behindBush || !target.GetComponent<PlayerController>().crawling)
+                a.SwitchState(0, new SeekerChaseState());
         }
 
         //Debug.DrawLine(a.transform.position, a.transform.position);

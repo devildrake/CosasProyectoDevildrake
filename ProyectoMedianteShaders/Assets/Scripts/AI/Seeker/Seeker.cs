@@ -77,7 +77,7 @@ public class Seeker : Agent {
                 //Path_Points[i].position = new Vector3(Path_Points[i].position.x, Path_Points[i].position.y+GameLogic.instance.worldOffset, Path_Points[i].position.z);
 
                 Path_Positions[i] = new Vector3(Path_Points[i].position.x, Path_Points[i].position.y+GameLogic.instance.worldOffset, Path_Points[i].position.z);
-
+                Destroy(Path_Points[i].gameObject);
             }
         }
 
@@ -129,7 +129,7 @@ public class Seeker : Agent {
         //target = GameLogic.instance.currentPlayer.transform;
 
 
-        currentTarget = 0;
+        //currentTarget = 0;
 
         //El objeto que modifica a ambos haciendo de controlador es el que pertenece a Dawn
         if (worldAssignation == world.DAWN) {

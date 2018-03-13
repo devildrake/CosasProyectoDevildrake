@@ -189,7 +189,7 @@ public class InputManager : MonoBehaviour {
         } else {
 
             InputManager.gamePadConnected = false;
-            Debug.Log("FALSE");
+            //Debug.Log("FALSE");
         }
 
         if (!blocked) {
