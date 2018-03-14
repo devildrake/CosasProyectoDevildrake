@@ -38,10 +38,10 @@ public class InputManager : MonoBehaviour {
     public float prevRightHorizontalAxis;
     [HideInInspector]
     public float prevRightVerticalAxis;
-    [HideInInspector]
-    public bool prevDashButtonPlayer;
-    [HideInInspector]
-    public bool prevDeflectButtonPlayer;
+    //[HideInInspector]
+    //public bool prevDashButtonPlayer;
+    //[HideInInspector]
+    //public bool prevDeflectButtonPlayer;
 
 
 
@@ -61,8 +61,8 @@ public class InputManager : MonoBehaviour {
     public float verticalAxis;
     public float rightHorizontalAxis;
     public float rightVerticalAxis;
-    public bool dashButtonPlayer;
-    public bool deflectButtonPlayer;
+    //public bool dashButtonPlayer;
+    //public bool deflectButtonPlayer;
 
 
     private void Awake() {
@@ -129,34 +129,34 @@ public class InputManager : MonoBehaviour {
         blocked = false;
     }
 
-    public void UpdatePreviousGameLogic() {
-        prevSelectButton = selectButton;
-        prevChangeButton = changeButton;
-        prevPauseButton = pauseButton;
+    //public void UpdatePreviousGameLogic() {
+    //    //prevSelectButton = selectButton;
+    //    //prevChangeButton = changeButton;
+    //    //prevPauseButton = pauseButton;
 
-    }
+    //}
 
-    public void UpdatePreviousCamera() {
-        prevCameraButton = cameraButton;
-    }
+    //public void UpdatePreviousCamera() {
+    //    //prevCameraButton = cameraButton;
+    //}
 
-    public void UpdatePreviousUtils() {
-        prevDashButton = dashButton;
-        prevDeflectButton = deflectButton;
-    }
+    //public void UpdatePreviousUtils() {
+    //    //prevDashButton = dashButton;
+    //    //prevDeflectButton = deflectButton;
+    //}
 
-    public void UpdatePreviousPlayer() {
-        if (!blocked) {
-            prevCrawlButton = crawlButton;
-            prevJumpButton = jumpButton;
-            prevInteractButton = interactButton;
-            prevHorizontalAxis = horizontalAxis;
-            prevRightHorizontalAxis = rightHorizontalAxis;
-            prevRightVerticalAxis = rightVerticalAxis;
-            prevDeflectButtonPlayer = deflectButtonPlayer;
-            prevDashButtonPlayer = dashButtonPlayer;
-        }
-}
+    //public void UpdatePreviousPlayer() {
+    //    if (!blocked) {
+    //        //prevCrawlButton = crawlButton;
+    //        //prevJumpButton = jumpButton;
+    //        //prevInteractButton = interactButton;
+    //        //prevHorizontalAxis = horizontalAxis;
+    //        //prevRightHorizontalAxis = rightHorizontalAxis;
+    //        //prevRightVerticalAxis = rightVerticalAxis;
+    //        //prevDeflectButtonPlayer = deflectButtonPlayer;
+    //        //prevDashButtonPlayer = dashButtonPlayer;
+    //    }
+//}
 
     // Update is called once per frame
     void Update() {
@@ -194,11 +194,30 @@ public class InputManager : MonoBehaviour {
 
         if (!blocked) {
 
+            prevCrawlButton = crawlButton;
+            prevJumpButton = jumpButton;
+            prevInteractButton = interactButton;
+            prevHorizontalAxis = horizontalAxis;
+            prevRightHorizontalAxis = rightHorizontalAxis;
+            prevRightVerticalAxis = rightVerticalAxis;
+            //prevDeflectButtonPlayer = deflectButtonPlayer;
+            //prevDashButtonPlayer = dashButtonPlayer;
+
+
+            prevCameraButton = cameraButton;
+
+            prevDashButton = dashButton;
+            prevDeflectButton = deflectButton;
+
+            prevSelectButton = selectButton;
+            prevChangeButton = changeButton;
+            prevPauseButton = pauseButton;
+
             dashButton = (Input.GetAxisRaw("DashPunch") == 1.0);
-            dashButtonPlayer = (Input.GetAxisRaw("DashPunch") == 1.0);
+            //dashButtonPlayer = (Input.GetAxisRaw("DashPunch") == 1.0);
 
             deflectButton = (Input.GetAxisRaw("DeflectDrag") == 1.0);
-            deflectButtonPlayer = (Input.GetAxisRaw("DeflectDrag") == 1.0);
+            //deflectButtonPlayer = (Input.GetAxisRaw("DeflectDrag") == 1.0);
             crawlButton = (Input.GetAxisRaw("CrawlSmash") == 1.0);
             jumpButton = (Input.GetAxisRaw("Jump") == 1.0);
             pauseButton = (Input.GetAxisRaw("Pause") == 1.0);
@@ -206,6 +225,9 @@ public class InputManager : MonoBehaviour {
             resetButton = Input.GetAxisRaw("Reset") == 1.0;
             interactButton = (Input.GetAxisRaw("Interact") == 1.0);
             cameraButton = Input.GetAxisRaw("Camera") == 1.0;
+
+
+
 
             if (!Xbox_One_Controller && !PS4_Controller) {
                 changeButton = (Input.GetAxisRaw("Change") == 1.0);
@@ -219,7 +241,7 @@ public class InputManager : MonoBehaviour {
                 rightVerticalAxis = Input.GetAxisRaw("RightJoyStickVertical");
                 dashButton = (Input.GetAxisRaw("ChangePad") == -1.0);
                 changeButton = (Input.GetAxisRaw("ChangePad") == 1);
-                dashButtonPlayer = (Input.GetAxisRaw("ChangePad") == -1.0);
+                //dashButtonPlayer = (Input.GetAxisRaw("ChangePad") == -1.0);
 
 
             }

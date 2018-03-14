@@ -457,7 +457,7 @@ public class PlayerController : DoubleObject {
 
                 myAnimator.SetBool("dashing", dashTimer < dashCoolDown);
                 myAnimator.SetBool("crawling", crawling);
-                myAnimator.SetBool("dash_press", InputManager.instance.dashButtonPlayer && dashTimer>=dashCoolDown&&canDash&&!grounded);
+                myAnimator.SetBool("dash_press", InputManager.instance.dashButton && dashTimer>=dashCoolDown&&canDash&&!grounded);
                 myAnimator.SetBool("deflecting", deflectTimer < deflectCoolDown);
                 myAnimator.SetBool("deflect_press", InputManager.instance.deflectButton && deflectTimer >= deflectCoolDown&&objectsInDeflectArea.Count>0);
                 brotherAnimator.SetBool("punching", punchTimer < punchCoolDown);
@@ -518,7 +518,7 @@ public class PlayerController : DoubleObject {
         } else {
 
 
-            InputManager.instance.UpdatePreviousPlayer();
+            //InputManager.instance.UpdatePreviousPlayer();
         }
 
     }
@@ -564,7 +564,7 @@ public class PlayerController : DoubleObject {
 
 
                 if (grounded) {
-                    if (dawn&&worldAssignation==world.DAWN&& InputManager.instance.dashButtonPlayer) {
+                    if (dawn&&worldAssignation==world.DAWN&& InputManager.instance.dashButton) {
                         PlayerUtilsStatic.ResetDirectionCircle(arrow);
                     }
 
@@ -793,7 +793,7 @@ public class PlayerController : DoubleObject {
         }
 
         //Si se suelta el botón izquierdo del ratón y se puede dashear, se desactiva la slowMotion y se modifica el timeScale además de poner en false canDash
-        if (/*Input.GetMouseButtonUp(0)*/!InputManager.instance.dashButtonPlayer && InputManager.instance.prevDashButtonPlayer && canDash && dashTimer > dashCoolDown) {
+        if (/*Input.GetMouseButtonUp(0)*/!InputManager.instance.dashButton && InputManager.instance.prevDashButton && canDash && dashTimer > dashCoolDown) {
             if (leftPressed&&!grounded) {
                 GameLogic.instance.SetTimeScaleLocal(1.0f);
 
@@ -830,7 +830,7 @@ public class PlayerController : DoubleObject {
 
             //Si se pulsa el botón izquierdo del ratón y se puede dashear, se activa la slowMotion y se modifica el timeScale de gameLogic
         }
-        else if (/*Input.GetMouseButtonDown(0)*/InputManager.instance.dashButtonPlayer && !InputManager.instance.prevDashButtonPlayer && canDash&& !grounded && dashTimer > dashCoolDown) {
+        else if (/*Input.GetMouseButtonDown(0)*/InputManager.instance.dashButton && !InputManager.instance.prevDashButton && canDash&& !grounded && dashTimer > dashCoolDown) {
             leftPressed = true;
             GameLogic.instance.SetTimeScaleLocal(slowMotionTimeScale);
         }
@@ -893,7 +893,7 @@ public class PlayerController : DoubleObject {
 
         //Si se suelta el botón izquierdo del ratón y se habia pulsado previamente, el tiempo pasa a cero
         //En caso de estar grounded Se hace una llamada a Punch
-        if (/*Input.GetMouseButtonUp(0)*/!InputManager.instance.dashButtonPlayer && InputManager.instance.prevDashButtonPlayer && punchTimer > punchCoolDown) {
+        if (/*Input.GetMouseButtonUp(0)*/!InputManager.instance.dashButton && InputManager.instance.prevDashButton && punchTimer > punchCoolDown) {
             if (leftPressed) {
                 GameLogic.instance.SetTimeScaleLocal(1.0f);
                 if (grounded) {
@@ -908,7 +908,7 @@ public class PlayerController : DoubleObject {
         }
 
         //En caso de pulsar el botón izquierdo del ratón y estar grounded, se pone el timepo a 0.5
-        else if (/*Input.GetMouseButtonDown(0)*/InputManager.instance.dashButtonPlayer && !InputManager.instance.prevDashButtonPlayer && grounded&&punchTimer>punchCoolDown) {
+        else if (/*Input.GetMouseButtonDown(0)*/InputManager.instance.dashButton && !InputManager.instance.prevDashButton && grounded&&punchTimer>punchCoolDown) {
             GameLogic.instance.SetTimeScaleLocal(slowMotionTimeScale);
             leftPressed = true;
         }
@@ -920,7 +920,7 @@ public class PlayerController : DoubleObject {
         //Se renderizan las flechas en caso de clicar solo si esta en el suelo
         else {
             direction = PlayerUtilsStatic.UseDirectionCircle(arrow, gameObject,0,0,60);
-            if (/*Input.GetMouseButtonDown(1)*/InputManager.instance.deflectButtonPlayer && !InputManager.instance.prevDeflectButtonPlayer) {
+            if (/*Input.GetMouseButtonDown(1)*/InputManager.instance.deflectButton && !InputManager.instance.prevDeflectButton) {
                 foreach (GameObject g in NearbyObjects) {
                     if (g.GetComponent<DoubleObject>().isMovable) {
                         distanceToGrabbedObject = transform.position - NearbyObjects[0].transform.position;
@@ -928,7 +928,7 @@ public class PlayerController : DoubleObject {
 
                     }
                 }
-            }else if(/*Input.GetMouseButtonUp(1)*/!InputManager.instance.deflectButtonPlayer && InputManager.instance.prevDeflectButtonPlayer) {
+            }else if(/*Input.GetMouseButtonUp(1)*/!InputManager.instance.deflectButton && InputManager.instance.prevDeflectButton) {
                 grabbing = false;
             }
         }

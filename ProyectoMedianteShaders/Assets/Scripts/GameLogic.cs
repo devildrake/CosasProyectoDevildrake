@@ -405,7 +405,7 @@ public class GameLogic : MonoBehaviour {
         }
 
         if (InputManager.instance != null) {
-            InputManager.instance.UpdatePreviousGameLogic();
+            //InputManager.instance.UpdatePreviousGameLogic();
         }
 
 

@@ -204,7 +204,7 @@ public class CameraScript : MonoBehaviour {
 
 
 
-                InputManager.instance.UpdatePreviousCamera();
+                //InputManager.instance.UpdatePreviousCamera();
 
 
 

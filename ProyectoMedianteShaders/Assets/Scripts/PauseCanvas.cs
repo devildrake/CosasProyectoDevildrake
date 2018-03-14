@@ -101,7 +101,7 @@ public class PauseCanvas : MonoBehaviour {
     void Update () {
         //CheckNull();
         CheckPause();
-        if (Input.GetKey(KeyCode.R)) {
+        if (InputManager.instance.resetButton) {
             Barra.SetActive(true);
         } else
             Barra.SetActive(false);

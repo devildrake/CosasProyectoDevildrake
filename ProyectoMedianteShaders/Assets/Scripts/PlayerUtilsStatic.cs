@@ -151,7 +151,7 @@ public static class PlayerUtilsStatic {
                             arrowAnchor.transform.rotation = rot; //rota el sprite
                         }
                     }
-                    InputManager.instance.UpdatePreviousUtils();
+                    //InputManager.instance.UpdatePreviousUtils();
                     return (mousePositions[1] - mousePositions[0]).normalized;
                 } else {
                     ////CONTROL CON EL MANDO
@@ -253,7 +253,7 @@ public static class PlayerUtilsStatic {
                         }
                     }
 
-                    InputManager.instance.UpdatePreviousUtils();
+                    //InputManager.instance.UpdatePreviousUtils();
 
                     return (mousePositions[1] - mousePositions[0]).normalized;
 
@@ -510,7 +510,7 @@ public static class PlayerUtilsStatic {
                         }
                     }
                     //Debug.Log(finalDirection.normalized);
-                    InputManager.instance.UpdatePreviousUtils();
+                    //InputManager.instance.UpdatePreviousUtils();
                     return finalDirection.normalized;
                     // return (mousePositions[1] - mousePositions[0]).normalized;
                 }
