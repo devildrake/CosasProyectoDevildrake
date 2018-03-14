@@ -24,7 +24,7 @@ public class Seeker : Agent {
     [Header("Esto se setea por codigo")]
     public Vector3[] Path_Positions;
 
-    Rigidbody2D rb;
+    //Rigidbody2D rb;
     Seeker brotherScript;
 
     public void HideTentacles() {

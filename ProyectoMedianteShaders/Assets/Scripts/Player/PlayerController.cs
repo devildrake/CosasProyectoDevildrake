@@ -338,7 +338,7 @@ public class PlayerController : DoubleObject {
 
                 } else {
                 InputManager.UnBlockInput();
-                Debug.Log("UNBLOCKBRUH");
+                //Debug.Log("UNBLOCKBRUH");
                 }
             }
         }
@@ -735,7 +735,7 @@ public class PlayerController : DoubleObject {
     }
 
     //Metodo que añade una fuerza al personaje para simular un salto
-    void Jump() {
+    public void Jump() {
         rb.velocity= new Vector2(0,0);
         audioSource.pitch = 1.0f;
 
@@ -1131,7 +1131,7 @@ public class PlayerController : DoubleObject {
         if (worldAssignation == world.DUSK) {
             transform.position = GameLogic.instance.spawnPoint;
         } else {
-            Debug.Log(GameLogic.instance.spawnPoint);
+            //Debug.Log(GameLogic.instance.spawnPoint);
             transform.position = GameLogic.instance.spawnPoint + new Vector3(0, GameLogic.instance.worldOffset, 0);
         }
 

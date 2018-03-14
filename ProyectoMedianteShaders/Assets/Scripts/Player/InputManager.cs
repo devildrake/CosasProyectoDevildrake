@@ -166,7 +166,7 @@ public class InputManager : MonoBehaviour {
 
 
         for (int x = 0; x < names.Length; x++) {
-            print(names[x].Length);
+            //print(names[x].Length);
             if (names[x].Length == 19) {
                 print("PS4 CONTROLLER IS CONNECTED");
                 PS4_Controller = true;
@@ -184,7 +184,7 @@ public class InputManager : MonoBehaviour {
 
         if (Xbox_One_Controller|| PS4_Controller) {
             InputManager.gamePadConnected = true;
-            Debug.Log("TRUE");
+            //Debug.Log("TRUE");
 
         } else {
 

@@ -67,6 +67,8 @@ public class GroundCheck : MonoBehaviour {
                 player.sliding = true;
                 player.rb.velocity = new Vector2(player.rb.velocity.x, -10);
                 //Debug.Log("BothHit");
+            } else {
+                player.sliding = false;
             }
         } else {
             player.sliding = false;

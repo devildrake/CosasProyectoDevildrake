@@ -18,7 +18,7 @@ public class Trampler : Agent {
     public bool mustStop;
 
     Trampler brotherScript;
-    Rigidbody2D rb;
+    //Rigidbody2D rb;
 
     public void ResetPoints() {
         if (worldAssignation == world.DAWN) {

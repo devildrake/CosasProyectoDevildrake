@@ -21,7 +21,7 @@ public class FlyingSeed : Agent {
     public float timeCastingBlowUp;
 
     FlyingSeed brotherScript;
-    Rigidbody2D rb;
+    //Rigidbody2D rb;
 
     public void DropObject() {
         if (grabbedObject != null) {
@@ -218,11 +218,11 @@ public class FlyingSeed : Agent {
 
     public void Spin(float angularSpeed) {
         if (rabitoGiratorio != null) {
-            Debug.Log("Spin");
+            //Debug.Log("Spin");
             rabitoGiratorio.transform.Rotate(new Vector3(0, 0, 1), angularSpeed * Time.deltaTime);
         }
     }
-
+    //SUAVIZAR SLIDE CON TIMER
 
     // Update is called once per frame
     void Update() {

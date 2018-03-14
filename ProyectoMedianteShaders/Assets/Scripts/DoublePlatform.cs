@@ -6,7 +6,7 @@ public class DoublePlatform : DoubleObject {
     public bool isSlider;
 	// Use this for initialization
 	void Start () {
-        if (gameObject.tag == "slider") {
+        if (gameObject.tag == "Slide") {
             isSlider = true;
         }
         InitTransformable();

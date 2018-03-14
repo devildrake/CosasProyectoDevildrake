@@ -48,7 +48,7 @@ public class DoubleBox : DoubleObject {
             rb = GetComponent<Rigidbody2D>();
 
         if (rb.bodyType == RigidbodyType2D.Kinematic) {
-            Debug.Log(worldAssignation);
+            //Debug.Log(worldAssignation);
 
 
             positionWithOffset = brotherObject.transform.position;

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Agent : DoubleObject {
-    Rigidbody2D rb;
+    public Rigidbody2D rb;
     protected State dawnState;
     protected State duskState;
     protected bool startedAI;

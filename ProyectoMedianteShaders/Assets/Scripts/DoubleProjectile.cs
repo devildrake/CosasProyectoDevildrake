@@ -38,7 +38,7 @@ public class DoubleProjectile : DoubleObject {
         offset = GameLogic.instance.worldOffset;
         angleToRot = Vector3.Angle(Vector2.right, GetComponent<Rigidbody2D>().velocity);
         transform.Rotate(new Vector3(0, 0, 1), -angleToRot);
-        Debug.Log(angleToRot);
+        //Debug.Log(angleToRot);
     }
 
     public void BeDeflected() {
@@ -121,7 +121,7 @@ public class DoubleProjectile : DoubleObject {
 
     private void OnCollisionEnter2D(Collision2D collision) {
         if (collision.gameObject.tag == "Player") {
-            Debug.Log("CollisionWithPlayer");
+            //Debug.Log("CollisionWithPlayer");
             collision.gameObject.GetComponent<PlayerController>().Kill();
         }
         if (collision.gameObject != brotherObject&&collision.gameObject.tag!="ProjectileThrow") {
