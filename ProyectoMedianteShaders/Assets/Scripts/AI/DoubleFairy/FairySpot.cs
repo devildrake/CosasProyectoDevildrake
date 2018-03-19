@@ -16,6 +16,8 @@ public class FairySpot : DoubleObject {
     public bool hasMessage;
     Sprite messageSprite;
 
+    public DoubleFairyGuide parentFairy;
+
     void Start() {
         if (spriteObject != null) {
             spriteObject.SetActive(false);
@@ -32,26 +34,11 @@ public class FairySpot : DoubleObject {
     }
 
     protected override void BrotherBehavior() {
-        Vector3 positionWithOffset;
-
-        positionWithOffset = brotherObject.transform.position;
-
-        if (worldAssignation == world.DAWN) {
-            if (!dawn) {
-                positionWithOffset.y += offset;
-                transform.position = positionWithOffset;
-                transform.rotation = brotherObject.transform.rotation;
-            }
-        } else if (worldAssignation == world.DUSK) {
-            if (dawn) {
-                positionWithOffset.y -= offset;
-                transform.position = positionWithOffset;
-                transform.rotation = brotherObject.transform.rotation;
-            }
+        if (worldAssignation == world.DAWN&&dawn) {
+            transform.position = new Vector3(brotherObject.transform.position.x, brotherObject.transform.position.y + GameLogic.instance.worldOffset, brotherObject.transform.position.z);
+        } else if(worldAssignation==world.DUSK&&!dawn){
+            transform.position = new Vector3(brotherObject.transform.position.x, brotherObject.transform.position.y - GameLogic.instance.worldOffset, brotherObject.transform.position.z);
         }
-
-
-
     }
 
     public override void Change() {
@@ -68,9 +55,30 @@ public class FairySpot : DoubleObject {
     }
 
 
+
     // Update is called once per frame
     void Update() {
         AddToGameLogicList();
         BrotherBehavior();
+
+        if (added) {
+            if(parentFairy == null) {
+                parentFairy = GetComponentInParent<DoubleFairyGuide>();
+            } else {
+                if (!parentFairy.fairySpotList.Contains(this)) {
+                    parentFairy.fairySpotList.Add(this);
+                } else {
+                    for(int i = 0; i < parentFairy.fairySpotList.Count; i++) {
+                        if (parentFairy.fairySpotList[i] == this) {
+                            parentFairy.fairySpotPositionList[i] = transform.position;
+
+                        }
+                    }
+
+
+                }
+            }
+        }
+
     }
 }

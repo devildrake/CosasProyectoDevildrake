@@ -5,6 +5,7 @@ using UnityEngine;
 public class DoubleFairyGuide : DoubleObject {
 
     public List<FairySpot> fairySpotList;
+    public List<Vector3> fairySpotPositionList;
 
     int targetIndex;
     public FairySpot currentSpot;
@@ -13,13 +14,20 @@ public class DoubleFairyGuide : DoubleObject {
     // Use this for initialization
     Rigidbody2D rb;
     DoubleFairyGuide brotherScript;
-
+    public GameObject objetoDebug;
+    public GameObject spriteRendererObject;
+    public SpriteRenderer spriteRenderer;
 
     bool NotDAWN(DoubleObject d) {
         return d.worldAssignation != world.DAWN;
     }
 
     void Start() {
+
+        spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        spriteRendererObject = spriteRenderer.gameObject;
+
+
         distanceFromPlayerThreshold = 4.0f;
         brotherScript = brotherObject.GetComponent<DoubleFairyGuide>();
         targetIndex = 0;
@@ -32,8 +40,11 @@ public class DoubleFairyGuide : DoubleObject {
             foreach (FairySpot f in fairySpotArray) {
                 if (f.worldAssignation == world.DAWN) {
                     fairySpotList.Add(f);
+                    fairySpotPositionList.Add(new Vector3(f.transform.position.x, f.transform.position.y, f.transform.position.z));
                 } else if (f.worldAssignation == world.DUSK) {
                     brotherScript.fairySpotList.Add(f);
+                    brotherScript.fairySpotPositionList.Add(new Vector3(f.transform.position.x, f.transform.position.y, f.transform.position.z));
+
                 }
             }
         }
@@ -78,6 +89,11 @@ public class DoubleFairyGuide : DoubleObject {
 
         }
 
+    }
+
+    bool isNotFromThisWorld(FairySpot f) {
+
+        return worldAssignation != f.worldAssignation;
     }
 
     public override void Change() {
@@ -126,48 +142,85 @@ public class DoubleFairyGuide : DoubleObject {
         }
     }
 
-
     void FairyBehaviour() {
         if (currentSpot == null) {
-            if (Vector2.Distance(transform.position, fairySpotList[targetIndex].transform.position) < 1.0f) {
+            spriteRendererObject.SetActive(false);
+            if (Vector2.Distance(transform.position, fairySpotPositionList[targetIndex]) < 1.0f) {
                 currentSpot = fairySpotList[targetIndex];
                 brotherScript.currentSpot = fairySpotList[targetIndex].brotherScript;
+
+                spriteRenderer.sprite = currentSpot.GetComponentInChildren<SpriteRenderer>().sprite;
+
+
+                //rb.velocity = new Vector2(0, 0);
+                Debug.Log(currentSpot);
             } else {
-                Debug.Log("Hace Cosas");
-                Vector2 DesiredVelocity = fairySpotList[targetIndex].transform.position - transform.position;
+
+                Debug.Log((Vector2.Distance(transform.position, fairySpotPositionList[targetIndex])));
+                Vector2 DesiredVelocity = fairySpotPositionList[targetIndex] - transform.position;
                 DesiredVelocity.Normalize();
                 DesiredVelocity *= max_Speed;
                 Vector2 SteeringForce = (DesiredVelocity - rb.velocity);
                 SteeringForce /= max_Speed;
                 Vector2 acceleration = SteeringForce;
                 rb.velocity += acceleration * Time.deltaTime;
-                rb.velocity.Normalize();
-                rb.velocity *= max_Speed;
-            }
+
+                //rb.velocity.Normalize();
+
+                //rb.velocity *= max_Speed;
+
+
+                //rb.velocity = rb.velocity * max_Speed;
+
+            } 
         } else {
+
             if (!currentSpot.mustStopHere) {
                 targetIndex++;
                 brotherScript.targetIndex++;
+                currentSpot = null;
+                brotherScript.currentSpot = null;
+                spriteRendererObject.SetActive(false);
             } else {
-                if (Vector2.Distance(GameLogic.instance.currentPlayer.transform.position, transform.position) < distanceFromPlayerThreshold) {
-                    currentSpot.spriteObject.SetActive(true);
-                } else {
-                    currentSpot.spriteObject.SetActive(false);
-                    if (GameLogic.instance.currentPlayer.transform.position.x > transform.position.x + (distanceFromPlayerThreshold * 1.2f)) {
-                        targetIndex++;
-                    }
+                rb.velocity = new Vector2(0, 0);
+
+                //if (Vector2.Distance(GameLogic.instance.currentPlayer.transform.position, transform.position) < distanceFromPlayerThreshold){
+                //    if (spriteRenderer != null) {
+                //        if (spriteRenderer.sprite != null) {
+                //            spriteRendererObject.SetActive(true);
+
+                //        }
+                //    }
+
+                        
 
 
-                }
+                //}
+
+                //if(GameLogic.instance.currentPlayer.transform.position.x > transform.position.x + distanceFromPlayerThreshold) {
+                //    currentSpot = null;
+                //    brotherScript.currentSpot = null;
+                //    targetIndex++;
+                //    brotherScript.targetIndex++;
+                //    spriteRendererObject.SetActive(false);
+                //}
+
+
 
             }
-
 
         }
     }
 
     // Update is called once per frame
     void Update() {
+
+        if (objetoDebug != null) {
+            if (fairySpotPositionList.Count > 0){
+                objetoDebug.transform.position = fairySpotPositionList[0]; 
+            }
+        }
+
         AddToGameLogicList();
         BrotherBehavior();
         if ((worldAssignation == world.DAWN && dawn) || (worldAssignation == world.DUSK && !dawn)) {
@@ -175,6 +228,9 @@ public class DoubleFairyGuide : DoubleObject {
 
         }
 
+        if (added) {
+            fairySpotList.RemoveAll(isNotFromThisWorld);
+        }
 
 
     }
