@@ -5,18 +5,19 @@ using UnityEngine;
 public class DoubleFairyGuide : DoubleObject {
 
     public List<FairySpot> fairySpotList;
-    public List<Vector3> fairySpotPositionList;
-
     int targetIndex;
     public FairySpot currentSpot;
     float distanceFromPlayerThreshold;
-    float max_Speed = 2.0f;
+    float max_Speed = 6.0f;
     // Use this for initialization
     Rigidbody2D rb;
     DoubleFairyGuide brotherScript;
-    public GameObject objetoDebug;
     public GameObject spriteRendererObject;
+    public GameObject fairyModel;
     public SpriteRenderer spriteRenderer;
+    float myAlpha;
+    float idleTimer=0;
+    public int currentIdlePattern = 0;
 
     bool NotDAWN(DoubleObject d) {
         return d.worldAssignation != world.DAWN;
@@ -26,7 +27,7 @@ public class DoubleFairyGuide : DoubleObject {
 
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         spriteRendererObject = spriteRenderer.gameObject;
-
+        myAlpha = 0;
 
         distanceFromPlayerThreshold = 4.0f;
         brotherScript = brotherObject.GetComponent<DoubleFairyGuide>();
@@ -40,10 +41,10 @@ public class DoubleFairyGuide : DoubleObject {
             foreach (FairySpot f in fairySpotArray) {
                 if (f.worldAssignation == world.DAWN) {
                     fairySpotList.Add(f);
-                    fairySpotPositionList.Add(new Vector3(f.transform.position.x, f.transform.position.y, f.transform.position.z));
-                } else if (f.worldAssignation == world.DUSK) {
+                    f.transform.parent = transform.parent;
+                } else {
+                    f.transform.parent = transform.parent;
                     brotherScript.fairySpotList.Add(f);
-                    brotherScript.fairySpotPositionList.Add(new Vector3(f.transform.position.x, f.transform.position.y, f.transform.position.z));
 
                 }
             }
@@ -66,6 +67,7 @@ public class DoubleFairyGuide : DoubleObject {
 
         rb.mass = 5000;
         rb.gravityScale = 0;
+        spriteRendererObject.SetActive(true);
     }
 
     protected override void BrotherBehavior() {
@@ -113,6 +115,8 @@ public class DoubleFairyGuide : DoubleObject {
                 OnlyFreezeRotation();
                 brotherScript.rb.velocity = dominantVelocity;
                 rb.velocity = new Vector2(0.0f, 0.0f);
+                brotherScript.fairyModel.transform.localPosition = fairyModel.transform.localPosition;
+                brotherScript.idleTimer = idleTimer;
             }
             //Si antes del cambio estaba en dusk, pasara a hacerse dynamic y al otro kinematic, además de darle su velocidad 
             else {
@@ -122,11 +126,17 @@ public class DoubleFairyGuide : DoubleObject {
                 brotherScript.rb.bodyType = RigidbodyType2D.Kinematic;
                 brotherScript.rb.velocity = new Vector2(0.0f, 0.0f);
                 rb.velocity = dominantVelocity;
+                fairyModel.transform.localPosition = brotherScript.fairyModel.transform.localPosition;
+                idleTimer = brotherScript.idleTimer;
+
             }
 
             dawn = !dawn;
             brotherScript.dawn = !brotherScript.dawn;
         }
+
+                
+
 
     }
 
@@ -143,83 +153,179 @@ public class DoubleFairyGuide : DoubleObject {
     }
 
     void FairyBehaviour() {
-        if (currentSpot == null) {
-            spriteRendererObject.SetActive(false);
-            if (Vector2.Distance(transform.position, fairySpotPositionList[targetIndex]) < 1.0f) {
-                currentSpot = fairySpotList[targetIndex];
-                brotherScript.currentSpot = fairySpotList[targetIndex].brotherScript;
+        if (targetIndex < fairySpotList.Count) {
+            if (currentSpot == null) {
+                fairyModel.transform.localPosition = new Vector3(0, 0, 0);
+                idleTimer = 0;
+                FadeOut();
+                if (Vector2.Distance(transform.position, fairySpotList[targetIndex].transform.position) < 1.0f) {
+                    currentSpot = fairySpotList[targetIndex];
 
-                spriteRenderer.sprite = currentSpot.GetComponentInChildren<SpriteRenderer>().sprite;
+                    brotherScript.currentSpot = fairySpotList[targetIndex].brotherScript;
+
+                    if (spriteRendererObject != null) {
+                        if (currentSpot.messageSprite != null) {
+                            //spriteRendererObject.SetActive(false);
+                            FadeOut();
+                            spriteRenderer.sprite = currentSpot.messageSprite;
+                            brotherScript.spriteRenderer.sprite = currentSpot.brotherScript.messageSprite;
+                            Debug.Log("Set");
+                        }
+                    }
+                    //rb.velocity = new Vector2(0, 0);
+                    Debug.Log(currentSpot);
+                } else {
+                    Vector2 DesiredVelocity = fairySpotList[targetIndex].transform.position - transform.position;
+                    DesiredVelocity.Normalize();
+                    DesiredVelocity *= max_Speed;
+                    Vector2 SteeringForce = (DesiredVelocity - rb.velocity);
+                    SteeringForce /= max_Speed;
+                    Vector2 acceleration = SteeringForce*2;
+                    rb.velocity += acceleration * Time.deltaTime;
+
+                    //rb.velocity.Normalize();
+
+                    //rb.velocity *= max_Speed;
 
 
-                //rb.velocity = new Vector2(0, 0);
-                Debug.Log(currentSpot);
+                    //rb.velocity = rb.velocity * max_Speed;
+
+                }
             } else {
 
-                Debug.Log((Vector2.Distance(transform.position, fairySpotPositionList[targetIndex])));
-                Vector2 DesiredVelocity = fairySpotPositionList[targetIndex] - transform.position;
-                DesiredVelocity.Normalize();
-                DesiredVelocity *= max_Speed;
-                Vector2 SteeringForce = (DesiredVelocity - rb.velocity);
-                SteeringForce /= max_Speed;
-                Vector2 acceleration = SteeringForce;
-                rb.velocity += acceleration * Time.deltaTime;
+                if (!currentSpot.mustStopHere) {
+                    targetIndex++;
+                    brotherScript.targetIndex++;
+                    currentSpot = null;
+                    brotherScript.currentSpot = null;
+                    //spriteRendererObject.SetActive(false);
+                    FadeOut();
+                } else {
+                    rb.velocity = new Vector2(0, 0);
 
-                //rb.velocity.Normalize();
+                    //////IDLE
+                    if (currentIdlePattern == 0) {
+                        idleTimer += Time.deltaTime;
 
-                //rb.velocity *= max_Speed;
+                        float idleX, idleY;
 
+                        idleX = Mathf.Cos(4 * idleTimer) - Mathf.Pow(Mathf.Cos(1 * idleTimer), 3);
+                        idleY = Mathf.Sin(4 * idleTimer) - Mathf.Pow(Mathf.Sin(1 * idleTimer), 3);
 
-                //rb.velocity = rb.velocity * max_Speed;
+                        fairyModel.transform.Translate(new Vector2(idleX * Time.deltaTime, idleY * Time.deltaTime));
+                    } else if (currentIdlePattern == 1) {
 
-            } 
-        } else {
+                        idleTimer += Time.deltaTime;
 
-            if (!currentSpot.mustStopHere) {
-                targetIndex++;
-                brotherScript.targetIndex++;
-                currentSpot = null;
-                brotherScript.currentSpot = null;
-                spriteRendererObject.SetActive(false);
-            } else {
-                rb.velocity = new Vector2(0, 0);
+                        float idleX, idleY;
 
-                //if (Vector2.Distance(GameLogic.instance.currentPlayer.transform.position, transform.position) < distanceFromPlayerThreshold){
-                //    if (spriteRenderer != null) {
-                //        if (spriteRenderer.sprite != null) {
-                //            spriteRendererObject.SetActive(true);
+                        idleX = Mathf.Sin(idleTimer) * (Mathf.Exp(Mathf.Cos(idleTimer)) - 2*Mathf.Cos(idleTimer*4) - Mathf.Pow(Mathf.Sin(idleTimer / 12),5)) ;
+                        idleY = Mathf.Cos(idleTimer) * (Mathf.Exp(Mathf.Cos(idleTimer)) - 2 * Mathf.Cos(idleTimer * 4) - Mathf.Pow(Mathf.Sin(idleTimer / 12), 5));
 
-                //        }
-                //    }
-
-                        
-
-
-                //}
-
-                //if(GameLogic.instance.currentPlayer.transform.position.x > transform.position.x + distanceFromPlayerThreshold) {
-                //    currentSpot = null;
-                //    brotherScript.currentSpot = null;
-                //    targetIndex++;
-                //    brotherScript.targetIndex++;
-                //    spriteRendererObject.SetActive(false);
-                //}
+                        fairyModel.transform.Translate(new Vector2(idleX * Time.deltaTime, idleY * Time.deltaTime));
 
 
 
+                    } else if (currentIdlePattern == 2) {
+                        idleTimer += Time.deltaTime;
+
+                        float idleX, idleY;
+
+                        idleX = Mathf.Sin(-90 + idleTimer) * 1;
+                        idleY = Mathf.Cos(90 + idleTimer) * 1;
+
+                        fairyModel.transform.Translate(new Vector2(idleX * Time.deltaTime, idleY * Time.deltaTime));
+                    }
+
+                    //////IDLE
+
+                    if (Vector2.Distance(GameLogic.instance.currentPlayer.transform.position, transform.position) < distanceFromPlayerThreshold) {
+                        if (spriteRenderer != null) {
+                            if (spriteRenderer.sprite != null) {
+                                FadeIn();
+                                Debug.Log("Close enough");
+
+                            } else {
+                                Debug.Log("Null SpriteRenderers.sprite");
+                            }
+                        } else {
+                            Debug.Log("Null SpriteRenderers");
+
+                        }
+                    } else {
+                        FadeOut();
+                        Debug.Log("Too far");
+                    }
+
+                    if (currentSpot.messageSprite != null) {
+                        if (GameLogic.instance.currentPlayer.transform.position.x > transform.position.x + distanceFromPlayerThreshold) {
+                            currentSpot = null;
+                            brotherScript.currentSpot = null;
+
+                            targetIndex++;
+                            brotherScript.targetIndex++;
+                            //spriteRendererObject.SetActive(false);
+                            FadeOut();
+
+                        }
+                    } else {
+                        if (GameLogic.instance.currentPlayer.transform.position.x >= transform.position.x) {
+                            currentSpot = null;
+                            brotherScript.currentSpot = null;
+
+                            targetIndex++;
+                            brotherScript.targetIndex++;
+                            //spriteRendererObject.SetActive(false);
+                            FadeOut();
+
+                        }
+                    }
+
+
+
+                }
             }
-
+        } else {
+            FadeOut();
         }
+        
+    }
+
+    void FadeIn() {
+        if (myAlpha < 0) {
+            myAlpha = 0;
+        }
+
+
+        if (spriteRenderer.color.a < 0.75f) {
+            myAlpha += Time.deltaTime;
+            if (spriteRenderer.sprite != null) {
+                spriteRenderer.color = new Color(spriteRenderer.color.r, spriteRenderer.color.g, spriteRenderer.color.b, myAlpha);
+            }
+            Debug.Log(myAlpha);
+        }
+        brotherScript.myAlpha = myAlpha;
+
+    }
+
+    void FadeOut() {
+        if (myAlpha < 0) {
+            myAlpha = 0;
+        }
+
+        if (spriteRenderer.color.a > 0) {
+
+            myAlpha -= Time.deltaTime;
+            if (spriteRenderer.sprite != null) {
+                spriteRenderer.color = new Color(spriteRenderer.color.r, spriteRenderer.color.g, spriteRenderer.color.b, myAlpha);
+            }
+        }
+        brotherScript.myAlpha = myAlpha;
+
     }
 
     // Update is called once per frame
     void Update() {
-
-        if (objetoDebug != null) {
-            if (fairySpotPositionList.Count > 0){
-                objetoDebug.transform.position = fairySpotPositionList[0]; 
-            }
-        }
 
         AddToGameLogicList();
         BrotherBehavior();

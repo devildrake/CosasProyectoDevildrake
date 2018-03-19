@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class FairySpot : DoubleObject {
-    public GameObject spriteObject;
 
     protected override void LoadResources() {
         //ASIGNAR DAWNSPRITE Y DUSKSPRITE ESTARIA BIEN
@@ -14,15 +13,11 @@ public class FairySpot : DoubleObject {
 
     public bool mustStopHere;
     public bool hasMessage;
-    Sprite messageSprite;
+    public Sprite messageSprite;
 
     public DoubleFairyGuide parentFairy;
 
     void Start() {
-        if (spriteObject != null) {
-            spriteObject.SetActive(false);
-        }
-
         brotherScript = brotherObject.GetComponent<FairySpot>();
         canBounce = false;
         InitTransformable();
@@ -34,10 +29,8 @@ public class FairySpot : DoubleObject {
     }
 
     protected override void BrotherBehavior() {
-        if (worldAssignation == world.DAWN&&dawn) {
+        if (worldAssignation == world.DAWN && dawn) {
             transform.position = new Vector3(brotherObject.transform.position.x, brotherObject.transform.position.y + GameLogic.instance.worldOffset, brotherObject.transform.position.z);
-        } else if(worldAssignation==world.DUSK&&!dawn){
-            transform.position = new Vector3(brotherObject.transform.position.x, brotherObject.transform.position.y - GameLogic.instance.worldOffset, brotherObject.transform.position.z);
         }
     }
 
@@ -70,7 +63,9 @@ public class FairySpot : DoubleObject {
                 } else {
                     for(int i = 0; i < parentFairy.fairySpotList.Count; i++) {
                         if (parentFairy.fairySpotList[i] == this) {
-                            parentFairy.fairySpotPositionList[i] = transform.position;
+                            //parentFairy.fairySpotPositionList[i] = transform.position;
+                            parentFairy.fairySpotList[i].transform.position = transform.position;
+
 
                         }
                     }
