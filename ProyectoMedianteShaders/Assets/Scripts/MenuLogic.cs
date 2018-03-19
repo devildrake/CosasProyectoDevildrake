@@ -26,9 +26,13 @@ public class MenuLogic : MonoBehaviour {
      * menuState = 0 --> Pantalla de pulsa cualquier tecla para continuar
      * menuState = 1 --> Pantalla jugar/salir
      * menuState = 2 --> Opciones abiertas
+     * menuState = 3 --> Control de errores para salir
      */
     private int menuState;
     private bool axisInUse = false; //para detectar el input solo una vez hasta que sueltas
+
+    //Canvas con los elementos para el control de errores
+    [SerializeField] private GameObject controlErrores;
 
     //variables para controlar el blink
     private float timer, timeToBlink;
@@ -53,6 +57,7 @@ public class MenuLogic : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        print(menuState);
         switch (menuState) {
         case -1:
             if(canvasGroup.alpha > 0) {
@@ -82,6 +87,9 @@ public class MenuLogic : MonoBehaviour {
             State2Behavior();
             break;
 
+        case 3:
+                State3Behavior();
+                break;
         default:
             break;
         }
@@ -118,15 +126,16 @@ public class MenuLogic : MonoBehaviour {
              * Selected = 1 --> Boton salir
              * Selected = 2 --> Boton opciones
              */
-            if(selected == 0) {
+            if (selected == 0) {
                 GameLogic.instance.LoadScene(1);
             }
-            else if(selected == 1) {
-                Application.Quit();
-            }
-            else if(selected == 2) {
+            else if (selected == 2) {
                 optionsCanvas.SetActive(true);
                 menuState = 2;
+            }
+            else if (selected == 1) {
+                controlErrores.SetActive(true);
+                menuState = 3;
             }
         }
 
@@ -146,7 +155,8 @@ public class MenuLogic : MonoBehaviour {
                 }
                 else if(hit.transform.gameObject.name == "salir") {
                     selected = 1;
-                    Application.Quit();
+                    controlErrores.SetActive(true);
+                    menuState = 3;
                 }
             }
         }
@@ -161,6 +171,16 @@ public class MenuLogic : MonoBehaviour {
         }
     }
 
+    //Funcionamiento del control de errores para salir
+    void State3Behavior() {
+        if (!controlErrores.activeInHierarchy) {
+            menuState = 1;
+        }
+        if (Input.GetKeyDown(KeyCode.Escape)) {
+            controlErrores.SetActive(false);
+        }
+    }
+
     void Blink(GameObject go) {
         if(timer > timeToBlink) {
             if(go.activeInHierarchy) {
@@ -171,5 +191,9 @@ public class MenuLogic : MonoBehaviour {
             timer = 0;
         }
         timer += Time.deltaTime;
+    }
+
+    public void QuitGame() {
+        Application.Quit();
     }
 }
