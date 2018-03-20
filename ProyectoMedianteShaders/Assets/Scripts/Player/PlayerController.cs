@@ -123,6 +123,9 @@ public class PlayerController : DoubleObject {
     //Referencia al sistema de particulas de dawn para el deflect.
     public ParticleSystem PSdawnDeflectCast, PSdawnDeflectRelease, PSdawnDash1, PSdawnDash2, PSDawnDashRelease, PSdawnDeflectFeedback;
     private ParticleSystem.EmissionModule emissionModuleDash1, emissionModuleDash2;
+    [SerializeField]private Color particleDashColor, particleHasDashedColor;
+    private ParticleSystem.MainModule mainModuleDash1, mainModuleDash2;
+    private ParticleSystem.TrailModule trailModuleDash1, trailModuleDash2;
 
     AudioSource audioSource;
     GroundCheck groundCheck;
@@ -144,10 +147,14 @@ public class PlayerController : DoubleObject {
         if (PSdawnDash1 != null) {
             emissionModuleDash1 = PSdawnDash1.emission;
             emissionModuleDash1.enabled = false;
+            mainModuleDash1 = PSdawnDash1.main;
+            trailModuleDash1 = PSdawnDash1.trails;
         }
         if(PSdawnDash2 != null) {
             emissionModuleDash2 = PSdawnDash2.emission;
             emissionModuleDash2.enabled = false;
+            mainModuleDash2 = PSdawnDash2.main;
+            trailModuleDash2 = PSdawnDash2.trails;
         }
         if(PSdawnDeflectFeedback != null) {
             PSdawnDeflectFeedback.Stop();
@@ -759,16 +766,13 @@ public class PlayerController : DoubleObject {
                 direction = PlayerUtilsStatic.UseDirectionCircle(arrow, gameObject, 0);
 
                 if (PSdawnDash1 != null) {
-                    ParticleSystem.MainModule main = PSdawnDash1.main;
-                    main.simulationSpeed = 1;
+                    mainModuleDash1.simulationSpeed = 1;
                     emissionModuleDash1.enabled = true;
                 }
                 if (PSdawnDash2 != null) {
-                    ParticleSystem.MainModule main = PSdawnDash2.main;
-                    main.simulationSpeed = 1;
+                    mainModuleDash2.simulationSpeed = 1;
                     emissionModuleDash2.enabled = true;
                 }
-
             }
         } else {
             if (PSdawnDash1 != null) {
@@ -836,6 +840,12 @@ public class PlayerController : DoubleObject {
                 }
                 else {
                     Debug.Log("El sistema de particulas del release del dash no esta referenciado");
+                }
+                if(PSdawnDash1 != null) {
+                    emissionModuleDash1.enabled = false;
+                }
+                if(PSdawnDash2 != null) {
+                    emissionModuleDash2.enabled = false;
                 }
                 dashTimer = 0;
                 SetCanDash(false);

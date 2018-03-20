@@ -7478,6 +7478,8 @@ MonoBehaviour:
   PSdawnDash2: {fileID: 0}
   PSDawnDashRelease: {fileID: 0}
   PSdawnDeflectFeedback: {fileID: 0}
+  particleDashColor: {r: 0, g: 0, b: 0, a: 0}
+  particleHasDashedColor: {r: 0, g: 0, b: 0, a: 0}
   brotherScript: {fileID: 0}
 --- !u!114 &114120057378442316
 MonoBehaviour:
@@ -7790,6 +7792,8 @@ MonoBehaviour:
   PSdawnDash2: {fileID: 198936380503043052}
   PSDawnDashRelease: {fileID: 198221884525237860}
   PSdawnDeflectFeedback: {fileID: 198618214812279060}
+  particleDashColor: {r: 1, g: 1, b: 0.67058825, a: 0.7411765}
+  particleHasDashedColor: {r: 0.34736305, g: 0.36764705, b: 0, a: 0.7411765}
   brotherScript: {fileID: 0}
 --- !u!114 &114184290945405734
 MonoBehaviour:
@@ -34691,7 +34695,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 869152282
+  randomSeed: 1325566889
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -37841,7 +37845,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 1027681735
+  randomSeed: -1319588487
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -38115,7 +38119,7 @@ ParticleSystem:
         m_RotationOrder: 4
     startRotationX:
       serializedVersion: 2
-      minMaxState: 3
+      minMaxState: 0
       scalar: 0
       minScalar: 0
       maxCurve:
@@ -38156,7 +38160,7 @@ ParticleSystem:
         m_RotationOrder: 4
     startRotationY:
       serializedVersion: 2
-      minMaxState: 3
+      minMaxState: 0
       scalar: 0
       minScalar: 0
       maxCurve:
@@ -38197,8 +38201,8 @@ ParticleSystem:
         m_RotationOrder: 4
     startRotation:
       serializedVersion: 2
-      minMaxState: 3
-      scalar: 6.283185
+      minMaxState: 0
+      scalar: 0
       minScalar: 0
       maxCurve:
         serializedVersion: 2
