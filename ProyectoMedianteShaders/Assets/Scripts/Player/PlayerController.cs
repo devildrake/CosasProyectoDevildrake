@@ -121,7 +121,7 @@ public class PlayerController : DoubleObject {
     public Change_Scale maskObjectScript;
 
     //Referencia al sistema de particulas de dawn para el deflect.
-    public ParticleSystem PSdawnDeflectCast, PSdawnDeflectRelease, PSdawnDash1, PSdawnDash2, PSdawnDeflectFeedback;
+    public ParticleSystem PSdawnDeflectCast, PSdawnDeflectRelease, PSdawnDash1, PSdawnDash2, PSDawnDashRelease, PSdawnDeflectFeedback;
     private ParticleSystem.EmissionModule emissionModuleDash1, emissionModuleDash2;
 
     AudioSource audioSource;
@@ -151,6 +151,9 @@ public class PlayerController : DoubleObject {
         }
         if(PSdawnDeflectFeedback != null) {
             PSdawnDeflectFeedback.Stop();
+        }
+        if(PSDawnDashRelease != null) {
+            PSDawnDashRelease.Stop();
         }
         audioSource = GetComponent<AudioSource>();
         groundCheck = GetComponentInChildren<GroundCheck>();
@@ -827,6 +830,13 @@ public class PlayerController : DoubleObject {
                 rb.velocity = new Vector2(0, 0);
                // Debug.Log(direction);
                 PlayerUtilsStatic.DoDash(gameObject, direction, dashForce,true);
+                //control de error del sistema de particulas del release del dash
+                if (PSDawnDashRelease != null) {
+                    PSDawnDashRelease.Play();
+                }
+                else {
+                    Debug.Log("El sistema de particulas del release del dash no esta referenciado");
+                }
                 dashTimer = 0;
                 SetCanDash(false);
                 leftPressed = false;
