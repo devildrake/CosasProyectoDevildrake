@@ -39,6 +39,8 @@ public class MenuLogic : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+        GameLogic.instance.isPaused = false;
+        GameLogic.instance.SetTimeScaleLocal(1);
         canvasGroup = canvas.GetComponent<CanvasGroup>();
         menuState = -1;
         timer = 0f;
@@ -56,12 +58,11 @@ public class MenuLogic : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
-        //print(menuState);
+	void Update () { 
         switch (menuState) {
         case -1:
             if(canvasGroup.alpha > 0) {
-                canvasGroup.alpha -= Time.deltaTime/2;
+                canvasGroup.alpha -= Time.deltaTime;
             } else {
                 pressAnyKeyObj.SetActive(true);
                 menuState = 0;
@@ -96,6 +97,7 @@ public class MenuLogic : MonoBehaviour {
 	}
 
     private void State1Behavior() {
+        
         //MOVIMIENTO ENTRE LAS OPCIONES
         if (Input.GetAxisRaw("Vertical") < 0) {
             if (!axisInUse) {
@@ -112,7 +114,6 @@ public class MenuLogic : MonoBehaviour {
                 if(selected > state1Elements.Length - 2) {
                     selected = 0;
                 }
-                print(selected);
             }
         } else {
             axisInUse = false;
