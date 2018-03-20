@@ -67,9 +67,9 @@ public class PauseCanvas : MonoBehaviour {
                 //Debug.Log("LevelFinish");
                 if (!textSet) {
                     textSet = true;
-                    texts[1].text = "Fragmentos: " + GameLogic.instance.pickedFragments + "/1";
-                    texts[2].text = "Intentos: " + (GameLogic.instance.timesDied + 1).ToString();
-                    texts[3].text = "Tiempo: " + Mathf.Floor((GameLogic.instance.timeElapsed * 100))/100 + " segundos";
+                    texts[1].text = GameLogic.instance.pickedFragments + "/1";
+                    texts[2].text = (GameLogic.instance.timesDied + 1).ToString();
+                    texts[3].text = Mathf.Floor((GameLogic.instance.timeElapsed * 100))/100 + " segundos";
                 }
                 scoreScreen.SetActive(true);
                 Cursor.visible = true;
