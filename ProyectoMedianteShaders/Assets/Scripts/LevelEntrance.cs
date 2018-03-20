@@ -222,14 +222,16 @@ public class LevelEntrance : DoubleObject {
                             GameLogic.instance.currentPlayer.transform.position = gameObject.transform.position+new Vector3(0, 0.55f, 2);
                             GameLogic.instance.currentPlayer.brotherObject.transform.position = brotherObject.transform.position + new Vector3(0, 0.55f, 2);
                             GameLogic.instance.SetSpawnPoint(gameObject.transform.position);
+                            GameLogic.instance.cameraTransition = true;
 
                         } else {
                         GameLogic.instance.currentPlayer.transform.position = brotherObject.transform.position + new Vector3(0, 0.55f, 2);
                         GameLogic.instance.currentPlayer.brotherObject.transform.position = transform.position + new Vector3(0, 0.55f, 2);
                         GameLogic.instance.SetSpawnPoint(brotherObject.transform.position);
+                        GameLogic.instance.cameraTransition = true;
 
-                        }
-                        tryMovePlayer = true;
+                    }
+                    tryMovePlayer = true;
                         brotherScript.tryMovePlayer = true;
 
 

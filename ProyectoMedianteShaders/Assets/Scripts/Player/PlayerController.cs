@@ -70,6 +70,7 @@ public class PlayerController : DoubleObject {
     public bool canJumpOnImpulsor;
     public bool calledImpuslorBool;
     public bool sliding;
+    public float timeNotSliding;
     public DoubleObject interactableObject;
     Vector3 distanceToGrabbedObject;
 
@@ -132,7 +133,7 @@ public class PlayerController : DoubleObject {
 
     //Se inicializan las cosas
     void Start() {
-        
+        timeNotSliding = 0.2f;
         //El sistema de particulas de Dawn del deflect se inicia desactivado
         if (PSdawnDeflectCast != null) {
             PSdawnDeflectCast.Stop();
@@ -319,11 +320,11 @@ public class PlayerController : DoubleObject {
 
 
                     } else if (transform.position.z > 0.1f || transform.position.z < -0.1f) {
-                        Debug.Log(transform.position.z);
+                       // Debug.Log(transform.position.z);
 
                         transform.position = new Vector3(transform.position.x, transform.position.y, 0);
                         brotherObject.transform.position = new Vector3(brotherObject.transform.position.x, brotherObject.transform.position.y, 0);
-                        Debug.Log("DeSPUES " + transform.position);
+                       // Debug.Log("DeSPUES " + transform.position);
 
 
 
@@ -333,7 +334,7 @@ public class PlayerController : DoubleObject {
 
                         myAnimator.transform.rotation = q;
                         brotherAnimator.transform.rotation = q;
-                        Debug.Log("UNBLOCKBRUH");
+                      //  Debug.Log("UNBLOCKBRUH");
                     }
 
                 } else {
@@ -552,6 +553,9 @@ public class PlayerController : DoubleObject {
     //Funcion que hace al personaje moverse hacia los lados a partir del input de las flechas, en caso de estar en el aire se mantiene siempre y cuando se cambie la dirección horizontal en el aire se reduce a la mitad la velocidad
     void Move() {
         if (!sliding) {
+            if (timeNotSliding < 0.3f) {
+                timeNotSliding += Time.deltaTime;
+            }
             if (!grabbing) {
                 timeCountToDrag = 0;
                 bool changed = false;
@@ -821,7 +825,7 @@ public class PlayerController : DoubleObject {
                 audioSource.Play();
                 canJumpOnImpulsor = false;
                 rb.velocity = new Vector2(0, 0);
-                Debug.Log(direction);
+               // Debug.Log(direction);
                 PlayerUtilsStatic.DoDash(gameObject, direction, dashForce,true);
                 dashTimer = 0;
                 SetCanDash(false);
@@ -960,7 +964,7 @@ public class PlayerController : DoubleObject {
     void DoSmash() {
         RaycastHit2D hit2D = Physics2D.Raycast(rb.position - new Vector2(0f, 0.5f), Vector2.down, 0.2f, groundMask);
         if (hit2D) {
-            Debug.Log("HittingStuff");
+            //Debug.Log("HittingStuff");
             if (hit2D.transform.gameObject.GetComponent<DoubleObject>().isBreakable) {
                 hit2D.transform.gameObject.GetComponent<DoubleObject>().GetBroken();
             }

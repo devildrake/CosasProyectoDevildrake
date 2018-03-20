@@ -57,7 +57,7 @@ public class MenuLogic : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        print(menuState);
+        //print(menuState);
         switch (menuState) {
         case -1:
             if(canvasGroup.alpha > 0) {
@@ -146,7 +146,12 @@ public class MenuLogic : MonoBehaviour {
             if(Physics.Raycast(ray, out hit, 100.0f)) {
                 if(hit.transform.gameObject.name == "jugar") {
                     selected = 0;
-                    GameLogic.instance.LoadScene(1);
+                    if (GameLogic.instance.firstOpening) {
+                        GameLogic.instance.LoadScene(1);
+                        GameLogic.instance.firstOpening = true;
+                    } else {
+                        GameLogic.instance.LoadScene(2);
+                    }
                 }
                 else if(hit.transform.gameObject.name == "opciones") {
                     selected = 2;

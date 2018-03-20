@@ -27,7 +27,7 @@ public class GameLogic : MonoBehaviour {
     //////////////////////VARIABLES LOAD/SAVE////////////////////////////
     //////////////////////VARIABLES LOAD/SAVE////////////////////////////
     public bool saved;
-    bool firstOpening;
+    public bool firstOpening;
     //public Dictionary<int, bool> completedLevels;
     //public Dictionary<int, bool> fragments;
     public Dictionary<int, LevelData> levelsData;
@@ -264,7 +264,7 @@ public class GameLogic : MonoBehaviour {
         currentSceneName = SceneManager.GetActiveScene().name;
         DirectionCircle.SetOnce(true);
         //timeElapsed = 0;
-        Debug.Log("RESET");
+        //Debug.Log("RESET");
         pickedFragments = 0;
         additionalOffset = new Vector3(0, 0, 0);
         timesDied = 0;
@@ -485,7 +485,7 @@ public class GameLogic : MonoBehaviour {
     }
 
     void InitLoadSaveVariables() {
-        firstOpening = true;
+        firstOpening = false;
 
         for (int i = 0; i < 30; i++) {
             //fragments[i] = false;

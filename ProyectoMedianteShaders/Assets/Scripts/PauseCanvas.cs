@@ -50,7 +50,7 @@ public class PauseCanvas : MonoBehaviour {
                 if (comprovacion != null) {
                     comprovacion.SetActive(false);
                 }else {
-                    Debug.Log("Falta asignar la variable comprovación");
+                    //Debug.Log("Falta asignar la variable comprovación");
                 }
 
                 if(salir != null) {

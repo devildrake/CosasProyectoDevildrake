@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class TemporaryOffset : DoubleObject {
-    int localKillCount;
+    //int localKillCount;
     public Vector3 additionalOffset;
     Rigidbody2D rb;
     GameObject player;
@@ -11,7 +11,7 @@ public class TemporaryOffset : DoubleObject {
     TemporaryOffset brotherScript;
 
     void Start() {
-        localKillCount = 0;
+        //localKillCount = 0;
         InitTransformable();
         offset = GameLogic.instance.worldOffset;
         rb = GetComponent<Rigidbody2D>();
