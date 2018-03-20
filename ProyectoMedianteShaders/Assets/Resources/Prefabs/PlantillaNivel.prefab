@@ -4319,7 +4319,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1666293796172694}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -521.72, y: -381.85, z: 0}
+  m_LocalPosition: {x: -518.83, y: -380.14, z: 0}
   m_LocalScale: {x: 0.1, y: 0.10000001, z: 0.1}
   m_Children:
   - {fileID: 4402962987169400}
@@ -4414,7 +4414,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1028251591184920}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3.1, y: 24.4, z: -36.5}
+  m_LocalPosition: {x: 21.5, y: 24.4, z: -36.07}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4805067214027586}
@@ -8168,7 +8168,7 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: 8e4d95f7118a6af4d91c2747a7439b0b, type: 3}
     m_FontSize: 14
     m_FontStyle: 0
     m_BestFit: 0
@@ -8319,8 +8319,8 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 40
+    m_Font: {fileID: 12800000, guid: 8e4d95f7118a6af4d91c2747a7439b0b, type: 3}
+    m_FontSize: 60
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
@@ -10312,8 +10312,8 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 40
+    m_Font: {fileID: 12800000, guid: 8e4d95f7118a6af4d91c2747a7439b0b, type: 3}
+    m_FontSize: 60
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
@@ -10622,7 +10622,7 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: 8e4d95f7118a6af4d91c2747a7439b0b, type: 3}
     m_FontSize: 14
     m_FontStyle: 0
     m_BestFit: 0
@@ -11381,8 +11381,8 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 40
+    m_Font: {fileID: 12800000, guid: 8e4d95f7118a6af4d91c2747a7439b0b, type: 3}
+    m_FontSize: 60
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
@@ -11655,8 +11655,8 @@ SkinnedMeshRenderer:
   m_BlendShapeWeights: []
   m_RootBone: {fileID: 0}
   m_AABB:
-    m_Center: {x: -0.008220255, y: 0.19509983, z: -0.10597038}
-    m_Extent: {x: 0.36190674, y: 0.40039524, z: 0.74365556}
+    m_Center: {x: -0.008221552, y: 0.19512749, z: -0.105938196}
+    m_Extent: {x: 0.3619067, y: 0.4003947, z: 0.7436558}
   m_DirtyAABB: 0
 --- !u!137 &137580113668498854
 SkinnedMeshRenderer:
@@ -11699,8 +11699,8 @@ SkinnedMeshRenderer:
   m_BlendShapeWeights: []
   m_RootBone: {fileID: 0}
   m_AABB:
-    m_Center: {x: 0.000000009313226, y: -0.000014305115, z: 0.00003838539}
-    m_Extent: {x: 0.31087235, y: 0.18791662, z: 0.35687187}
+    m_Center: {x: 0.000000011175871, y: -0.000046253204, z: 0.000061035156}
+    m_Extent: {x: 0.31087235, y: 0.18791716, z: 0.35687187}
   m_DirtyAABB: 0
 --- !u!137 &137857310011618188
 SkinnedMeshRenderer:
@@ -42283,7 +42283,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 390, y: -46}
+  m_AnchoredPosition: {x: 390, y: -42}
   m_SizeDelta: {x: 455, y: 95}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224034666001718110
@@ -43233,7 +43233,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 376, y: -204}
+  m_AnchoredPosition: {x: 376, y: -200}
   m_SizeDelta: {x: 455, y: 95}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224414219800548490
@@ -43537,7 +43537,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 629, y: 118}
+  m_AnchoredPosition: {x: 629, y: 122}
   m_SizeDelta: {x: 455, y: 95}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224501514830213974
