@@ -1287,7 +1287,7 @@ Transform:
 Transform:
   m_PrefabParentObject: {fileID: 4899079776961396, guid: 5ce16f901e7aad54d830bef6cfd8c6d4,
     type: 2}
-  m_PrefabInternal: {fileID: 1558439568}
+  m_PrefabInternal: {fileID: 1772714007}
 --- !u!4 &365268439 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4578625287248598, guid: 06d5c493d5f0ca444bcbd4a3a6a01f17,
@@ -4197,52 +4197,6 @@ Transform:
   m_PrefabParentObject: {fileID: 4262175452879522, guid: 2aa06ada0bd413c4498d14d098a98f1d,
     type: 2}
   m_PrefabInternal: {fileID: 468868924}
---- !u!1001 &1558439568
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 82550204}
-    m_Modifications:
-    - target: {fileID: 4899079776961396, guid: 5ce16f901e7aad54d830bef6cfd8c6d4, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 30.12
-      objectReference: {fileID: 0}
-    - target: {fileID: 4899079776961396, guid: 5ce16f901e7aad54d830bef6cfd8c6d4, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 4.12
-      objectReference: {fileID: 0}
-    - target: {fileID: 4899079776961396, guid: 5ce16f901e7aad54d830bef6cfd8c6d4, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: -1.64
-      objectReference: {fileID: 0}
-    - target: {fileID: 4899079776961396, guid: 5ce16f901e7aad54d830bef6cfd8c6d4, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4899079776961396, guid: 5ce16f901e7aad54d830bef6cfd8c6d4, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4899079776961396, guid: 5ce16f901e7aad54d830bef6cfd8c6d4, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4899079776961396, guid: 5ce16f901e7aad54d830bef6cfd8c6d4, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4899079776961396, guid: 5ce16f901e7aad54d830bef6cfd8c6d4, type: 2}
-      propertyPath: m_RootOrder
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1601903697374184, guid: 5ce16f901e7aad54d830bef6cfd8c6d4, type: 2}
-      propertyPath: m_Name
-      value: BushPrefabModel (3)
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: 5ce16f901e7aad54d830bef6cfd8c6d4, type: 2}
-  m_IsPrefabParent: 0
 --- !u!4 &1561683250 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4578625287248598, guid: 06d5c493d5f0ca444bcbd4a3a6a01f17,
@@ -4652,6 +4606,52 @@ Transform:
   m_PrefabParentObject: {fileID: 4578625287248598, guid: 06d5c493d5f0ca444bcbd4a3a6a01f17,
     type: 2}
   m_PrefabInternal: {fileID: 731610276}
+--- !u!1001 &1772714007
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 82550204}
+    m_Modifications:
+    - target: {fileID: 4899079776961396, guid: 5ce16f901e7aad54d830bef6cfd8c6d4, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 30.12
+      objectReference: {fileID: 0}
+    - target: {fileID: 4899079776961396, guid: 5ce16f901e7aad54d830bef6cfd8c6d4, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 4.12
+      objectReference: {fileID: 0}
+    - target: {fileID: 4899079776961396, guid: 5ce16f901e7aad54d830bef6cfd8c6d4, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: -1.64
+      objectReference: {fileID: 0}
+    - target: {fileID: 4899079776961396, guid: 5ce16f901e7aad54d830bef6cfd8c6d4, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4899079776961396, guid: 5ce16f901e7aad54d830bef6cfd8c6d4, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4899079776961396, guid: 5ce16f901e7aad54d830bef6cfd8c6d4, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4899079776961396, guid: 5ce16f901e7aad54d830bef6cfd8c6d4, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4899079776961396, guid: 5ce16f901e7aad54d830bef6cfd8c6d4, type: 2}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1601903697374184, guid: 5ce16f901e7aad54d830bef6cfd8c6d4, type: 2}
+      propertyPath: m_Name
+      value: BushPrefabModel (3)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 5ce16f901e7aad54d830bef6cfd8c6d4, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1001 &1815743725
 Prefab:
   m_ObjectHideFlags: 0
