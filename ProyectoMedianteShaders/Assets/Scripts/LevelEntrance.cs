@@ -232,6 +232,8 @@ public class LevelEntrance : DoubleObject {
                             GameLogic.instance.cameraTransition = true;
 
                         }
+                        GameLogic.instance.timeElapsed = 0;
+                        GameLogic.instance.pickedFragments = 0;
                         tryMovePlayer = true;
                         brotherScript.tryMovePlayer = true;
                         GameLogic.instance.setSpawnPoint = true;

@@ -32,14 +32,15 @@ public class GameLogic : MonoBehaviour {
     //public Dictionary<int, bool> fragments;
     public Dictionary<int, LevelData> levelsData;
     public int lastEntranceIndex;
-
-        //public Dictionary<int,FragmentData> savedFragments;
+    public int[] interactuableLevelIndexes = {2};
+    //public Dictionary<int,FragmentData> savedFragments;
 
 
     //////////////////////VARIABLES LOAD/SAVE////////////////////////////
     //////////////////////VARIABLES LOAD/SAVE////////////////////////////
     //////////////////////VARIABLES LOAD/SAVE////////////////////////////
 
+    public bool showTimeCounter=false;
     public string levelName = "NonSet";
 
     //Flag para la transición inicial de la camara
@@ -118,6 +119,9 @@ public class GameLogic : MonoBehaviour {
      * Conjunto de metodos que se llamaran al cambiar las opciones de juego
      */
     public void changeGameSettings() {
+
+        //showTimeCounter
+
         //CONFIGURACION DE PANTALLA
         Screen.SetResolution(Screen.resolutions[resolutionSelected].width, Screen.resolutions[resolutionSelected].height,fullscreen,screenRefreshRate);
         Application.targetFrameRate = maxFrameRate;
@@ -256,7 +260,7 @@ public class GameLogic : MonoBehaviour {
             InputManager.UnBlockInput();
         }
 
-        timeElapsed = 0;
+        //timeElapsed = 0;
         levelName = "NonSet";
         cameraAttenuation = 1;
         cameraTransition = true;
@@ -266,7 +270,7 @@ public class GameLogic : MonoBehaviour {
         DirectionCircle.SetOnce(true);
         //timeElapsed = 0;
         //Debug.Log("RESET");
-        pickedFragments = 0;
+        //pickedFragments = 0;
         additionalOffset = new Vector3(0, 0, 0);
         timesDied = 0;
     }
