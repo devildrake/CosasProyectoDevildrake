@@ -3546,7 +3546,6 @@ GameObject:
   - component: {fileID: 124415062967357342}
   - component: {fileID: 114475717537003352}
   - component: {fileID: 114074255514805672}
-  - component: {fileID: 114541369165954400}
   m_Layer: 0
   m_Name: Dawn_Camera
   m_TagString: MainCamera
@@ -4914,7 +4913,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1185294212326556}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 512, y: 384, z: 0}
+  m_LocalPosition: {x: -87.500916, y: 7.594452, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4983188337837188}
@@ -9631,23 +9630,6 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!114 &114541369165954400
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1912617004924058}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4975a6e437fc3b149a8cd508ce5bdd69, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  threshold: 0.3
-  intensity: 2.5
-  blurSize: 3.68
-  blurIterations: 2
-  blurType: 0
-  fastBloomShader: {fileID: 4800000, guid: 68a00c837b82e4c6d92e7da765dc5f1d, type: 3}
 --- !u!114 &114548704267139540
 MonoBehaviour:
   m_ObjectHideFlags: 1

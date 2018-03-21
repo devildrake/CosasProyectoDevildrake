@@ -51,6 +51,6 @@ public class DoublePlatform : DoubleObject {
 
     // Update is called once per frame
     void Update () {
-		
+        AddToGameLogicList();
 	}
 }
