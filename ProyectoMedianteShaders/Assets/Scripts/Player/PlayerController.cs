@@ -286,7 +286,8 @@ public class PlayerController : DoubleObject {
                                 if (transform.position.x < placeToGo.transform.position.x) {
                                     transform.position = new Vector3(placeToGo.transform.position.x, transform.position.y, transform.position.z);
                                 } else {
-                                    transform.Translate(Vector3.left * 2.0f * Time.deltaTime);
+                                    Debug.Log("LeFtu");
+                                    transform.Translate(Vector3.right * 2.0f * Time.deltaTime);
                                     myAnimator.SetBool("grounded", true);
                                     myAnimator.SetBool("moving", true);
                                     myAnimator.SetFloat("timeMoving", 1.0f);
@@ -305,7 +306,11 @@ public class PlayerController : DoubleObject {
                                 myAnimator.SetBool("grounded", true);
                                 myAnimator.SetBool("moving", true);
                                 myAnimator.SetFloat("timeMoving", 1.0f);
-                                transform.Translate(Vector3.forward * 1.4f * Time.deltaTime);
+                                if (whichX > 0) {
+                                    transform.Translate(Vector3.forward * 1.4f * Time.deltaTime);
+                                } else {
+                                    transform.Translate(Vector3.back * 1.4f * Time.deltaTime);
+                                }
                             }
 
 

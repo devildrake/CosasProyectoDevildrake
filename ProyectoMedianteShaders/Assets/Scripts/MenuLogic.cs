@@ -128,7 +128,12 @@ public class MenuLogic : MonoBehaviour {
              * Selected = 2 --> Boton opciones
              */
             if (selected == 0) {
-                GameLogic.instance.LoadScene(1);
+                if (GameLogic.instance.firstOpening) {
+                    GameLogic.instance.LoadScene(2);
+                    GameLogic.instance.firstOpening = true;
+                } else {
+                    GameLogic.instance.LoadScene(2);
+                }
             }
             else if (selected == 2) {
                 optionsCanvas.SetActive(true);
@@ -148,7 +153,7 @@ public class MenuLogic : MonoBehaviour {
                 if(hit.transform.gameObject.name == "jugar") {
                     selected = 0;
                     if (GameLogic.instance.firstOpening) {
-                        GameLogic.instance.LoadScene(1);
+                        GameLogic.instance.LoadScene(2);
                         GameLogic.instance.firstOpening = true;
                     } else {
                         GameLogic.instance.LoadScene(2);

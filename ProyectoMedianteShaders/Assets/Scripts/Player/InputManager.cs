@@ -108,6 +108,8 @@ public class InputManager : MonoBehaviour {
         instance.interactButton = false;
         instance.resetButton = false;
         instance.horizontalAxis = 0;
+        instance.rightHorizontalAxis = 0;
+        instance.rightVerticalAxis = 0;
 
         instance.prevDashButton = false;
         instance.prevDeflectButton = false;
@@ -119,7 +121,8 @@ public class InputManager : MonoBehaviour {
         instance.prevInteractButton = false;
         instance.prevResetButton = false;
         instance.prevHorizontalAxis = 0;
-
+        instance.prevRightHorizontalAxis = 0;
+        instance.prevRightVerticalAxis = 0;
 
 
         blocked = true;
