@@ -69,21 +69,21 @@ MonoBehaviour:
       screenEdgeMask:
         intensity: 0
   depthOfField:
-    m_Enabled: 1
-    m_Settings:
-      focusDistance: 5
-      aperture: 7.7
-      focalLength: 71
-      useCameraFov: 0
-      kernelSize: 1
-  motionBlur:
     m_Enabled: 0
+    m_Settings:
+      focusDistance: 10
+      aperture: 32
+      focalLength: 92
+      useCameraFov: 0
+      kernelSize: 0
+  motionBlur:
+    m_Enabled: 1
     m_Settings:
       shutterAngle: 270
       sampleCount: 10
-      frameBlending: 0
+      frameBlending: 0.007
   eyeAdaptation:
-    m_Enabled: 0
+    m_Enabled: 1
     m_Settings:
       lowPercent: 45
       highPercent: 95
@@ -284,7 +284,7 @@ MonoBehaviour:
     m_Enabled: 0
     m_Settings:
       spectralTexture: {fileID: 0}
-      intensity: 1
+      intensity: 0
   grain:
     m_Enabled: 0
     m_Settings:

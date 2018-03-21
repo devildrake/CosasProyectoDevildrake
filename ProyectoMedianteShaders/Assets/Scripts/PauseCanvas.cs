@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class PauseCanvas : MonoBehaviour {
 
     public int nextSceneIndex;
+    public GameObject timeFeedBackObject;
     public GameObject salir;
     public GameObject comprovacion;
     public GameObject Barra;
@@ -67,11 +68,23 @@ public class PauseCanvas : MonoBehaviour {
                 //Debug.Log("LevelFinish");
                 if (!textSet) {
                     textSet = true;
-                    texts[1].text = GameLogic.instance.pickedFragments + "/1";
+                    texts[1].text = GameLogic.instance.pickedFragments + "/3";
                     texts[2].text = (GameLogic.instance.timesDied + 1).ToString();
                     texts[3].text = Mathf.Floor((GameLogic.instance.timeElapsed * 100))/100 + " segundos";
                 }
-                scoreScreen.SetActive(true);
+
+                for (int i = 0; i < GameLogic.instance.interactuableLevelIndexes.Length; i++) {
+                    bool goingToSelector = false;
+                    if (GameLogic.instance.interactuableLevelIndexes[i] == nextSceneIndex) {
+                        goingToSelector = true;
+                    }
+
+                    if (goingToSelector) {
+                        scoreScreen.SetActive(true);
+                    } else {
+                        GameLogic.instance.LoadScene(GameLogic.instance.pauseCanvas.nextSceneIndex);
+                    }
+                }
                 Cursor.visible = true;
                 Cursor.lockState = CursorLockMode.None; //Se puede volver a mover el cursor
 
@@ -99,6 +112,15 @@ public class PauseCanvas : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
+
+        if (GameLogic.instance.showTimeCounter) {
+            if (timeFeedBackObject != null) {
+                timeFeedBackObject.SetActive(true);
+                timeFeedBackObject.GetComponent<Text>().text =(Mathf.Floor((GameLogic.instance.timeElapsed))).ToString() + "s";
+            }
+        }
+
+
         //CheckNull();
         CheckPause();
         if (InputManager.instance.resetButton) {
