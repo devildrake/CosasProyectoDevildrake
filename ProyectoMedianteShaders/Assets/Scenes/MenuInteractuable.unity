@@ -176,6 +176,7 @@ MonoBehaviour:
   spriteFragments: {fileID: 0}
   spriteLevelNumb: {fileID: 0}
   portalEffect: {fileID: 0}
+  brotherScript: {fileID: 0}
 --- !u!50 &88350968
 Rigidbody2D:
   serializedVersion: 4
@@ -714,6 +715,16 @@ Prefab:
     - target: {fileID: 1594755954670994, guid: a113aabf8a79f3f468e4ced9566c08a4, type: 2}
       propertyPath: m_Name
       value: LevelSelector (6)
+      objectReference: {fileID: 0}
+    - target: {fileID: 114606968220020842, guid: a113aabf8a79f3f468e4ced9566c08a4,
+        type: 2}
+      propertyPath: startPosObj
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 114458281975387272, guid: a113aabf8a79f3f468e4ced9566c08a4,
+        type: 2}
+      propertyPath: startPosObj
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a113aabf8a79f3f468e4ced9566c08a4, type: 2}
@@ -1331,6 +1342,7 @@ MonoBehaviour:
   spriteFragments: {fileID: 0}
   spriteLevelNumb: {fileID: 0}
   portalEffect: {fileID: 0}
+  brotherScript: {fileID: 0}
 --- !u!50 &726387445
 Rigidbody2D:
   serializedVersion: 4
@@ -1529,6 +1541,16 @@ Prefab:
         type: 2}
       propertyPath: levelToLoad
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 114606968220020842, guid: a113aabf8a79f3f468e4ced9566c08a4,
+        type: 2}
+      propertyPath: startPosObj
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 114458281975387272, guid: a113aabf8a79f3f468e4ced9566c08a4,
+        type: 2}
+      propertyPath: startPosObj
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a113aabf8a79f3f468e4ced9566c08a4, type: 2}
@@ -2494,6 +2516,7 @@ MonoBehaviour:
   spriteFragments: {fileID: 0}
   spriteLevelNumb: {fileID: 0}
   portalEffect: {fileID: 0}
+  brotherScript: {fileID: 0}
 --- !u!50 &1298263401
 Rigidbody2D:
   serializedVersion: 4
@@ -3040,6 +3063,7 @@ MonoBehaviour:
   spriteFragments: {fileID: 0}
   spriteLevelNumb: {fileID: 0}
   portalEffect: {fileID: 0}
+  brotherScript: {fileID: 0}
 --- !u!50 &1440936722
 Rigidbody2D:
   serializedVersion: 4
@@ -3334,6 +3358,7 @@ MonoBehaviour:
   spriteFragments: {fileID: 0}
   spriteLevelNumb: {fileID: 0}
   portalEffect: {fileID: 0}
+  brotherScript: {fileID: 0}
 --- !u!50 &1474767103
 Rigidbody2D:
   serializedVersion: 4
@@ -3791,6 +3816,16 @@ Prefab:
       propertyPath: sequenceLength
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 114458281975387272, guid: a113aabf8a79f3f468e4ced9566c08a4,
+        type: 2}
+      propertyPath: startPosObj
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 114606968220020842, guid: a113aabf8a79f3f468e4ced9566c08a4,
+        type: 2}
+      propertyPath: startPosObj
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a113aabf8a79f3f468e4ced9566c08a4, type: 2}
   m_IsPrefabParent: 0
@@ -4124,6 +4159,16 @@ Prefab:
       propertyPath: levelToLoad
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 114458281975387272, guid: a113aabf8a79f3f468e4ced9566c08a4,
+        type: 2}
+      propertyPath: startPosObj
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 114606968220020842, guid: a113aabf8a79f3f468e4ced9566c08a4,
+        type: 2}
+      propertyPath: startPosObj
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a113aabf8a79f3f468e4ced9566c08a4, type: 2}
   m_IsPrefabParent: 0
@@ -4253,6 +4298,7 @@ MonoBehaviour:
   spriteFragments: {fileID: 0}
   spriteLevelNumb: {fileID: 0}
   portalEffect: {fileID: 0}
+  brotherScript: {fileID: 0}
 --- !u!50 &1821007525
 Rigidbody2D:
   serializedVersion: 4
@@ -4543,17 +4589,17 @@ Prefab:
     - target: {fileID: 137479573745986324, guid: 1dc1c32df61779f499b1fbfbd2ad6cee,
         type: 2}
       propertyPath: m_AABB.m_Center.x
-      value: -0.008221321
+      value: -0.00822071
       objectReference: {fileID: 0}
     - target: {fileID: 137479573745986324, guid: 1dc1c32df61779f499b1fbfbd2ad6cee,
         type: 2}
       propertyPath: m_AABB.m_Center.y
-      value: 0.19507456
+      value: 0.1951127
       objectReference: {fileID: 0}
     - target: {fileID: 137479573745986324, guid: 1dc1c32df61779f499b1fbfbd2ad6cee,
         type: 2}
       propertyPath: m_AABB.m_Center.z
-      value: -0.105965614
+      value: -0.10597348
       objectReference: {fileID: 0}
     - target: {fileID: 137479573745986324, guid: 1dc1c32df61779f499b1fbfbd2ad6cee,
         type: 2}
@@ -4571,12 +4617,12 @@ Prefab:
     - target: {fileID: 137580113668498854, guid: 1dc1c32df61779f499b1fbfbd2ad6cee,
         type: 2}
       propertyPath: m_AABB.m_Center.x
-      value: 0
+      value: 0.000000011175871
       objectReference: {fileID: 0}
     - target: {fileID: 137580113668498854, guid: 1dc1c32df61779f499b1fbfbd2ad6cee,
         type: 2}
       propertyPath: m_AABB.m_Center.y
-      value: -0.00010061264
+      value: -0.0001001358
       objectReference: {fileID: 0}
     - target: {fileID: 137580113668498854, guid: 1dc1c32df61779f499b1fbfbd2ad6cee,
         type: 2}

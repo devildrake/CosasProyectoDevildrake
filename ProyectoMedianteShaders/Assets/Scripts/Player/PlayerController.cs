@@ -214,7 +214,9 @@ public class PlayerController : DoubleObject {
         timeToDrag = 0.8f;
         timeToRest = 0.2f;
         timeCountToDrag = 0;
-
+        if (arrow != null) {
+            arrow.SetActive(false);
+        }
     }
 
     protected override void AddToGameLogicList() {
@@ -945,6 +947,8 @@ public class PlayerController : DoubleObject {
         //Si el personaje no esta en el suelo el tiempo pasa a ser 1 en Dusk
         if (!grounded) {
             GameLogic.instance.SetTimeScaleLocal(1.0f);
+            leftPressed = false;
+            arrow.SetActive(false);
         }
         //Se renderizan las flechas en caso de clicar solo si esta en el suelo
         else {
@@ -1159,10 +1163,15 @@ public class PlayerController : DoubleObject {
 
         if (worldAssignation == world.DUSK) {
             transform.position = GameLogic.instance.spawnPoint;
+            Debug.Log("Spawning at" + transform.position);
+
         } else {
             //Debug.Log(GameLogic.instance.spawnPoint);
             transform.position = GameLogic.instance.spawnPoint + new Vector3(0, GameLogic.instance.worldOffset, 0);
+            Debug.Log("Spawning at" + transform.position);
+
         }
+
 
         if (rb != null) {
             rb.velocity = new Vector2(0, 0);

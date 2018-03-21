@@ -82,7 +82,8 @@ public class GameLogic : MonoBehaviour {
     [SerializeField]
     private bool isInMainMenu;
 
-    private bool setSpawnPoint;
+    [HideInInspector]
+    public bool setSpawnPoint;
 
     //Booleano que determina si se ha mirado si se esta en el menu principal o no
     private bool checkMainMenu;
