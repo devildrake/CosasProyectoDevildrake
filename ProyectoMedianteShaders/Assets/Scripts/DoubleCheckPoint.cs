@@ -140,10 +140,11 @@ public class DoubleCheckPoint : DoubleObject
 
                     localPlayer.mustEnd = true;
                     localPlayer.brotherScript.mustEnd = true;
+                    if (!interacted)
+                        Interact();
                 }
             }
-            if (!interacted)
-                Interact();
+
         }
     }
 

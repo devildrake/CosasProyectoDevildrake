@@ -15,8 +15,10 @@ public class LevelEntrance : DoubleObject {
     public GameObject spriteLevelNumb;
     public GameObject portalEffect;
     public LevelEntrance brotherScript;
+    bool interacted;
 
     void Start() {
+        interacted = false;
         brotherScript = brotherObject.GetComponent<LevelEntrance>();
         if(levelToLoad-1==2)
         GameLogic.instance.levelsData[2].completed = true;
@@ -187,18 +189,28 @@ public class LevelEntrance : DoubleObject {
     }
 
     public override void Interact() {
+
         if (activated) {
+            //GameLogic.instance.lastEntranceIndex = levelToLoad;
+            //GameLogic.instance.LoadScene(levelToLoad);
+
+            GameLogic.instance.pauseCanvas.nextSceneIndex = levelToLoad;
             GameLogic.instance.lastEntranceIndex = levelToLoad;
-            GameLogic.instance.LoadScene(levelToLoad);
+            InputManager.BlockInput();
+            GameLogic.instance.currentPlayer.placeToGo = gameObject;
+            GameLogic.instance.currentPlayer.brotherScript.placeToGo = brotherObject;
+
         }
     }
 
     public void OnTriggerEnter2D(Collider2D collision) {
         if (activated) {
-            if (collision.gameObject.tag == "Player") {
-                collision.gameObject.GetComponent<PlayerController>().interactableObject = gameObject.GetComponent<DoubleObject>();
-                if (interactionSprite != null)
-                    interactionSprite.SetActive(true);
+            if (!InputManager.GetBlocked()) {
+                if (collision.gameObject.tag == "Player") {
+                    collision.gameObject.GetComponent<PlayerController>().interactableObject = gameObject.GetComponent<DoubleObject>();
+                    if (interactionSprite != null)
+                        interactionSprite.SetActive(true);
+                }
             }
         }
     }
@@ -264,8 +276,15 @@ public class LevelEntrance : DoubleObject {
                     //brotherScript.tryMovePlayer = true;
                 }
 
+                if (interacted) {
+                    if (GameLogic.instance.currentPlayer.transform.position.z > 4) {
+                        GameLogic.instance.LoadScene(levelToLoad);
+                    }
+                }
+            
 
-            }
+
+        }
 
             BrotherBehavior();
         }
