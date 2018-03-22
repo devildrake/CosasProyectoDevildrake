@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class CameraDataProvider : MonoBehaviour {
-    bool done;
     public string levelName;
     public float farDistance;
     public float closeDistance;
@@ -12,6 +11,7 @@ public class CameraDataProvider : MonoBehaviour {
 
     public int nextSceneIndex;
     public float sceneMaxTime;
+    public GameObject startPosObj;
 
     private void Awake() {
         cameraScripts = new CameraScript[2];
@@ -38,10 +38,35 @@ public class CameraDataProvider : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (!done && GameLogic.instance != null&&GameLogic.instance.pauseCanvas!=null) {
+        if (GameLogic.instance != null&&GameLogic.instance.pauseCanvas!=null) {
             GameLogic.instance.pauseCanvas.nextSceneIndex = nextSceneIndex;
             GameLogic.instance.levelName = levelName;
-            Destroy(gameObject);
+
+            if (startPosObj != null) {
+                if (GameLogic.instance.currentPlayer != null) {
+                    if (!GameLogic.instance.setSpawnPoint) {
+                        GameLogic.instance.setSpawnPoint = true;
+                        GameLogic.instance.SetSpawnPoint(startPosObj.transform.position+new Vector3(1.2f,0));
+
+                        if (GameLogic.instance.currentPlayer.worldAssignation == DoubleObject.world.DUSK) {
+                            GameLogic.instance.currentPlayer.transform.position = startPosObj.transform.position+new Vector3(-2,0.25f);
+                        } else {
+                            GameLogic.instance.currentPlayer.transform.position = startPosObj.transform.position+new Vector3(-2,GameLogic.instance.worldOffset+0.25f,0);
+                        }
+                    } else {
+                        Debug.Log("BRUH");
+                        GameLogic.instance.SetSpawnPoint(startPosObj.transform.position + new Vector3(1.2f, 0));
+                        if (GameLogic.instance.currentPlayer.worldAssignation == DoubleObject.world.DUSK) {
+                                GameLogic.instance.currentPlayer.transform.position = startPosObj.transform.position + new Vector3(-2, 0.25f);
+                            } else {
+                                GameLogic.instance.currentPlayer.transform.position = startPosObj.transform.position + new Vector3(-2, GameLogic.instance.worldOffset + 0.25f, 0);
+                            }
+                    }
+                    Destroy(gameObject);
+                }
+            } 
+
+
 
         }
     }

@@ -344,7 +344,9 @@ public class GameLogic : MonoBehaviour {
 
                     //Si el juego no esta pausado
                     if (!isPaused) {
-                        timeElapsed += Time.deltaTime;
+                        if (currentPlayer.placeToGo == null) {
+                            timeElapsed += Time.deltaTime;
+                        }
 
                         if (!setSpawnPoint) {
                             GameObject playerObject = GameObject.FindGameObjectWithTag("Player");

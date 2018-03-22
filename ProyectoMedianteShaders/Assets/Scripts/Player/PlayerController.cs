@@ -318,12 +318,14 @@ public class PlayerController : DoubleObject {
 
                         } else {
                             InputManager.UnBlockInput();
-                            if (placeToGo != null)
+                            if (placeToGo != null) {
                                 Destroy(placeToGo.gameObject);
+                            }
                         }
 
 
                     }
+                    rb.velocity = new Vector3(rb.velocity.x, 0);
                 } else if (GameLogic.instance.GetCurrentLevel() == "MenuInteractuable") {
                     if (transform.position.z > 0) {
 
@@ -363,11 +365,15 @@ public class PlayerController : DoubleObject {
     }
 
     void Update() {
-
-        if (rb.velocity.y < 0) {
-            rb.gravityScale = 1.5f;
+        if (placeToGo == null) {
+            if (rb.velocity.y < 0) {
+                rb.gravityScale = 1.5f;
+            } else {
+                rb.gravityScale = 1;
+            }
         } else {
-            rb.gravityScale = 1;
+            rb.gravityScale = 0;
+            rb.velocity = new Vector2(rb.velocity.x, 0);
         }
 
         AddToGameLogicList();
