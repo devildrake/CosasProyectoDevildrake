@@ -40,7 +40,7 @@ public class MenuLogic : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         GameLogic.instance.isPaused = false;
-        GameLogic.instance.SetTimeScaleLocal(1);
+        GameLogic.instance.SetTimeScaleLocal(0.5f);
         canvas.gameObject.SetActive(true);
         canvasGroup = canvas.GetComponent<CanvasGroup>();
         menuState = -1;
