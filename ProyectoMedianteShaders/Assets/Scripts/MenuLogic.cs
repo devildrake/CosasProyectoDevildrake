@@ -54,7 +54,6 @@ public class MenuLogic : MonoBehaviour {
         selected = 0;
         highlight = state1Elements[state1Elements.Length - 1].transform;
         optionsCanvas.SetActive(false);
-
         GameLogic.instance.transformableObjects.Add(gameObject);
 	}
 	
