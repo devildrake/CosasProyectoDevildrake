@@ -1028,7 +1028,7 @@ public class PlayerController : DoubleObject {
             
 
         //BARRA ESPACIADORA = SALTO
-        if (/*Input.GetKeyDown(KeyCode.Space)*/InputManager.instance.jumpButton&& !InputManager.instance.prevJumpButton && grounded&&!crawling||/*Input.GetKeyDown(KeyCode.Space)*/InputManager.instance.jumpButton && !InputManager.instance.prevJumpButton && sliding) {
+        if (/*Input.GetKeyDown(KeyCode.Space)*/InputManager.instance.jumpButton&& !InputManager.instance.prevJumpButton && grounded&&!crawling||/*Input.GetKeyDown(KeyCode.Space)*/InputManager.instance.jumpButton && !InputManager.instance.prevJumpButton && timeNotSliding<0.2f) {
             Jump();
         }
 

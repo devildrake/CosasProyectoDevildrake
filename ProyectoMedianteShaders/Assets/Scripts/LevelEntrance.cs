@@ -216,57 +216,59 @@ public class LevelEntrance : DoubleObject {
         AddToGameLogicList();
 
         if (added) {
-            if (!tryMovePlayer&&levelToLoad==GameLogic.instance.lastEntranceIndex) {
-                if (worldAssignation == world.DAWN) {
-                    if (!GameLogic.instance.setSpawnPoint) {
-                        if (GameLogic.instance.currentPlayer.worldAssignation == world.DAWN) {
-                            GameLogic.instance.currentPlayer.transform.position = gameObject.transform.position + new Vector3(0, 0.55f, 2);
-                            GameLogic.instance.currentPlayer.brotherObject.transform.position = brotherObject.transform.position + new Vector3(0, 0.55f, 2);
-                            GameLogic.instance.SetSpawnPoint(gameObject.transform.position + new Vector3(0, 0.55f, 0));
-                            GameLogic.instance.cameraTransition = true;
+            if (GameLogic.instance.currentPlayer != null) {
+                if (!tryMovePlayer && levelToLoad == GameLogic.instance.lastEntranceIndex) {
+                    if (worldAssignation == world.DAWN) {
+                        if (!GameLogic.instance.setSpawnPoint) {
+                            if (GameLogic.instance.currentPlayer.worldAssignation == world.DAWN) {
+                                GameLogic.instance.currentPlayer.transform.position = gameObject.transform.position + new Vector3(0, 0.55f, 2);
+                                GameLogic.instance.currentPlayer.brotherObject.transform.position = brotherObject.transform.position + new Vector3(0, 0.55f, 2);
+                                GameLogic.instance.SetSpawnPoint(gameObject.transform.position + new Vector3(0, 0.55f, 0));
+                                GameLogic.instance.cameraTransition = true;
 
+                            } else {
+                                GameLogic.instance.currentPlayer.transform.position = brotherObject.transform.position + new Vector3(0, 0.55f, 2);
+                                GameLogic.instance.currentPlayer.brotherObject.transform.position = transform.position + new Vector3(0, 0.55f, 2);
+                                GameLogic.instance.SetSpawnPoint(brotherObject.transform.position + new Vector3(0, 0.55f, 0));
+                                GameLogic.instance.cameraTransition = true;
+
+                            }
+                            GameLogic.instance.timeElapsed = 0;
+                            GameLogic.instance.pickedFragments = 0;
+                            tryMovePlayer = true;
+                            brotherScript.tryMovePlayer = true;
+                            GameLogic.instance.setSpawnPoint = true;
                         } else {
-                            GameLogic.instance.currentPlayer.transform.position = brotherObject.transform.position + new Vector3(0, 0.55f, 2);
-                            GameLogic.instance.currentPlayer.brotherObject.transform.position = transform.position + new Vector3(0, 0.55f, 2);
-                            GameLogic.instance.SetSpawnPoint(brotherObject.transform.position + new Vector3(0, 0.55f, 0));
-                            GameLogic.instance.cameraTransition = true;
+                            Debug.Log("GameLogic se adelaantó");
+                            if (GameLogic.instance.currentPlayer.worldAssignation == world.DAWN) {
+                                GameLogic.instance.currentPlayer.transform.position = gameObject.transform.position + new Vector3(0, 0.55f, 2);
+                                GameLogic.instance.currentPlayer.brotherObject.transform.position = brotherObject.transform.position + new Vector3(0, 0.55f, 2);
+                                GameLogic.instance.SetSpawnPoint(gameObject.transform.position + new Vector3(0, 0.55f, 0));
+                                GameLogic.instance.cameraTransition = true;
+
+                            } else {
+                                GameLogic.instance.currentPlayer.transform.position = brotherObject.transform.position + new Vector3(0, 0.55f, 2);
+                                GameLogic.instance.currentPlayer.brotherObject.transform.position = transform.position + new Vector3(0, 0.55f, 2);
+                                GameLogic.instance.SetSpawnPoint(brotherObject.transform.position + new Vector3(0, 0.55f, 0));
+                                GameLogic.instance.cameraTransition = true;
+
+                            }
+                            tryMovePlayer = true;
+                            brotherScript.tryMovePlayer = true;
 
                         }
-                        GameLogic.instance.timeElapsed = 0;
-                        GameLogic.instance.pickedFragments = 0;
-                        tryMovePlayer = true;
-                        brotherScript.tryMovePlayer = true;
-                        GameLogic.instance.setSpawnPoint = true;
-                    } else {
-                        Debug.Log("GameLogic se adelaantó");
-                        if (GameLogic.instance.currentPlayer.worldAssignation == world.DAWN) {
-                            GameLogic.instance.currentPlayer.transform.position = gameObject.transform.position + new Vector3(0, 0.55f, 2);
-                            GameLogic.instance.currentPlayer.brotherObject.transform.position = brotherObject.transform.position + new Vector3(0, 0.55f, 2);
-                            GameLogic.instance.SetSpawnPoint(gameObject.transform.position + new Vector3(0, 0.55f, 0));
-                            GameLogic.instance.cameraTransition = true;
-
-                        } else {
-                            GameLogic.instance.currentPlayer.transform.position = brotherObject.transform.position + new Vector3(0, 0.55f, 2);
-                            GameLogic.instance.currentPlayer.brotherObject.transform.position = transform.position + new Vector3(0, 0.55f, 2);
-                            GameLogic.instance.SetSpawnPoint(brotherObject.transform.position + new Vector3(0, 0.55f,0));
-                            GameLogic.instance.cameraTransition = true;
-
-                        }
-                        tryMovePlayer = true;
-                        brotherScript.tryMovePlayer = true;
-
                     }
+                    //Debug.Log(transform.position);
+                    //Debug.Log(GameLogic.instance.currentPlayer.transform.position);
+                    tryMovePlayer = true;
+                    //brotherScript.tryMovePlayer = true;
                 }
-                //Debug.Log(transform.position);
-                //Debug.Log(GameLogic.instance.currentPlayer.transform.position);
-                tryMovePlayer = true;
-                //brotherScript.tryMovePlayer = true;
+
+
             }
 
-
+            BrotherBehavior();
         }
-
-        BrotherBehavior();
     }
 }
 
