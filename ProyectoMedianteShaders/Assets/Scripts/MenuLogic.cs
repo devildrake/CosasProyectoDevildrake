@@ -41,6 +41,7 @@ public class MenuLogic : MonoBehaviour {
 	void Start () {
         GameLogic.instance.isPaused = false;
         GameLogic.instance.SetTimeScaleLocal(1);
+        canvas.gameObject.SetActive(true);
         canvasGroup = canvas.GetComponent<CanvasGroup>();
         menuState = -1;
         timer = 0f;
