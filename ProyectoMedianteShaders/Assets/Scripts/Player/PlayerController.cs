@@ -277,6 +277,7 @@ public class PlayerController : DoubleObject {
                                     transform.position = new Vector3(placeToGo.transform.position.x, transform.position.y, transform.position.z);
 
                                 } else {
+                                    transform.rotation = Quaternion.AngleAxis(0, new Vector3(0, 1, 0));
                                     transform.Translate(Vector3.right * 2.0f * Time.deltaTime);
                                     myAnimator.SetBool("grounded", true);
                                     myAnimator.SetBool("moving", true);
@@ -289,6 +290,7 @@ public class PlayerController : DoubleObject {
                                     transform.position = new Vector3(placeToGo.transform.position.x, transform.position.y, transform.position.z);
                                 } else {
                                     Debug.Log("LeFtu");
+                                    transform.rotation = Quaternion.AngleAxis(180, new Vector3(0, 1, 0));
                                     transform.Translate(Vector3.right * 2.0f * Time.deltaTime);
                                     myAnimator.SetBool("grounded", true);
                                     myAnimator.SetBool("moving", true);
