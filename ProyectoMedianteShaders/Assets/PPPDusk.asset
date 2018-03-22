@@ -77,13 +77,13 @@ MonoBehaviour:
       useCameraFov: 0
       kernelSize: 0
   motionBlur:
-    m_Enabled: 1
+    m_Enabled: 0
     m_Settings:
       shutterAngle: 270
       sampleCount: 10
       frameBlending: 0.007
   eyeAdaptation:
-    m_Enabled: 1
+    m_Enabled: 0
     m_Settings:
       lowPercent: 45
       highPercent: 95
@@ -100,8 +100,8 @@ MonoBehaviour:
     m_Enabled: 1
     m_Settings:
       bloom:
-        intensity: 2
-        threshold: 1.1
+        intensity: 2.5
+        threshold: 0.8
         softKnee: 0.762
         radius: 4.06
         antiFlicker: 0

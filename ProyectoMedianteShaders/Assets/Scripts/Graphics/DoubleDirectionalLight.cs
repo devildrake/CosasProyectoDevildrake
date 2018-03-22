@@ -12,11 +12,11 @@ public class DoubleDirectionalLight : DoubleObject {
         changingLight = GetComponent<Light>();
         if (dawn) {
             RenderSettings.skybox = dawnSkybox;
-            //changingLight.intensity = dawnLighIntensity;
+            changingLight.intensity = dawnLighIntensity;
         }
         else {
             RenderSettings.skybox = duskSkybox;
-            //changingLight.intensity = duskLightIntensity;
+            changingLight.intensity = duskLightIntensity;
         }
         print(RenderSettings.skybox);
 	}
@@ -29,14 +29,12 @@ public class DoubleDirectionalLight : DoubleObject {
         base.Change();
 
         if (dawn) {
-            //changingLight.intensity = dawnLighIntensity;
+            changingLight.intensity = dawnLighIntensity;
             RenderSettings.skybox = dawnSkybox;
-            print(RenderSettings.skybox);
         }
         else {
-            //changingLight.intensity = duskLightIntensity;
+            changingLight.intensity = duskLightIntensity;
             RenderSettings.skybox = duskSkybox;
-            print(RenderSettings.skybox);
         }
     }
 }
