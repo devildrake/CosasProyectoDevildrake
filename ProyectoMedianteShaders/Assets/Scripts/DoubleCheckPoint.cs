@@ -121,6 +121,9 @@ public class DoubleCheckPoint : DoubleObject
                 } else {
 
                 }
+            } else {
+                if (!interacted)
+                    Interact();
             }
 
         }
@@ -143,6 +146,9 @@ public class DoubleCheckPoint : DoubleObject
                     if (!interacted)
                         Interact();
                 }
+            } else {
+                if (!interacted)
+                    Interact();
             }
 
         }
