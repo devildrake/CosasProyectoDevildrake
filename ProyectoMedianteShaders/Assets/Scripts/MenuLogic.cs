@@ -22,6 +22,7 @@ public class MenuLogic : MonoBehaviour {
     //------------------------------------------------------------
 
     /*
+     * menuState = -2 --> Splash del equipo.
      * menuState = -1 --> FadeIn del juego.
      * menuState = 0 --> Pantalla de pulsa cualquier tecla para continuar
      * menuState = 1 --> Pantalla jugar/salir
@@ -37,14 +38,23 @@ public class MenuLogic : MonoBehaviour {
     //variables para controlar el blink
     private float timer, timeToBlink;
 
+    [SerializeField] private CanvasGroup canvasFadeSplash;
+    private bool doneFadeIn = false;
+    private float timerM2; //timer para el estado -2
+    public GameObject uselessCanvas;
+    private bool upAlpha=true, downAlpha= true;
+
 	// Use this for initialization
 	void Start () {
         GameLogic.instance.isPaused = false;
         GameLogic.instance.SetTimeScaleLocal(0.5f);
-        canvas.gameObject.SetActive(true);
+        canvas.gameObject.SetActive(false);
         canvasGroup = canvas.GetComponent<CanvasGroup>();
-        menuState = -1;
+        canvasGroup.alpha = 1;
+        canvasFadeSplash.alpha = 0;
+        menuState = -2;
         timer = 0f;
+        timerM2 = 0f;
         timeToBlink = 0.4f;
         pressAnyKeyObj.SetActive(false);
 
@@ -60,7 +70,13 @@ public class MenuLogic : MonoBehaviour {
 	// Update is called once per frame
 	void Update () { 
         switch (menuState) {
+        case -2:
+            StateM2Behavior();
+            break;
+
         case -1:
+            canvasGroup.gameObject.SetActive(true);
+            Destroy(uselessCanvas);
             if(canvasGroup.alpha > 0) {
                 canvasGroup.alpha -= Time.deltaTime;
             } else {
@@ -89,15 +105,50 @@ public class MenuLogic : MonoBehaviour {
             break;
 
         case 3:
-                State3Behavior();
-                break;
+            State3Behavior();
+            break;
         default:
             break;
         }
 	}
 
+    private void StateM2Behavior() {
+        if(canvasFadeSplash.alpha < 0.5f && !doneFadeIn) {
+            canvasFadeSplash.alpha += Time.deltaTime/5;
+        }
+        else {
+            doneFadeIn = true;
+            timerM2 += Time.deltaTime;
+            if(timerM2 > 0.5f) {
+                if (upAlpha) {
+                    if(canvasFadeSplash.alpha < 0.999) {
+                        canvasFadeSplash.alpha += Time.deltaTime;
+                    }
+                    else {
+                        upAlpha = false;
+                    }
+                }
+                else if (downAlpha) {
+                    if(canvasFadeSplash.alpha > 0.5) {
+                        canvasFadeSplash.alpha -= Time.deltaTime;
+                    }
+                    else {
+                        downAlpha = false;
+                    }
+                }
+                else {
+                    if (canvasFadeSplash.alpha > 0.0001) {
+                        canvasFadeSplash.alpha -= Time.deltaTime / 2;
+                    }
+                    else {
+                        menuState = -1;
+                    }
+                }
+            }
+        }
+    }
+
     private void State1Behavior() {
-        
         //MOVIMIENTO ENTRE LAS OPCIONES
         if (Input.GetAxisRaw("Vertical") < 0) {
             if (!axisInUse) {
