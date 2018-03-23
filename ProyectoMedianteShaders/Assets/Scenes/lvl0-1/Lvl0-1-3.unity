@@ -950,6 +950,38 @@ Transform:
   m_PrefabParentObject: {fileID: 4578625287248598, guid: 06d5c493d5f0ca444bcbd4a3a6a01f17,
     type: 2}
   m_PrefabInternal: {fileID: 33330393}
+--- !u!1 &263366779
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 1773710335720592, guid: 06d5204fd4894f745a4b5bd0963911d3,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 263366780}
+  m_Layer: 0
+  m_Name: DoubleFairySpot (7)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &263366780
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 4320701141980526, guid: 06d5204fd4894f745a4b5bd0963911d3,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 263366779}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 11.15, y: 1.4, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1486482364}
+  - {fileID: 347452481}
+  m_Father: {fileID: 1519932392}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &263528647
 Prefab:
   m_ObjectHideFlags: 0
@@ -1203,6 +1235,67 @@ Transform:
   m_PrefabParentObject: {fileID: 4357515944918862, guid: 46258176d2c9ea4478901eb57372615a,
     type: 2}
   m_PrefabInternal: {fileID: 312209116}
+--- !u!1 &347452480
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 1309159497870870, guid: 06d5204fd4894f745a4b5bd0963911d3,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 347452481}
+  - component: {fileID: 347452482}
+  m_Layer: 0
+  m_Name: DoubleFairySpotDusk
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &347452481
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 4372228931340554, guid: 06d5204fd4894f745a4b5bd0963911d3,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 347452480}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 263366780}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &347452482
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 114464663194223330, guid: 06d5204fd4894f745a4b5bd0963911d3,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 347452480}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41fd9d9ca59752d4aa4552aed0008fd9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  worldAssignation: 0
+  brotherObject: {fileID: 1486482362}
+  dominantVelocity: {x: 0, y: 0}
+  isBreakable: 0
+  interactuableBySmash: 0
+  isPunchable: 0
+  isMovable: 0
+  dawn: 0
+  activated: 0
+  canBounce: 0
+  imagenDusk: {fileID: 0}
+  imagenDawn: {fileID: 0}
+  originalPos: {x: 0, y: 0}
+  brotherScript: {fileID: 0}
+  mustStopHere: 1
+  hasMessage: 0
+  messageSprite: {fileID: 0}
+  parentFairy: {fileID: 0}
 --- !u!4 &360621478 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4899079776961396, guid: 5ce16f901e7aad54d830bef6cfd8c6d4,
@@ -1391,6 +1484,67 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5ce16f901e7aad54d830bef6cfd8c6d4, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &521639233
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 1131621120344502, guid: 06d5204fd4894f745a4b5bd0963911d3,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 521639235}
+  - component: {fileID: 521639234}
+  m_Layer: 0
+  m_Name: DoubleFairySpotDawn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &521639234
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 114464468493501056, guid: 06d5204fd4894f745a4b5bd0963911d3,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 521639233}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41fd9d9ca59752d4aa4552aed0008fd9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  worldAssignation: 1
+  brotherObject: {fileID: 887442124}
+  dominantVelocity: {x: 0, y: 0}
+  isBreakable: 0
+  interactuableBySmash: 0
+  isPunchable: 0
+  isMovable: 0
+  dawn: 0
+  activated: 0
+  canBounce: 0
+  imagenDusk: {fileID: 0}
+  imagenDawn: {fileID: 0}
+  originalPos: {x: 0, y: 0}
+  brotherScript: {fileID: 0}
+  mustStopHere: 1
+  hasMessage: 0
+  messageSprite: {fileID: 0}
+  parentFairy: {fileID: 0}
+--- !u!4 &521639235
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 4813352717213140, guid: 06d5204fd4894f745a4b5bd0963911d3,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 521639233}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 879941268}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &557298204
 Prefab:
   m_ObjectHideFlags: 0
@@ -2746,6 +2900,99 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 78bf8ce30c2fc134a9ae0d66bfbfdeae, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &879941267
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 1506737914024574, guid: 06d5204fd4894f745a4b5bd0963911d3,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 879941268}
+  m_Layer: 0
+  m_Name: DoubleFairySpot (5)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &879941268
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 4824189013897104, guid: 06d5204fd4894f745a4b5bd0963911d3,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 879941267}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 53.8, y: 1.14, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 521639235}
+  - {fileID: 887442125}
+  m_Father: {fileID: 1519932392}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &887442124
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 1383449069033968, guid: 06d5204fd4894f745a4b5bd0963911d3,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 887442125}
+  - component: {fileID: 887442126}
+  m_Layer: 0
+  m_Name: DoubleFairySpotDusk
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &887442125
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 4843356874356552, guid: 06d5204fd4894f745a4b5bd0963911d3,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 887442124}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 879941268}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &887442126
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 114845862720877346, guid: 06d5204fd4894f745a4b5bd0963911d3,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 887442124}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41fd9d9ca59752d4aa4552aed0008fd9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  worldAssignation: 0
+  brotherObject: {fileID: 521639233}
+  dominantVelocity: {x: 0, y: 0}
+  isBreakable: 0
+  interactuableBySmash: 0
+  isPunchable: 0
+  isMovable: 0
+  dawn: 0
+  activated: 0
+  canBounce: 0
+  imagenDusk: {fileID: 0}
+  imagenDawn: {fileID: 0}
+  originalPos: {x: 0, y: 0}
+  brotherScript: {fileID: 0}
+  mustStopHere: 1
+  hasMessage: 0
+  messageSprite: {fileID: 0}
+  parentFairy: {fileID: 0}
 --- !u!1001 &910812335
 Prefab:
   m_ObjectHideFlags: 0
@@ -3023,6 +3270,67 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 06d5c493d5f0ca444bcbd4a3a6a01f17, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &1125976209
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 1383449069033968, guid: 06d5204fd4894f745a4b5bd0963911d3,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1125976210}
+  - component: {fileID: 1125976211}
+  m_Layer: 0
+  m_Name: DoubleFairySpotDusk
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1125976210
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 4843356874356552, guid: 06d5204fd4894f745a4b5bd0963911d3,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1125976209}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1953677827}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1125976211
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 114845862720877346, guid: 06d5204fd4894f745a4b5bd0963911d3,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1125976209}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41fd9d9ca59752d4aa4552aed0008fd9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  worldAssignation: 0
+  brotherObject: {fileID: 1958473390}
+  dominantVelocity: {x: 0, y: 0}
+  isBreakable: 0
+  interactuableBySmash: 0
+  isPunchable: 0
+  isMovable: 0
+  dawn: 0
+  activated: 0
+  canBounce: 0
+  imagenDusk: {fileID: 0}
+  imagenDawn: {fileID: 0}
+  originalPos: {x: 0, y: 0}
+  brotherScript: {fileID: 0}
+  mustStopHere: 1
+  hasMessage: 0
+  messageSprite: {fileID: 0}
+  parentFairy: {fileID: 0}
 --- !u!4 &1137910467 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4881370331168590, guid: 78bf8ce30c2fc134a9ae0d66bfbfdeae,
@@ -3291,6 +3599,67 @@ Transform:
   m_PrefabParentObject: {fileID: 4578625287248598, guid: 06d5c493d5f0ca444bcbd4a3a6a01f17,
     type: 2}
   m_PrefabInternal: {fileID: 567547680}
+--- !u!1 &1214243829
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 1131621120344502, guid: 06d5204fd4894f745a4b5bd0963911d3,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1214243831}
+  - component: {fileID: 1214243830}
+  m_Layer: 0
+  m_Name: DoubleFairySpotDawn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1214243830
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 114464468493501056, guid: 06d5204fd4894f745a4b5bd0963911d3,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1214243829}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41fd9d9ca59752d4aa4552aed0008fd9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  worldAssignation: 1
+  brotherObject: {fileID: 1458725069}
+  dominantVelocity: {x: 0, y: 0}
+  isBreakable: 0
+  interactuableBySmash: 0
+  isPunchable: 0
+  isMovable: 0
+  dawn: 0
+  activated: 0
+  canBounce: 0
+  imagenDusk: {fileID: 0}
+  imagenDawn: {fileID: 0}
+  originalPos: {x: 0, y: 0}
+  brotherScript: {fileID: 0}
+  mustStopHere: 1
+  hasMessage: 0
+  messageSprite: {fileID: 0}
+  parentFairy: {fileID: 0}
+--- !u!4 &1214243831
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 4813352717213140, guid: 06d5204fd4894f745a4b5bd0963911d3,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1214243829}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1807866403}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1224390581
 Prefab:
   m_ObjectHideFlags: 0
@@ -3783,6 +4152,67 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: fc50c4725240d4a4baf05317969c48d3, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &1458725069
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 1383449069033968, guid: 06d5204fd4894f745a4b5bd0963911d3,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1458725070}
+  - component: {fileID: 1458725071}
+  m_Layer: 0
+  m_Name: DoubleFairySpotDusk
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1458725070
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 4843356874356552, guid: 06d5204fd4894f745a4b5bd0963911d3,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1458725069}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1807866403}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1458725071
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 114845862720877346, guid: 06d5204fd4894f745a4b5bd0963911d3,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1458725069}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41fd9d9ca59752d4aa4552aed0008fd9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  worldAssignation: 0
+  brotherObject: {fileID: 1214243829}
+  dominantVelocity: {x: 0, y: 0}
+  isBreakable: 0
+  interactuableBySmash: 0
+  isPunchable: 0
+  isMovable: 0
+  dawn: 0
+  activated: 0
+  canBounce: 0
+  imagenDusk: {fileID: 0}
+  imagenDawn: {fileID: 0}
+  originalPos: {x: 0, y: 0}
+  brotherScript: {fileID: 0}
+  mustStopHere: 1
+  hasMessage: 0
+  messageSprite: {fileID: 0}
+  parentFairy: {fileID: 0}
 --- !u!1001 &1463888203
 Prefab:
   m_ObjectHideFlags: 0
@@ -3839,6 +4269,67 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 06d5c493d5f0ca444bcbd4a3a6a01f17, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &1486482362
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 1739215033836088, guid: 06d5204fd4894f745a4b5bd0963911d3,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1486482364}
+  - component: {fileID: 1486482363}
+  m_Layer: 0
+  m_Name: DoubleFairySpotDawn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1486482363
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 114733635536189530, guid: 06d5204fd4894f745a4b5bd0963911d3,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1486482362}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41fd9d9ca59752d4aa4552aed0008fd9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  worldAssignation: 1
+  brotherObject: {fileID: 347452480}
+  dominantVelocity: {x: 0, y: 0}
+  isBreakable: 0
+  interactuableBySmash: 0
+  isPunchable: 0
+  isMovable: 0
+  dawn: 0
+  activated: 0
+  canBounce: 0
+  imagenDusk: {fileID: 0}
+  imagenDawn: {fileID: 0}
+  originalPos: {x: 0, y: 0}
+  brotherScript: {fileID: 0}
+  mustStopHere: 1
+  hasMessage: 0
+  messageSprite: {fileID: 0}
+  parentFairy: {fileID: 0}
+--- !u!4 &1486482364
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 4465470310890360, guid: 06d5204fd4894f745a4b5bd0963911d3,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1486482362}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 263366780}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1493008252
 Prefab:
   m_ObjectHideFlags: 0
@@ -3957,6 +4448,91 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1519932391
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4732349729431664, guid: 06d5204fd4894f745a4b5bd0963911d3, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -9.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4732349729431664, guid: 06d5204fd4894f745a4b5bd0963911d3, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 5.07
+      objectReference: {fileID: 0}
+    - target: {fileID: 4732349729431664, guid: 06d5204fd4894f745a4b5bd0963911d3, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4732349729431664, guid: 06d5204fd4894f745a4b5bd0963911d3, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4732349729431664, guid: 06d5204fd4894f745a4b5bd0963911d3, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4732349729431664, guid: 06d5204fd4894f745a4b5bd0963911d3, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4732349729431664, guid: 06d5204fd4894f745a4b5bd0963911d3, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4732349729431664, guid: 06d5204fd4894f745a4b5bd0963911d3, type: 2}
+      propertyPath: m_RootOrder
+      value: 28
+      objectReference: {fileID: 0}
+    - target: {fileID: 114628567926027560, guid: 06d5204fd4894f745a4b5bd0963911d3,
+        type: 2}
+      propertyPath: messageSprite
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 114415547504078728, guid: 06d5204fd4894f745a4b5bd0963911d3,
+        type: 2}
+      propertyPath: messageSprite
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4105096169211580, guid: 06d5204fd4894f745a4b5bd0963911d3, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 16.53
+      objectReference: {fileID: 0}
+    - target: {fileID: 4105096169211580, guid: 06d5204fd4894f745a4b5bd0963911d3, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: -1.37
+      objectReference: {fileID: 0}
+    - target: {fileID: 4824189013897104, guid: 06d5204fd4894f745a4b5bd0963911d3, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 25.64
+      objectReference: {fileID: 0}
+    - target: {fileID: 4824189013897104, guid: 06d5204fd4894f745a4b5bd0963911d3, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 5.24
+      objectReference: {fileID: 0}
+    - target: {fileID: 4105096169211580, guid: 06d5204fd4894f745a4b5bd0963911d3, type: 2}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4824189013897104, guid: 06d5204fd4894f745a4b5bd0963911d3, type: 2}
+      propertyPath: m_RootOrder
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4816819799741294, guid: 06d5204fd4894f745a4b5bd0963911d3, type: 2}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 06d5204fd4894f745a4b5bd0963911d3, type: 2}
+  m_IsPrefabParent: 0
+--- !u!4 &1519932392 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 4542411521316420, guid: 06d5204fd4894f745a4b5bd0963911d3,
+    type: 2}
+  m_PrefabInternal: {fileID: 1519932391}
 --- !u!1001 &1524329262
 Prefab:
   m_ObjectHideFlags: 0
@@ -4635,6 +5211,38 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5ce16f901e7aad54d830bef6cfd8c6d4, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &1807866402
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 1506737914024574, guid: 06d5204fd4894f745a4b5bd0963911d3,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1807866403}
+  m_Layer: 0
+  m_Name: DoubleFairySpot (4)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1807866403
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 4824189013897104, guid: 06d5204fd4894f745a4b5bd0963911d3,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1807866402}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 43.64, y: -0.18, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1214243831}
+  - {fileID: 1458725070}
+  m_Father: {fileID: 1519932392}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1815743725
 Prefab:
   m_ObjectHideFlags: 0
@@ -4832,6 +5440,99 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 06d5c493d5f0ca444bcbd4a3a6a01f17, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &1953677826
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 1506737914024574, guid: 06d5204fd4894f745a4b5bd0963911d3,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1953677827}
+  m_Layer: 0
+  m_Name: DoubleFairySpot (6)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1953677827
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 4824189013897104, guid: 06d5204fd4894f745a4b5bd0963911d3,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1953677826}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 64.35, y: -3.09, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1958473392}
+  - {fileID: 1125976210}
+  m_Father: {fileID: 1519932392}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1958473390
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 1131621120344502, guid: 06d5204fd4894f745a4b5bd0963911d3,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1958473392}
+  - component: {fileID: 1958473391}
+  m_Layer: 0
+  m_Name: DoubleFairySpotDawn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1958473391
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 114464468493501056, guid: 06d5204fd4894f745a4b5bd0963911d3,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1958473390}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41fd9d9ca59752d4aa4552aed0008fd9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  worldAssignation: 1
+  brotherObject: {fileID: 1125976209}
+  dominantVelocity: {x: 0, y: 0}
+  isBreakable: 0
+  interactuableBySmash: 0
+  isPunchable: 0
+  isMovable: 0
+  dawn: 0
+  activated: 0
+  canBounce: 0
+  imagenDusk: {fileID: 0}
+  imagenDawn: {fileID: 0}
+  originalPos: {x: 0, y: 0}
+  brotherScript: {fileID: 0}
+  mustStopHere: 1
+  hasMessage: 0
+  messageSprite: {fileID: 0}
+  parentFairy: {fileID: 0}
+--- !u!4 &1958473392
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 4813352717213140, guid: 06d5204fd4894f745a4b5bd0963911d3,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1958473390}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1953677827}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1959163113
 GameObject:
   m_ObjectHideFlags: 0
