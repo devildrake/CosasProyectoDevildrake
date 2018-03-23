@@ -706,6 +706,8 @@ public class PlayerController : DoubleObject {
 
             }
         }else {//Sliding es true
+            rb.gravityScale = 15;
+
             if (rb.velocity.y > 0) {
                 sliding = false;
             }

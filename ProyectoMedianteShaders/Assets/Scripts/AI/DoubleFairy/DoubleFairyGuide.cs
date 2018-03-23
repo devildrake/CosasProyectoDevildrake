@@ -208,18 +208,20 @@ public class DoubleFairyGuide : DoubleObject {
 
                     if (!setIdle) {
                         setIdle = true;
-                        currentIdlePattern = Random.Range(0, 2);
+                        currentIdlePattern = Random.Range(0, 6);
+                        brotherScript.setIdle = true;
+                        brotherScript.currentIdlePattern = currentIdlePattern;
+
                         Debug.Log(currentIdlePattern);
                     }
-
-
-
                     rb.velocity = new Vector2(0, 0);
 
                     //////IDLE
                     float idleX = 0, idleY=0;
 
+
                     switch (currentIdlePattern) {
+                        #region switchIdle
                         case 0:
                             idleTimer += Time.deltaTime;
                             idleX = Mathf.Cos(4 * idleTimer) - Mathf.Pow(Mathf.Cos(1 * idleTimer), 3);
@@ -237,6 +239,39 @@ public class DoubleFairyGuide : DoubleObject {
 
                             fairyModel.transform.Translate(new Vector2(idleX * Time.deltaTime, idleY * Time.deltaTime));
                             break;
+                        case 2:
+                            idleTimer += Time.deltaTime;
+                            idleX = Mathf.Cos(1 * idleTimer) - Mathf.Pow(Mathf.Cos(5 * idleTimer), 3);
+                            idleY = Mathf.Sin(1 * idleTimer) - Mathf.Pow(Mathf.Sin(5 * idleTimer), 3);
+
+                            fairyModel.transform.Translate(new Vector2(idleX * Time.deltaTime, idleY * Time.deltaTime));
+
+                            break;
+                        case 3:
+                            idleTimer += Time.deltaTime;
+                            idleX = Mathf.Cos(1 * idleTimer) - Mathf.Pow(Mathf.Cos(3 * idleTimer), 3);
+                            idleY = Mathf.Sin(3 * idleTimer) - Mathf.Pow(Mathf.Sin(1 * idleTimer), 3);
+
+                            fairyModel.transform.Translate(new Vector2(idleX * Time.deltaTime, idleY * Time.deltaTime));
+
+                            break;
+                        case 4:
+                            idleTimer += Time.deltaTime;
+                            idleX = Mathf.Cos(5 * idleTimer) - Mathf.Pow(Mathf.Cos(1 * idleTimer), 3);
+                            idleY = Mathf.Sin(5 * idleTimer) - Mathf.Pow(Mathf.Sin(1 * idleTimer), 3);
+
+                            fairyModel.transform.Translate(new Vector2(idleX * Time.deltaTime, idleY * Time.deltaTime));
+
+                            break;
+                        case 5:
+                            idleTimer += Time.deltaTime;
+                            idleX = Mathf.Cos(1 * idleTimer) - Mathf.Pow(Mathf.Cos(2 * idleTimer), 3);
+                            idleY = Mathf.Sin(1 * idleTimer) - Mathf.Pow(Mathf.Sin(3 * idleTimer), 3);
+
+                            fairyModel.transform.Translate(new Vector2(idleX * Time.deltaTime, idleY * Time.deltaTime));
+
+                            break;
+                    #endregion
                     }
 
                     //////IDLE
