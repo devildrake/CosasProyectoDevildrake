@@ -17,6 +17,7 @@ public class DoubleFairyGuide : DoubleObject {
     public SpriteRenderer spriteRenderer;
     float myAlpha;
     float idleTimer=0;
+    bool setIdle;
     public int currentIdlePattern = 0;
 
     bool NotDAWN(DoubleObject d) {
@@ -24,7 +25,7 @@ public class DoubleFairyGuide : DoubleObject {
     }
 
     void Start() {
-
+        setIdle = false;
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         spriteRendererObject = spriteRenderer.gameObject;
         myAlpha = 0;
@@ -169,7 +170,9 @@ public class DoubleFairyGuide : DoubleObject {
                             FadeOut();
                             spriteRenderer.sprite = currentSpot.messageSprite;
                             brotherScript.spriteRenderer.sprite = currentSpot.brotherScript.messageSprite;
-                            Debug.Log("Set");
+                        } else {
+                            spriteRenderer.sprite = null;
+                            brotherScript.spriteRenderer.sprite = null;
                         }
                     }
                     //rb.velocity = new Vector2(0, 0);
@@ -192,8 +195,9 @@ public class DoubleFairyGuide : DoubleObject {
 
                 }
             } else {
-
                 if (!currentSpot.mustStopHere) {
+                    setIdle = false;
+                    brotherScript.setIdle = false;
                     targetIndex++;
                     brotherScript.targetIndex++;
                     currentSpot = null;
@@ -201,40 +205,38 @@ public class DoubleFairyGuide : DoubleObject {
                     //spriteRendererObject.SetActive(false);
                     FadeOut();
                 } else {
+
+                    if (!setIdle) {
+                        setIdle = true;
+                        currentIdlePattern = Random.Range(0, 2);
+                        Debug.Log(currentIdlePattern);
+                    }
+
+
+
                     rb.velocity = new Vector2(0, 0);
 
                     //////IDLE
-                    if (currentIdlePattern == 0) {
-                        idleTimer += Time.deltaTime;
+                    float idleX = 0, idleY=0;
 
-                        float idleX, idleY;
+                    switch (currentIdlePattern) {
+                        case 0:
+                            idleTimer += Time.deltaTime;
+                            idleX = Mathf.Cos(4 * idleTimer) - Mathf.Pow(Mathf.Cos(1 * idleTimer), 3);
+                            idleY = Mathf.Sin(4 * idleTimer) - Mathf.Pow(Mathf.Sin(1 * idleTimer), 3);
 
-                        idleX = Mathf.Cos(4 * idleTimer) - Mathf.Pow(Mathf.Cos(1 * idleTimer), 3);
-                        idleY = Mathf.Sin(4 * idleTimer) - Mathf.Pow(Mathf.Sin(1 * idleTimer), 3);
+                            fairyModel.transform.Translate(new Vector2(idleX * Time.deltaTime, idleY * Time.deltaTime));
 
-                        fairyModel.transform.Translate(new Vector2(idleX * Time.deltaTime, idleY * Time.deltaTime));
-                    } else if (currentIdlePattern == 1) {
-
-                        idleTimer += Time.deltaTime;
-
-                        float idleX, idleY;
-
-                        idleX = Mathf.Sin(idleTimer) * (Mathf.Exp(Mathf.Cos(idleTimer)) - 2*Mathf.Cos(idleTimer*4) - Mathf.Pow(Mathf.Sin(idleTimer / 12),5)) ;
-                        idleY = Mathf.Cos(idleTimer) * (Mathf.Exp(Mathf.Cos(idleTimer)) - 2 * Mathf.Cos(idleTimer * 4) - Mathf.Pow(Mathf.Sin(idleTimer / 12), 5));
-
-                        fairyModel.transform.Translate(new Vector2(idleX * Time.deltaTime, idleY * Time.deltaTime));
+                            break;
+                        case 1:
+                            idleTimer += Time.deltaTime * 2;
 
 
+                            idleX = Mathf.Sin(-90 + idleTimer) * 1;
+                            idleY = Mathf.Cos(90 + idleTimer) * 1;
 
-                    } else if (currentIdlePattern == 2) {
-                        idleTimer += Time.deltaTime;
-
-                        float idleX, idleY;
-
-                        idleX = Mathf.Sin(-90 + idleTimer) * 1;
-                        idleY = Mathf.Cos(90 + idleTimer) * 1;
-
-                        fairyModel.transform.Translate(new Vector2(idleX * Time.deltaTime, idleY * Time.deltaTime));
+                            fairyModel.transform.Translate(new Vector2(idleX * Time.deltaTime, idleY * Time.deltaTime));
+                            break;
                     }
 
                     //////IDLE
@@ -243,10 +245,8 @@ public class DoubleFairyGuide : DoubleObject {
                         if (spriteRenderer != null) {
                             if (spriteRenderer.sprite != null) {
                                 FadeIn();
-                                Debug.Log("Close enough");
 
                             } else {
-                                Debug.Log("Null SpriteRenderers.sprite");
                             }
                         } else {
                             Debug.Log("Null SpriteRenderers");
@@ -254,13 +254,14 @@ public class DoubleFairyGuide : DoubleObject {
                         }
                     } else {
                         FadeOut();
-                        Debug.Log("Too far");
                     }
 
                     if (currentSpot.messageSprite != null) {
-                        if (GameLogic.instance.currentPlayer.transform.position.x > transform.position.x + distanceFromPlayerThreshold) {
+                        if (GameLogic.instance.currentPlayer.transform.position.x > transform.position.x + distanceFromPlayerThreshold/2) {
                             currentSpot = null;
                             brotherScript.currentSpot = null;
+                            setIdle = false;
+                            brotherScript.setIdle = false;
 
                             targetIndex++;
                             brotherScript.targetIndex++;
@@ -272,6 +273,9 @@ public class DoubleFairyGuide : DoubleObject {
                         if (GameLogic.instance.currentPlayer.transform.position.x >= transform.position.x) {
                             currentSpot = null;
                             brotherScript.currentSpot = null;
+                            setIdle = false;
+                            brotherScript.setIdle = false;
+
 
                             targetIndex++;
                             brotherScript.targetIndex++;
@@ -302,7 +306,6 @@ public class DoubleFairyGuide : DoubleObject {
             if (spriteRenderer.sprite != null) {
                 spriteRenderer.color = new Color(spriteRenderer.color.r, spriteRenderer.color.g, spriteRenderer.color.b, myAlpha);
             }
-            Debug.Log(myAlpha);
         }
         brotherScript.myAlpha = myAlpha;
 
