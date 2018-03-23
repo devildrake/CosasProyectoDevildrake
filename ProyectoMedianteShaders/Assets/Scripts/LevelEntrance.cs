@@ -199,7 +199,7 @@ public class LevelEntrance : DoubleObject {
             InputManager.BlockInput();
             GameLogic.instance.currentPlayer.placeToGo = gameObject;
             GameLogic.instance.currentPlayer.brotherScript.placeToGo = brotherObject;
-
+            interacted = true;
         }
     }
 
@@ -228,20 +228,20 @@ public class LevelEntrance : DoubleObject {
         AddToGameLogicList();
 
         if (added) {
-            if (GameLogic.instance.currentPlayer != null) {
+            if (GameLogic.instance.currentPlayer != null&&!interacted) {
                 if (!tryMovePlayer && levelToLoad == GameLogic.instance.lastEntranceIndex) {
                     if (worldAssignation == world.DAWN) {
                         if (!GameLogic.instance.setSpawnPoint) {
                             if (GameLogic.instance.currentPlayer.worldAssignation == world.DAWN) {
                                 GameLogic.instance.currentPlayer.transform.position = gameObject.transform.position + new Vector3(0, 0.55f, 2);
                                 GameLogic.instance.currentPlayer.brotherObject.transform.position = brotherObject.transform.position + new Vector3(0, 0.55f, 2);
-                                GameLogic.instance.SetSpawnPoint(gameObject.transform.position + new Vector3(0, 0.55f, 0));
+                                GameLogic.instance.SetSpawnPoint(new Vector3(gameObject.transform.position.x,gameObject.transform.position.y + 0.55f, -0.1085899f));
                                 GameLogic.instance.cameraTransition = true;
 
                             } else {
                                 GameLogic.instance.currentPlayer.transform.position = brotherObject.transform.position + new Vector3(0, 0.55f, 2);
                                 GameLogic.instance.currentPlayer.brotherObject.transform.position = transform.position + new Vector3(0, 0.55f, 2);
-                                GameLogic.instance.SetSpawnPoint(brotherObject.transform.position + new Vector3(0, 0.55f, 0));
+                                GameLogic.instance.SetSpawnPoint(new Vector3(brotherObject.transform.position.x, brotherObject.transform.position.y + 0.55f, -0.1085899f));
                                 GameLogic.instance.cameraTransition = true;
 
                             }
@@ -251,11 +251,13 @@ public class LevelEntrance : DoubleObject {
                             brotherScript.tryMovePlayer = true;
                             GameLogic.instance.setSpawnPoint = true;
                         } else {
+                            GameLogic.instance.timeElapsed = 0;
+                            GameLogic.instance.pickedFragments = 0;
                             Debug.Log("GameLogic se adelaantó");
                             if (GameLogic.instance.currentPlayer.worldAssignation == world.DAWN) {
                                 GameLogic.instance.currentPlayer.transform.position = gameObject.transform.position + new Vector3(0, 0.55f, 2);
                                 GameLogic.instance.currentPlayer.brotherObject.transform.position = brotherObject.transform.position + new Vector3(0, 0.55f, 2);
-                                GameLogic.instance.SetSpawnPoint(gameObject.transform.position + new Vector3(0, 0.55f, 0));
+                                GameLogic.instance.SetSpawnPoint(new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 0.55f, -0.1085899f));
                                 GameLogic.instance.cameraTransition = true;
 
                             } else {
@@ -276,15 +278,15 @@ public class LevelEntrance : DoubleObject {
                     //brotherScript.tryMovePlayer = true;
                 }
 
-                if (interacted) {
+
+
+
+
+            } else if (interacted) {
                     if (GameLogic.instance.currentPlayer.transform.position.z > 4) {
                         GameLogic.instance.LoadScene(levelToLoad);
                     }
-                }
-            
-
-
-        }
+            }
 
             BrotherBehavior();
         }
