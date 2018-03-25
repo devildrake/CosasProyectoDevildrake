@@ -367,16 +367,20 @@ public class PlayerController : DoubleObject {
     }
 
     void Update() {
-        if (placeToGo == null) {
-            if (rb.velocity.y < 0) {
-                rb.gravityScale = 1.5f;
-            } else {
-                rb.gravityScale = 1;
-            }
+        //if (placeToGo == null) {
+        if (rb.velocity.y < 0) {
+            rb.gravityScale = 1.5f;
         } else {
-            rb.gravityScale = 0;
-            rb.velocity = new Vector2(rb.velocity.x, 0);
+            rb.gravityScale = 1;
         }
+        //} else {
+        //    rb.gravityScale = 0;
+        //    rb.velocity = new Vector2(rb.velocity.x, 0);
+        //}
+
+        //if (!sliding) {
+        //    rb.gravityScale = 1.5f;
+        //}
 
         AddToGameLogicList();
 
