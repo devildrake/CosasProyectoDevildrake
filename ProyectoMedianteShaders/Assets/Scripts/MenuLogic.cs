@@ -180,9 +180,11 @@ public class MenuLogic : MonoBehaviour {
              */
             if (selected == 0) {
                 if (GameLogic.instance.firstOpening) {
+                    GameLogic.instance.SetTimeScaleLocal(1);
                     GameLogic.instance.LoadScene(2);
                     GameLogic.instance.firstOpening = true;
                 } else {
+                    GameLogic.instance.SetTimeScaleLocal(1);
                     GameLogic.instance.LoadScene(2);
                 }
             }
@@ -204,10 +206,14 @@ public class MenuLogic : MonoBehaviour {
                 if(hit.transform.gameObject.name == "jugar") {
                     selected = 0;
                     if (GameLogic.instance.firstOpening) {
+                        GameLogic.instance.SetTimeScaleLocal(1);
                         GameLogic.instance.LoadScene(2);
+
                         GameLogic.instance.firstOpening = true;
                     } else {
+                        GameLogic.instance.SetTimeScaleLocal(1);
                         GameLogic.instance.LoadScene(2);
+
                     }
                 }
                 else if(hit.transform.gameObject.name == "opciones") {

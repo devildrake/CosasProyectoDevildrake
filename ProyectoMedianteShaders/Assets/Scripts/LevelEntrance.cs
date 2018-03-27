@@ -17,8 +17,11 @@ public class LevelEntrance : DoubleObject {
     public LevelEntrance brotherScript;
     bool interacted;
     public bool finalBeta;
-
+    public ParticleSystem[] particleSystems;
+    public bool[] particleMustDo;
     void Start() {
+        particleMustDo = new bool[3];
+
         interacted = false;
         brotherScript = brotherObject.GetComponent<LevelEntrance>();
         if(levelToLoad-1==2)
@@ -67,33 +70,114 @@ public class LevelEntrance : DoubleObject {
 
         rb.mass = 5000;
         rb.gravityScale = 0;
+
+        for(int i = 0; i < particleSystems.Length; i++) {
+            if (particleSystems[i] != null) {
+                particleSystems[i].Stop();
+            }
+        }
+
+
+
     }
 
     void FragmentsCheck() {
+        bool temp = true;
+        //string levels="";
+        //string bools = "";
+
         for (int i = levelToLoad; i < (levelToLoad + sequenceLength); i++) {
-            bool temp = true;
+           // levels += i.ToString();
+          //  bools += GameLogic.instance.levelsData[i].fragment.ToString();
             if (!GameLogic.instance.levelsData[i].fragment) {
                 temp = false;
             }
-
-            spriteFragments.SetActive(temp);
             //Debug.Log(GameLogic.instance.levelsData[i].fragment);
-
         }
+            if (temp) {
+                if (!GameLogic.instance.levelsData[levelToLoad].fragmentFeedBack) {
+                    if (particleSystems[0] != null) {
 
+                        if (!particleSystems[0].isEmitting||particleSystems[0].isStopped) {
+                            particleSystems[0].Play();
+                        particleMustDo[0] = true;
+
+                    }
+                    particleSystems[0].gameObject.transform.position = Vector3.MoveTowards(particleSystems[0].gameObject.transform.position, spriteFragments.transform.position, 10 * Time.deltaTime);
+                        if ((particleSystems[0].gameObject.transform.position - spriteFragments.transform.position).magnitude < 0.1) {
+                            particleSystems[0].startSpeed += 1;
+                            particleSystems[0].Emit(200);
+                            particleSystems[0].startSpeed -= 1;
+                            spriteFragments.SetActive(true);
+                            GameLogic.instance.levelsData[levelToLoad].fragmentFeedBack = false;
+                        particleMustDo[0] = false;
+
+                        particleSystems[0].Emit(1000);
+                        //Destroy(particleSystems[0].gameObject);
+                        particleSystems[0].Stop();
+
+                        //ENTRA AQUI; HAY QUE METER AQUI PARTICLEDESU
+                    }
+                } else {
+                        spriteFragments.SetActive(true);
+                    }
+                } else {
+                    spriteFragments.SetActive(true);
+                }
+        } else {
+                spriteFragments.SetActive(false);
+            }
+
+       // Debug.Log("My index is " + levelToLoad + " and I am checking fragments " + levels + " and the results are " + bools);
 
     }
 
     void ActivatedCheck() {
-        spriteLevelNumb.SetActive(GameLogic.instance.levelsData[levelToLoad - 1].completed);
-        portalEffect.SetActive(GameLogic.instance.levelsData[levelToLoad - 1].completed);
-        if (spriteLevelNumb.activeInHierarchy) {
-            //Debug.Log("AHAHSDHASDS " + GameLogic.instance.levelsData[levelToLoad].completed);
+        //spriteLevelNumb.SetActive(GameLogic.instance.levelsData[levelToLoad - 1].completed);
+        //portalEffect.SetActive(GameLogic.instance.levelsData[levelToLoad - 1].completed);
+        //if (spriteLevelNumb.activeInHierarchy) {
+        //    //Debug.Log("AHAHSDHASDS " + GameLogic.instance.levelsData[levelToLoad].completed);
+        //} else {
+        //    //Debug.Log(levelToLoad - 1 + "NO ESTA COMPLETADO -> " + GameLogic.instance.levelsData[levelToLoad - 1].completed);
+        //}
+        portalEffect.SetActive(false);
+
+        if (GameLogic.instance.levelsData[levelToLoad - 1].completed) {
+            if (!GameLogic.instance.levelsData[levelToLoad - 1].completedFeedBack) {
+                if (particleSystems.Length > 2) {
+                    if (particleSystems[1] != null) {
+                        if (!particleSystems[1].isEmitting||particleSystems[1].isStopped) {
+                            particleSystems[1].Play();
+                            particleMustDo[1] = true;
+
+                        }
+
+                        particleSystems[1].gameObject.transform.position = Vector3.MoveTowards(particleSystems[1].gameObject.transform.position, spriteLevelNumb.transform.position, 10 * Time.deltaTime);
+                        if ((particleSystems[1].gameObject.transform.position - spriteLevelNumb.transform.position).magnitude < 0.1) {
+                            particleSystems[1].startSpeed += 1;
+                            particleSystems[1].Emit(200);
+                            particleSystems[1].startSpeed -= 1;
+                            spriteFragments.SetActive(true);
+                            Destroy(particleSystems[1].gameObject);
+                            particleMustDo[1] = false;
+
+                            GameLogic.instance.levelsData[levelToLoad - 1].completedFeedBack = true;
+                            //ENTRA AQUI; HAY QUE METER AQUI PARTICLEDESU
+                        }
+
+                    } else {
+                        spriteLevelNumb.SetActive(true);
+                        portalEffect.SetActive(true);
+                    }
+                }
+            } else {
+                spriteLevelNumb.SetActive(true);
+                portalEffect.SetActive(true);
+            }
         } else {
-            //Debug.Log(levelToLoad - 1 + "NO ESTA COMPLETADO -> " + GameLogic.instance.levelsData[levelToLoad - 1].completed);
+            spriteLevelNumb.SetActive(false);
+            portalEffect.SetActive(false);
         }
-
-
     }
 
     void TimeCheck() {
@@ -102,10 +186,38 @@ public class LevelEntrance : DoubleObject {
             for (int i = levelToLoad; i < levelToLoad + sequenceLength - 1; i++) {
                 total += GameLogic.instance.levelsData[i].timeLapse;
             }
+           // Debug.Log("Total = " + total);
+           if (timeForSequence > total) {
+                if (!GameLogic.instance.levelsData[levelToLoad].timeLapseFeedBack) {
+                    if (particleSystems[2] != null) {
 
-            spriteTime.SetActive(timeForSequence > total);
+                        if (!particleSystems[2].isEmitting||particleSystems[2].isStopped) {
+                            particleSystems[2].Play();
+                            particleMustDo[2] = true;
 
-            Debug.Log("Total = " + total);
+                        }
+                        particleSystems[2].gameObject.transform.position = Vector3.MoveTowards(particleSystems[2].gameObject.transform.position, spriteTime.transform.position, 10 * Time.deltaTime);
+                        if ((particleSystems[2].gameObject.transform.position - spriteTime.transform.position).magnitude < 0.1) {
+                            particleSystems[2].startSpeed += 1;
+                            particleSystems[2].Emit(200);
+                            particleSystems[2].startSpeed -= 1;
+                            particleMustDo[2] = true;
+
+                            spriteFragments.SetActive(true);
+                            Destroy(particleSystems[2].gameObject);
+                            GameLogic.instance.levelsData[levelToLoad].timeLapseFeedBack = true;
+                            //ENTRA AQUI; HAY QUE METER AQUI PARTICLEDESU
+                        }
+                    } else {
+                        spriteTime.SetActive(true);
+                    }
+                } else {
+                    spriteTime.SetActive(true);
+                }
+            } else {
+                spriteTime.SetActive(false);
+            }
+
 
         }
     }
@@ -224,6 +336,103 @@ public class LevelEntrance : DoubleObject {
         }
     }
 
+    void ParticleBusiness(int i) {
+
+        switch (i) {
+            case 0:
+                spriteFragments.SetActive(false);
+            particleSystems[0].gameObject.transform.position = Vector3.MoveTowards(particleSystems[0].gameObject.transform.position, spriteFragments.transform.position,  Time.deltaTime);
+            if ((particleSystems[0].gameObject.transform.position - spriteFragments.transform.position).magnitude < 0.1) {
+                particleSystems[0].startSpeed += 1;
+                particleSystems[0].Emit(200);
+                particleSystems[0].startSpeed -= 1;
+                spriteFragments.SetActive(true);
+                    GameLogic.instance.levelsData[levelToLoad].fragmentFeedBack = true;
+                    Invoke("Save", 1.0f);
+
+
+                    ParticleSystem.MainModule module = particleSystems[0].main;
+                    ParticleSystem.ShapeModule shapeModule = particleSystems[0].shape;
+                    module.maxParticles = 1000;
+                    module.startLifetime = 0.4f;
+                    module.startSpeed = 30;
+                    shapeModule.radius = 0.01f;
+
+
+                    particleSystems[0].Emit(1000);
+                    //Destroy(particleSystems[0].gameObject);
+                    particleSystems[0].Stop();
+                    particleMustDo[0] = false;
+
+                    //ENTRA AQUI; HAY QUE METER AQUI PARTICLEDESU
+                }
+                break;
+            case 1:
+                spriteLevelNumb.SetActive(false);
+                particleSystems[1].gameObject.transform.position = Vector3.MoveTowards(particleSystems[1].gameObject.transform.position, spriteLevelNumb.transform.position, Time.deltaTime);
+                if ((particleSystems[1].gameObject.transform.position - spriteLevelNumb.transform.position).magnitude < 0.1) {
+                    particleSystems[1].startSpeed += 1;
+                    particleSystems[1].Emit(200);
+                    particleSystems[1].startSpeed -= 1;
+                    spriteLevelNumb.SetActive(true);
+                    portalEffect.SetActive(true);
+                    GameLogic.instance.levelsData[levelToLoad - 1].completedFeedBack = true;
+                    //ENTRA AQUI; HAY QUE METER AQUI PARTICLEDESU
+                    Invoke("Save", 1.0f);
+
+
+
+                    ParticleSystem.MainModule module = particleSystems[1].main;
+                    ParticleSystem.ShapeModule shapeModule = particleSystems[1].shape;
+                    module.maxParticles = 1000;
+                    module.startLifetime = 0.4f;
+                    module.startSpeed = 30;
+                    shapeModule.radius = 0.01f;
+
+
+                    particleSystems[1].Emit(1000);
+                    //Destroy(particleSystems[0].gameObject);
+                    particleSystems[1].Stop();
+                    particleMustDo[1] = false;
+
+                }
+                break;
+            case 2:
+                spriteTime.SetActive(false);
+                particleSystems[2].gameObject.transform.position = Vector3.MoveTowards(particleSystems[2].gameObject.transform.position, spriteTime.transform.position, Time.deltaTime);
+                if ((particleSystems[2].gameObject.transform.position - spriteTime.transform.position).magnitude < 0.1) {
+                    particleSystems[2].startSpeed += 1;
+                    particleSystems[2].Emit(200);
+                    particleSystems[2].startSpeed -= 1;
+                    spriteTime.SetActive(true);
+                    GameLogic.instance.levelsData[levelToLoad].timeLapseFeedBack = true;
+                    Invoke("Save", 1.0f);
+
+
+
+                    ParticleSystem.MainModule module = particleSystems[2].main;
+                    ParticleSystem.ShapeModule shapeModule = particleSystems[2].shape;
+                    module.maxParticles = 1000;
+                    module.startLifetime = 0.4f;
+                    module.startSpeed = 30;
+                    shapeModule.radius = 0.01f;
+
+
+                    particleSystems[2].Emit(1000);
+                    //Destroy(particleSystems[0].gameObject);
+                    particleSystems[2].Stop();
+                    particleMustDo[2] = false;
+
+                    //ENTRA AQUI; HAY QUE METER AQUI PARTICLEDESU
+                }
+                break;
+        }
+    }
+
+    void Save() {
+        GameLogic.instance.Save();
+    }
+
     // Update is called once per frame
     void Update() {
         AddToGameLogicList();
@@ -293,6 +502,15 @@ public class LevelEntrance : DoubleObject {
                         GameLogic.instance.LoadScene(levelToLoad);
                     }
                 }
+                for(int i = 0; i < particleSystems.Length; i++) {
+                    if (particleSystems[i] != null) {
+                        if (particleMustDo[i]) {
+                            ParticleBusiness(i);
+                        }
+                    }
+                }
+
+
             }
             else { 
 

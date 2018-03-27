@@ -14,7 +14,7 @@ public class LevelData {
     public bool completed;
     public bool completedFeedBack;
     public float timeLapse;
-    public float timeLapseFeedBack;
+    public bool timeLapseFeedBack;
 }
 
 //Clase singleton (solo debe existir uno) referenciable a partir de una instancia estatica a si mismo que gestiona
@@ -504,6 +504,9 @@ public class GameLogic : MonoBehaviour {
         }
         //completedLevels[2] = true;
         levelsData[2].completed = true;
+        levelsData[3].completedFeedBack = true;
+        levelsData[2].completedFeedBack = true;
+
         lastEntranceIndex = 3;
 
         Save();
@@ -518,17 +521,40 @@ public class GameLogic : MonoBehaviour {
             file.Close();
 
             firstOpening = data.firstOpening;
+            levelsData = data.levelData;
+            lastEntranceIndex = data.lastEntranceIndex;
+
+            #region debugStuff
             //completedLevels = data.completedLevels;
             //fragments = data.fragments;
-            levelsData = data.levelData;
-
-            lastEntranceIndex = data.lastEntranceIndex;
+            //levelsData[9].completed = true;
+            //levelsData[9].fragmentFeedBack = false;
+            //levelsData[9].timeLapseFeedBack = false;
+            //levelsData[9].completedFeedBack = false;
+            //levelsData[9].fragment = true;
+            //levelsData[9].timeLapse = 0;
+            //levelsData[10].completed = true;
+            //levelsData[10].fragmentFeedBack = false;
+            //levelsData[10].timeLapseFeedBack = false;
+            //levelsData[10].completedFeedBack = false;
+            //levelsData[10].fragment = true;
+            //levelsData[10].timeLapse = 0;
+            //levelsData[11].completed = true;
+            //levelsData[11].fragmentFeedBack = false;
+            //levelsData[11].timeLapseFeedBack = false;
+            //levelsData[11].completedFeedBack = false;
+            //levelsData[11].fragment = true;
+            //levelsData[11].timeLapse = 0;
+            //levelsData[8].completed = true;
+            //levelsData[3].fragment = true;
+            //levelsData[4].fragment = true;
+            //levelsData[5].fragment = true;
             //Igualar variables a cargar (Locales) a las de data
 
             //for(int i=2;i<30;i++) {
             //    Debug.Log("Level->  " + i + " " + levelsData[i].timeLapse + " " + levelsData[i].completed);
             //}
-
+            #endregion
 
         } else {
             InitLoadSaveVariables();
