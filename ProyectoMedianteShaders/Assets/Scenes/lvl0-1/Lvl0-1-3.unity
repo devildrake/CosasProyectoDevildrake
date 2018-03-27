@@ -577,7 +577,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4899079776961396, guid: 5ce16f901e7aad54d830bef6cfd8c6d4, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 2.84
+      value: 3.08
       objectReference: {fileID: 0}
     - target: {fileID: 4899079776961396, guid: 5ce16f901e7aad54d830bef6cfd8c6d4, type: 2}
       propertyPath: m_LocalPosition.z
@@ -4119,6 +4119,11 @@ Prefab:
       propertyPath: startPosObj
       value: 
       objectReference: {fileID: 1560754486}
+    - target: {fileID: 114506745500389186, guid: 63021cf7b8851aa4ca95fb0b77c03287,
+        type: 2}
+      propertyPath: levelName
+      value: El primer paso - 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 63021cf7b8851aa4ca95fb0b77c03287, type: 2}
   m_IsPrefabParent: 0
@@ -6696,7 +6701,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4899079776961396, guid: 5ce16f901e7aad54d830bef6cfd8c6d4, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -2.62
+      value: -2.42
       objectReference: {fileID: 0}
     - target: {fileID: 4899079776961396, guid: 5ce16f901e7aad54d830bef6cfd8c6d4, type: 2}
       propertyPath: m_LocalPosition.z
