@@ -176,7 +176,6 @@ public class DoubleFairyGuide : DoubleObject {
                         }
                     }
                     //rb.velocity = new Vector2(0, 0);
-                    Debug.Log(currentSpot);
                 } else {
                     Vector2 DesiredVelocity = fairySpotList[targetIndex].transform.position - transform.position;
                     DesiredVelocity.Normalize();
@@ -212,7 +211,7 @@ public class DoubleFairyGuide : DoubleObject {
                         brotherScript.setIdle = true;
                         brotherScript.currentIdlePattern = currentIdlePattern;
 
-                        Debug.Log(currentIdlePattern);
+                        //Debug.Log(currentIdlePattern);
                     }
                     rb.velocity = new Vector2(0, 0);
 

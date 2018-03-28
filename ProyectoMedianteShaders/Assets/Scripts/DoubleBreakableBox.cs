@@ -9,16 +9,16 @@ public class DoubleBreakableBox : DoubleObject {
     bool broken;
     [SerializeField]
     AudioClip smashedClip;
-
+    Animator myAnimator;
+    DoubleBreakableBox brotherScript;
     void Start() {
-
+        myAnimator = GetComponentInChildren<Animator>();
         offset = GameLogic.instance.worldOffset;
         LoadResources();
         if (worldAssignation == world.DAWN) {
             GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
-            //GetComponent<SpriteRenderer>().sprite = imagenDawn;
-        }else {
-            //GetComponent<SpriteRenderer>().sprite = imagenDusk;
+        } else {
+            transform.localPosition = new Vector3(0, 0, 0);
         }
         InitTransformable();
 
@@ -32,22 +32,25 @@ public class DoubleBreakableBox : DoubleObject {
         interactuableBySmash = false;
         broken = false;
         rb.gravityScale = 0;
+        brotherScript = brotherObject.GetComponent<DoubleBreakableBox>();
+
     }
 
     protected override void BrotherBehavior() {
         Vector3 positionWithOffset;
-        if (GetComponent<Rigidbody2D>().bodyType == RigidbodyType2D.Kinematic) {
-            positionWithOffset = brotherObject.transform.position;
+        if (rb != null) {
+            if (rb.bodyType == RigidbodyType2D.Kinematic) {
+                positionWithOffset = brotherObject.transform.position;
 
-            if (worldAssignation == world.DAWN)
-                positionWithOffset.y += offset;
-            else {
-                positionWithOffset.y -= offset;
+                if (worldAssignation == world.DAWN)
+                    positionWithOffset.y += offset;
+                else {
+                    positionWithOffset.y -= offset;
+                }
+                transform.position = positionWithOffset;
+                transform.rotation = brotherObject.transform.rotation;
             }
-            transform.position = positionWithOffset;
-            transform.rotation = brotherObject.transform.rotation;
         }
-
     }
 
     protected override void LoadResources() {
@@ -80,12 +83,15 @@ public class DoubleBreakableBox : DoubleObject {
 
         Destroy(gameObject.GetComponent<Rigidbody2D>());
         Destroy(gameObject.GetComponent<BoxCollider2D>());
-        Destroy(gameObject.GetComponent<SpriteRenderer>());
-        Destroy(brotherObject.gameObject);
 
-        Invoke("DestroyCompletely", 0.5f);
+        Destroy(brotherScript.gameObject.GetComponent<Rigidbody2D>());
+        Destroy(brotherScript.gameObject.GetComponent<BoxCollider2D>());
 
+        //Destroy(brotherObject.gameObject);
 
+        Invoke("DestroyCompletely", 1.0f);
+        myAnimator.SetBool("broken", true);
+        brotherScript.myAnimator.SetBool("broken", true);
 
         //   }
     }
@@ -96,9 +102,15 @@ public class DoubleBreakableBox : DoubleObject {
 
     // Update is called once per frame
     void Update() {
+
+        if(transform.localPosition!=new Vector3(0,0,0)&&worldAssignation == world.DUSK) {
+            transform.localPosition = new Vector3(0, 0, 0);
+        }
+
         AddToGameLogicList();
 
-        if(!broken)
-        BrotherBehavior();
+        if (!broken) {
+            BrotherBehavior();
+        }
     }
 }

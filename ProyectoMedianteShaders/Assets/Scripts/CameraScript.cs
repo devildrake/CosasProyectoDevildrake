@@ -136,8 +136,10 @@ public class CameraScript : MonoBehaviour {
                             GetComponent<Camera>().orthographicSize = Mathf.Lerp(GetComponent<Camera>().orthographicSize, farDistance, Time.deltaTime * 2);
                         }
 
-                        if ((Vector3.Distance(transform.position, overViewPosition) > transitionThreshold)) {
-                            smoothedPosition = Vector3.Lerp(transform.position, overViewPosition, Time.deltaTime * 2);
+                        desiredPosition = target.position + new Vector3(5, 0, -25);
+
+                        if ((Vector3.Distance(transform.position, desiredPosition) > transitionThreshold)) {
+                            smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, Time.deltaTime * 2);
                             transform.position = smoothedPosition;
                         }
                         break;

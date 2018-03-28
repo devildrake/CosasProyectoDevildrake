@@ -194,7 +194,7 @@ public class PlayerController : DoubleObject {
 
         rb = GetComponent<Rigidbody2D>();
         slowedInTheAir = false;
-        slowMotionTimeScale = 0.3f;
+        slowMotionTimeScale = 0.75f;
         dashForce = 7;
         //Se hace esto para que UseDirectionCircle haga uso de su bool once y inicialize las cosas que le interesan
         //direction = DirectionCircle.UseDirectionCircle(arrow, gameObject,0);
@@ -268,8 +268,12 @@ public class PlayerController : DoubleObject {
                         if (whichX == 0) {
                             if (placeToGo.transform.position.x - transform.position.x > 0) {
                                 whichX = 1.0f;
+                                Debug.Log("Place " + placeToGo.transform.position.x);
+                                Debug.Log("Me " + transform.position.x);
+
                             } else {
                                 whichX = -1.0f;
+                                Debug.Log("MustGoLeft");
                             }
                         } else {
                             if (whichX > 0) {
@@ -311,8 +315,10 @@ public class PlayerController : DoubleObject {
                                 myAnimator.SetBool("moving", true);
                                 myAnimator.SetFloat("timeMoving", 1.0f);
                                 if (whichX > 0) {
+                                    Debug.Log("A");
                                     transform.Translate(Vector3.forward * 1.4f * Time.deltaTime);
-                                } else {
+                                } else if(whichX < 0) {
+                                    Debug.Log("B");
                                     transform.Translate(Vector3.back * 1.4f * Time.deltaTime);
                                 }
                             }
@@ -320,6 +326,7 @@ public class PlayerController : DoubleObject {
 
                         } else {
                             InputManager.UnBlockInput();
+                            whichX = 0;
                             if (placeToGo != null) {
                                 Destroy(placeToGo.gameObject);
                             }
@@ -385,9 +392,9 @@ public class PlayerController : DoubleObject {
         AddToGameLogicList();
 
         if (added) {
-
-            MoveEvents();
-
+            if ((worldAssignation == world.DAWN && dawn) || (worldAssignation == world.DUSK && !dawn)) {
+                MoveEvents();
+            }
 
             if (!GameLogic.instance.levelFinished) {
                 //Debug.Log(grounded);
@@ -853,7 +860,10 @@ public class PlayerController : DoubleObject {
                 audioSource.Play();
                 canJumpOnImpulsor = false;
                 rb.velocity = new Vector2(0, 0);
-               // Debug.Log(direction);
+                if (direction.x == 0 && direction.y == 0) {
+                    direction.x = 0;
+                    direction.y = 1;
+                }
                 PlayerUtilsStatic.DoDash(gameObject, direction, dashForce,true);
                 //control de error del sistema de particulas del release del dash
                 if (PSDawnDashRelease != null) {
