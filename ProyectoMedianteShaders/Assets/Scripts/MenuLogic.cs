@@ -65,50 +65,55 @@ public class MenuLogic : MonoBehaviour {
         highlight = state1Elements[state1Elements.Length - 1].transform;
         optionsCanvas.SetActive(false);
         GameLogic.instance.transformableObjects.Add(gameObject);
+        InputManager.UnBlockInput();
 	}
 	
 	// Update is called once per frame
 	void Update () { 
         switch (menuState) {
-        case -2:
-            StateM2Behavior();
-            break;
-
-        case -1:
-            canvasGroup.gameObject.SetActive(true);
-            Destroy(uselessCanvas);
-            if(canvasGroup.alpha > 0) {
-                canvasGroup.alpha -= Time.deltaTime;
-            } else {
-                pressAnyKeyObj.SetActive(true);
-                menuState = 0;
-            }
-            break;
-
-        case 0:
-            Blink(pressAnyKeyObj);
-            if (Input.anyKeyDown) {
-                menuState = 1;
-                pressAnyKeyObj.SetActive(false);
-                foreach (GameObject go in state1Elements) {
-                    go.SetActive(true);
+            case -2:
+                if(InputManager.instance.pauseButton && !InputManager.instance.prevPauseButton) {
+                    menuState = -1;
                 }
-            }
-            break;
+                StateM2Behavior();
+                break;
 
-        case 1:
-            State1Behavior();
-            break;
+            case -1:
+                canvasGroup.gameObject.SetActive(true);
+                canvasFadeSplash.gameObject.SetActive(false);
+                Destroy(uselessCanvas);
+                if(canvasGroup.alpha > 0) {
+                    canvasGroup.alpha -= Time.deltaTime;
+                } else {
+                    pressAnyKeyObj.SetActive(true);
+                    menuState = 0;
+                }
+                break;
 
-        case 2:
-            State2Behavior();
-            break;
+            case 0:
+                Blink(pressAnyKeyObj);
+                if (Input.anyKeyDown) {
+                    menuState = 1;
+                    pressAnyKeyObj.SetActive(false);
+                    foreach (GameObject go in state1Elements) {
+                        go.SetActive(true);
+                    }
+                }
+                break;
 
-        case 3:
-            State3Behavior();
-            break;
-        default:
-            break;
+            case 1:
+                State1Behavior();
+                break;
+
+            case 2:
+                State2Behavior();
+                break;
+
+            case 3:
+                State3Behavior();
+                break;
+            default:
+                break;
         }
 	}
 
@@ -181,10 +186,12 @@ public class MenuLogic : MonoBehaviour {
             if (selected == 0) {
                 if (GameLogic.instance.firstOpening) {
                     GameLogic.instance.SetTimeScaleLocal(1);
+                    InputManager.BlockInput();
                     GameLogic.instance.LoadScene(2);
                     GameLogic.instance.firstOpening = true;
                 } else {
                     GameLogic.instance.SetTimeScaleLocal(1);
+                    InputManager.BlockInput();
                     GameLogic.instance.LoadScene(2);
                 }
             }
