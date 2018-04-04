@@ -20,6 +20,7 @@ public class EnemyWalker : DoubleObject {
     public Transform[] PatrolPoints;
     public Vector3[] VectorPatrolPoints;
     bool goingA;
+    float timeSinceStompedOn;
 
     //El Objeto que esta en DAWN pilla las posiciones de los patrolPoints y los destruye
     void Start() {
@@ -31,7 +32,7 @@ public class EnemyWalker : DoubleObject {
             Destroy(PatrolPoints[1].gameObject);
         }
 
-
+        timeSinceStompedOn = 0.5f;
         bounceForce = 10.5f;
         velocity = 2.5f;
         InitTransformable();
@@ -153,6 +154,7 @@ public class EnemyWalker : DoubleObject {
     void DuskBehavior() {
         if (!dawn) {
             GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
+                GetComponentInChildren<Animator>().SetBool("Jumped", timeSinceStompedOn < 0.4f);
         }
     }
 
@@ -168,6 +170,7 @@ public class EnemyWalker : DoubleObject {
         }else if (!dawn && worldAssignation == world.DUSK) {
             if (other.tag == "Player") {
 
+                timeSinceStompedOn = 0;
                 if (other.GetComponent<Rigidbody2D>().velocity.y <= 0) {
                     other.GetComponent<Rigidbody2D>().velocity = new Vector2(other.GetComponent<Rigidbody2D>().velocity.x, 0);
                     other.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, 1 * bounceForce), ForceMode2D.Impulse);
@@ -175,6 +178,7 @@ public class EnemyWalker : DoubleObject {
                     //Debug.Log(other.GetComponent<Rigidbody2D>().velocity);
                 }
             } else if (other.GetComponent<DoubleObject>() != null) {
+                timeSinceStompedOn = 0;
                 if (other.GetComponent<DoubleObject>().canBounce) {
                     other.GetComponent<Rigidbody2D>().velocity = new Vector2(other.GetComponent<Rigidbody2D>().velocity.x, 0);
                     other.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, other.GetComponent<Rigidbody2D>().mass * bounceForce), ForceMode2D.Impulse);
@@ -192,6 +196,7 @@ public class EnemyWalker : DoubleObject {
         } else if (!dawn && worldAssignation == world.DUSK) {
             if (other.tag == "Player") {
                 if (other.GetComponent<Rigidbody2D>().velocity.y <= 0&&!other.GetComponent<PlayerController>().grounded) {
+                    timeSinceStompedOn = 0;
                     Debug.Log(other.GetComponent<Rigidbody2D>());
                     other.GetComponent<Rigidbody2D>().velocity = new Vector2(other.GetComponent<Rigidbody2D>().velocity.x, 0);
                     other.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, 1 * bounceForce),ForceMode2D.Impulse);
@@ -213,10 +218,15 @@ public class EnemyWalker : DoubleObject {
 
     // Update is called once per frame
     void Update() {
+
+
+
         AddToGameLogicList();
 
         if (added) {
-
+            if (timeSinceStompedOn < 0.5f) {
+                timeSinceStompedOn += Time.deltaTime;
+            }
             //Este método es una mierda que he tenido que meter, es una guarrada pero hace ByPass de un problemilla que solo está en este script
             Nen();
 
