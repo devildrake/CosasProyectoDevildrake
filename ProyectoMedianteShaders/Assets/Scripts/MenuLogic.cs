@@ -43,6 +43,7 @@ public class MenuLogic : MonoBehaviour {
     private float timerM2; //timer para el estado -2
     public GameObject uselessCanvas;
     private bool upAlpha=true, downAlpha= true;
+    private int delayCounter;
 
 	// Use this for initialization
 	void Start () {
@@ -57,6 +58,7 @@ public class MenuLogic : MonoBehaviour {
         timerM2 = 0f;
         timeToBlink = 0.4f;
         pressAnyKeyObj.SetActive(false);
+        delayCounter = 0;
 
         foreach(GameObject go in state1Elements) {
             go.SetActive(false);
@@ -102,7 +104,12 @@ public class MenuLogic : MonoBehaviour {
                 break;
 
             case 1:
-                State1Behavior();
+                if (delayCounter < 2) {
+                    delayCounter++;
+                }
+                else {
+                    State1Behavior();
+                }
                 break;
 
             case 2:
@@ -177,7 +184,7 @@ public class MenuLogic : MonoBehaviour {
         highlight.position = new Vector3(highlight.position.x, state1Elements[selected].transform.position.y, highlight.position.z);
 
         //SELECCION
-        if(Input.GetAxisRaw("Select") == 1) {
+        if(!InputManager.instance.prevSelectButton && InputManager.instance.selectButton) {
             /*
              * Selected = 0 --> Boton jugar
              * Selected = 1 --> Boton salir

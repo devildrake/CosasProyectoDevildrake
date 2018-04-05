@@ -13,7 +13,7 @@ public class SetUpOptions : MonoBehaviour {
     public Button aceptar, cancelar;
     public GameObject optionsCanvas; //referencia al canvas de todo el menu de opciones para cerrarlo despues de aceptar o cancelar.
     public Scrollbar scroll;
-    public Toggle mute;
+    public Toggle mute, timeOnScreen;
     public float maxScroll = 50;
 
     //valores previos de las variables
