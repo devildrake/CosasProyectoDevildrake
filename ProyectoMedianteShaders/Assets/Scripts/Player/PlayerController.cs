@@ -268,12 +268,12 @@ public class PlayerController : DoubleObject {
                         if (whichX == 0) {
                             if (placeToGo.transform.position.x - transform.position.x > 0) {
                                 whichX = 1.0f;
-                                Debug.Log("Place " + placeToGo.transform.position.x);
-                                Debug.Log("Me " + transform.position.x);
+                                //Debug.Log("Place " + placeToGo.transform.position.x);
+                                //Debug.Log("Me " + transform.position.x);
 
                             } else {
                                 whichX = -1.0f;
-                                Debug.Log("MustGoLeft");
+                                //Debug.Log("MustGoLeft");
                             }
                         } else {
                             if (whichX > 0) {

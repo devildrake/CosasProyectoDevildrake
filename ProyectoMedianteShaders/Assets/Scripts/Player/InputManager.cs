@@ -40,6 +40,8 @@ public class InputManager : MonoBehaviour {
     public float prevRightVerticalAxis;
     [HideInInspector]
     public bool prevAnyKeyDown;
+    [HideInInspector]
+    public bool prevCancelButton;
     //[HideInInspector]
     //public bool prevDashButtonPlayer;
     //[HideInInspector]
@@ -48,7 +50,7 @@ public class InputManager : MonoBehaviour {
 
 
 
-
+    public bool cancelButton;
     public bool dashButton;
     public bool deflectButton;
     public bool crawlButton;
@@ -111,7 +113,9 @@ public class InputManager : MonoBehaviour {
         instance.selectButton = false;
         instance.interactButton = false;
         instance.resetButton = false;
+        instance.cancelButton = false;
         instance.horizontalAxis = 0;
+        instance.verticalAxis = 0;
         instance.rightHorizontalAxis = 0;
         instance.rightVerticalAxis = 0;
 
@@ -124,7 +128,9 @@ public class InputManager : MonoBehaviour {
         instance.prevSelectButton = false;
         instance.prevInteractButton = false;
         instance.prevResetButton = false;
+        instance.prevCancelButton = false;
         instance.prevHorizontalAxis = 0;
+        instance.prevVerticalAxis = 0;
         instance.prevRightHorizontalAxis = 0;
         instance.prevRightVerticalAxis = 0;
         instance.prevAnyKeyDown = false;
@@ -219,7 +225,8 @@ public class InputManager : MonoBehaviour {
             instance.prevSelectButton = instance.selectButton;
             instance.prevChangeButton = instance.changeButton;
             instance.prevPauseButton = instance.pauseButton;
-
+            instance.prevVerticalAxis = instance.verticalAxis;
+            instance.prevCancelButton = instance.cancelButton;
             instance.dashButton = (Input.GetAxisRaw("DashPunch") == 1.0);
             //dashButtonPlayer = (Input.GetAxisRaw("DashPunch") == 1.0);
 
@@ -232,7 +239,7 @@ public class InputManager : MonoBehaviour {
             instance.resetButton = Input.GetAxisRaw("Reset") == 1.0;
             instance.interactButton = (Input.GetAxisRaw("Interact") == 1.0);
             instance.cameraButton = Input.GetAxisRaw("Camera") == 1.0;
-
+            instance.cancelButton = Input.GetAxisRaw("Cancel") == 1.0;
 
 
 

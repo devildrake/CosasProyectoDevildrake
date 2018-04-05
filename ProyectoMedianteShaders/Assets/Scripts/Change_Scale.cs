@@ -60,7 +60,7 @@ public class Change_Scale : MonoBehaviour {
                     psMainModule.startSpeed = -50;
                     psShapeModule.radius = 10.5f;
                     psChangeWorld.Emit(particlesToDusk);
-                    print("play to dusk");
+                    //print("play to dusk");
                     emissionToDawn = true;
                 }
             } else {

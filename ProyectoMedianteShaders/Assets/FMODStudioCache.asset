@@ -1,0 +1,100 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d32cf7c32a3ed8347bac48ef5ed56d82, type: 3}
+  m_Name: FMODStudioCache
+  m_EditorClassIdentifier: 
+  EditorBanks:
+  - {fileID: 114867409791930004}
+  - {fileID: 114147294262243666}
+  - {fileID: 114844049644358910}
+  EditorEvents:
+  - {fileID: 114200465859187042}
+  MasterBankRef: {fileID: 114147294262243666}
+  StringsBankRef: {fileID: 114867409791930004}
+  stringsBankWriteTime: 636585427710518563
+  cacheVersion: 2
+--- !u!114 &114147294262243666
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Path: C:\Users\MSI-D\Documents\CosasProyectoDevildrake\ProyectoMedianteShaders\Assets\Resources\FModBuild\DesktopConfig\Master
+    Bank.bank
+  lastModified: 636585427710508540
+  LoadResult: 0
+  FileSizes:
+  - Name: 
+    Value: 12474
+  Exists: 1
+--- !u!114 &114200465859187042
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Path: event:/InteractableMenuMusic
+  guid: a8be859548890348a8db6f18134a41a6
+  Banks:
+  - {fileID: 114844049644358910}
+  IsStream: 1
+  Is3D: 1
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 59489
+--- !u!114 &114844049644358910
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Path: C:\Users\MSI-D\Documents\CosasProyectoDevildrake\ProyectoMedianteShaders\Assets\Resources\FModBuild\DesktopConfig\LevelMusic.bank
+  lastModified: 636585427710819860
+  LoadResult: 0
+  FileSizes:
+  - Name: 
+    Value: 1199488
+  Exists: 1
+--- !u!114 &114867409791930004
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Path: Assets\Resources\FModBuild\DesktopConfig\Master Bank.strings.bank
+  lastModified: 636585427710518563
+  LoadResult: 0
+  FileSizes:
+  - Name: 
+    Value: 784
+  Exists: 1
