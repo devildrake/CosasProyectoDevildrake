@@ -2257,6 +2257,47 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   brotherObject: {fileID: 694680240}
   worldAssignation: 0
+--- !u!1 &1141969217
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1141969219}
+  - component: {fileID: 1141969218}
+  m_Layer: 0
+  m_Name: MusicSetter
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1141969218
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1141969217}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f61824589fdd3564dbf74b2fce5fd368, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  songId: 3
+--- !u!4 &1141969219
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1141969217}
+  m_LocalRotation: {x: -0.5042484, y: -0.4957152, z: -0.5042484, w: 0.4957152}
+  m_LocalPosition: {x: 2.3, y: 5.31, z: 3.3255}
+  m_LocalScale: {x: 3.7807412, y: 3.6199293, z: 3.8809106}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 13
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1166486800
 Prefab:
   m_ObjectHideFlags: 0
