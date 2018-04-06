@@ -17,6 +17,8 @@ public class MenuLogic : MonoBehaviour {
     //El primer elemento es el highlight del seleccionado, los siguientes son los botones que hay
     public GameObject[] state1Elements = new GameObject[3];
     public GameObject optionsCanvas; //referencia al canvas que tiene el menu de las opciones
+    [SerializeField] private GameObject newOptionsCanvas;
+    private Animator newOptionsAnimator;
     private int selected; //variable para controlar que elemento esta seleccionado en el menu
     private Transform highlight;
     //------------------------------------------------------------
@@ -66,6 +68,9 @@ public class MenuLogic : MonoBehaviour {
         selected = 0;
         highlight = state1Elements[state1Elements.Length - 1].transform;
         optionsCanvas.SetActive(false);
+        newOptionsAnimator = newOptionsCanvas.GetComponentInChildren<Animator>();
+        print(newOptionsAnimator);
+        newOptionsCanvas.SetActive(false);
         GameLogic.instance.transformableObjects.Add(gameObject);
         InputManager.UnBlockInput();
 	}
@@ -204,6 +209,8 @@ public class MenuLogic : MonoBehaviour {
             }
             else if (selected == 2) {
                 optionsCanvas.SetActive(true);
+                newOptionsCanvas.SetActive(true);
+                newOptionsAnimator.SetBool("Desplegar", true);
                 menuState = 2;
             }
             else if (selected == 1) {
@@ -233,6 +240,8 @@ public class MenuLogic : MonoBehaviour {
                 else if(hit.transform.gameObject.name == "opciones") {
                     selected = 2;
                     optionsCanvas.SetActive(true);
+                    newOptionsCanvas.SetActive(true);
+                    newOptionsAnimator.SetBool("Desplegar", true);
                     menuState = 2;
                 }
                 else if(hit.transform.gameObject.name == "salir") {
@@ -249,6 +258,7 @@ public class MenuLogic : MonoBehaviour {
         //al pulsar escape se cierran las opciones y vuelve al menu
         if (Input.GetAxisRaw("Cancel") == 1 || !optionsCanvas.activeInHierarchy) { //pulsando boton atrás o haciendo click en cancelar
             optionsCanvas.SetActive(false);
+            newOptionsAnimator.SetBool("Desplegar", false);
             menuState = 1;
         }
     }
@@ -277,5 +287,9 @@ public class MenuLogic : MonoBehaviour {
 
     public void QuitGame() {
         Application.Quit();
+    }
+
+    public void AnimationEvent(string msg) {
+        print(msg);
     }
 }
