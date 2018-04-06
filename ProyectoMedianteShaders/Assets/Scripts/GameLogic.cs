@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using System;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
+using FMOD.Studio;
 
 [Serializable]
 public class LevelData {
@@ -22,7 +23,8 @@ public class LevelData {
 
 public class GameLogic : MonoBehaviour {
 
-
+    SoundManager soundManager;
+    public EventInstance musicEvent;
     //////////////////////VARIABLES LOAD/SAVE////////////////////////////
     //////////////////////VARIABLES LOAD/SAVE////////////////////////////
     //////////////////////VARIABLES LOAD/SAVE////////////////////////////
@@ -158,6 +160,9 @@ public class GameLogic : MonoBehaviour {
     }
 
     void Awake() {
+
+        soundManager = SoundManager.Instance;
+
         cameraAttenuation = 1;
         //completedLevels = new Dictionary<int, bool>();
         //fragments = new Dictionary<int, bool>();
@@ -273,6 +278,11 @@ public class GameLogic : MonoBehaviour {
         //pickedFragments = 0;
         additionalOffset = new Vector3(0, 0, 0);
         timesDied = 0;
+
+        if (SoundManager.Instance != null) {
+            SoundManager.Instance.StopAllEvents(true);
+        }
+
     }
 
     public static bool isNull(GameObject g) {
@@ -298,6 +308,14 @@ public class GameLogic : MonoBehaviour {
         }
     }
 
+    public void PlaySong(int songId) {
+        if (!musicEvent.Equals(null))
+            musicEvent.stop(STOP_MODE.ALLOWFADEOUT);
+
+            musicEvent = SoundManager.Instance.PlayEvent("event:/song" + songId.ToString(),transform.position);
+        Debug.Log("PlaySong");
+    }
+
     void Update() {
 
         transformableObjects.RemoveAll(isNull);
@@ -309,6 +327,13 @@ public class GameLogic : MonoBehaviour {
             ResetSceneData();
         }
 
+        if (!SoundManager.Instance.Equals(null)) {
+            if (!musicEvent.Equals(null)) {
+                if (SoundManager.Instance.isPlaying(musicEvent)) {
+
+                }
+            }
+        }
 
         //Espera de un frame para comprobar que se ejecuta en el orden deseado
         if (!waitAFrame) {

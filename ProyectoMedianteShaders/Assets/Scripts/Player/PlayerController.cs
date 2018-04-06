@@ -134,8 +134,15 @@ public class PlayerController : DoubleObject {
     Animator brotherAnimator;
     BoxCollider2D myBoxCollider;
 
+    public GameObject armTarget;
+    int currentArmTargetIndex;
+    public Vector3[] armPositions;
+
     //Se inicializan las cosas
     void Start() {
+        armPositions = new Vector3[9];
+
+
         timeNotSliding = 0.2f;
         //El sistema de particulas de Dawn del deflect se inicia desactivado
         if (PSdawnDeflectCast != null) {
@@ -217,6 +224,10 @@ public class PlayerController : DoubleObject {
         if (arrow != null) {
             arrow.SetActive(false);
         }
+
+        if(armTarget!=null)
+        armTarget.transform.position = transform.position + new Vector3(1, 0.5f, 0);
+
     }
 
     protected override void AddToGameLogicList() {
@@ -374,6 +385,7 @@ public class PlayerController : DoubleObject {
     }
 
     void Update() {
+
         //if (placeToGo == null) {
         if (rb.velocity.y < 0) {
             rb.gravityScale = 1.5f;
@@ -394,6 +406,58 @@ public class PlayerController : DoubleObject {
         if (added) {
             if ((worldAssignation == world.DAWN && dawn) || (worldAssignation == world.DUSK && !dawn)) {
                 MoveEvents();
+            }
+
+            if (armTarget != null) {
+                if (worldAssignation == world.DUSK && !dawn) {
+                    if (Vector3.Distance(armTarget.transform.position, transform.position) > 3) {
+                        armTarget.transform.position = transform.position + new Vector3(1, 0.5f, 0);
+                    }
+
+                    #region armStuff
+
+                    if (!moving) {
+                        if (Vector3.Distance(armTarget.transform.position, armPositions[currentArmTargetIndex]) < 0.2f) {
+                            currentArmTargetIndex++;
+                            currentArmTargetIndex = currentArmTargetIndex % 9;
+                        } else {
+                            Vector3 velocity = armPositions[currentArmTargetIndex] - armTarget.transform.position;
+                            velocity.Normalize();
+                            velocity *= Time.deltaTime;
+                            armTarget.transform.position += velocity * 2;
+                        }
+                        armPositions[0] = transform.position;
+                        armPositions[1] = transform.position + new Vector3(1, 0, 0);
+                        armPositions[2] = transform.position + new Vector3(-1, 0, 0);
+                        armPositions[3] = transform.position + new Vector3(1, 1, 0);
+                        armPositions[4] = transform.position + new Vector3(-1, 1, 0);
+                        armPositions[5] = transform.position + new Vector3(1, 0.5f, 0);
+                        armPositions[6] = transform.position + new Vector3(1, -0.5f, 0);
+                        armPositions[7] = transform.position + new Vector3(-1, 0.5f, 0);
+                        armPositions[8] = transform.position + new Vector3(-1, -0.5f, 0);
+                    } else {
+                        int facing = 0;
+                        if (facingRight) {
+                            facing = 1;
+                        } else {
+                            facing = -1;
+                        }
+                        Debug.Log(facing);
+                        if (Vector3.Distance(armTarget.transform.position, transform.position + new Vector3(1, 0, 0) * facing + new Vector3(0, 1, 0)) < 0.2f) {
+                            currentArmTargetIndex++;
+                            currentArmTargetIndex = currentArmTargetIndex % 9;
+                        } else {
+                            Vector3 velocity = (transform.position + new Vector3(1, 0, 0) * facing + new Vector3(0, 1, 0)) - armTarget.transform.position;
+                            velocity.Normalize();
+                            //velocity *= Time.deltaTime;
+                            armTarget.transform.position += velocity * 2 * Time.deltaTime;
+                            Debug.Log(velocity);
+
+                        }
+                    }
+                    #endregion
+
+                }
             }
 
             if (!GameLogic.instance.levelFinished) {
