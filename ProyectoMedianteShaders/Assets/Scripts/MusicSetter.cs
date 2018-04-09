@@ -15,7 +15,6 @@ public class MusicSetter : MonoBehaviour {
         if (!done) {
             if (GameLogic.instance != null) {
                 GameLogic.instance.PlaySong(songId);
-                
                 done = true;
             }
         } else {

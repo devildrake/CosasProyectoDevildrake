@@ -5884,6 +5884,47 @@ MeshCollider:
   m_InflateMesh: 0
   m_SkinWidth: 0.01
   m_Mesh: {fileID: 4300000, guid: 40326c517b47c7d4aacc919a5da0017f, type: 3}
+--- !u!1 &1721160166
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1721160168}
+  - component: {fileID: 1721160167}
+  m_Layer: 0
+  m_Name: MusicSetter
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1721160167
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1721160166}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f61824589fdd3564dbf74b2fce5fd368, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  songId: 3
+--- !u!4 &1721160168
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1721160166}
+  m_LocalRotation: {x: -0.5042484, y: -0.4957152, z: -0.5042484, w: 0.4957152}
+  m_LocalPosition: {x: 2.3, y: 5.31, z: 3.3255}
+  m_LocalScale: {x: 3.7807412, y: 3.6199293, z: 3.8809106}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 30
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1741506187
 Prefab:
   m_ObjectHideFlags: 0
@@ -6193,6 +6234,26 @@ Prefab:
         type: 2}
       propertyPath: isStatic
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 137542314815378610, guid: afaa219e4c111a74d8da6a1ed558368f,
+        type: 2}
+      propertyPath: m_AABB.m_Center.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 137542314815378610, guid: afaa219e4c111a74d8da6a1ed558368f,
+        type: 2}
+      propertyPath: m_AABB.m_Center.z
+      value: 0.06349945
+      objectReference: {fileID: 0}
+    - target: {fileID: 137542314815378610, guid: afaa219e4c111a74d8da6a1ed558368f,
+        type: 2}
+      propertyPath: m_AABB.m_Extent.x
+      value: 12.312296
+      objectReference: {fileID: 0}
+    - target: {fileID: 137542314815378610, guid: afaa219e4c111a74d8da6a1ed558368f,
+        type: 2}
+      propertyPath: m_AABB.m_Extent.y
+      value: 12.312296
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: afaa219e4c111a74d8da6a1ed558368f, type: 2}

@@ -18,9 +18,10 @@ MonoBehaviour:
   EditorEvents:
   - {fileID: 114469857400087768}
   - {fileID: 114666040216342722}
+  - {fileID: 114765937579993802}
   MasterBankRef: {fileID: 114147294262243666}
   StringsBankRef: {fileID: 114867409791930004}
-  stringsBankWriteTime: 636586363643377601
+  stringsBankWriteTime: 636588975046458172
   cacheVersion: 2
 --- !u!114 &114147294262243666
 MonoBehaviour:
@@ -35,7 +36,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Path: C:\Users\MSI-D\Documents\CosasProyectoDevildrake\ProyectoMedianteShaders\Assets\Resources\FModBuild\DesktopConfig\Master
     Bank.bank
-  lastModified: 636586363643362593
+  lastModified: 636588975046443251
   LoadResult: 0
   FileSizes:
   - Name: 
@@ -129,6 +130,28 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 69996
+--- !u!114 &114765937579993802
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Path: event:/song4
+  guid: 91bf99be6c578f4a9563f79515fe2a3a
+  Banks:
+  - {fileID: 114844049644358910}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 72655
 --- !u!114 &114844049644358910
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -141,11 +164,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Path: C:\Users\MSI-D\Documents\CosasProyectoDevildrake\ProyectoMedianteShaders\Assets\Resources\FModBuild\DesktopConfig\LevelMusic.bank
-  lastModified: 636586363643722859
+  lastModified: 636588975047053835
   LoadResult: 0
   FileSizes:
   - Name: 
-    Value: 3073536
+    Value: 4848064
   Exists: 1
 --- !u!114 &114867409791930004
 MonoBehaviour:
@@ -159,9 +182,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Path: Assets\Resources\FModBuild\DesktopConfig\Master Bank.strings.bank
-  lastModified: 636586363643377601
+  lastModified: 636588975046458172
   LoadResult: 0
   FileSizes:
   - Name: 
-    Value: 812
+    Value: 844
   Exists: 1
