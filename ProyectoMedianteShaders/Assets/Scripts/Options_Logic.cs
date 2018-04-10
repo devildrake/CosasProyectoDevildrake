@@ -4,22 +4,23 @@ using UnityEngine;
 
 public class Options_Logic : MonoBehaviour {
     enum OptionsState {DESPLEGANDO_AUDIO, AUDIO_DESPLEGADO, REPLEGANDO_AUDIO, DESPLEGANDO_VIDEO, VIDEO_DESPLEGADO, REPLEGANDO_VIDEO };
-    private OptionsState currentState;
+    private OptionsState currentState, goingTo;
     private Animation_Event animationCheck;
-    [SerializeField] private Animator bgAnimator;
+    [SerializeField] private GameObject bg;
     [SerializeField] private List<GameObject> menuElements; //Audio - Video - Aceptar - Cancelar
     [SerializeField] private GameObject setaAudio, setaVideo;
 
-    private void Start() {
+    void Start() {
         currentState = OptionsState.DESPLEGANDO_AUDIO;
         animationCheck = GetComponentInChildren<Animation_Event>();
-        bgAnimator.SetBool("Desplegar", true);
+        goingTo = OptionsState.VIDEO_DESPLEGADO;
         foreach(GameObject g in menuElements) {
             g.SetActive(false);
         }
     }
 
-    private void Update() {
+    void Update() {
+        Debug.Log("current state--> "+currentState);
         switch (currentState) {
             case OptionsState.DESPLEGANDO_AUDIO:
                 DesplegandoAudio();
@@ -42,7 +43,8 @@ public class Options_Logic : MonoBehaviour {
         }
     }
 
-    private void ReplegandoVideo() {
+
+    private void AudioDesplegado() {
 
     }
 
@@ -50,20 +52,37 @@ public class Options_Logic : MonoBehaviour {
 
     }
 
-    private void DesplegandoVideo() {
-
+    private void ReplegandoVideo() {
+        foreach (GameObject g in menuElements) {
+            g.SetActive(false);
+        }
+        if (animationCheck.isDown == 0) {
+            currentState = OptionsState.DESPLEGANDO_AUDIO;
+        }
     }
 
     private void ReplegandoAudio() {
-
+        foreach (GameObject g in menuElements) {
+            g.SetActive(false);
+        }
+        if (animationCheck.isDown == 0) {
+            currentState = OptionsState.DESPLEGANDO_VIDEO;
+        }
     }
 
-    private void AudioDesplegado() {
-
+    private void DesplegandoVideo() {
+        //bgAnimator.SetBool("Desplegar", true);
+        if (animationCheck.isDown == 1) {
+            currentState = OptionsState.VIDEO_DESPLEGADO;
+            menuElements[1].SetActive(true);
+            menuElements[2].SetActive(true);
+            menuElements[3].SetActive(true);
+        }
     }
 
     private void DesplegandoAudio() {
-        if(animationCheck.isDown == 1) {
+        //bgAnimator.SetBool("Desplegar", true);
+        if (animationCheck.isDown == 1) {
             currentState = OptionsState.AUDIO_DESPLEGADO;
             menuElements[0].SetActive(true);
             menuElements[2].SetActive(true);
@@ -71,7 +90,24 @@ public class Options_Logic : MonoBehaviour {
         }
     }
 
+    public void ClickAudio() {
+        if(currentState == OptionsState.VIDEO_DESPLEGADO) {
+            currentState = OptionsState.REPLEGANDO_VIDEO;
+            goingTo = OptionsState.AUDIO_DESPLEGADO;
+            //bgAnimator.SetBool("Desplegar", false);
+        }
+    }
+
+    public void ClickVideo() {
+        if(currentState == OptionsState.AUDIO_DESPLEGADO) {
+            currentState = OptionsState.REPLEGANDO_AUDIO;
+            goingTo = OptionsState.VIDEO_DESPLEGADO;
+        }
+        //bgAnimator.SetBool("Desplegar", false);
+    }
+
     private void OnEnable() {
         currentState = OptionsState.DESPLEGANDO_AUDIO;
+        //bgAnimator.SetBool("Desplegar", true);
     }
 }
