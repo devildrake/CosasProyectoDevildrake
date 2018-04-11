@@ -154,14 +154,22 @@ public class PlayerController : DoubleObject {
     public GameObject armTarget;
     public IK_FABRIK_UNITY arm;
     int currentArmTargetIndex=8;
-    public Transform[] armPositions;
-    enum armState { PUNCH, GRAB};
+    public Transform[] punchRightPositions;
+    public Transform[] punchLeftPositions;
+    enum ARMSTATE{ PUNCH, GRAB, IDLE};
+    ARMSTATE armstate;
     public PunchContact punchContact;
+
+
+    Transform[] grabPositions;
 
     //Se inicializan las cosas
     void Start() {
-        //armPositions = new Vector3[9];
 
+        grabPositions = new Transform[6];
+
+        //armPositions = new Vector3[9];
+        armstate = ARMSTATE.IDLE;
 
         timeNotSliding = 0.2f;
         //El sistema de particulas de Dawn del deflect se inicia desactivado
@@ -437,20 +445,66 @@ public class PlayerController : DoubleObject {
 
                     #region armStuff
 
-                    if (currentArmTargetIndex < 8) {
-                        if (!arm.gameObject.activeInHierarchy) {
-                            arm.gameObject.SetActive(true);
-                        }
-                        if (Vector3.Distance(armTarget.transform.position, armPositions[currentArmTargetIndex].position) < 0.2f) {
-                            currentArmTargetIndex++;
-                        } else {
-                            Vector3 velocity = armPositions[currentArmTargetIndex].position - armTarget.transform.position;
-                            velocity.Normalize();
-                            velocity *= Time.deltaTime;
-                            armTarget.transform.position += velocity * 8;
-                        }
-                    } else {
-                        arm.gameObject.SetActive(false);
+                    switch (armstate){
+                        case ARMSTATE.IDLE:
+                            //arm.gameObject.SetActive(false);
+                            arm.meshObject.SetActive(false);
+                            break;
+                        case ARMSTATE.PUNCH:
+                            if (currentArmTargetIndex < 8) {
+
+
+                                if (!arm.meshObject.activeInHierarchy) {
+                                   // arm.gameObject.SetActive(true);
+                                    arm.meshObject.SetActive(true);
+
+                                }
+                                if (facingRight) {
+                                    if (currentArmTargetIndex < 7) {
+                                        arm.punchContact.enabled = false;
+                                    } else if (Vector2.Distance(punchRightPositions[7].position, arm.joints[28].position) < 0.25f) {
+                                        arm.punchContact.enabled = true;
+                                    }
+
+                                    if (Vector3.Distance(armTarget.transform.position, punchRightPositions[currentArmTargetIndex].position) < 0.2f) {
+                                        currentArmTargetIndex++;
+                                    } else {
+                                        Vector3 velocity = punchRightPositions[currentArmTargetIndex].position - armTarget.transform.position;
+                                        velocity.Normalize();
+                                        velocity *= Time.deltaTime;
+                                        armTarget.transform.position += velocity * 8;
+                                    }
+                                } else {
+
+                                    if (currentArmTargetIndex < 7) {
+                                        arm.punchContact.enabled = false;
+                                    } else if (Vector2.Distance(punchRightPositions[7].position, arm.joints[28].position) < 0.25f) {
+                                        arm.punchContact.enabled = true;
+                                    }
+
+                                    if (Vector3.Distance(armTarget.transform.position, punchLeftPositions[currentArmTargetIndex].position) < 0.2f) {
+                                        currentArmTargetIndex++;
+                                    } else {
+                                        Vector3 velocity = punchLeftPositions[currentArmTargetIndex].position - armTarget.transform.position;
+                                        velocity.Normalize();
+                                        velocity *= Time.deltaTime;
+                                        armTarget.transform.position += velocity * 8;
+                                    }
+                                }
+                            } else {
+                                arm.meshObject.SetActive(false);
+                                arm.punchContact.enabled = false;
+                                armTarget.transform.position = transform.position + new Vector3(0, 2, 0);
+                                armstate = ARMSTATE.IDLE;
+                            }
+                            break;
+                        case ARMSTATE.GRAB:
+                            
+                            //Aqui hay que hacer que el brazo se coloque en la posición original y vaya justo a la posición central + new Vector3(0,2,0) del objeto grabbeable delante suyo 
+                            //Y después hasta alcanzar a chocar con el objeto Draggable
+                            break;
+
+
                     }
 
                     //if (!moving&&grounded) {
@@ -699,88 +753,82 @@ public class PlayerController : DoubleObject {
                 timeCountToDrag = 0;
                 bool changed = false;
                 float mustSlow = 1;
-                if (InputManager.instance.horizontalAxis * (float)prevHorizontalMov < 0  && InputManager.instance.horizontalAxis != 0.0f&&!InputManager.GetBlocked()) {
-                    changed = true;
-                    //Debug.Log("CHANGE");
-                    prevHorizontalMov = InputManager.instance.horizontalAxis;
-                }
 
-
-                if (grounded) {
-                    if (dawn&&worldAssignation==world.DAWN&& InputManager.instance.dashButton) {
-                        PlayerUtilsStatic.ResetDirectionCircle(arrow);
+                if (armstate == ARMSTATE.IDLE) {
+                    if (InputManager.instance.horizontalAxis * (float)prevHorizontalMov < 0 && InputManager.instance.horizontalAxis != 0.0f && !InputManager.GetBlocked()) {
+                        changed = true;
+                        //Debug.Log("CHANGE");
+                        prevHorizontalMov = InputManager.instance.horizontalAxis;
                     }
-
-                    rb.velocity = new Vector2(0, rb.velocity.y);
-                    //Debug.Log("Se para");
-                    if (facingRight)
-                        transform.Translate(Vector3.right * InputManager.instance.horizontalAxis * characterSpeed * Time.deltaTime);
-                    else
-                        transform.Translate(Vector3.left * InputManager.instance.horizontalAxis * characterSpeed * Time.deltaTime);
-
-                    slowedInTheAir = false;
-                    if (InputManager.instance.horizontalAxis != 0) {
-                        timeMoving += Time.deltaTime;
-                        timeNotMoving = 0;
-                        moving = true;
-                        if (!audioSource.isPlaying&&!crawling) {
-                            audioSource.pitch = 0.3f;
-                            audioSource.clip = walkClip;
-                            audioSource.Play();
+                    if (grounded) {
+                        if (dawn && worldAssignation == world.DAWN && InputManager.instance.dashButton) {
+                            PlayerUtilsStatic.ResetDirectionCircle(arrow);
                         }
-                        else if(crawling){
-                            audioSource.pitch = 0.3f;
-                            audioSource.clip = crawlClip;
-                            audioSource.Play();
-                        }
-                    }
-                    else {
-                        timeMoving = 0;
-                        if (timeNotMoving > 0.1f) {
-                            moving = false;
+
+                        rb.velocity = new Vector2(0, rb.velocity.y);
+                        //Debug.Log("Se para");
+                        if (facingRight)
+                            transform.Translate(Vector3.right * InputManager.instance.horizontalAxis * characterSpeed * Time.deltaTime);
+                        else
+                            transform.Translate(Vector3.left * InputManager.instance.horizontalAxis * characterSpeed * Time.deltaTime);
+
+                        slowedInTheAir = false;
+                        if (InputManager.instance.horizontalAxis != 0) {
+                            timeMoving += Time.deltaTime;
+                            timeNotMoving = 0;
+                            moving = true;
+                            if (!audioSource.isPlaying && !crawling) {
+                                audioSource.pitch = 0.3f;
+                                audioSource.clip = walkClip;
+                                audioSource.Play();
+                            } else if (crawling) {
+                                audioSource.pitch = 0.3f;
+                                audioSource.clip = crawlClip;
+                                audioSource.Play();
+                            }
                         } else {
-                            timeNotMoving += Time.deltaTime;
+                            timeMoving = 0;
+                            if (timeNotMoving > 0.1f) {
+                                moving = false;
+                            } else {
+                                timeNotMoving += Time.deltaTime;
+                            }
                         }
-
-
                     }
-
-
-                }
                 //Not Grounded and changed
                 else if (changed) {
-                    slowedInTheAir = true;
-                    mustSlow = 0.5f;
+                        slowedInTheAir = true;
+                        mustSlow = 0.5f;
 
-                    if(facingRight)
-                    transform.Translate(Vector3.right * InputManager.instance.horizontalAxis * characterSpeed*0.75f * mustSlow * Time.deltaTime);
-                    else
-                    transform.Translate(Vector3.left * InputManager.instance.horizontalAxis * characterSpeed *0.75f*mustSlow* Time.deltaTime);
+                        if (facingRight)
+                            transform.Translate(Vector3.right * InputManager.instance.horizontalAxis * characterSpeed * 0.75f * mustSlow * Time.deltaTime);
+                        else
+                            transform.Translate(Vector3.left * InputManager.instance.horizontalAxis * characterSpeed * 0.75f * mustSlow * Time.deltaTime);
 
 
-                    //Velocidad X a 0
-                    rb.AddForce(new Vector2(-rb.velocity.x, 0), ForceMode2D.Impulse);
+                        //Velocidad X a 0
+                        rb.AddForce(new Vector2(-rb.velocity.x, 0), ForceMode2D.Impulse);
 
-                }
+                    }
                 //Not Grounded and not changed
                 else {
-                    if (slowedInTheAir) {
-                        //rb.AddForce(new Vector2(-rb.velocity.x, 0), ForceMode2D.Impulse);
-                        mustSlow = 0.5f;
+                        if (slowedInTheAir) {
+                            //rb.AddForce(new Vector2(-rb.velocity.x, 0), ForceMode2D.Impulse);
+                            mustSlow = 0.5f;
+                        }
+
+                        if (facingRight)
+                            transform.Translate(Vector3.right * InputManager.instance.horizontalAxis * characterSpeed * 0.75f * mustSlow * Time.deltaTime);
+
+                        else
+                            transform.Translate(Vector3.left * InputManager.instance.horizontalAxis * characterSpeed * 0.75f * mustSlow * Time.deltaTime);
+
                     }
 
-                    if(facingRight)
-                    transform.Translate(Vector3.right * InputManager.instance.horizontalAxis * characterSpeed*0.75f * mustSlow * Time.deltaTime);
-
-                    else
-                        transform.Translate(Vector3.left * InputManager.instance.horizontalAxis * characterSpeed * 0.75f * mustSlow * Time.deltaTime);
-
+                    if (changed) {
+                        Flip();
+                    }
                 }
-
-                if (changed) {
-                    Flip();
-                }
-
             }
             //Grabbing es true
             else {
@@ -1052,14 +1100,19 @@ public class PlayerController : DoubleObject {
         //Si se suelta el botón izquierdo del ratón y se habia pulsado previamente, el tiempo pasa a cero
         //En caso de estar grounded Se hace una llamada a Punch
         if (/*Input.GetMouseButtonUp(0)*/!InputManager.instance.dashButton && InputManager.instance.prevDashButton && punchTimer > punchCoolDown) {
-            if (leftPressed) {
+            if (leftPressed&&armstate == ARMSTATE.IDLE) {
                 GameLogic.instance.SetTimeScaleLocal(1.0f);
                 if (grounded) {
                     currentArmTargetIndex = 0;
                     //Punch(direction, 40000);
                     punchTimer = 0;
-                    if (armTarget!= null ) {
-                        armTarget.transform.position = armPositions[0].position;
+                    armstate = ARMSTATE.PUNCH;
+                    if (armTarget!= null) {
+                        if (facingRight) {
+                            armTarget.transform.position = punchRightPositions[0].position;
+                        } else {
+                            armTarget.transform.position = punchLeftPositions[0].position;
+                        }
                     }
 
                     if (punchContact != null) {
@@ -1089,18 +1142,26 @@ public class PlayerController : DoubleObject {
         }
         //Se renderizan las flechas en caso de clicar solo si esta en el suelo
         else {
-            direction = PlayerUtilsStatic.UseDirectionCircle(arrow, gameObject,0,0,60);
-            if (/*Input.GetMouseButtonDown(1)*/InputManager.instance.deflectButton && !InputManager.instance.prevDeflectButton) {
-                foreach (GameObject g in NearbyObjects) {
-                    if (g.GetComponent<DoubleObject>().isMovable) {
-                        distanceToGrabbedObject = transform.position - NearbyObjects[0].transform.position;
-                        grabbing = true;
+                direction = PlayerUtilsStatic.UseDirectionCircle(arrow, gameObject, 0, 0, 60);
 
+                if (/*Input.GetMouseButtonDown(1)*/InputManager.instance.deflectButton && !InputManager.instance.prevDeflectButton) {
+                    if (armstate == ARMSTATE.IDLE) {
+
+                        foreach (GameObject g in NearbyObjects) {
+                            if (g.GetComponent<DoubleObject>().isMovable) {
+                                distanceToGrabbedObject = transform.position - NearbyObjects[0].transform.position;
+                                grabbing = true;
+                                //arm.ResetPositions();
+                                armstate = ARMSTATE.GRAB;
+
+                            }
+                        }
                     }
+                } else if (/*Input.GetMouseButtonUp(1)*/!InputManager.instance.deflectButton && InputManager.instance.prevDeflectButton) {
+                    grabbing = false;
+                armstate = ARMSTATE.IDLE;
                 }
-            }else if(/*Input.GetMouseButtonUp(1)*/!InputManager.instance.deflectButton && InputManager.instance.prevDeflectButton) {
-                grabbing = false;
-            }
+            
         }
         if (/*Input.GetKeyDown(KeyCode.LeftControl)*/InputManager.instance.crawlButton && !InputManager.instance.prevCrawlButton && !grounded) {
             Smash();
