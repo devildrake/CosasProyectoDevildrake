@@ -9,9 +9,16 @@ public class Options_Logic : MonoBehaviour {
     [SerializeField] private GameObject bg;
     [SerializeField] private List<GameObject> menuElements; //Audio - Video - Aceptar - Cancelar
     [SerializeField] private GameObject setaAudio, setaVideo;
-    [SerializeField] private int bgOffset, scrollSpeed = 400;
-    private Vector2 originalBgPos;
+    [SerializeField] private int bgOffset, scrollSpeed = 400, setaOffset = 30;
+    private Vector2 originalBgPos, originalSetaAudioPos, originalSetaVideoPos;
     private int bgMovThreshold = 3;
+
+    void Awake() {
+        originalBgPos = bg.transform.position;
+        originalSetaAudioPos = setaAudio.transform.position;
+        originalSetaVideoPos = setaVideo.transform.position;
+        print("Awake");
+    }
 
     void Start() {
         currentState = OptionsState.DESPLEGANDO_AUDIO;
@@ -20,12 +27,12 @@ public class Options_Logic : MonoBehaviour {
         foreach(GameObject g in menuElements) {
             g.SetActive(false);
         }
-        originalBgPos = bg.transform.position;
-        bg.transform.position += new Vector3(0,bgOffset,0);
+        //originalBgPos = bg.transform.position;
+        //originalSetaAudioPos = setaAudio.transform.position;
+        //originalSetaVideoPos = setaVideo.transform.position;
     }
 
     void Update() {
-        Debug.Log("current state--> "+currentState);
         switch (currentState) {
             case OptionsState.DESPLEGANDO_AUDIO:
                 DesplegandoAudio();
@@ -110,6 +117,8 @@ public class Options_Logic : MonoBehaviour {
             foreach (GameObject g in menuElements) {
                 g.SetActive(false);
             }
+            setaVideo.transform.position = originalSetaVideoPos;
+            setaAudio.transform.position += new Vector3(0, setaOffset, 0);
         }
     }
 
@@ -120,12 +129,18 @@ public class Options_Logic : MonoBehaviour {
             foreach (GameObject g in menuElements) {
                 g.SetActive(false);
             }
+            setaAudio.transform.position = originalSetaAudioPos;
+            setaVideo.transform.position += new Vector3(0, setaOffset, 0);
         }
-        //bgAnimator.SetBool("Desplegar", false);
     }
 
     private void OnEnable() {
         currentState = OptionsState.DESPLEGANDO_AUDIO;
+        //print("Stored--> " + originalSetaAudioPos);
+        setaAudio.transform.position = originalSetaAudioPos;
+        setaVideo.transform.position = originalSetaVideoPos;
+        setaAudio.transform.position += new Vector3(0, setaOffset, 0);
+        bg.transform.position += new Vector3(0, bgOffset, 0);
         //bgAnimator.SetBool("Desplegar", true);
     }
 }

@@ -68,8 +68,6 @@ public class MenuLogic : MonoBehaviour {
         selected = 0;
         highlight = state1Elements[state1Elements.Length - 1].transform;
         optionsCanvas.SetActive(false);
-        newOptionsAnimator = newOptionsCanvas.GetComponentInChildren<Animator>();
-        print(newOptionsAnimator);
         newOptionsCanvas.SetActive(false);
         GameLogic.instance.transformableObjects.Add(gameObject);
         InputManager.UnBlockInput();
@@ -239,9 +237,8 @@ public class MenuLogic : MonoBehaviour {
                 }
                 else if(hit.transform.gameObject.name == "opciones") {
                     selected = 2;
-                    optionsCanvas.SetActive(true);
+                    //optionsCanvas.SetActive(true);
                     newOptionsCanvas.SetActive(true);
-                    newOptionsAnimator.SetBool("Desplegar", true);
                     menuState = 2;
                 }
                 else if(hit.transform.gameObject.name == "salir") {
