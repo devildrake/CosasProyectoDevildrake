@@ -25,7 +25,7 @@ public class IK_FABRIK_UNITY : MonoBehaviour
     public Vector3[] originalPositions;
     public Quaternion[] originalRotations;
     public Transform target;
-
+    Transform originalTarget;
     //public int numIterations;
 
     private Vector3[] copy;
@@ -34,8 +34,9 @@ public class IK_FABRIK_UNITY : MonoBehaviour
 
     public GameObject dusk;
     public PlayerController duskController;
-
     float tresholdCondition = 0.1f;
+    public GameObject meshObject;
+    public PunchContact punchContact;
 
     void Start()
     {
@@ -48,13 +49,23 @@ public class IK_FABRIK_UNITY : MonoBehaviour
         originalJoints = joints;
         for(int i = 0; i < originalJoints.Length; i++) {
             //originalPositions[i] = originalJoints[i].position;
-            originalJoints[i].position = new Vector3(joints[i].position.x, joints[i].position.y, joints[i].position.z);
-            originalRotations[i] = originalJoints[i].rotation;
+            originalJoints[i].position = new Vector3(joints[i].localPosition.x, joints[i].localPosition.y, joints[i].localPosition.z);
+            originalRotations[i] = joints[i].localRotation;
         }
+        //originalTarget.position = new Vector3(target.localPosition.x, target.localPosition.y, target.localPosition.z);
 
     }
 
-    void Update() {
+    //public void ResetPositions() {
+    //    target.localPosition = originalTarget.position;
+    //    for (int i = 0; i < originalJoints.Length; i++) {
+    //        joints[i].localPosition = new Vector3(originalJoints[i].position.x, originalJoints[i].position.y, originalJoints[i].position.z);
+    //        joints[i].localRotation = originalJoints[i].rotation;
+    //    }
+
+    //}
+
+        void Update() {
 
         joints[0].position = dusk.transform.position + new Vector3(0, 0.4f, 0);
 
