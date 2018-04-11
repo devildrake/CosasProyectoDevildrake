@@ -9,6 +9,9 @@ public class Options_Logic : MonoBehaviour {
     [SerializeField] private GameObject bg;
     [SerializeField] private List<GameObject> menuElements; //Audio - Video - Aceptar - Cancelar
     [SerializeField] private GameObject setaAudio, setaVideo;
+    [SerializeField] private int bgOffset, scrollSpeed = 400;
+    private Vector2 originalBgPos;
+    private int bgMovThreshold = 3;
 
     void Start() {
         currentState = OptionsState.DESPLEGANDO_AUDIO;
@@ -17,6 +20,8 @@ public class Options_Logic : MonoBehaviour {
         foreach(GameObject g in menuElements) {
             g.SetActive(false);
         }
+        originalBgPos = bg.transform.position;
+        bg.transform.position += new Vector3(0,bgOffset,0);
     }
 
     void Update() {
@@ -53,26 +58,30 @@ public class Options_Logic : MonoBehaviour {
     }
 
     private void ReplegandoVideo() {
-        foreach (GameObject g in menuElements) {
-            g.SetActive(false);
+        if (bg.transform.position.y < originalBgPos.y+bgOffset) {
+            bg.transform.position += new Vector3(0, scrollSpeed * Time.deltaTime, 0);
         }
-        if (animationCheck.isDown == 0) {
+        else {
             currentState = OptionsState.DESPLEGANDO_AUDIO;
         }
     }
 
     private void ReplegandoAudio() {
-        foreach (GameObject g in menuElements) {
-            g.SetActive(false);
+        if (bg.transform.position.y < originalBgPos.y + bgOffset) {
+            bg.transform.position += new Vector3(0,  scrollSpeed * Time.deltaTime, 0);
         }
-        if (animationCheck.isDown == 0) {
+        else {
             currentState = OptionsState.DESPLEGANDO_VIDEO;
         }
     }
 
     private void DesplegandoVideo() {
-        //bgAnimator.SetBool("Desplegar", true);
-        if (animationCheck.isDown == 1) {
+        if (bg.transform.position.y > originalBgPos.y) {
+            //Vector3.MoveTowards(bg.transform.position, new Vector3(0, originalBgPos.y + bgOffset, 0), bgOffset * Time.deltaTime);
+            bg.transform.position -= new Vector3(0, scrollSpeed * Time.deltaTime, 0);
+        }
+        else {
+            bg.transform.position = originalBgPos;
             currentState = OptionsState.VIDEO_DESPLEGADO;
             menuElements[1].SetActive(true);
             menuElements[2].SetActive(true);
@@ -81,8 +90,12 @@ public class Options_Logic : MonoBehaviour {
     }
 
     private void DesplegandoAudio() {
-        //bgAnimator.SetBool("Desplegar", true);
-        if (animationCheck.isDown == 1) {
+        if (bg.transform.position.y > originalBgPos.y) {
+            //Vector3.MoveTowards(bg.transform.position, new Vector3(0, originalBgPos.y + bgOffset, 0), bgOffset * Time.deltaTime);
+            bg.transform.position -= new Vector3(0, scrollSpeed * Time.deltaTime, 0);
+        }
+        else {
+            bg.transform.position = originalBgPos;
             currentState = OptionsState.AUDIO_DESPLEGADO;
             menuElements[0].SetActive(true);
             menuElements[2].SetActive(true);
@@ -94,7 +107,9 @@ public class Options_Logic : MonoBehaviour {
         if(currentState == OptionsState.VIDEO_DESPLEGADO) {
             currentState = OptionsState.REPLEGANDO_VIDEO;
             goingTo = OptionsState.AUDIO_DESPLEGADO;
-            //bgAnimator.SetBool("Desplegar", false);
+            foreach (GameObject g in menuElements) {
+                g.SetActive(false);
+            }
         }
     }
 
@@ -102,6 +117,9 @@ public class Options_Logic : MonoBehaviour {
         if(currentState == OptionsState.AUDIO_DESPLEGADO) {
             currentState = OptionsState.REPLEGANDO_AUDIO;
             goingTo = OptionsState.VIDEO_DESPLEGADO;
+            foreach (GameObject g in menuElements) {
+                g.SetActive(false);
+            }
         }
         //bgAnimator.SetBool("Desplegar", false);
     }

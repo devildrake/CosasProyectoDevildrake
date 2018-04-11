@@ -167,6 +167,7 @@ public class MenuLogic : MonoBehaviour {
 
     private void State1Behavior() {
         //MOVIMIENTO ENTRE LAS OPCIONES
+        //TODO cambiar por el inputmanager para que funcione tambien con el mando
         if (Input.GetAxisRaw("Vertical") < 0) {
             if (!axisInUse) {
                 axisInUse = true;
@@ -208,9 +209,8 @@ public class MenuLogic : MonoBehaviour {
                 }
             }
             else if (selected == 2) {
-                optionsCanvas.SetActive(true);
+                //optionsCanvas.SetActive(true);
                 newOptionsCanvas.SetActive(true);
-                newOptionsAnimator.SetBool("Desplegar", true);
                 menuState = 2;
             }
             else if (selected == 1) {

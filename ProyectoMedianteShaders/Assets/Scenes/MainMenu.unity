@@ -11580,6 +11580,8 @@ MonoBehaviour:
   - {fileID: 975743069}
   setaAudio: {fileID: 1193619837}
   setaVideo: {fileID: 733178079}
+  bgOffset: 750
+  scrollSpeed: 2000
 --- !u!1 &1790706521
 GameObject:
   m_ObjectHideFlags: 0
@@ -13208,7 +13210,7 @@ GameObject:
   - component: {fileID: 2114593814}
   - component: {fileID: 2114593815}
   m_Layer: 5
-  m_Name: GameObject
+  m_Name: Fondo_Viewport
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
