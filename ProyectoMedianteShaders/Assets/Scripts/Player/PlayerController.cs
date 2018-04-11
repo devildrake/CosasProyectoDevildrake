@@ -55,9 +55,12 @@ public class PlayerController : DoubleObject {
 
     bool leftPressed;
     public List<GameObject> NearbyObjects;
-
+    [HideInInspector]
     public bool crawling; 
-    bool moving;
+
+    public bool moving;
+
+    [HideInInspector]
     public bool smashing;
     bool grabbing;
     GameObject capaObject;
@@ -66,11 +69,22 @@ public class PlayerController : DoubleObject {
     public bool behindBush;
 
     //Bool para determinar si esta dentro del area de un impulsor
+    [HideInInspector]
     public bool onImpulsor;
+
+    [HideInInspector]
     public bool canJumpOnImpulsor;
+
+    [HideInInspector]
     public bool calledImpuslorBool;
+
+    [HideInInspector]
     public bool sliding;
+
+    [HideInInspector]
     public float timeNotSliding;
+
+    [HideInInspector]
     public DoubleObject interactableObject;
     Vector3 distanceToGrabbedObject;
 
@@ -78,6 +92,7 @@ public class PlayerController : DoubleObject {
 
     //Booleano privado que maneja que el personaje pueda utilizar el dash, se pone en true a la vez que el grounded y en false cuando se usa el Dash
     [SerializeField]
+    [HideInInspector]
     public bool canDash;
 
     //Vector dirección para el dash/Hit
@@ -97,8 +112,10 @@ public class PlayerController : DoubleObject {
 
     //Booleano que gestiona si el personaje esta en el suelo (Para saber si puede saltar o no)
     [SerializeField]
+    [HideInInspector]
     public bool grounded = false;
 
+    [HideInInspector]
     public bool facingRight;
 
     //Mascara de suelo (Mas tarde podria ser util, ahora esta aqui por que para gestionar grounded hice pruebas varias)
@@ -135,12 +152,15 @@ public class PlayerController : DoubleObject {
     BoxCollider2D myBoxCollider;
 
     public GameObject armTarget;
-    int currentArmTargetIndex;
-    public Vector3[] armPositions;
+    public IK_FABRIK_UNITY arm;
+    int currentArmTargetIndex=8;
+    public Transform[] armPositions;
+    enum armState { PUNCH, GRAB};
+    public PunchContact punchContact;
 
     //Se inicializan las cosas
     void Start() {
-        armPositions = new Vector3[9];
+        //armPositions = new Vector3[9];
 
 
         timeNotSliding = 0.2f;
@@ -409,6 +429,7 @@ public class PlayerController : DoubleObject {
             }
 
             if (armTarget != null) {
+                arm.transform.position = transform.position;
                 if (worldAssignation == world.DUSK && !dawn) {
                     if (Vector3.Distance(armTarget.transform.position, transform.position) > 3) {
                         armTarget.transform.position = transform.position + new Vector3(1, 0.5f, 0);
@@ -416,45 +437,63 @@ public class PlayerController : DoubleObject {
 
                     #region armStuff
 
-                    if (!moving) {
-                        if (Vector3.Distance(armTarget.transform.position, armPositions[currentArmTargetIndex]) < 0.2f) {
+                    if (currentArmTargetIndex < 8) {
+                        if (!arm.gameObject.activeInHierarchy) {
+                            arm.gameObject.SetActive(true);
+                        }
+                        if (Vector3.Distance(armTarget.transform.position, armPositions[currentArmTargetIndex].position) < 0.2f) {
                             currentArmTargetIndex++;
-                            currentArmTargetIndex = currentArmTargetIndex % 9;
                         } else {
-                            Vector3 velocity = armPositions[currentArmTargetIndex] - armTarget.transform.position;
+                            Vector3 velocity = armPositions[currentArmTargetIndex].position - armTarget.transform.position;
                             velocity.Normalize();
                             velocity *= Time.deltaTime;
-                            armTarget.transform.position += velocity * 2;
+                            armTarget.transform.position += velocity * 8;
                         }
-                        armPositions[0] = transform.position;
-                        armPositions[1] = transform.position + new Vector3(1, 0, 0);
-                        armPositions[2] = transform.position + new Vector3(-1, 0, 0);
-                        armPositions[3] = transform.position + new Vector3(1, 1, 0);
-                        armPositions[4] = transform.position + new Vector3(-1, 1, 0);
-                        armPositions[5] = transform.position + new Vector3(1, 0.5f, 0);
-                        armPositions[6] = transform.position + new Vector3(1, -0.5f, 0);
-                        armPositions[7] = transform.position + new Vector3(-1, 0.5f, 0);
-                        armPositions[8] = transform.position + new Vector3(-1, -0.5f, 0);
                     } else {
-                        int facing = 0;
-                        if (facingRight) {
-                            facing = 1;
-                        } else {
-                            facing = -1;
-                        }
-                        Debug.Log(facing);
-                        if (Vector3.Distance(armTarget.transform.position, transform.position + new Vector3(1, 0, 0) * facing + new Vector3(0, 1, 0)) < 0.2f) {
-                            currentArmTargetIndex++;
-                            currentArmTargetIndex = currentArmTargetIndex % 9;
-                        } else {
-                            Vector3 velocity = (transform.position + new Vector3(1, 0, 0) * facing + new Vector3(0, 1, 0)) - armTarget.transform.position;
-                            velocity.Normalize();
-                            //velocity *= Time.deltaTime;
-                            armTarget.transform.position += velocity * 2 * Time.deltaTime;
-                            Debug.Log(velocity);
-
-                        }
+                        arm.gameObject.SetActive(false);
                     }
+
+                    //if (!moving&&grounded) {
+                    //    if (Vector3.Distance(armTarget.transform.position, armPositions[currentArmTargetIndex]) < 0.2f) {
+                    //        currentArmTargetIndex++;
+                    //        currentArmTargetIndex = currentArmTargetIndex % 9;
+                    //    } else {
+                    //        Vector3 velocity = armPositions[currentArmTargetIndex] - armTarget.transform.position;
+                    //        velocity.Normalize();
+                    //        velocity *= Time.deltaTime;
+                    //        armTarget.transform.position += velocity * 2;
+                    //    }
+                    //    armPositions[0] = transform.position;
+                    //    armPositions[1] = transform.position + new Vector3(1, 0, 0);
+                    //    armPositions[2] = transform.position + new Vector3(-1, 0, 0);
+                    //    armPositions[3] = transform.position + new Vector3(1, 1, 0);
+                    //    armPositions[4] = transform.position + new Vector3(-1, 1, 0);
+                    //    armPositions[5] = transform.position + new Vector3(1, 0.5f, 0);
+                    //    armPositions[6] = transform.position + new Vector3(1, -0.5f, 0);
+                    //    armPositions[7] = transform.position + new Vector3(-1, 0.5f, 0);
+                    //    armPositions[8] = transform.position + new Vector3(-1, -0.5f, 0);
+                    //} else if(moving){
+                    //    int facing = 0;
+                    //    if (facingRight) {
+                    //        facing = 1;
+                    //    } else {
+                    //        facing = -1;
+                    //    }
+                    //    Debug.Log(facing);
+                    //    if (Vector3.Distance(armTarget.transform.position, transform.position + new Vector3(1, 0, 0) * facing + new Vector3(0, 1, 0)) < 0.2f) {
+                    //        currentArmTargetIndex++;
+                    //        currentArmTargetIndex = currentArmTargetIndex % 9;
+                    //    } else {
+                    //        Vector3 velocity = (transform.position + new Vector3(1, 0, 0) * facing + new Vector3(0, 1, 0)) - armTarget.transform.position;
+                    //        velocity.Normalize();
+                    //        //velocity *= Time.deltaTime;
+                    //        armTarget.transform.position += velocity * 2 * Time.deltaTime;
+                    //        Debug.Log(velocity);
+
+                    //    }
+                    //}else if (!grounded) {
+
+                    //}
                     #endregion
 
                 }
@@ -1016,8 +1055,18 @@ public class PlayerController : DoubleObject {
             if (leftPressed) {
                 GameLogic.instance.SetTimeScaleLocal(1.0f);
                 if (grounded) {
-                    Punch(direction, 40000);
+                    currentArmTargetIndex = 0;
+                    //Punch(direction, 40000);
                     punchTimer = 0;
+                    if (armTarget!= null ) {
+                        armTarget.transform.position = armPositions[0].position;
+                    }
+
+                    if (punchContact != null) {
+                        punchContact.direction = direction;
+                        punchContact.mustPunch = true;
+                    }
+
                     audioSource.clip = punchClip;
                     audioSource.Play();
                 }

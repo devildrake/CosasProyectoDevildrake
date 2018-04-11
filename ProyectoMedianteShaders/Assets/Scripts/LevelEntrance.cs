@@ -38,7 +38,7 @@ public class LevelEntrance : DoubleObject {
 
         interactionSprite.SetActive(false);
         InitTransformable();
-        isPunchable = true;
+        isPunchable = false;
         isBreakable = false;
         interactuableBySmash = false;
         offset = GameLogic.instance.worldOffset;

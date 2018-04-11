@@ -18,7 +18,7 @@ public class IK_FABRIK_UNITY : MonoBehaviour
     public float maxSwingClamp = 1.1f;
     public float minTwistClamp = 0.9f;
     public float maxTwistClamp = 1.1f;
-
+    public Cloth cloth;
     [Space]
     public Transform[] joints;
     public Transform[] originalJoints;
@@ -33,6 +33,7 @@ public class IK_FABRIK_UNITY : MonoBehaviour
     private bool done;
 
     public GameObject dusk;
+    public PlayerController duskController;
 
     float tresholdCondition = 0.1f;
 
@@ -53,153 +54,156 @@ public class IK_FABRIK_UNITY : MonoBehaviour
 
     }
 
-    void Update()
-    {
-        joints[0].position = dusk.transform.position+new Vector3(0,0.4f,0);
-        // Copy the joints positions to work with
-        //TODO
-        copy[0] = joints[0].position;
+    void Update() {
 
-        for (int i = 0; i < joints.Length - 1; i++)
-        {
-            copy[i + 1] = joints[i + 1].position;
-            distances[i] = (copy[i + 1] - copy[i]).magnitude;
+        joints[0].position = dusk.transform.position + new Vector3(0, 0.4f, 0);
+
+        if (duskController == null) {
+            duskController = dusk.GetComponent<PlayerController>();
         }
-        // CALCULATE ALSO THE DISTANCE BETWEEN JOINTS
 
-        //done = TODO
-        done = (copy[copy.Length - 1] - target.position).magnitude < tresholdCondition;
 
-        if (!done)
-        {
-            float targetRootDist = Vector3.Distance(copy[0], target.position);
+        //if (!duskController.moving&&duskController.grounded) {
+           // cloth.enabled = false;
+            // Copy the joints positions to work with
+            //TODO
+            copy[0] = joints[0].position;
 
-            // Update joint positions
-            if (targetRootDist > distances.Sum())
-            {
-                // The target is unreachable
-                for (int i = 0; i < copy.Length - 1; i++)
-                {
-                    float r = (target.position - copy[i]).magnitude;
-                    float lambda = distances[i] / r;
-
-                    copy[i + 1] = (1 - lambda) * copy[i] + (lambda * target.position);
-                }
-
+            for (int i = 0; i < joints.Length - 1; i++) {
+                copy[i + 1] = joints[i + 1].position;
+                distances[i] = (copy[i + 1] - copy[i]).magnitude;
             }
-            else
-            {
-                Vector3 b = copy[0];
+            // CALCULATE ALSO THE DISTANCE BETWEEN JOINTS
 
-                // The target is reachable
-                //while (TODO)
+            //done = TODO
+            done = (copy[copy.Length - 1] - target.position).magnitude < tresholdCondition;
 
-                float difference = (copy[copy.Length - 1] - target.position).magnitude;
+            if (!done) {
+                float targetRootDist = Vector3.Distance(copy[0], target.position);
 
-                while (difference > tresholdCondition) // treshold = tolerance
-                {
-                    // numIterations++;
-
-                    // STAGE 1: FORWARD REACHING
-                    //TODO
-                    copy[copy.Length - 1] = target.position;
-
-                    for (int i = copy.Length - 2; i > 0; i--)
-                    {
-                        float r = (copy[i + 1] - copy[i]).magnitude;
+                // Update joint positions
+                if (targetRootDist > distances.Sum()) {
+                    // The target is unreachable
+                    for (int i = 0; i < copy.Length - 1; i++) {
+                        float r = (target.position - copy[i]).magnitude;
                         float lambda = distances[i] / r;
 
-                        copy[i] = (1 - lambda) * copy[i + 1] + lambda * copy[i];
-
-
-
+                        copy[i + 1] = (1 - lambda) * copy[i] + (lambda * target.position);
                     }
 
-                    // STAGE 2: BACKWARD REACHING
-                    //TODO
-                    copy[0] = b;
+                } else {
+                    Vector3 b = copy[0];
 
-                    for (int i = 0; i < copy.Length - 1; i++)
+                    // The target is reachable
+                    //while (TODO)
+
+                    float difference = (copy[copy.Length - 1] - target.position).magnitude;
+
+                    while (difference > tresholdCondition) // treshold = tolerance
                     {
-                        float r = (copy[i + 1] - copy[i]).magnitude;
-                        float lambda = distances[i] / r;
+                        // numIterations++;
 
-                        copy[i + 1] = (1 - lambda) * copy[i] + lambda * copy[i + 1];
+                        // STAGE 1: FORWARD REACHING
+                        //TODO
+                        copy[copy.Length - 1] = target.position;
+
+                        for (int i = copy.Length - 2; i > 0; i--) {
+                            float r = (copy[i + 1] - copy[i]).magnitude;
+                            float lambda = distances[i] / r;
+
+                            copy[i] = (1 - lambda) * copy[i + 1] + lambda * copy[i];
+
+
+
+                        }
+
+                        // STAGE 2: BACKWARD REACHING
+                        //TODO
+                        copy[0] = b;
+
+                        for (int i = 0; i < copy.Length - 1; i++) {
+                            float r = (copy[i + 1] - copy[i]).magnitude;
+                            float lambda = distances[i] / r;
+
+                            copy[i + 1] = (1 - lambda) * copy[i] + lambda * copy[i + 1];
+                        }
+
+                        difference = (copy[copy.Length - 1] - target.position).magnitude;
+                    }
+                }
+
+                // Update original joint rotations
+                for (int i = 0; i <= joints.Length - 2; i++) {
+                    // float originalAngle = joints[i].rotation.w;
+
+                    //TODO
+                    // Rotation
+                    Vector3 vectorA = joints[i + 1].position - joints[i].position;
+                    Vector3 vectorB = copy[i + 1] - copy[i];
+
+                    // float angle = Mathf.Acos(Vector3.Dot(vectorA.normalized, vectorB.normalized)) * Mathf.Rad2Deg;
+                    float cosA = (Vector3.Dot(vectorA.normalized, vectorB.normalized));
+                    float sinA = Vector3.Cross(vectorA.normalized, vectorB.normalized).magnitude;
+
+                    // Atan = Cos | Atan2 = denominador y...
+                    float angle = Mathf.Atan2(sinA, cosA) * Mathf.Rad2Deg;
+
+                    Vector3 axis = Vector3.Cross(vectorA, vectorB).normalized;
+
+                    joints[i].rotation = Quaternion.AngleAxis(angle, axis) * joints[i].rotation;
+
+
+                    //1. decompose twist and swing
+                    Quaternion twist = getTwist(joints[i], joints[i + 1]);
+                    Quaternion swing = getSwing(joints[i], joints[i + 1]);
+
+                    //test A: make sure that recomposing twist and swing gives the original rotation
+
+                    float angleTest = Quaternion.Angle(joints[i + 1].rotation, joints[i].rotation);
+
+                    if (Mathf.Abs(angleTest) > maxAngleRotation) {
+                        // float clampedTwist = Mathf.Clamp(twist.w, minTwistClamp, maxTwistClamp);
+                        // twist = new Quaternion(twist.x, twist.y, twist.z, clampedTwist);
+
+                        joints[i + 1].rotation = joints[i].rotation;
                     }
 
-                    difference = (copy[copy.Length - 1] - target.position).magnitude;
-                }
-            }
+                    //Debug.Log("Before: " + twist);
 
-            // Update original joint rotations
-            for (int i = 0; i <= joints.Length - 2; i++)
-            {
-                // float originalAngle = joints[i].rotation.w;
-
-                //TODO
-                // Rotation
-                Vector3 vectorA = joints[i + 1].position - joints[i].position;
-                Vector3 vectorB = copy[i + 1] - copy[i];
-
-                // float angle = Mathf.Acos(Vector3.Dot(vectorA.normalized, vectorB.normalized)) * Mathf.Rad2Deg;
-                float cosA = (Vector3.Dot(vectorA.normalized, vectorB.normalized));
-                float sinA = Vector3.Cross(vectorA.normalized, vectorB.normalized).magnitude;
-
-                // Atan = Cos | Atan2 = denominador y...
-                float angle = Mathf.Atan2(sinA, cosA) * Mathf.Rad2Deg;
-
-                Vector3 axis = Vector3.Cross(vectorA, vectorB).normalized;
-
-                joints[i].rotation = Quaternion.AngleAxis(angle, axis) * joints[i].rotation;
-
-
-                //1. decompose twist and swing
-                Quaternion twist = getTwist(joints[i], joints[i + 1]);
-                Quaternion swing = getSwing(joints[i], joints[i + 1]);
-
-                //test A: make sure that recomposing twist and swing gives the original rotation
-
-                float angleTest = Quaternion.Angle(joints[i + 1].rotation, joints[i].rotation);
-
-                if (Mathf.Abs(angleTest) > maxAngleRotation)
-                {
+                    //2. clamp twist (or even cancel)
                     // float clampedTwist = Mathf.Clamp(twist.w, minTwistClamp, maxTwistClamp);
                     // twist = new Quaternion(twist.x, twist.y, twist.z, clampedTwist);
 
-                    joints[i + 1].rotation = joints[i].rotation;
+                    //Debug.Log("After: " + twist);
+
+                    //3. clamp swing
+                    // float clampedSwing = Mathf.Clamp(swing.w, minSwingClamp, maxSwingClamp);
+                    // swing = new Quaternion(swing.x, swing.y, swing.z, clampedSwing);
+
+
+
+                    //4. recompose rotation from (clamped) twist and (optionally clamped) swing
+                    // joints[i].rotation = twist * swing;
+
+
+                    //if(getTwist(joints[i-1], joints[i]).w )
+
+                    //float clampedRotation = Mathf.Clamp(joints[i].localRotation.w, 0.9f, 1.1f);
+
+                    //joints[i].localRotation = new Quaternion(joints[i].localRotation.x, joints[i].localRotation.y, joints[i].localRotation.z, clampedRotation);
+
+                    joints[i + 1].position = copy[i + 1];
+
                 }
-
-                //Debug.Log("Before: " + twist);
-
-                //2. clamp twist (or even cancel)
-                // float clampedTwist = Mathf.Clamp(twist.w, minTwistClamp, maxTwistClamp);
-                // twist = new Quaternion(twist.x, twist.y, twist.z, clampedTwist);
-
-                //Debug.Log("After: " + twist);
-
-                //3. clamp swing
-                // float clampedSwing = Mathf.Clamp(swing.w, minSwingClamp, maxSwingClamp);
-                // swing = new Quaternion(swing.x, swing.y, swing.z, clampedSwing);
-
-
-
-                //4. recompose rotation from (clamped) twist and (optionally clamped) swing
-                // joints[i].rotation = twist * swing;
-
-
-                //if(getTwist(joints[i-1], joints[i]).w )
-
-                //float clampedRotation = Mathf.Clamp(joints[i].localRotation.w, 0.9f, 1.1f);
-
-                //joints[i].localRotation = new Quaternion(joints[i].localRotation.x, joints[i].localRotation.y, joints[i].localRotation.z, clampedRotation);
-
-                joints[i + 1].position = copy[i + 1];
+                // Debug.Log(getTwist(joints[20], joints[21]));
+                // Debug.Log(joints[20].localRotation.w);
 
             }
-            // Debug.Log(getTwist(joints[20], joints[21]));
-            // Debug.Log(joints[20].localRotation.w);
+        //} else {
+        //    cloth.enabled = true;
 
-        }
+
+        //}
     }
 
     Quaternion getTwist(Transform _parent, Transform _selfJoint)
