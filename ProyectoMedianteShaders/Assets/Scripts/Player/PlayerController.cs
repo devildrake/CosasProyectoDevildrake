@@ -161,12 +161,12 @@ public class PlayerController : DoubleObject {
     public PunchContact punchContact;
 
 
-    Transform[] grabPositions;
+    Vector3[] grabPositions;
 
     //Se inicializan las cosas
     void Start() {
 
-        grabPositions = new Transform[6];
+        grabPositions = new Vector3[4];
 
         //armPositions = new Vector3[9];
         armstate = ARMSTATE.IDLE;
@@ -499,12 +499,49 @@ public class PlayerController : DoubleObject {
                             }
                             break;
                         case ARMSTATE.GRAB:
-                            
                             //Aqui hay que hacer que el brazo se coloque en la posición original y vaya justo a la posición central + new Vector3(0,2,0) del objeto grabbeable delante suyo 
                             //Y después hasta alcanzar a chocar con el objeto Draggable
-                            break;
+                            if (currentArmTargetIndex ==0) {
+                                if (facingRight) {
+                                    //grabPositions[0] = transform.position + new Vector3(-2,2,0);
+                                    grabPositions[0] = transform.position + new Vector3(-0.5f, 1, 0);
+                                    grabPositions[1] = transform.position + new Vector3(-0.75f, 1.5f, 0);
 
+                                } else {
+                                    //grabPositions[0] = transform.position + new Vector3(2,2,0);
+                                    grabPositions[0] = transform.position + new Vector3(0.5f, 1, 0);
+                                    grabPositions[1] = transform.position + new Vector3(0.75f, 1.5f, 0);
 
+                                }
+                                //grabPositions[1] = transform.position + new Vector3(0, 2.5f, 0);
+                                grabPositions[2] = NearbyObjects[0].transform.position + new Vector3(0, 2f, 0);
+                            grabPositions[3] = NearbyObjects[0].transform.position + new Vector3(0, 1f, 0);
+                                arm.meshObject.SetActive(true);
+                                arm.punchContact.enabled = false;
+                                armTarget.transform.position = grabPositions[0];
+                                currentArmTargetIndex++;
+                            }else if (currentArmTargetIndex < 3) {
+                                if (Vector3.Distance(armTarget.transform.position, grabPositions[currentArmTargetIndex]) < 0.2f) {
+                                    currentArmTargetIndex++;
+                                } else {
+                                    Vector3 velocity = grabPositions[currentArmTargetIndex] - armTarget.transform.position;
+                                    velocity.Normalize();
+                                    velocity *= Time.deltaTime;
+                                    armTarget.transform.position += velocity * 8;
+                                }
+                            } else {
+                                grabPositions[3] = NearbyObjects[0].transform.position + new Vector3(0, 1f, 0);
+                                //currentArmTargetIndex = 2;
+
+                                if (!(Vector3.Distance(armTarget.transform.position, grabPositions[currentArmTargetIndex]) < 0.2f)) {
+                                    Vector3 velocity = grabPositions[currentArmTargetIndex] - armTarget.transform.position;
+                                    velocity.Normalize();
+                                    velocity *= Time.deltaTime;
+                                    armTarget.transform.position += velocity * 8;
+                                }
+
+                            }
+                                break;
                     }
 
                     //if (!moving&&grounded) {
@@ -849,7 +886,7 @@ public class PlayerController : DoubleObject {
 
 
                             NearbyObjects[0].transform.position = transform.position - distanceToGrabbedObject;
-                            Debug.Log(distanceToGrabbedObject);
+                            //Debug.Log(distanceToGrabbedObject);
                             if (!audioSource.isPlaying) {
                                 audioSource.clip = grabClip;
                                 audioSource.Play();
@@ -1153,7 +1190,7 @@ public class PlayerController : DoubleObject {
                                 grabbing = true;
                                 //arm.ResetPositions();
                                 armstate = ARMSTATE.GRAB;
-
+                            currentArmTargetIndex = 0;
                             }
                         }
                     }
