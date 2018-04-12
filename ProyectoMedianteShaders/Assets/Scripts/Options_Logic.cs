@@ -3,15 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Options_Logic : MonoBehaviour {
-    enum OptionsState {DESPLEGANDO_AUDIO, AUDIO_DESPLEGADO, REPLEGANDO_AUDIO, DESPLEGANDO_VIDEO, VIDEO_DESPLEGADO, REPLEGANDO_VIDEO };
+    enum OptionsState { NONE, DESPLEGANDO_AUDIO, AUDIO_DESPLEGADO, REPLEGANDO_AUDIO, DESPLEGANDO_VIDEO, VIDEO_DESPLEGADO, REPLEGANDO_VIDEO, CERRAR };
     private OptionsState currentState, goingTo;
     private Animation_Event animationCheck;
     [SerializeField] private GameObject bg;
     [SerializeField] private List<GameObject> menuElements; //Audio - Video - Aceptar - Cancelar
     [SerializeField] private GameObject setaAudio, setaVideo;
-    [SerializeField] private int bgOffset, scrollSpeed = 400;
-    private Vector2 originalBgPos;
+    [SerializeField] private int bgOffset, scrollSpeed = 3500, setaOffset = 30;
+    private Vector2 originalBgPos, originalSetaAudioPos, originalSetaVideoPos;
     private int bgMovThreshold = 3;
+
+    void Awake() {
+        originalBgPos = bg.transform.position;
+        originalSetaAudioPos = setaAudio.transform.position;
+        originalSetaVideoPos = setaVideo.transform.position;
+    }
 
     void Start() {
         currentState = OptionsState.DESPLEGANDO_AUDIO;
@@ -20,8 +26,6 @@ public class Options_Logic : MonoBehaviour {
         foreach(GameObject g in menuElements) {
             g.SetActive(false);
         }
-        originalBgPos = bg.transform.position;
-        bg.transform.position += new Vector3(0,bgOffset,0);
     }
 
     void Update() {
@@ -49,11 +53,24 @@ public class Options_Logic : MonoBehaviour {
 
 
     private void AudioDesplegado() {
-
+        if (InputManager.instance.cancelButton) {
+            goingTo = OptionsState.CERRAR;
+            currentState = OptionsState.REPLEGANDO_AUDIO;
+            foreach (GameObject go in menuElements) {
+                go.SetActive(false);
+            }
+        }
+    
     }
 
     private void VideoDesplegado() {
-
+        if (InputManager.instance.cancelButton) {
+            goingTo = OptionsState.CERRAR;
+            currentState = OptionsState.REPLEGANDO_VIDEO;
+            foreach (GameObject go in menuElements) {
+                go.SetActive(false);
+            }
+        }
     }
 
     private void ReplegandoVideo() {
@@ -61,7 +78,12 @@ public class Options_Logic : MonoBehaviour {
             bg.transform.position += new Vector3(0, scrollSpeed * Time.deltaTime, 0);
         }
         else {
-            currentState = OptionsState.DESPLEGANDO_AUDIO;
+            if (goingTo == OptionsState.CERRAR) {
+                gameObject.SetActive(false);
+            }
+            else {
+                currentState = OptionsState.DESPLEGANDO_AUDIO;
+            }
         }
     }
 
@@ -70,7 +92,12 @@ public class Options_Logic : MonoBehaviour {
             bg.transform.position += new Vector3(0,  scrollSpeed * Time.deltaTime, 0);
         }
         else {
-            currentState = OptionsState.DESPLEGANDO_VIDEO;
+            if (goingTo == OptionsState.CERRAR) {
+                gameObject.SetActive(false);
+            }
+            else {
+                currentState = OptionsState.DESPLEGANDO_VIDEO;
+            }
         }
     }
 
@@ -109,6 +136,8 @@ public class Options_Logic : MonoBehaviour {
             foreach (GameObject g in menuElements) {
                 g.SetActive(false);
             }
+            setaVideo.transform.position = originalSetaVideoPos;
+            setaAudio.transform.position += new Vector3(0, setaOffset, 0);
         }
     }
 
@@ -119,12 +148,18 @@ public class Options_Logic : MonoBehaviour {
             foreach (GameObject g in menuElements) {
                 g.SetActive(false);
             }
+            setaAudio.transform.position = originalSetaAudioPos;
+            setaVideo.transform.position += new Vector3(0, setaOffset, 0);
         }
-        //bgAnimator.SetBool("Desplegar", false);
     }
 
     private void OnEnable() {
         currentState = OptionsState.DESPLEGANDO_AUDIO;
+        goingTo = OptionsState.NONE;
+        setaAudio.transform.position = originalSetaAudioPos;
+        setaVideo.transform.position = originalSetaVideoPos;
+        setaAudio.transform.position += new Vector3(0, setaOffset, 0);
+        bg.transform.position += new Vector3(0, bgOffset, 0);
         //bgAnimator.SetBool("Desplegar", true);
     }
 }
