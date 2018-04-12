@@ -13,15 +13,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EditorBanks:
   - {fileID: 114867409791930004}
-  - {fileID: 114147294262243666}
-  - {fileID: 114844049644358910}
+  - {fileID: 114783818043250030}
+  - {fileID: 114837055542700156}
   EditorEvents:
   - {fileID: 114469857400087768}
   - {fileID: 114666040216342722}
   - {fileID: 114765937579993802}
-  MasterBankRef: {fileID: 114147294262243666}
+  MasterBankRef: {fileID: 114783818043250030}
   StringsBankRef: {fileID: 114867409791930004}
-  stringsBankWriteTime: 636588975046458172
+  stringsBankWriteTime: 636589518702906535
   cacheVersion: 2
 --- !u!114 &114147294262243666
 MonoBehaviour:
@@ -100,7 +100,7 @@ MonoBehaviour:
   Path: event:/song2
   guid: 13edaad5a2a7764389e3a41f9ef43232
   Banks:
-  - {fileID: 114844049644358910}
+  - {fileID: 114837055542700156}
   IsStream: 1
   Is3D: 0
   IsOneShot: 0
@@ -122,7 +122,7 @@ MonoBehaviour:
   Path: event:/song3
   guid: 325e52dccf5b0149bc295433249f449a
   Banks:
-  - {fileID: 114844049644358910}
+  - {fileID: 114837055542700156}
   IsStream: 1
   Is3D: 0
   IsOneShot: 0
@@ -144,7 +144,7 @@ MonoBehaviour:
   Path: event:/song4
   guid: 91bf99be6c578f4a9563f79515fe2a3a
   Banks:
-  - {fileID: 114844049644358910}
+  - {fileID: 114837055542700156}
   IsStream: 1
   Is3D: 0
   IsOneShot: 0
@@ -152,6 +152,43 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 72655
+--- !u!114 &114783818043250030
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Path: C:\Users\David-2\Documents\CosasProyectoDevildrake\ProyectoMedianteShaders\Assets\Resources\FModBuild\DesktopConfig\Master
+    Bank.bank
+  lastModified: 636589518702896510
+  LoadResult: 0
+  FileSizes:
+  - Name: 
+    Value: 12474
+  Exists: 1
+--- !u!114 &114837055542700156
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Path: C:\Users\David-2\Documents\CosasProyectoDevildrake\ProyectoMedianteShaders\Assets\Resources\FModBuild\DesktopConfig\LevelMusic.bank
+  lastModified: 636589518702881469
+  LoadResult: 0
+  FileSizes:
+  - Name: 
+    Value: 4848064
+  Exists: 1
 --- !u!114 &114844049644358910
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -182,7 +219,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Path: Assets\Resources\FModBuild\DesktopConfig\Master Bank.strings.bank
-  lastModified: 636588975046458172
+  lastModified: 636589518702906535
   LoadResult: 0
   FileSizes:
   - Name: 
