@@ -25,7 +25,6 @@ public class Options_Logic : MonoBehaviour {
     }
 
     void Update() {
-        Debug.Log("current state--> "+currentState);
         switch (currentState) {
             case OptionsState.DESPLEGANDO_AUDIO:
                 DesplegandoAudio();

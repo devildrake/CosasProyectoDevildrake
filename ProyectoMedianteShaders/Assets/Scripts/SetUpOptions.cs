@@ -15,12 +15,21 @@ public class SetUpOptions : MonoBehaviour {
     public Scrollbar scroll;
     public Toggle mute, timeOnScreen;
     public float maxScroll = 50;
-
+    [SerializeField] private int slideItemOffset = 205;//distancia de separación entre elementos en nuestro slider de las opciones.
+    private List<Vector2> resolutions = new List<Vector2> {new Vector2(640,480), new Vector2(800,600), new Vector2(1024,600), new Vector2(1280,720),
+                                                            new Vector2(1280,1024), new Vector2(1400,1050), new Vector2(1600, 900), new Vector2(1920,1080)};
+    private List<int> fpsList = new List<int> { -1, 30, 60, 90, 120 };
+    private const int qualityElements = 6;
+    
     //valores previos de las variables
     private float prevMusic, prevSfx;
     private int prevResolution, prevFullscreen, prevRefreshRate, prevFps;
 
+    private int resolutionSel = 0, fpsSel = 0, qualitySel = 0; //Que elemento de nuestro slider estas seleccionando.
+
     private Vector3 initialOptionsPosition;
+
+    [SerializeField] private GameObject resolutionGroup, fpsGroup, qualityGroup;
 
     private void Start() {
         initialOptionsPosition = GetComponent<RectTransform>().localPosition; //para controlar el scroll
@@ -167,11 +176,14 @@ public class SetUpOptions : MonoBehaviour {
         scroll.value = 0;
 
         //Cuando se activa ponemos las opciones con el scroll a 0;
-        GetComponent<RectTransform>().localPosition = initialOptionsPosition;
+        //GetComponent<RectTransform>().localPosition = initialOptionsPosition;
+
+        //Al activar ponemos nuestros sliders en la posición del elemento que está seleccionado
+
     }
 
     private void Update() {
-        if(Input.GetAxisRaw("Cancel") == 1) {
+        if(InputManager.instance.cancelButton) {
             music.value = prevMusic;
             sfx.value = prevSfx;
             resolution.value = prevResolution;
@@ -179,6 +191,53 @@ public class SetUpOptions : MonoBehaviour {
             refreshRate.value = prevRefreshRate;
             fps.value = prevFps;
             optionsCanvas.SetActive(false);
+        }
+    }
+
+    /*
+     * Controla los botones de las opciones para deslizar la seleccion a derecha e izquierda.
+     * Recibe un gameobject que es el que se va a deslizar y un bool que marca si va a la derecha (true)
+     * o a la izquierda (false)
+     */
+    public void MyScrollingOptionRight(GameObject go) {
+        if (go.name.Equals("resolution_group")) {
+            if(resolutionSel < resolutions.Count - 1) {
+                go.transform.position -= new Vector3(slideItemOffset, 0, 0);
+                resolutionSel++;
+            }
+        }
+        else if (go.name.Equals("fps_group")) {
+            if(fpsSel < fpsList.Count - 1) {
+                go.transform.position -= new Vector3(slideItemOffset, 0, 0);
+                fpsSel++;
+            }
+        }
+        else if (go.name.Equals("calidad_group")) {
+            if(qualitySel < qualityElements - 1) {
+                go.transform.position -= new Vector3(slideItemOffset, 0, 0);
+                qualitySel++;
+            }
+        }
+    }
+
+    public void MyScrollingOptionsLeft(GameObject go) {
+        if (go.name.Equals("resolution_group")) {
+            if (resolutionSel > 0) {
+                go.transform.position += new Vector3(slideItemOffset, 0, 0);
+                resolutionSel--;
+            }
+        }
+        else if (go.name.Equals("fps_group")) {
+            if(fpsSel > 0) {
+                go.transform.position += new Vector3(slideItemOffset, 0, 0);
+                fpsSel--;
+            }
+        }
+        else if (go.name.Equals("calidad_group")) {
+            if(qualitySel > 0) {
+                go.transform.position += new Vector3(slideItemOffset, 0, 0);
+                qualitySel--;
+            }
         }
     }
 }
