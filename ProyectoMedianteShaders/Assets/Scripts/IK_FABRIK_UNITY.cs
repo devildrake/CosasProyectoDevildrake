@@ -44,14 +44,14 @@ public class IK_FABRIK_UNITY : MonoBehaviour
 
         distances = new float[joints.Length - 1];
         copy = new Vector3[joints.Length];
-        originalPositions = new Vector3[joints.Length];
-        originalRotations = new Quaternion[joints.Length];
-        originalJoints = joints;
-        for(int i = 0; i < originalJoints.Length; i++) {
-            //originalPositions[i] = originalJoints[i].position;
-            originalJoints[i].position = new Vector3(joints[i].localPosition.x, joints[i].localPosition.y, joints[i].localPosition.z);
-            originalRotations[i] = joints[i].localRotation;
-        }
+        //originalPositions = new Vector3[joints.Length];
+        //originalRotations = new Quaternion[joints.Length];
+        //originalJoints = joints;
+        //for(int i = 0; i < originalJoints.Length; i++) {
+        //    //originalPositions[i] = originalJoints[i].position;
+        //    originalJoints[i].position = new Vector3(joints[i].localPosition.x, joints[i].localPosition.y, joints[i].localPosition.z);
+        //    originalRotations[i] = joints[i].localRotation;
+        //}
         //originalTarget.position = new Vector3(target.localPosition.x, target.localPosition.y, target.localPosition.z);
 
     }
@@ -66,19 +66,18 @@ public class IK_FABRIK_UNITY : MonoBehaviour
     //}
 
         void Update() {
-
-        joints[0].position = dusk.transform.position + new Vector3(0, 0.4f, 0);
-
         if (duskController == null) {
             duskController = dusk.GetComponent<PlayerController>();
         }
 
+        joints[0].position = dusk.transform.position + new Vector3(0, 0.4f, 0);
+
 
         //if (!duskController.moving&&duskController.grounded) {
-           // cloth.enabled = false;
-            // Copy the joints positions to work with
-            //TODO
-            copy[0] = joints[0].position;
+        // cloth.enabled = false;
+        // Copy the joints positions to work with
+        //TODO
+        copy[0] = joints[0].position;
 
             for (int i = 0; i < joints.Length - 1; i++) {
                 copy[i + 1] = joints[i + 1].position;

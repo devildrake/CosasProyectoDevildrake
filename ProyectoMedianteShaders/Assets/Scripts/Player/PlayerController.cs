@@ -156,9 +156,11 @@ public class PlayerController : DoubleObject {
     int currentArmTargetIndex=8;
     public Transform[] punchRightPositions;
     public Transform[] punchLeftPositions;
-    enum ARMSTATE{ PUNCH, GRAB, IDLE};
+    public Transform[] punchChargePositions;
+    enum ARMSTATE{ PUNCH, GRAB, IDLE, PUNCHCHARGE};
     ARMSTATE armstate;
     public PunchContact punchContact;
+    public BoxCollider2D punchTrigger;
 
 
     Vector3[] grabPositions;
@@ -449,6 +451,23 @@ public class PlayerController : DoubleObject {
                         case ARMSTATE.IDLE:
                             //arm.gameObject.SetActive(false);
                             arm.meshObject.SetActive(false);
+                            punchTrigger.enabled = false;
+                            punchContact.enabled = false;
+                            break;
+                        case ARMSTATE.PUNCHCHARGE:
+                            if (currentArmTargetIndex < 4) {
+                                arm.meshObject.SetActive(true);
+                                if (Vector3.Distance(armTarget.transform.position, punchChargePositions[currentArmTargetIndex].position) < 0.2f) {
+                                    currentArmTargetIndex++;
+                                } else {
+                                    Vector3 velocity = punchChargePositions[currentArmTargetIndex].position - armTarget.transform.position;
+                                    velocity.Normalize();
+                                    velocity *= Time.deltaTime;
+                                    armTarget.transform.position += velocity * 12;
+                                }
+
+                            }
+
                             break;
                         case ARMSTATE.PUNCH:
                             if (currentArmTargetIndex < 8) {
@@ -462,8 +481,10 @@ public class PlayerController : DoubleObject {
                                 if (facingRight) {
                                     if (currentArmTargetIndex < 7) {
                                         arm.punchContact.enabled = false;
+                                        punchTrigger.enabled = false;
                                     } else if (Vector2.Distance(punchRightPositions[7].position, arm.joints[28].position) < 0.25f) {
                                         arm.punchContact.enabled = true;
+                                        punchTrigger.enabled = true;
                                     }
 
                                     if (Vector3.Distance(armTarget.transform.position, punchRightPositions[currentArmTargetIndex].position) < 0.2f) {
@@ -472,14 +493,17 @@ public class PlayerController : DoubleObject {
                                         Vector3 velocity = punchRightPositions[currentArmTargetIndex].position - armTarget.transform.position;
                                         velocity.Normalize();
                                         velocity *= Time.deltaTime;
-                                        armTarget.transform.position += velocity * 8;
+                                        armTarget.transform.position += velocity * 12;
                                     }
                                 } else {
 
                                     if (currentArmTargetIndex < 7) {
                                         arm.punchContact.enabled = false;
-                                    } else if (Vector2.Distance(punchRightPositions[7].position, arm.joints[28].position) < 0.25f) {
+                                        punchTrigger.enabled = false;
+
+                                    } else if (Vector2.Distance(punchLeftPositions[7].position, arm.joints[28].position) < 0.25f) {
                                         arm.punchContact.enabled = true;
+                                        punchTrigger.enabled = true;
                                     }
 
                                     if (Vector3.Distance(armTarget.transform.position, punchLeftPositions[currentArmTargetIndex].position) < 0.2f) {
@@ -488,7 +512,7 @@ public class PlayerController : DoubleObject {
                                         Vector3 velocity = punchLeftPositions[currentArmTargetIndex].position - armTarget.transform.position;
                                         velocity.Normalize();
                                         velocity *= Time.deltaTime;
-                                        armTarget.transform.position += velocity * 8;
+                                        armTarget.transform.position += velocity * 12;
                                     }
                                 }
                             } else {
@@ -1134,10 +1158,16 @@ public class PlayerController : DoubleObject {
         //Método para aglotinar comportamiento de Dusk 
         void DuskBehavior() {
 
+        if (armstate == ARMSTATE.IDLE && grounded && leftPressed) {
+                Debug.Log("BASD");
+                armstate = ARMSTATE.PUNCHCHARGE;
+                currentArmTargetIndex = 0;
+        }
+
         //Si se suelta el botón izquierdo del ratón y se habia pulsado previamente, el tiempo pasa a cero
         //En caso de estar grounded Se hace una llamada a Punch
         if (/*Input.GetMouseButtonUp(0)*/!InputManager.instance.dashButton && InputManager.instance.prevDashButton && punchTimer > punchCoolDown) {
-            if (leftPressed&&armstate == ARMSTATE.IDLE) {
+            if (leftPressed&&(armstate == ARMSTATE.IDLE||armstate==ARMSTATE.PUNCHCHARGE)) {
                 GameLogic.instance.SetTimeScaleLocal(1.0f);
                 if (grounded) {
                     currentArmTargetIndex = 0;

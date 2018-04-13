@@ -12,10 +12,11 @@ public class PunchContact : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+        gameObject.transform.rotation = Quaternion.identity;	
 	}
 
     void OnTriggerEnter2D(Collider2D col) {
+        Debug.Log("Nen");
         if (col.GetComponent<DoubleObject>()!= null) {
             if (col.GetComponent<DoubleObject>().isPunchable) {
                 if (mustPunch) {
