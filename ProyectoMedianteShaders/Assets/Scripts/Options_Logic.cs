@@ -153,6 +153,40 @@ public class Options_Logic : MonoBehaviour {
         }
     }
 
+    public void ClickAceptar() {
+        if(currentState == OptionsState.AUDIO_DESPLEGADO) {
+            currentState = OptionsState.REPLEGANDO_AUDIO;
+            goingTo = OptionsState.CERRAR;
+            foreach (GameObject g in menuElements) {
+                g.SetActive(false);
+            }
+        }
+        else if(currentState == OptionsState.VIDEO_DESPLEGADO) {
+            currentState = OptionsState.REPLEGANDO_VIDEO;
+            goingTo = OptionsState.CERRAR;
+            foreach (GameObject g in menuElements) {
+                g.SetActive(false);
+            }
+        }
+    }
+
+    public void ClickCancelar() {
+        if (currentState == OptionsState.AUDIO_DESPLEGADO) {
+            currentState = OptionsState.REPLEGANDO_AUDIO;
+            goingTo = OptionsState.CERRAR;
+            foreach (GameObject g in menuElements) {
+                g.SetActive(false);
+            }
+        }
+        else if (currentState == OptionsState.VIDEO_DESPLEGADO) {
+            currentState = OptionsState.REPLEGANDO_VIDEO;
+            goingTo = OptionsState.CERRAR;
+            foreach (GameObject g in menuElements) {
+                g.SetActive(false);
+            }
+        }
+    }
+
     private void OnEnable() {
         currentState = OptionsState.DESPLEGANDO_AUDIO;
         goingTo = OptionsState.NONE;
