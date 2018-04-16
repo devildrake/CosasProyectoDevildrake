@@ -9,14 +9,18 @@ public class Options_Logic : MonoBehaviour {
     [SerializeField] private GameObject bg;
     [SerializeField] private List<GameObject> menuElements; //Audio - Video - Aceptar - Cancelar
     [SerializeField] private GameObject setaAudio, setaVideo;
+    private RectTransform transformSetaAudio, transformSetaVideo,transformBG;
     [SerializeField] private int bgOffset, scrollSpeed = 3500, setaOffset = 30;
     private Vector2 originalBgPos, originalSetaAudioPos, originalSetaVideoPos;
     private int bgMovThreshold = 3;
 
     void Awake() {
-        originalBgPos = bg.transform.position;
-        originalSetaAudioPos = setaAudio.transform.position;
-        originalSetaVideoPos = setaVideo.transform.position;
+        transformSetaAudio = setaAudio.GetComponent<RectTransform>();
+        transformSetaVideo = setaVideo.GetComponent<RectTransform>();
+        transformBG = bg.GetComponent<RectTransform>();
+        originalBgPos = transformBG.localPosition;
+        originalSetaAudioPos = transformSetaAudio.localPosition;
+        originalSetaVideoPos = transformSetaVideo.localPosition;
     }
 
     void Start() {
@@ -26,6 +30,7 @@ public class Options_Logic : MonoBehaviour {
         foreach(GameObject g in menuElements) {
             g.SetActive(false);
         }
+        
     }
 
     void Update() {
@@ -74,8 +79,8 @@ public class Options_Logic : MonoBehaviour {
     }
 
     private void ReplegandoVideo() {
-        if (bg.transform.position.y < originalBgPos.y+bgOffset) {
-            bg.transform.position += new Vector3(0, scrollSpeed * Time.deltaTime, 0);
+        if (transformBG.localPosition.y < originalBgPos.y+bgOffset) {
+            transformBG.localPosition += new Vector3(0, scrollSpeed * Time.deltaTime, 0);
         }
         else {
             if (goingTo == OptionsState.CERRAR) {
@@ -88,8 +93,8 @@ public class Options_Logic : MonoBehaviour {
     }
 
     private void ReplegandoAudio() {
-        if (bg.transform.position.y < originalBgPos.y + bgOffset) {
-            bg.transform.position += new Vector3(0,  scrollSpeed * Time.deltaTime, 0);
+        if (transformBG.localPosition.y < originalBgPos.y + bgOffset) {
+            transformBG.localPosition += new Vector3(0,  scrollSpeed * Time.deltaTime, 0);
         }
         else {
             if (goingTo == OptionsState.CERRAR) {
@@ -102,12 +107,11 @@ public class Options_Logic : MonoBehaviour {
     }
 
     private void DesplegandoVideo() {
-        if (bg.transform.position.y > originalBgPos.y) {
-            //Vector3.MoveTowards(bg.transform.position, new Vector3(0, originalBgPos.y + bgOffset, 0), bgOffset * Time.deltaTime);
-            bg.transform.position -= new Vector3(0, scrollSpeed * Time.deltaTime, 0);
+        if (transformBG.localPosition.y > originalBgPos.y) {
+            transformBG.localPosition -= new Vector3(0, scrollSpeed * Time.deltaTime, 0);
         }
         else {
-            bg.transform.position = originalBgPos;
+            transformBG.localPosition = originalBgPos;
             currentState = OptionsState.VIDEO_DESPLEGADO;
             menuElements[1].SetActive(true);
             menuElements[2].SetActive(true);
@@ -116,12 +120,11 @@ public class Options_Logic : MonoBehaviour {
     }
 
     private void DesplegandoAudio() {
-        if (bg.transform.position.y > originalBgPos.y) {
-            //Vector3.MoveTowards(bg.transform.position, new Vector3(0, originalBgPos.y + bgOffset, 0), bgOffset * Time.deltaTime);
-            bg.transform.position -= new Vector3(0, scrollSpeed * Time.deltaTime, 0);
+        if (transformBG.localPosition.y > originalBgPos.y) {
+            transformBG.localPosition -= new Vector3(0, scrollSpeed * Time.deltaTime, 0);
         }
         else {
-            bg.transform.position = originalBgPos;
+            transformBG.localPosition = originalBgPos;
             currentState = OptionsState.AUDIO_DESPLEGADO;
             menuElements[0].SetActive(true);
             menuElements[2].SetActive(true);
@@ -136,8 +139,8 @@ public class Options_Logic : MonoBehaviour {
             foreach (GameObject g in menuElements) {
                 g.SetActive(false);
             }
-            setaVideo.transform.position = originalSetaVideoPos;
-            setaAudio.transform.position += new Vector3(0, setaOffset, 0);
+            transformSetaVideo.localPosition = originalSetaVideoPos;
+            transformSetaAudio.localPosition += new Vector3(0, setaOffset, 0);
         }
     }
 
@@ -148,8 +151,8 @@ public class Options_Logic : MonoBehaviour {
             foreach (GameObject g in menuElements) {
                 g.SetActive(false);
             }
-            setaAudio.transform.position = originalSetaAudioPos;
-            setaVideo.transform.position += new Vector3(0, setaOffset, 0);
+            transformSetaAudio.localPosition = originalSetaAudioPos;
+            transformSetaVideo.localPosition += new Vector3(0, setaOffset, 0);
         }
     }
 
@@ -190,10 +193,9 @@ public class Options_Logic : MonoBehaviour {
     private void OnEnable() {
         currentState = OptionsState.DESPLEGANDO_AUDIO;
         goingTo = OptionsState.NONE;
-        setaAudio.transform.position = originalSetaAudioPos;
-        setaVideo.transform.position = originalSetaVideoPos;
-        setaAudio.transform.position += new Vector3(0, setaOffset, 0);
-        bg.transform.position += new Vector3(0, bgOffset, 0);
-        //bgAnimator.SetBool("Desplegar", true);
+        transformSetaAudio.localPosition = originalSetaAudioPos;
+        transformSetaVideo.localPosition = originalSetaVideoPos;
+        transformSetaAudio.localPosition += new Vector3(0, setaOffset, 0);
+        transformBG.localPosition += new Vector3(0, bgOffset, 0);
     }
 }
