@@ -161,6 +161,7 @@ public class PlayerController : DoubleObject {
     ARMSTATE armstate;
     public PunchContact punchContact;
     public BoxCollider2D punchTrigger;
+    [SerializeField] private ParticleSystem armParticleSystem;
 
 
     Vector3[] grabPositions;
@@ -453,10 +454,12 @@ public class PlayerController : DoubleObject {
                             arm.meshObject.SetActive(false);
                             punchTrigger.enabled = false;
                             punchContact.enabled = false;
+                            armParticleSystem.Stop();
                             break;
                         case ARMSTATE.PUNCHCHARGE:
                             if (currentArmTargetIndex < 4) {
                                 arm.meshObject.SetActive(true);
+                                armParticleSystem.Play();
                                 if (Vector3.Distance(armTarget.transform.position, punchChargePositions[currentArmTargetIndex].position) < 0.2f) {
                                     currentArmTargetIndex++;
                                 } else {
@@ -470,13 +473,11 @@ public class PlayerController : DoubleObject {
 
                             break;
                         case ARMSTATE.PUNCH:
-                            if (currentArmTargetIndex < 8) {
-
-
+                            armParticleSystem.Play();
+                            if (currentArmTargetIndex < 8) { 
                                 if (!arm.meshObject.activeInHierarchy) {
                                    // arm.gameObject.SetActive(true);
                                     arm.meshObject.SetActive(true);
-
                                 }
                                 if (facingRight) {
                                     if (currentArmTargetIndex < 7) {
@@ -525,6 +526,7 @@ public class PlayerController : DoubleObject {
                         case ARMSTATE.GRAB:
                             //Aqui hay que hacer que el brazo se coloque en la posición original y vaya justo a la posición central + new Vector3(0,2,0) del objeto grabbeable delante suyo 
                             //Y después hasta alcanzar a chocar con el objeto Draggable
+                            armParticleSystem.Play();
                             if (currentArmTargetIndex ==0) {
                                 if (facingRight) {
                                     //grabPositions[0] = transform.position + new Vector3(-2,2,0);
@@ -565,7 +567,7 @@ public class PlayerController : DoubleObject {
                                 }
 
                             }
-                                break;
+                            break;
                     }
 
                     //if (!moving&&grounded) {
