@@ -1355,6 +1355,9 @@ public class PlayerController : DoubleObject {
 
         DirectionCircle.SetOnce(false);
 
+        if (arm != null) {
+            armstate = ARMSTATE.IDLE;
+        }
 
         //Si antes del cambio estaba en dusk, pasara a hacerse dynamic y al otro kinematic, además de darle su velocidad 
 
@@ -1425,6 +1428,8 @@ public class PlayerController : DoubleObject {
     public override void Kill() {
         behindBush = false;
         sliding = false;
+        grabbing = false;
+        armstate = ARMSTATE.IDLE;
 
         GameLogic.instance.additionalOffset = new Vector3(0, 0, 0);
 
