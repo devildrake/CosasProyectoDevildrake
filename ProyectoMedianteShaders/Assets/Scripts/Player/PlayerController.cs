@@ -157,7 +157,8 @@ public class PlayerController : DoubleObject {
     public Transform[] punchRightPositions;
     public Transform[] punchLeftPositions;
     public Transform[] punchChargePositions;
-    enum ARMSTATE{ PUNCH, GRAB, IDLE, PUNCHCHARGE};
+    public Transform[] punchChargePositions2;
+    enum ARMSTATE { PUNCH, GRAB, IDLE, PUNCHCHARGE};
     ARMSTATE armstate;
     public PunchContact punchContact;
     public BoxCollider2D punchTrigger;
@@ -460,14 +461,35 @@ public class PlayerController : DoubleObject {
                             if (currentArmTargetIndex < 4) {
                                 arm.meshObject.SetActive(true);
                                 armParticleSystem.Play();
-                                if (Vector3.Distance(armTarget.transform.position, punchChargePositions[currentArmTargetIndex].position) < 0.2f) {
-                                    currentArmTargetIndex++;
-                                } else {
-                                    Vector3 velocity = punchChargePositions[currentArmTargetIndex].position - armTarget.transform.position;
-                                    velocity.Normalize();
-                                    velocity *= Time.deltaTime;
-                                    armTarget.transform.position += velocity * 12;
+                                if (facingRight)
+                                {
+                                    if (Vector3.Distance(armTarget.transform.position, punchChargePositions[currentArmTargetIndex].position) < 0.2f)
+                                    {
+                                        currentArmTargetIndex++;
+                                    }
+                                    else
+                                    {
+                                        Vector3 velocity = punchChargePositions[currentArmTargetIndex].position - armTarget.transform.position;
+                                        velocity.Normalize();
+                                        velocity *= Time.deltaTime;
+                                        armTarget.transform.position += velocity * 12;
+                                    }
                                 }
+                                else
+                                {
+                                    if (Vector3.Distance(armTarget.transform.position, punchChargePositions2[currentArmTargetIndex].position) < 0.2f)
+                                    {
+                                        currentArmTargetIndex++;
+                                    }
+                                    else
+                                    {
+                                        Vector3 velocity = punchChargePositions2[currentArmTargetIndex].position - armTarget.transform.position;
+                                        velocity.Normalize();
+                                        velocity *= Time.deltaTime;
+                                        armTarget.transform.position += velocity * 12;
+                                    }
+                                }
+
 
                             }
 
