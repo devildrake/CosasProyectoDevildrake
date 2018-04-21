@@ -2,8 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class InputManager : MonoBehaviour {
     public static InputManager instance = null;
+
+    public enum GAMEMODE { SINGLEPLAYER, MULTI_KEYBOARD_CONTROLLER, MULTI_CONTROLLER_KEYBOARD, MULTI_CONTROLLER_CONTROLLER};
+    public static GAMEMODE currentGameMode = GAMEMODE.SINGLEPLAYER;
 
     [SerializeField]
     private static bool blocked;
@@ -42,13 +46,44 @@ public class InputManager : MonoBehaviour {
     public bool prevAnyKeyDown;
     [HideInInspector]
     public bool prevCancelButton;
+
+    [HideInInspector]
+    public bool prevDashButton2;
+    [HideInInspector]
+    public bool prevDeflectButton2;
+    [HideInInspector]
+    public bool prevCrawlButton2;
+    [HideInInspector]
+    public bool prevJumpButton2;
+    //[HideInInspector]
+    public bool prevChangeButton2;
+    [HideInInspector]
+    public bool prevPauseButton2;
+    [HideInInspector]
+    public bool prevSelectButton2;
+    [HideInInspector]
+    public bool prevInteractButton2;
+    [HideInInspector]
+    public bool prevResetButton2;
+    [HideInInspector]
+    public bool prevCameraButton2;
+    [HideInInspector]
+    public float prevHorizontalAxis2;
+    [HideInInspector]
+    public float prevVerticalAxis2;
+    [HideInInspector]
+    public float prevRightHorizontalAxis2;
+    [HideInInspector]
+    public float prevRightVerticalAxis2;
+    [HideInInspector]
+    public bool prevAnyKeyDown2;
+    [HideInInspector]
+    public bool prevCancelButton2;
+
     //[HideInInspector]
     //public bool prevDashButtonPlayer;
     //[HideInInspector]
     //public bool prevDeflectButtonPlayer;
-
-
-
 
     public bool cancelButton;
     public bool dashButton;
@@ -65,6 +100,24 @@ public class InputManager : MonoBehaviour {
     public float verticalAxis;
     public float rightHorizontalAxis;
     public float rightVerticalAxis;
+
+    public bool cancelButton2;
+    public bool dashButton2;
+    public bool deflectButton2;
+    public bool crawlButton2;
+    public bool jumpButton2;
+    public bool changeButton2;
+    public bool pauseButton2;
+    public bool selectButton2;
+    public bool interactButton2;
+    public bool resetButton2;
+    public bool cameraButton2;
+    public float horizontalAxis2;
+    public float verticalAxis2;
+    public float rightHorizontalAxis2;
+    public float rightVerticalAxis2;
+
+
     //public bool dashButtonPlayer;
     //public bool deflectButtonPlayer;
 
@@ -92,7 +145,6 @@ public class InputManager : MonoBehaviour {
         
 
     }
-
     // Use this for initialization
     void Start () {
 		
@@ -135,6 +187,36 @@ public class InputManager : MonoBehaviour {
         instance.prevRightVerticalAxis = 0;
         instance.prevAnyKeyDown = false;
 
+        instance.dashButton2 = false;
+        instance.deflectButton2 = false;
+        instance.crawlButton2 = false;
+        instance.jumpButton2 = false;
+        instance.pauseButton2 = false;
+        instance.changeButton2 = false;
+        instance.selectButton2 = false;
+        instance.interactButton2 = false;
+        instance.resetButton2 = false;
+        instance.cancelButton2 = false;
+        instance.horizontalAxis2 = 0;
+        instance.verticalAxis2 = 0;
+        instance.rightHorizontalAxis2 = 0;
+        instance.rightVerticalAxis2 = 0;
+
+        instance.prevDashButton2 = false;
+        instance.prevDeflectButton2 = false;
+        instance.prevCrawlButton2 = false;
+        instance.prevJumpButton2 = false;
+        instance.prevChangeButton2 = false;
+        instance.prevPauseButton2 = false;
+        instance.prevSelectButton2 = false;
+        instance.prevInteractButton2 = false;
+        instance.prevResetButton2 = false;
+        instance.prevCancelButton2 = false;
+        instance.prevHorizontalAxis2 = 0;
+        instance.prevVerticalAxis2 = 0;
+        instance.prevRightHorizontalAxis2 = 0;
+        instance.prevRightVerticalAxis2 = 0;
+
         blocked = true;
     }
 
@@ -142,69 +224,7 @@ public class InputManager : MonoBehaviour {
         blocked = false;
     }
 
-    //public void UpdatePreviousGameLogic() {
-    //    //prevSelectButton = selectButton;
-    //    //prevChangeButton = changeButton;
-    //    //prevPauseButton = pauseButton;
-
-    //}
-
-    //public void UpdatePreviousCamera() {
-    //    //prevCameraButton = cameraButton;
-    //}
-
-    //public void UpdatePreviousUtils() {
-    //    //prevDashButton = dashButton;
-    //    //prevDeflectButton = deflectButton;
-    //}
-
-    //public void UpdatePreviousPlayer() {
-    //    if (!blocked) {
-    //        //prevCrawlButton = crawlButton;
-    //        //prevJumpButton = jumpButton;
-    //        //prevInteractButton = interactButton;
-    //        //prevHorizontalAxis = horizontalAxis;
-    //        //prevRightHorizontalAxis = rightHorizontalAxis;
-    //        //prevRightVerticalAxis = rightVerticalAxis;
-    //        //prevDeflectButtonPlayer = deflectButtonPlayer;
-    //        //prevDashButtonPlayer = dashButtonPlayer;
-    //    }
-//}
-
-    // Update is called once per frame
-    void Update() {
-        bool PS4_Controller = false;
-        bool Xbox_One_Controller = false;
-        string[] names = Input.GetJoystickNames();
-
-
-        for (int x = 0; x < names.Length; x++) {
-            //print(names[x].Length);
-            if (names[x].Length == 19) {
-                print("PS4 CONTROLLER IS CONNECTED");
-                PS4_Controller = true;
-                Xbox_One_Controller = false;
-            }
-            if (names[x].Length == 33 || names[x].Length == 24) {
-                print("XBOX ONE CONTROLLER IS CONNECTED");
-                //set a controller bool to true
-                PS4_Controller = false;
-                Xbox_One_Controller = true;
-
-            }
-        }
-
-
-        if (Xbox_One_Controller|| PS4_Controller) {
-            InputManager.gamePadConnected = true;
-            //Debug.Log("TRUE");
-
-        } else {
-
-            InputManager.gamePadConnected = false;
-            //Debug.Log("FALSE");
-        }
-
+    public void UpdatePrevious() {
         if (!blocked) {
             instance.prevAnyKeyDown = Input.anyKey;
             instance.prevCrawlButton = instance.crawlButton;
@@ -227,38 +247,366 @@ public class InputManager : MonoBehaviour {
             instance.prevPauseButton = instance.pauseButton;
             instance.prevVerticalAxis = instance.verticalAxis;
             instance.prevCancelButton = instance.cancelButton;
-            instance.dashButton = (Input.GetAxisRaw("DashPunch") == 1.0);
-            //dashButtonPlayer = (Input.GetAxisRaw("DashPunch") == 1.0);
 
-            instance.deflectButton = (Input.GetAxisRaw("DeflectDrag") == 1.0);
-            //deflectButtonPlayer = (Input.GetAxisRaw("DeflectDrag") == 1.0);
-            instance.crawlButton = (Input.GetAxisRaw("CrawlSmash") == 1.0);
-            instance.jumpButton = (Input.GetAxisRaw("Jump") == 1.0);
-            instance.pauseButton = (Input.GetAxisRaw("Pause") == 1.0);
-            instance.selectButton = (Input.GetAxisRaw("Select") == 1.0);
-            instance.resetButton = Input.GetAxisRaw("Reset") == 1.0;
-            instance.interactButton = (Input.GetAxisRaw("Interact") == 1.0);
-            instance.cameraButton = Input.GetAxisRaw("Camera") == 1.0;
-            instance.cancelButton = Input.GetAxisRaw("Cancel") == 1.0;
+            instance.prevCrawlButton2 = instance.crawlButton2;
+            instance.prevJumpButton2 = instance.jumpButton2;
+            instance.prevInteractButton2 = instance.interactButton2;
+            instance.prevHorizontalAxis2 = instance.horizontalAxis2;
+            instance.prevRightHorizontalAxis2 = instance.rightHorizontalAxis2;
+            instance.prevRightVerticalAxis2 = instance.rightVerticalAxis2;
+            instance.prevCameraButton2 = instance.cameraButton2;
+            instance.prevDashButton2 = instance.dashButton2;
+            instance.prevDeflectButton2 = instance.deflectButton2;
+            instance.prevSelectButton2 = instance.selectButton2;
+            instance.prevChangeButton2 = instance.changeButton2;
+            instance.prevPauseButton2 = instance.pauseButton2;
+            instance.prevVerticalAxis2 = instance.verticalAxis2;
+            instance.prevCancelButton2 = instance.cancelButton2;
+        }
 
+    }
 
+    //public void UpdatePreviousCamera() {
+    //    //prevCameraButton = cameraButton;
+    //}
 
-            if (!Xbox_One_Controller && !PS4_Controller) {
-                instance.changeButton = (Input.GetAxisRaw("Change") == 1.0);
-                instance.horizontalAxis = Input.GetAxisRaw("Horizontal");
-                instance.verticalAxis = (Input.GetAxisRaw("Vertical"));
+    //public void UpdatePreviousUtils() {
+    //    //prevDashButton = dashButton;
+    //    //prevDeflectButton = deflectButton;
+    //}
 
-            } else {
-                instance.horizontalAxis = Input.GetAxisRaw("HorizontalPad");
-                instance.verticalAxis =Input.GetAxisRaw("VerticalPad");
-                instance.rightHorizontalAxis = Input.GetAxisRaw("RightJoyStickHorizontal");
-                instance.rightVerticalAxis = Input.GetAxisRaw("RightJoyStickVertical");
-                instance.dashButton = (Input.GetAxisRaw("ChangePad") == -1.0);
-                instance.changeButton = (Input.GetAxisRaw("ChangePad") == 1);
-                //dashButtonPlayer = (Input.GetAxisRaw("ChangePad") == -1.0);
+    //public void UpdatePreviousPlayer() {
+    //    if (!blocked) {
+    //        //prevCrawlButton = crawlButton;
+    //        //prevJumpButton = jumpButton;
+    //        //prevInteractButton = interactButton;
+    //        //prevHorizontalAxis = horizontalAxis;
+    //        //prevRightHorizontalAxis = rightHorizontalAxis;
+    //        //prevRightVerticalAxis = rightVerticalAxis;
+    //        //prevDeflectButtonPlayer = deflectButtonPlayer;
+    //        //prevDashButtonPlayer = dashButtonPlayer;
+    //    }
+    //}
 
-
+    // Update is called once per frame
+    void Update() {
+        bool[] PS4_Controllers = { false, false };
+        bool[] Xbox_One_Controllers = { false, false };
+        bool[] Windows_Controllers = { false, false };
+        string[] names = Input.GetJoystickNames();
+        List<string> namesList = new List<string>();
+        for(int i = 0; i < names.Length; i++) {
+            if (names[i].Length > 0) {
+                namesList.Add(names[i]);
             }
+        }
+
+        for (int x = 0; x < namesList.Count; x++) {
+            Debug.Log(namesList[x]);
+        }
+
+            for (int x = 0; x < namesList.Count; x++) {
+            //print(names[x].Length);
+            if (namesList[x].Length == 19) {
+                if (x == 0) {
+                    PS4_Controllers[0] = true;
+                    Xbox_One_Controllers[0] = false;
+                    Windows_Controllers[0] = false;
+                    print("PS4 CONTROLLER1 IS CONNECTED");
+                }else if(x == 1){
+                    PS4_Controllers[1] = true;
+                    Xbox_One_Controllers[1] = false;
+                    Windows_Controllers[1] = false;
+                    print("PS4 CONTROLLER2 IS CONNECTED");
+                }
+            }
+            if (namesList[x].Length == 33 || namesList[x].Length == 24) {
+                if (x == 0) {
+                    Xbox_One_Controllers[0] = true;
+                    print("XBOX ONE CONTROLLER1 IS CONNECTED");
+                }else if (x == 1) {
+                    Xbox_One_Controllers[1] = true;
+                    print("XBOX ONE CONTROLLER2 IS CONNECTED");
+                }
+            }
+            if (namesList[x].Length == 31) {
+                if (x == 0) {
+                    print("WINDOWS CONTROLLER1 IS CONNECTED");
+                    Windows_Controllers[0] = true;
+                } else if (x == 1) {
+                    Windows_Controllers[1] = true;
+                    print("WINDOWS CONTROLLER2 IS CONNECTED");
+                }
+            } 
+            }
+        UpdatePrevious();
+
+
+
+        /*SE ACTUALIZAN LAS VARIABLES NORMALES Y LAS QUE TIENEN UN 2 DESTRÁS PORQUE EN PLAYERCONTROLLER
+         * SE UTILIZAN AMBAS, LO QUE OCURRE ES QUE SI ES SINGLEPLAYER, ESTE ACTUALIZA AMBAS Y SI NO
+         * SE VARIA EL QUIEN LAS ACTUALIZA*/
+        switch (currentGameMode) {
+
+
+                case GAMEMODE.SINGLEPLAYER:
+                if (Xbox_One_Controllers[0]|| PS4_Controllers[0] ||Windows_Controllers[0]) {
+                    gamePadConnected = true;
+
+                } else {
+                    gamePadConnected = false;
+                }
+
+                if (!blocked) {
+
+
+                    if (!Xbox_One_Controllers[0] && !PS4_Controllers[0]&&!Windows_Controllers[0]) {
+
+                        instance.dashButton = (Input.GetAxisRaw("DashPunch") == 1.0);
+                        //dashButtonPlayer = (Input.GetAxisRaw("DashPunch") == 1.0);
+
+                        instance.deflectButton = (Input.GetAxisRaw("DeflectDrag") == 1.0);
+                        //deflectButtonPlayer = (Input.GetAxisRaw("DeflectDrag") == 1.0);
+                        instance.crawlButton = (Input.GetAxisRaw("CrawlSmash") == 1.0);
+                        instance.jumpButton = (Input.GetAxisRaw("Jump") == 1.0);
+
+                        instance.pauseButton = (Input.GetAxisRaw("Pause") == 1.0);
+                        instance.selectButton = (Input.GetAxisRaw("Select") == 1.0);
+                        instance.resetButton = Input.GetAxisRaw("Reset") == 1.0;
+                        instance.interactButton = (Input.GetAxisRaw("Interact") == 1.0);
+                        instance.cameraButton = Input.GetAxisRaw("Camera") == 1.0;
+                        instance.cancelButton = Input.GetAxisRaw("Cancel") == 1.0;
+                        instance.changeButton = (Input.GetAxisRaw("Change") == 1.0);
+                        instance.horizontalAxis = Input.GetAxisRaw("Horizontal");
+                        instance.verticalAxis = (Input.GetAxisRaw("Vertical"));
+                        /////////////////////////////////////////////////////////////////////////////
+                        /////////////////////////////////////////////////////////////////////////////
+                        /////////////////////////////////////////////////////////////////////////////
+                        /////////////////////////////////////////////////////////////////////////////
+                        instance.dashButton2 = (Input.GetAxisRaw("DashPunch") == 1.0);
+                        instance.deflectButton2 = (Input.GetAxisRaw("DeflectDrag") == 1.0);
+                        instance.crawlButton2 = (Input.GetAxisRaw("CrawlSmash") == 1.0);
+                        instance.jumpButton2 = (Input.GetAxisRaw("Jump") == 1.0);
+                        instance.pauseButton2 = (Input.GetAxisRaw("Pause") == 1.0);
+                        instance.selectButton2 = (Input.GetAxisRaw("Select") == 1.0);
+                        instance.resetButton2 = Input.GetAxisRaw("Reset") == 1.0;
+                        instance.interactButton2 = (Input.GetAxisRaw("Interact") == 1.0);
+                        instance.cameraButton2 = Input.GetAxisRaw("Camera") == 1.0;
+                        instance.cancelButton2 = Input.GetAxisRaw("Cancel") == 1.0;
+                        instance.changeButton2 = (Input.GetAxisRaw("Change") == 1.0);
+                        instance.horizontalAxis2 = Input.GetAxisRaw("Horizontal");
+                        instance.verticalAxis2 = (Input.GetAxisRaw("Vertical"));
+
+                    } else {
+                        Debug.Log("MANDO");
+                        //dashButtonPlayer = (Input.GetAxisRaw("DashPunch") == 1.0);
+
+                        instance.deflectButton = (Input.GetAxisRaw("DeflectDrag1") == 1.0);
+                        //deflectButtonPlayer = (Input.GetAxisRaw("DeflectDrag") == 1.0);
+                        instance.crawlButton = (Input.GetAxisRaw("CrawlSmash1") == 1.0);
+                        instance.jumpButton = (Input.GetAxisRaw("Jump1") == 1.0);
+
+                        instance.pauseButton = (Input.GetAxisRaw("Pause1") == 1.0);
+                        instance.selectButton = (Input.GetAxisRaw("Select1") == 1.0);
+                        instance.resetButton = Input.GetAxisRaw("Reset1") == 1.0;
+                        instance.interactButton = (Input.GetAxisRaw("Interact1") == 1.0);
+                        instance.cameraButton = Input.GetAxisRaw("Camera1") == 1.0;
+                        instance.cancelButton = Input.GetAxisRaw("Cancel1") == 1.0;
+                        instance.horizontalAxis = Input.GetAxisRaw("HorizontalPad1");
+                        instance.verticalAxis = Input.GetAxisRaw("VerticalPad1");
+                        instance.rightHorizontalAxis = Input.GetAxisRaw("RightJoyStickHorizontal1");
+                        instance.rightVerticalAxis = Input.GetAxisRaw("RightJoyStickVertical1");
+                        instance.dashButton = (Input.GetAxisRaw("ChangePad1") < 0);
+                        instance.changeButton = (Input.GetAxisRaw("ChangePad1") > 0);
+                        /////////////////////////////////////////////////////////////////////////////
+                        /////////////////////////////////////////////////////////////////////////////
+                        /////////////////////////////////////////////////////////////////////////////
+                        /////////////////////////////////////////////////////////////////////////////
+                        instance.deflectButton2 = (Input.GetAxisRaw("DeflectDrag1") == 1.0);
+                        instance.crawlButton2 = (Input.GetAxisRaw("CrawlSmash1") == 1.0);
+                        instance.jumpButton2 = (Input.GetAxisRaw("Jump1") == 1.0);
+                        instance.pauseButton2 = (Input.GetAxisRaw("Pause1") == 1.0);
+                        instance.selectButton2 = (Input.GetAxisRaw("Select1") == 1.0);
+                        instance.resetButton2 = Input.GetAxisRaw("Reset1") == 1.0;
+                        instance.interactButton2 = (Input.GetAxisRaw("Interact1") == 1.0);
+                        instance.cameraButton2 = Input.GetAxisRaw("Camera1") == 1.0;
+                        instance.cancelButton2 = Input.GetAxisRaw("Cancel1") == 1.0;
+                        instance.horizontalAxis2 = Input.GetAxisRaw("HorizontalPad1");
+                        instance.verticalAxis2 = Input.GetAxisRaw("VerticalPad1");
+                        instance.rightHorizontalAxis2 = Input.GetAxisRaw("RightJoyStickHorizontal1");
+                        instance.rightVerticalAxis2 = Input.GetAxisRaw("RightJoyStickVertical1");
+                        instance.dashButton2 = (Input.GetAxisRaw("ChangePad1") < 0);
+                        instance.changeButton2 = (Input.GetAxisRaw("ChangePad1") > 0);
+
+
+                        Debug.Log("CHANGEPAD " + Input.GetAxisRaw("ChangePad1"));
+
+                        //dashButtonPlayer = (Input.GetAxisRaw("ChangePad") == -1.0);
+
+
+                    }
+                }
+                break;
+            case GAMEMODE.MULTI_KEYBOARD_CONTROLLER:
+                if (!blocked) {
+
+                    ///////////////PLAYER 1 (KEYBOARD)/////////////////
+                    ///////////////PLAYER 1 (KEYBOARD)/////////////////
+                    ///////////////PLAYER 1 (KEYBOARD)/////////////////
+                    ///////////////PLAYER 1 (KEYBOARD)/////////////////
+                    instance.dashButton = (Input.GetAxisRaw("DashPunch") == 1.0);
+                    instance.deflectButton = (Input.GetAxisRaw("DeflectDrag") == 1.0);
+                    instance.crawlButton = (Input.GetAxisRaw("CrawlSmash") == 1.0);
+                    instance.jumpButton = (Input.GetAxisRaw("Jump") == 1.0);
+
+                    Debug.Log(instance.jumpButton);
+
+                    instance.pauseButton = (Input.GetAxisRaw("Pause") == 1.0);
+                    instance.selectButton = (Input.GetAxisRaw("Select") == 1.0);
+                    instance.resetButton = Input.GetAxisRaw("Reset") == 1.0;
+                    instance.interactButton = (Input.GetAxisRaw("Interact") == 1.0);
+                    instance.cameraButton = Input.GetAxisRaw("Camera") == 1.0;
+                    instance.cancelButton = Input.GetAxisRaw("Cancel") == 1.0;
+                    instance.changeButton = (Input.GetAxisRaw("Change") == 1.0);
+                    instance.horizontalAxis = Input.GetAxisRaw("Horizontal");
+                    instance.verticalAxis = (Input.GetAxisRaw("Vertical"));
+                    ///////////////PLAYER 1 (KEYBOARD)/////////////////
+                    ///////////////PLAYER 1 (KEYBOARD)/////////////////
+                    ///////////////PLAYER 1 (KEYBOARD)/////////////////
+                    ///////////////PLAYER 1 (KEYBOARD)/////////////////
+
+                    ///////////////PLAYER 2 (MANDO)/////////////////
+                    ///////////////PLAYER 2 (MANDO)/////////////////
+                    ///////////////PLAYER 2 (MANDO)/////////////////
+                    ///////////////PLAYER 2 (MANDO)/////////////////
+
+                    instance.deflectButton2 = (Input.GetAxisRaw("DeflectDrag1") == 1.0);
+                    instance.crawlButton2 = (Input.GetAxisRaw("CrawlSmash1") == 1.0);
+                    instance.jumpButton2 = (Input.GetAxisRaw("Jump1") == 1.0);
+                    instance.pauseButton2 = (Input.GetAxisRaw("Pause1") == 1.0);
+                    instance.selectButton2 = (Input.GetAxisRaw("Select1") == 1.0);
+                    instance.resetButton2 = Input.GetAxisRaw("Reset1") == 1.0;
+                    instance.interactButton2 = (Input.GetAxisRaw("Interact1") == 1.0);
+                    instance.cameraButton2 = Input.GetAxisRaw("Camera1") == 1.0;
+                    instance.cancelButton2 = Input.GetAxisRaw("Cancel1") == 1.0;
+                    instance.horizontalAxis2 = Input.GetAxisRaw("HorizontalPad1");
+                    instance.verticalAxis2 = Input.GetAxisRaw("VerticalPad1");
+                    instance.rightHorizontalAxis2 = Input.GetAxisRaw("RightJoyStickHorizontal1");
+                    instance.rightVerticalAxis2 = Input.GetAxisRaw("RightJoyStickVertical1");
+                    instance.dashButton2 = (Input.GetAxisRaw("ChangePad1") <0);
+                    instance.changeButton2 = (Input.GetAxisRaw("ChangePad1") >0);
+
+                    ///////////////PLAYER 2 (MANDO)/////////////////
+                    ///////////////PLAYER 2 (MANDO)/////////////////
+                    ///////////////PLAYER 2 (MANDO)/////////////////
+                    ///////////////PLAYER 2 (MANDO)/////////////////
+
+
+
+                }
+                break;
+            case GAMEMODE.MULTI_CONTROLLER_KEYBOARD:
+
+                ///////////////PLAYER 1 (MANDO)/////////////////
+                ///////////////PLAYER 1 (MANDO)/////////////////
+                ///////////////PLAYER 1 (MANDO)/////////////////
+                ///////////////PLAYER 1 (MANDO)/////////////////
+                instance.deflectButton = (Input.GetAxisRaw("DeflectDrag1") == 1.0);
+                instance.crawlButton = (Input.GetAxisRaw("CrawlSmash1") == 1.0);
+                instance.jumpButton = (Input.GetAxisRaw("Jump1") == 1.0);
+                instance.pauseButton = (Input.GetAxisRaw("Pause1") == 1.0);
+                instance.selectButton = (Input.GetAxisRaw("Select1") == 1.0);
+                instance.resetButton = Input.GetAxisRaw("Reset1") == 1.0;
+                instance.interactButton = (Input.GetAxisRaw("Interact1") == 1.0);
+                instance.cameraButton = Input.GetAxisRaw("Camera1") == 1.0;
+                instance.cancelButton = Input.GetAxisRaw("Cancel1") == 1.0;
+                instance.horizontalAxis = Input.GetAxisRaw("HorizontalPad1");
+                instance.verticalAxis = Input.GetAxisRaw("VerticalPad1");
+                instance.rightHorizontalAxis = Input.GetAxisRaw("RightJoyStickHorizontal1");
+                instance.rightVerticalAxis = Input.GetAxisRaw("RightJoyStickVertical1");
+                instance.dashButton = (Input.GetAxisRaw("ChangePad1") < 0);
+                instance.changeButton = (Input.GetAxisRaw("ChangePad1") > 0);
+                ///////////////PLAYER 1 (MANDO)/////////////////
+                ///////////////PLAYER 1 (MANDO)/////////////////
+                ///////////////PLAYER 1 (MANDO)/////////////////
+                ///////////////PLAYER 1 (MANDO)/////////////////
+
+                ///////////////PLAYER 2 (KEYBOARD)///////////////////
+                ///////////////PLAYER 2 ((KEYBOARD))/////////////////
+                ///////////////PLAYER 2 ((KEYBOARD))/////////////////
+                ///////////////PLAYER 2 ((KEYBOARD))/////////////////
+                instance.dashButton2 = (Input.GetAxisRaw("DashPunch") == 1.0);
+                instance.deflectButton2 = (Input.GetAxisRaw("DeflectDrag") == 1.0);
+                instance.crawlButton2 = (Input.GetAxisRaw("CrawlSmash") == 1.0);
+                instance.jumpButton2 = (Input.GetAxisRaw("Jump") == 1.0);
+                instance.pauseButton2 = (Input.GetAxisRaw("Pause") == 1.0);
+                instance.selectButton2 = (Input.GetAxisRaw("Select") == 1.0);
+                instance.resetButton2 = Input.GetAxisRaw("Reset") == 1.0;
+                instance.interactButton2 = (Input.GetAxisRaw("Interact") == 1.0);
+                instance.cameraButton2 = Input.GetAxisRaw("Camera") == 1.0;
+                instance.cancelButton2 = Input.GetAxisRaw("Cancel") == 1.0;
+                instance.changeButton2 = (Input.GetAxisRaw("Change") == 1.0);
+                instance.horizontalAxis2 = Input.GetAxisRaw("Horizontal");
+                instance.verticalAxis2 = (Input.GetAxisRaw("Vertical"));
+                ///////////////PLAYER 2 (KEYBOARD)///////////////////
+                ///////////////PLAYER 2 ((KEYBOARD))/////////////////
+                ///////////////PLAYER 2 ((KEYBOARD))/////////////////
+                ///////////////PLAYER 2 ((KEYBOARD))/////////////////
+
+                break;
+            case GAMEMODE.MULTI_CONTROLLER_CONTROLLER:
+
+
+                ///////////////PLAYER 1 (MANDO)/////////////////
+                ///////////////PLAYER 1 (MANDO)/////////////////
+                ///////////////PLAYER 1 (MANDO)/////////////////
+                ///////////////PLAYER 1 (MANDO)/////////////////
+                instance.deflectButton = (Input.GetAxisRaw("DeflectDrag1") == 1.0);
+                instance.crawlButton = (Input.GetAxisRaw("CrawlSmash1") == 1.0);
+                instance.jumpButton = (Input.GetAxisRaw("Jump1") == 1.0);
+                instance.pauseButton = (Input.GetAxisRaw("Pause1") == 1.0);
+                instance.selectButton = (Input.GetAxisRaw("Select1") == 1.0);
+                instance.resetButton = Input.GetAxisRaw("Reset1") == 1.0;
+                instance.interactButton = (Input.GetAxisRaw("Interact1") == 1.0);
+                instance.cameraButton = Input.GetAxisRaw("Camera1") == 1.0;
+                instance.cancelButton = Input.GetAxisRaw("Cancel1") == 1.0;
+                instance.horizontalAxis = Input.GetAxisRaw("HorizontalPad1");
+                instance.verticalAxis = Input.GetAxisRaw("VerticalPad1");
+                instance.rightHorizontalAxis = Input.GetAxisRaw("RightJoyStickHorizontal1");
+                instance.rightVerticalAxis = Input.GetAxisRaw("RightJoyStickVertical1");
+                instance.dashButton = (Input.GetAxisRaw("ChangePad1") < 0);
+                instance.changeButton = (Input.GetAxisRaw("ChangePad1") > 0);
+                ///////////////PLAYER 1 (MANDO)/////////////////
+                ///////////////PLAYER 1 (MANDO)/////////////////
+                ///////////////PLAYER 1 (MANDO)/////////////////
+                ///////////////PLAYER 1 (MANDO)/////////////////
+
+
+                ///////////////PLAYER 2 (MANDO)/////////////////
+                ///////////////PLAYER 2 (MANDO)/////////////////
+                ///////////////PLAYER 2 (MANDO)/////////////////
+                ///////////////PLAYER 2 (MANDO)/////////////////
+                instance.deflectButton2 = (Input.GetAxisRaw("DeflectDrag2") == 1.0);
+                instance.crawlButton2 = (Input.GetAxisRaw("CrawlSmash2") == 1.0);
+                instance.jumpButton2 = (Input.GetAxisRaw("Jump2") == 1.0);
+                instance.pauseButton2 = (Input.GetAxisRaw("Pause2") == 1.0);
+                instance.selectButton2 = (Input.GetAxisRaw("Select2") == 1.0);
+                instance.resetButton2 = Input.GetAxisRaw("Reset2") == 1.0;
+                instance.interactButton2 = (Input.GetAxisRaw("Interact2") == 1.0);
+                instance.cameraButton2 = Input.GetAxisRaw("Camera2") == 1.0;
+                instance.cancelButton2 = Input.GetAxisRaw("Cancel2") == 1.0;
+                instance.horizontalAxis2 = Input.GetAxisRaw("HorizontalPad2");
+                instance.verticalAxis2 = Input.GetAxisRaw("VerticalPad2");
+                instance.rightHorizontalAxis2 = Input.GetAxisRaw("RightJoyStickHorizontal2");
+                instance.rightVerticalAxis2 = Input.GetAxisRaw("RightJoyStickVertical2");
+                instance.dashButton2 = (Input.GetAxisRaw("ChangePad2") < 0);
+                instance.changeButton2 = (Input.GetAxisRaw("ChangePad2") > 0);
+                ///////////////PLAYER 2 (MANDO)/////////////////
+                ///////////////PLAYER 2 (MANDO)/////////////////
+                ///////////////PLAYER 2 (MANDO)/////////////////
+                ///////////////PLAYER 2 (MANDO)/////////////////
+
+                break;
         }
     }
 }

@@ -396,24 +396,39 @@ public class GameLogic : MonoBehaviour {
                             }
                             setSpawnPoint = true;
                         }
+                        if (currentPlayer != null) {
 
-                        //CAMBIO DE MUNDO
-                        if (InputManager.instance.changeButton&&!InputManager.instance.prevChangeButton && !cameraTransition) {
-                            if (currentPlayer != null) {
-                                if (!currentPlayer.crawling) {
-                                    if (gameObject.GetComponent<AudioSource>().pitch == 1.5) {
-                                        gameObject.GetComponent<AudioSource>().pitch = 0.5f;
-                                    } else {
-                                        gameObject.GetComponent<AudioSource>().pitch = 1.5f;
+                            if (currentPlayer.dawn) {
+                                //CAMBIO DE MUNDO
+                                if (InputManager.instance.changeButton && !InputManager.instance.prevChangeButton && !cameraTransition) {
+                                    if (!currentPlayer.crawling) {
+                                        if (gameObject.GetComponent<AudioSource>().pitch == 1.5) {
+                                            gameObject.GetComponent<AudioSource>().pitch = 0.5f;
+                                        } else {
+                                            gameObject.GetComponent<AudioSource>().pitch = 1.5f;
+                                        }
+                                        gameObject.GetComponent<AudioSource>().Play();
+                                        foreach (GameObject g in transformableObjects) {
+                                            g.GetComponent<DoubleObject>().Change();
+                                        }
                                     }
-                                    gameObject.GetComponent<AudioSource>().Play();
-                                    foreach (GameObject g in transformableObjects) {
-                                        g.GetComponent<DoubleObject>().Change();
+                                }
+                            } else {
+                                if (InputManager.instance.changeButton2 && !InputManager.instance.prevChangeButton2 && !cameraTransition) {
+                                    if (!currentPlayer.crawling) {
+                                        if (gameObject.GetComponent<AudioSource>().pitch == 1.5) {
+                                            gameObject.GetComponent<AudioSource>().pitch = 0.5f;
+                                        } else {
+                                            gameObject.GetComponent<AudioSource>().pitch = 1.5f;
+                                        }
+                                        gameObject.GetComponent<AudioSource>().Play();
+                                        foreach (GameObject g in transformableObjects) {
+                                            g.GetComponent<DoubleObject>().Change();
+                                        }
                                     }
                                 }
                             }
                         }
-
                     }
                     //Si el juego SI esta pausado
                     else {

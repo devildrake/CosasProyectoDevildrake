@@ -840,115 +840,222 @@ public class PlayerController : DoubleObject {
                 float mustSlow = 1;
 
                 if (armstate == ARMSTATE.IDLE) {
-                    if (InputManager.instance.horizontalAxis * (float)prevHorizontalMov < 0 && InputManager.instance.horizontalAxis != 0.0f && !InputManager.GetBlocked()) {
-                        changed = true;
-                        //Debug.Log("CHANGE");
-                        prevHorizontalMov = InputManager.instance.horizontalAxis;
-                    }
-                    if (grounded) {
-                        if (dawn && worldAssignation == world.DAWN && InputManager.instance.dashButton) {
-                            PlayerUtilsStatic.ResetDirectionCircle(arrow);
+                    if (dawn) {
+                        if (InputManager.instance.horizontalAxis * (float)prevHorizontalMov < 0 && InputManager.instance.horizontalAxis != 0.0f && !InputManager.GetBlocked()) {
+                            changed = true;
+                            //Debug.Log("CHANGE");
+                            prevHorizontalMov = InputManager.instance.horizontalAxis;
                         }
-
-                        rb.velocity = new Vector2(0, rb.velocity.y);
-                        //Debug.Log("Se para");
-                        if (facingRight)
-                            transform.Translate(Vector3.right * InputManager.instance.horizontalAxis * characterSpeed * Time.deltaTime);
-                        else
-                            transform.Translate(Vector3.left * InputManager.instance.horizontalAxis * characterSpeed * Time.deltaTime);
-
-                        slowedInTheAir = false;
-                        if (InputManager.instance.horizontalAxis != 0) {
-                            timeMoving += Time.deltaTime;
-                            timeNotMoving = 0;
-                            moving = true;
-                            if (!audioSource.isPlaying && !crawling) {
-                                audioSource.pitch = 0.3f;
-                                audioSource.clip = walkClip;
-                                audioSource.Play();
-                            } else if (crawling) {
-                                audioSource.pitch = 0.3f;
-                                audioSource.clip = crawlClip;
-                                audioSource.Play();
+                        if (grounded) {
+                            if (dawn && worldAssignation == world.DAWN && InputManager.instance.dashButton) {
+                                PlayerUtilsStatic.ResetDirectionCircle(arrow);
                             }
-                        } else {
-                            timeMoving = 0;
-                            if (timeNotMoving > 0.1f) {
-                                moving = false;
+
+                            rb.velocity = new Vector2(0, rb.velocity.y);
+                            //Debug.Log("Se para");
+                            if (facingRight)
+                                transform.Translate(Vector3.right * InputManager.instance.horizontalAxis * characterSpeed * Time.deltaTime);
+                            else
+                                transform.Translate(Vector3.left * InputManager.instance.horizontalAxis * characterSpeed * Time.deltaTime);
+
+                            slowedInTheAir = false;
+                            if (InputManager.instance.horizontalAxis != 0) {
+                                timeMoving += Time.deltaTime;
+                                timeNotMoving = 0;
+                                moving = true;
+                                if (!audioSource.isPlaying && !crawling) {
+                                    audioSource.pitch = 0.3f;
+                                    audioSource.clip = walkClip;
+                                    audioSource.Play();
+                                } else if (crawling) {
+                                    audioSource.pitch = 0.3f;
+                                    audioSource.clip = crawlClip;
+                                    audioSource.Play();
+                                }
                             } else {
-                                timeNotMoving += Time.deltaTime;
+                                timeMoving = 0;
+                                if (timeNotMoving > 0.1f) {
+                                    moving = false;
+                                } else {
+                                    timeNotMoving += Time.deltaTime;
+                                }
                             }
                         }
-                    }
-                //Not Grounded and changed
-                else if (changed) {
-                        slowedInTheAir = true;
-                        mustSlow = 0.5f;
-
-                        if (facingRight)
-                            transform.Translate(Vector3.right * InputManager.instance.horizontalAxis * characterSpeed * 0.75f * mustSlow * Time.deltaTime);
-                        else
-                            transform.Translate(Vector3.left * InputManager.instance.horizontalAxis * characterSpeed * 0.75f * mustSlow * Time.deltaTime);
-
-
-                        //Velocidad X a 0
-                        rb.AddForce(new Vector2(-rb.velocity.x, 0), ForceMode2D.Impulse);
-
-                    }
-                //Not Grounded and not changed
-                else {
-                        if (slowedInTheAir) {
-                            //rb.AddForce(new Vector2(-rb.velocity.x, 0), ForceMode2D.Impulse);
+                    //Not Grounded and changed
+                    else if (changed) {
+                            slowedInTheAir = true;
                             mustSlow = 0.5f;
+
+                            if (facingRight)
+                                transform.Translate(Vector3.right * InputManager.instance.horizontalAxis * characterSpeed * 0.75f * mustSlow * Time.deltaTime);
+                            else
+                                transform.Translate(Vector3.left * InputManager.instance.horizontalAxis * characterSpeed * 0.75f * mustSlow * Time.deltaTime);
+
+
+                            //Velocidad X a 0
+                            rb.AddForce(new Vector2(-rb.velocity.x, 0), ForceMode2D.Impulse);
+
+                        }
+                    //Not Grounded and not changed
+                        else {
+                            if (slowedInTheAir) {
+                                //rb.AddForce(new Vector2(-rb.velocity.x, 0), ForceMode2D.Impulse);
+                                mustSlow = 0.5f;
+                            }
+
+                            if (facingRight)
+                                transform.Translate(Vector3.right * InputManager.instance.horizontalAxis * characterSpeed * 0.75f * mustSlow * Time.deltaTime);
+
+                            else
+                                transform.Translate(Vector3.left * InputManager.instance.horizontalAxis * characterSpeed * 0.75f * mustSlow * Time.deltaTime);
+
                         }
 
-                        if (facingRight)
-                            transform.Translate(Vector3.right * InputManager.instance.horizontalAxis * characterSpeed * 0.75f * mustSlow * Time.deltaTime);
+                        if (changed) {
+                            Flip();
+                        }
+                    } else { //AQUI METO LOS INPUTS DE DUSK (PLAYER2)
+                        if (InputManager.instance.horizontalAxis2 * (float)prevHorizontalMov < 0 && InputManager.instance.horizontalAxis2 != 0.0f && !InputManager.GetBlocked()) {
+                            changed = true;
+                            //Debug.Log("CHANGE");
+                            prevHorizontalMov = InputManager.instance.horizontalAxis2;
+                        }
+                        if (grounded) {
+                            if (dawn && worldAssignation == world.DAWN && InputManager.instance.dashButton2) {
+                                PlayerUtilsStatic.ResetDirectionCircle(arrow);
+                            }
 
-                        else
-                            transform.Translate(Vector3.left * InputManager.instance.horizontalAxis * characterSpeed * 0.75f * mustSlow * Time.deltaTime);
+                            rb.velocity = new Vector2(0, rb.velocity.y);
+                            //Debug.Log("Se para");
+                            if (facingRight)
+                                transform.Translate(Vector3.right * InputManager.instance.horizontalAxis2 * characterSpeed * Time.deltaTime);
+                            else
+                                transform.Translate(Vector3.left * InputManager.instance.horizontalAxis2 * characterSpeed * Time.deltaTime);
 
-                    }
+                            slowedInTheAir = false;
+                            if (InputManager.instance.horizontalAxis2 != 0) {
+                                timeMoving += Time.deltaTime;
+                                timeNotMoving = 0;
+                                moving = true;
+                                if (!audioSource.isPlaying && !crawling) {
+                                    audioSource.pitch = 0.3f;
+                                    audioSource.clip = walkClip;
+                                    audioSource.Play();
+                                } else if (crawling) {
+                                    audioSource.pitch = 0.3f;
+                                    audioSource.clip = crawlClip;
+                                    audioSource.Play();
+                                }
+                            } else {
+                                timeMoving = 0;
+                                if (timeNotMoving > 0.1f) {
+                                    moving = false;
+                                } else {
+                                    timeNotMoving += Time.deltaTime;
+                                }
+                            }
+                        }
+                    //Not Grounded and changed
+                    else if (changed) {
+                            slowedInTheAir = true;
+                            mustSlow = 0.5f;
 
-                    if (changed) {
-                        Flip();
+                            if (facingRight)
+                                transform.Translate(Vector3.right * InputManager.instance.horizontalAxis2 * characterSpeed * 0.75f * mustSlow * Time.deltaTime);
+                            else
+                                transform.Translate(Vector3.left * InputManager.instance.horizontalAxis2 * characterSpeed * 0.75f * mustSlow * Time.deltaTime);
+
+
+                            //Velocidad X a 0
+                            rb.AddForce(new Vector2(-rb.velocity.x, 0), ForceMode2D.Impulse);
+
+                        }
+                        //Not Grounded and not changed
+                        else {
+                            if (slowedInTheAir) {
+                                //rb.AddForce(new Vector2(-rb.velocity.x, 0), ForceMode2D.Impulse);
+                                mustSlow = 0.5f;
+                            }
+
+                            if (facingRight)
+                                transform.Translate(Vector3.right * InputManager.instance.horizontalAxis2 * characterSpeed * 0.75f * mustSlow * Time.deltaTime);
+
+                            else
+                                transform.Translate(Vector3.left * InputManager.instance.horizontalAxis2 * characterSpeed * 0.75f * mustSlow * Time.deltaTime);
+
+                        }
+
+                        if (changed) {
+                            Flip();
+                        }
+
                     }
                 }
             }
             //Grabbing es true
             else {
-                if (grounded) {
-                    if (NearbyObjects[0].GetComponent<DoubleObject>().isMovable) {
-                        timeCountToDrag += Time.deltaTime;
+                if (dawn) {
+                    if (grounded) {
+                        if (NearbyObjects[0].GetComponent<DoubleObject>().isMovable) {
+                            timeCountToDrag += Time.deltaTime;
 
-                        if (timeCountToDrag < timeToRest) {
+                            if (timeCountToDrag < timeToRest) {
 
-                        }
-                        else if (timeCountToDrag < timeToRest + timeToDrag) {
+                            } else if (timeCountToDrag < timeToRest + timeToDrag) {
 
-                            if (facingRight)
-                                transform.Translate(Vector3.right * InputManager.instance.horizontalAxis * characterSpeed / 2 * Time.deltaTime);
+                                if (facingRight)
+                                    transform.Translate(Vector3.right * InputManager.instance.horizontalAxis * characterSpeed / 2 * Time.deltaTime);
 
-                            else
-                                transform.Translate(Vector3.left * InputManager.instance.horizontalAxis * characterSpeed / 2 * Time.deltaTime);
+                                else
+                                    transform.Translate(Vector3.left * InputManager.instance.horizontalAxis * characterSpeed / 2 * Time.deltaTime);
 
 
-                            NearbyObjects[0].transform.position = transform.position - distanceToGrabbedObject;
-                            //Debug.Log(distanceToGrabbedObject);
-                            if (!audioSource.isPlaying) {
-                                audioSource.clip = grabClip;
-                                audioSource.Play();
+                                NearbyObjects[0].transform.position = transform.position - distanceToGrabbedObject;
+                                //Debug.Log(distanceToGrabbedObject);
+                                if (!audioSource.isPlaying) {
+                                    audioSource.clip = grabClip;
+                                    audioSource.Play();
+                                }
+                            } else {
+                                timeCountToDrag = 0;
                             }
-                        }else {
-                            timeCountToDrag = 0;
+                        } else {
+                            grabbing = false;
                         }
-                    }
-                    else {
+                    } else {
                         grabbing = false;
                     }
-                }
-                else {
-                    grabbing = false;
+                } else {
+                    if (grounded) {
+                        if (NearbyObjects[0].GetComponent<DoubleObject>().isMovable) {
+                            timeCountToDrag += Time.deltaTime;
+
+                            if (timeCountToDrag < timeToRest) {
+
+                            } else if (timeCountToDrag < timeToRest + timeToDrag) {
+
+                                if (facingRight)
+                                    transform.Translate(Vector3.right * InputManager.instance.horizontalAxis2 * characterSpeed / 2 * Time.deltaTime);
+
+                                else
+                                    transform.Translate(Vector3.left * InputManager.instance.horizontalAxis2 * characterSpeed / 2 * Time.deltaTime);
+
+
+                                NearbyObjects[0].transform.position = transform.position - distanceToGrabbedObject;
+                                //Debug.Log(distanceToGrabbedObject);
+                                if (!audioSource.isPlaying) {
+                                    audioSource.clip = grabClip;
+                                    audioSource.Play();
+                                }
+                            } else {
+                                timeCountToDrag = 0;
+                            }
+                        } else {
+                            grabbing = false;
+                        }
+                    } else {
+                        grabbing = false;
+                    }
                 }
 
             }
@@ -1190,7 +1297,7 @@ public class PlayerController : DoubleObject {
 
         //Si se suelta el botón izquierdo del ratón y se habia pulsado previamente, el tiempo pasa a cero
         //En caso de estar grounded Se hace una llamada a Punch
-        if (/*Input.GetMouseButtonUp(0)*/!InputManager.instance.dashButton && InputManager.instance.prevDashButton && punchTimer > punchCoolDown) {
+        if (/*Input.GetMouseButtonUp(0)*/!InputManager.instance.dashButton2 && InputManager.instance.prevDashButton2 && punchTimer > punchCoolDown) {
             if (leftPressed&&(armstate == ARMSTATE.IDLE||armstate==ARMSTATE.PUNCHCHARGE)) {
                 GameLogic.instance.SetTimeScaleLocal(1.0f);
                 if (grounded) {
@@ -1220,7 +1327,7 @@ public class PlayerController : DoubleObject {
         }
 
         //En caso de pulsar el botón izquierdo del ratón y estar grounded, se pone el timepo a 0.5
-        else if (/*Input.GetMouseButtonDown(0)*/InputManager.instance.dashButton && !InputManager.instance.prevDashButton && grounded&&punchTimer>punchCoolDown) {
+        else if (/*Input.GetMouseButtonDown(0)*/InputManager.instance.dashButton2 && !InputManager.instance.prevDashButton2 && grounded&&punchTimer>punchCoolDown) {
             GameLogic.instance.SetTimeScaleLocal(slowMotionTimeScale);
             leftPressed = true;
         }
@@ -1235,7 +1342,7 @@ public class PlayerController : DoubleObject {
         else {
                 direction = PlayerUtilsStatic.UseDirectionCircle(arrow, gameObject, 0, 0, 60);
 
-                if (/*Input.GetMouseButtonDown(1)*/InputManager.instance.deflectButton && !InputManager.instance.prevDeflectButton) {
+                if (/*Input.GetMouseButtonDown(1)*/InputManager.instance.deflectButton2 && !InputManager.instance.prevDeflectButton2) {
                     if (armstate == ARMSTATE.IDLE) {
 
                         foreach (GameObject g in NearbyObjects) {
@@ -1248,13 +1355,13 @@ public class PlayerController : DoubleObject {
                             }
                         }
                     }
-                } else if (/*Input.GetMouseButtonUp(1)*/!InputManager.instance.deflectButton && InputManager.instance.prevDeflectButton) {
+                } else if (/*Input.GetMouseButtonUp(1)*/!InputManager.instance.deflectButton2 && InputManager.instance.prevDeflectButton2) {
                     grabbing = false;
                 armstate = ARMSTATE.IDLE;
                 }
             
         }
-        if (/*Input.GetKeyDown(KeyCode.LeftControl)*/InputManager.instance.crawlButton && !InputManager.instance.prevCrawlButton && !grounded) {
+        if (/*Input.GetKeyDown(KeyCode.LeftControl)*/InputManager.instance.crawlButton2 && !InputManager.instance.prevCrawlButton2 && !grounded) {
             Smash();
             audioSource.pitch = 1.0f;
 
@@ -1314,41 +1421,68 @@ public class PlayerController : DoubleObject {
                 Invoke("ImpulsorBool", 0.4f);
                 calledImpuslorBool = true;
             }
-            
 
-        //BARRA ESPACIADORA = SALTO
-        if (/*Input.GetKeyDown(KeyCode.Space)*/InputManager.instance.jumpButton&& !InputManager.instance.prevJumpButton && grounded&&!crawling||/*Input.GetKeyDown(KeyCode.Space)*/InputManager.instance.jumpButton && !InputManager.instance.prevJumpButton && timeNotSliding<0.2f) {
-            Jump();
-        }
-
-        if (onImpulsor) {
-
-            if (someRayCastChecks && /*Input.GetKeyDown(KeyCode.Space)*/InputManager.instance.jumpButton && !InputManager.instance.prevJumpButton) {
-                if (!calledImpuslorBool) {
-                    Invoke("ImpulsorBool", 0.2f);
-                    calledImpuslorBool = true;
-                }
-                canJumpOnImpulsor = false;
-                //Debug.Log("JUMP");
+        if (dawn) {
+            //BARRA ESPACIADORA = SALTO
+            if (/*Input.GetKeyDown(KeyCode.Space)*/InputManager.instance.jumpButton && !InputManager.instance.prevJumpButton && grounded && !crawling ||/*Input.GetKeyDown(KeyCode.Space)*/InputManager.instance.jumpButton && !InputManager.instance.prevJumpButton && timeNotSliding < 0.2f) {
                 Jump();
             }
-        }
 
-        //Comportamiento de dawn
-        if (dawn) {
-            DawnBehavior();
-        }
+            if (onImpulsor) {
 
-        //Comportamiento de dusk
-        else {
-            DuskBehavior();
-        }
+                if (someRayCastChecks && /*Input.GetKeyDown(KeyCode.Space)*/InputManager.instance.jumpButton && !InputManager.instance.prevJumpButton) {
+                    if (!calledImpuslorBool) {
+                        Invoke("ImpulsorBool", 0.2f);
+                        calledImpuslorBool = true;
+                    }
+                    canJumpOnImpulsor = false;
+                    //Debug.Log("JUMP");
+                    Jump();
+                }
+            }
 
-        if (interactableObject != null) {
-            if (/*Input.GetKeyDown(KeyCode.E)*/InputManager.instance.interactButton && !InputManager.instance.prevInteractButton) {
-                interactableObject.Interact();
+            //Comportamiento de dawn
+              DawnBehavior();
+            
+
+
+            if (interactableObject != null) {
+                if (/*Input.GetKeyDown(KeyCode.E)*/InputManager.instance.interactButton && !InputManager.instance.prevInteractButton) {
+                    interactableObject.Interact();
+                }
+            }
+        } else {
+            //BARRA ESPACIADORA = SALTO
+            if (/*Input.GetKeyDown(KeyCode.Space)*/InputManager.instance.jumpButton2 && !InputManager.instance.prevJumpButton2 && grounded && !crawling ||/*Input.GetKeyDown(KeyCode.Space)*/InputManager.instance.jumpButton2 && !InputManager.instance.prevJumpButton2 && timeNotSliding < 0.2f) {
+                Jump();
+            }
+
+            if (onImpulsor) {
+
+                if (someRayCastChecks && /*Input.GetKeyDown(KeyCode.Space)*/InputManager.instance.jumpButton2 && !InputManager.instance.prevJumpButton2) {
+                    if (!calledImpuslorBool) {
+                        Invoke("ImpulsorBool", 0.2f);
+                        calledImpuslorBool = true;
+                    }
+                    canJumpOnImpulsor = false;
+                    //Debug.Log("JUMP");
+                    Jump();
+                }
+            }
+
+
+
+            //Comportamiento de dusk
+                DuskBehavior();
+            
+
+            if (interactableObject != null) {
+                if (/*Input.GetKeyDown(KeyCode.E)*/InputManager.instance.interactButton2 && !InputManager.instance.prevInteractButton2) {
+                    interactableObject.Interact();
+                }
             }
         }
+
 
 
     }
