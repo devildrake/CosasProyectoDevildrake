@@ -1328,8 +1328,10 @@ public class PlayerController : DoubleObject {
 
         //En caso de pulsar el botón izquierdo del ratón y estar grounded, se pone el timepo a 0.5
         else if (/*Input.GetMouseButtonDown(0)*/InputManager.instance.dashButton2 && !InputManager.instance.prevDashButton2 && grounded&&punchTimer>punchCoolDown) {
-            GameLogic.instance.SetTimeScaleLocal(slowMotionTimeScale);
-            leftPressed = true;
+            if (!grabbing) {
+                GameLogic.instance.SetTimeScaleLocal(slowMotionTimeScale);
+                leftPressed = true;
+            }
         }
 
         //Si el personaje no esta en el suelo el tiempo pasa a ser 1 en Dusk
@@ -1340,6 +1342,7 @@ public class PlayerController : DoubleObject {
         }
         //Se renderizan las flechas en caso de clicar solo si esta en el suelo
         else {
+                if(!grabbing)
                 direction = PlayerUtilsStatic.UseDirectionCircle(arrow, gameObject, 0, 0, 60);
 
                 if (/*Input.GetMouseButtonDown(1)*/InputManager.instance.deflectButton2 && !InputManager.instance.prevDeflectButton2) {
@@ -1502,6 +1505,7 @@ public class PlayerController : DoubleObject {
 
     //Método de cambio, varia con respecto a los demás ya que además modifica variables especiales
     public override void Change() {
+        grabbing = false;
         PlayerUtilsStatic.ResetDirectionCircle(arrow);
         leftPressed = false;
         GameLogic.instance.SetTimeScaleLocal(1.0f);
