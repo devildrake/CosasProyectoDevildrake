@@ -68,7 +68,7 @@ public class MenuLogic : MonoBehaviour {
         }
         selected = 0;
         highlight = state1Elements[state1Elements.Length - 1].transform;
-        optionsCanvas.SetActive(false);
+        //optionsCanvas.SetActive(false);
         newOptionsCanvas.SetActive(false);
         GameLogic.instance.transformableObjects.Add(gameObject);
         InputManager.UnBlockInput();
@@ -166,7 +166,7 @@ public class MenuLogic : MonoBehaviour {
 
     private void State1Behavior() {
         //MOVIMIENTO ENTRE LAS OPCIONES
-        if ((InputManager.instance.prevVerticalAxis == 0 || InputManager.instance.prevVerticalAxis2 == 0) && (InputManager.instance.verticalAxis > 0 || InputManager.instance.verticalAxis2 > 0)) {//+1
+        if (((InputManager.instance.prevVerticalAxis == 0 && InputManager.instance.prevVerticalAxis2 == 0)&&!InputManager.instance.prevDownKey&&!InputManager.instance.prevUpKey) && (InputManager.instance.verticalAxis > 0 || InputManager.instance.verticalAxis2 > 0||InputManager.instance.downKey)) {//+1
             if (!axisInUse) {
                 axisInUse = true;
                 selected--;
@@ -175,7 +175,7 @@ public class MenuLogic : MonoBehaviour {
                 }
             }
         }
-        else if ((InputManager.instance.prevVerticalAxis == 0 || InputManager.instance.prevVerticalAxis2 == 0) && (InputManager.instance.verticalAxis < 0 || InputManager.instance.verticalAxis2 < 0)) {//-1
+        else if (((InputManager.instance.prevVerticalAxis == 0 && InputManager.instance.prevVerticalAxis2 == 0) && !InputManager.instance.prevDownKey && !InputManager.instance.prevUpKey) && (InputManager.instance.verticalAxis < 0 || InputManager.instance.verticalAxis2 < 0||InputManager.instance.upKey)) {//-1
             if (!axisInUse) {
                 axisInUse = true;
                 selected++;
@@ -184,6 +184,11 @@ public class MenuLogic : MonoBehaviour {
                 }
             }
         }
+
+        if (InputManager.instance.verticalAxis == 0 && InputManager.instance.verticalAxis2 == 0&&!InputManager.instance.downKey&&!InputManager.instance.upKey) {
+            axisInUse = false;
+        }
+
         highlight.position = new Vector3(highlight.position.x, state1Elements[selected].transform.position.y, highlight.position.z);
 
         //SELECCION
