@@ -52,7 +52,7 @@ public class SetUpOptions : MonoBehaviour {
             resolutionOptions.Add("" + Screen.resolutions[i]);
             if(Screen.resolutions[i].Equals(Screen.currentResolution)) {
                 currentResolution = i;
-                GameLogic.instance.resolutionSelected = i;
+                GameLogic.instance.resolutionSelected = new Vector2(0,0);
             }
         }
         resolution.AddOptions(resolutionOptions);
@@ -97,7 +97,7 @@ public class SetUpOptions : MonoBehaviour {
 
             //Añadir valores al gamelogic
             //Resolucion
-            GameLogic.instance.resolutionSelected = resolution.value;
+            GameLogic.instance.resolutionSelected = new Vector2(0,0);
             //Fullscreen
             if (fullscreen.value == 0) {
                 GameLogic.instance.fullscreen = true;
@@ -106,18 +106,18 @@ public class SetUpOptions : MonoBehaviour {
                 GameLogic.instance.fullscreen = false;
             }
             //Screen refresh rate
-            if (refreshRate.value == 0) {
-                GameLogic.instance.screenRefreshRate = 0;
-            }
-            else if (refreshRate.value == 1) {
-                GameLogic.instance.screenRefreshRate = 30;
-            }
-            else if (refreshRate.value == 2) {
-                GameLogic.instance.screenRefreshRate = 60;
-            }
-            else if (refreshRate.value == 3) {
-                GameLogic.instance.screenRefreshRate = 120;
-            }
+            //if (refreshRate.value == 0) {
+            //    GameLogic.instance.screenRefreshRate = 0;
+            //}
+            //else if (refreshRate.value == 1) {
+            //    GameLogic.instance.screenRefreshRate = 30;
+            //}
+            //else if (refreshRate.value == 2) {
+            //    GameLogic.instance.screenRefreshRate = 60;
+            //}
+            //else if (refreshRate.value == 3) {
+            //    GameLogic.instance.screenRefreshRate = 120;
+            //}
 
             //fps
             if(fps.value == 0) {

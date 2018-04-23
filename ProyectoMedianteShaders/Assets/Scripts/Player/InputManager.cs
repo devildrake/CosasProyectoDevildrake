@@ -145,10 +145,6 @@ public class InputManager : MonoBehaviour {
         
 
     }
-    // Use this for initialization
-    void Start () {
-		
-	}
 
     public static bool GetBlocked() {
         return blocked;
@@ -305,8 +301,8 @@ public class InputManager : MonoBehaviour {
             Debug.Log(namesList[x]);
         }
 
-            for (int x = 0; x < namesList.Count; x++) {
-            //print(names[x].Length);
+        for (int x = 0; x < namesList.Count; x++) {
+        //print(names[x].Length);
             if (namesList[x].Length == 19) {
                 if (x == 0) {
                     PS4_Controllers[0] = true;
@@ -338,7 +334,7 @@ public class InputManager : MonoBehaviour {
                     print("WINDOWS CONTROLLER2 IS CONNECTED");
                 }
             } 
-            }
+        }
         UpdatePrevious();
 
 

@@ -107,52 +107,62 @@ public class GameLogic : MonoBehaviour {
 
     public float worldOffset;
 
+    ///////////////////////////////OPCIONES///////////////////////////
+    ///////////////////////////////OPCIONES///////////////////////////
+    ///////////////////////////////OPCIONES///////////////////////////
+    ///////////////////////////////OPCIONES///////////////////////////
     //Variables para controlar las opciones del juego
     //Se inicializan en valores por defecto para evitar errores
     [HideInInspector] public float musicVolume = 1; //modificador del volumen de la musica
     [HideInInspector] public float sfxVolume = 1; //modificador del volumen de los efectos de sonido
     [HideInInspector] public bool muteVolume = false; //controla si todo el audio esta desactivado
-    [HideInInspector] public int screenRefreshRate = 0; //varia los Hz de refresco de la pantalla
-    [HideInInspector] public int maxFrameRate = -1; //limita el framerate
-    [HideInInspector] public int resolutionSelected; //que resolucion de pantalla se ha escogido. Se inicializa desde SetUpMenu
+    [HideInInspector] public bool mostrarTiempo = true; //controla si se muestra el cronometro en partida
     [HideInInspector] public bool fullscreen; //controlar el fullscreen
+    [HideInInspector] public int graficos = 0; //Varia la configuración grafica del juego
+    [HideInInspector] public int maxFrameRate = -1; //limita el framerate
+    [HideInInspector] public Vector2 resolutionSelected = new Vector2(1920,1080); //que resolucion de pantalla se ha escogido. Se inicializa desde SetUpMenu
+    
 
     /*
      * Conjunto de metodos que se llamaran al cambiar las opciones de juego
      */
     public void changeGameSettings() {
-
-        //showTimeCounter
+        //Mostrar tiempo de partida
+        showTimeCounter = mostrarTiempo;
 
         //CONFIGURACION DE PANTALLA
-        Screen.SetResolution(Screen.resolutions[resolutionSelected].width, Screen.resolutions[resolutionSelected].height,fullscreen,screenRefreshRate);
+        Screen.SetResolution((int)resolutionSelected.x, (int)resolutionSelected.y,fullscreen,0);
         Application.targetFrameRate = maxFrameRate;
 
-        //CONFIGURACION DE AUDIO
-        if (muteVolume){
-            foreach(GameObject g in transformableObjects) {
-                if(g.GetComponent<AudioSource>() != null) {
-                    g.GetComponent<AudioSource>().volume = 0;
-                }
-            }
-        }
-        else {
-            foreach(GameObject g in transformableObjects) {
-                if(g.GetComponent<AudioSource>() != null) {
-                    //musica del nivel
-                    if(g.GetComponent<LevelMusic>() != null) {
-                        g.GetComponent<AudioSource>().volume = musicVolume;
-                    }
-                    //efectos de sonido
-                    else {
-                        g.GetComponent<AudioSource>().volume = sfxVolume;
-                    }
-                }
-            }
-        }
-    }
-     
+        //CONFIGURACION DE GRAFICOS
+        QualitySettings.SetQualityLevel(graficos);
 
+        //CONFIGURACION DE AUDIO
+        //TODO hacer que funcione con el mixer de unity y fmod
+        //if (muteVolume){
+        //    foreach(GameObject g in transformableObjects) {
+        //        if(g.GetComponent<AudioSource>() != null) {
+        //            g.GetComponent<AudioSource>().volume = 0;
+        //        }
+        //    }
+        //}
+        //else {
+        //    foreach(GameObject g in transformableObjects) {
+        //        if(g.GetComponent<AudioSource>() != null) {
+        //            //musica del nivel
+        //            if(g.GetComponent<LevelMusic>() != null) {
+        //                g.GetComponent<AudioSource>().volume = musicVolume;
+        //            }
+        //            //efectos de sonido
+        //            else {
+        //                g.GetComponent<AudioSource>().volume = sfxVolume;
+        //            }
+        //        }
+        //    }
+        //}
+    }
+    //=====================FINAL DE METODOS DE OPCIONES========================
+    //=====================FINAL DE METODOS DE OPCIONES========================
     //=====================FINAL DE METODOS DE OPCIONES========================
 
     public void KillPlayer() {

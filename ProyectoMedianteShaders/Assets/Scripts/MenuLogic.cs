@@ -166,8 +166,7 @@ public class MenuLogic : MonoBehaviour {
 
     private void State1Behavior() {
         //MOVIMIENTO ENTRE LAS OPCIONES
-        //TODO cambiar por el inputmanager para que funcione tambien con el mando
-        if (InputManager.instance.prevVerticalAxis == 0 && InputManager.instance.verticalAxis == 1) {
+        if ((InputManager.instance.prevVerticalAxis == 0 || InputManager.instance.prevVerticalAxis2 == 0) && (InputManager.instance.verticalAxis > 0 || InputManager.instance.verticalAxis2 > 0)) {//+1
             if (!axisInUse) {
                 axisInUse = true;
                 selected--;
@@ -175,16 +174,15 @@ public class MenuLogic : MonoBehaviour {
                     selected = state1Elements.Length - 2;
                 }
             }
-        } else if(InputManager.instance.prevVerticalAxis == 0 && InputManager.instance.verticalAxis == -1) {
+        }
+        else if ((InputManager.instance.prevVerticalAxis == 0 || InputManager.instance.prevVerticalAxis2 == 0) && (InputManager.instance.verticalAxis < 0 || InputManager.instance.verticalAxis2 < 0)) {//-1
             if (!axisInUse) {
                 axisInUse = true;
                 selected++;
-                if(selected > state1Elements.Length - 2) {
+                if (selected > state1Elements.Length - 2) {
                     selected = 0;
                 }
             }
-        } else {
-            axisInUse = false;
         }
         highlight.position = new Vector3(highlight.position.x, state1Elements[selected].transform.position.y, highlight.position.z);
 
