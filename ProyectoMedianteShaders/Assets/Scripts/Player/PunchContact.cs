@@ -16,7 +16,7 @@ public class PunchContact : MonoBehaviour {
 	}
 
     void OnTriggerEnter2D(Collider2D col) {
-        Debug.Log("Nen");
+        //Debug.Log("Nen");
         if (col.GetComponent<DoubleObject>()!= null) {
             if (col.GetComponent<DoubleObject>().isPunchable) {
                 if (mustPunch) {

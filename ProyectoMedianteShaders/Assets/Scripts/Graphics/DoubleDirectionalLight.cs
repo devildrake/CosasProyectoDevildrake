@@ -18,7 +18,7 @@ public class DoubleDirectionalLight : DoubleObject {
             RenderSettings.skybox = duskSkybox;
             changingLight.intensity = duskLightIntensity;
         }
-        print(RenderSettings.skybox);
+//        print(RenderSettings.skybox);
 	}
 	
 	void Update () {

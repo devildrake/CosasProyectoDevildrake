@@ -103,7 +103,7 @@ public class PlayerController : DoubleObject {
     private Vector2 deflectDirection;
 
     //Hijo asignado a mano por ahora, anchor de rotación
-    public GameObject arrow;
+    public ArrowScript arrow;
 
     //Velocidad hacia los laterales base
     float characterSpeed = 5;
@@ -255,7 +255,7 @@ public class PlayerController : DoubleObject {
         timeToRest = 0.2f;
         timeCountToDrag = 0;
         if (arrow != null) {
-            arrow.SetActive(false);
+            arrow.gameObject.SetActive(false);
         }
 
         if(armTarget!=null)
@@ -647,7 +647,7 @@ public class PlayerController : DoubleObject {
                 //Add del transformable
 
                 if (arrow == null) {
-                    arrow = GameObject.FindGameObjectWithTag("Arrow");
+                    arrow = GameObject.FindGameObjectWithTag("Arrow").GetComponent<ArrowScript>();
                 }
 
                 //Comportamiento sin pausar
@@ -1351,7 +1351,7 @@ public class PlayerController : DoubleObject {
         if (!grounded) {
             GameLogic.instance.SetTimeScaleLocal(1.0f);
             leftPressed = false;
-            arrow.SetActive(false);
+            arrow.gameObject.SetActive(false);
         }
         //Se renderizan las flechas en caso de clicar solo si esta en el suelo
         else {

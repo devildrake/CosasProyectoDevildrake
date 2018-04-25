@@ -7,7 +7,7 @@ public class InputManager : MonoBehaviour {
     public static InputManager instance = null;
 
     public enum GAMEMODE { SINGLEPLAYER, MULTI_KEYBOARD_CONTROLLER, MULTI_CONTROLLER_KEYBOARD, MULTI_CONTROLLER_CONTROLLER};
-    public static GAMEMODE currentGameMode = GAMEMODE.MULTI_CONTROLLER_KEYBOARD;
+    public static GAMEMODE currentGameMode = GAMEMODE.SINGLEPLAYER;
 
     [SerializeField]
     private static bool blocked;
@@ -336,30 +336,30 @@ public class InputManager : MonoBehaviour {
                         PS4_Controllers[0] = true;
                         Xbox_One_Controllers[0] = false;
                         Windows_Controllers[0] = false;
-                        print("PS4 CONTROLLER1 IS CONNECTED");
+                       // print("PS4 CONTROLLER1 IS CONNECTED");
                     } else if (x == 1) {
                         PS4_Controllers[1] = true;
                         Xbox_One_Controllers[1] = false;
                         Windows_Controllers[1] = false;
-                        print("PS4 CONTROLLER2 IS CONNECTED");
+                       // print("PS4 CONTROLLER2 IS CONNECTED");
                     }
                 }
                 if (namesList[x].Length == 33 || namesList[x].Length == 24) {
                     if (x == 0) {
                         Xbox_One_Controllers[0] = true;
-                        print("XBOX ONE CONTROLLER1 IS CONNECTED");
+                       /// print("XBOX ONE CONTROLLER1 IS CONNECTED");
                     } else if (x == 1) {
                         Xbox_One_Controllers[1] = true;
-                        print("XBOX ONE CONTROLLER2 IS CONNECTED");
+                        ///print("XBOX ONE CONTROLLER2 IS CONNECTED");
                     }
                 }
                 if (namesList[x].Length == 31) {
                     if (x == 0) {
-                        print("WINDOWS CONTROLLER1 IS CONNECTED");
+                        //print("WINDOWS CONTROLLER1 IS CONNECTED");
                         Windows_Controllers[0] = true;
                     } else if (x == 1) {
                         Windows_Controllers[1] = true;
-                        print("WINDOWS CONTROLLER2 IS CONNECTED");
+                        //print("WINDOWS CONTROLLER2 IS CONNECTED");
                     }
                 }
             }

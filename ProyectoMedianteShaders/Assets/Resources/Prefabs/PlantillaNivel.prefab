@@ -670,6 +670,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4983188337837188}
+  - component: {fileID: 114960741246356906}
   m_Layer: 31
   m_Name: arrow
   m_TagString: Arrow
@@ -831,7 +832,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1169130606073270
 GameObject:
   m_ObjectHideFlags: 1
@@ -2001,7 +2002,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4760003300855720}
   m_Layer: 31
-  m_Name: GameObject
+  m_Name: anchor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6678,7 +6679,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1902328960610498}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.38, y: 0, z: 0}
+  m_LocalPosition: {x: 0.29, y: 0, z: 0}
   m_LocalScale: {x: 0.5000001, y: 0.49999994, z: 1}
   m_Children: []
   m_Father: {fileID: 4983188337837188}
@@ -9397,7 +9398,7 @@ MonoBehaviour:
   interactableObject: {fileID: 0}
   distanciaBordeSprite: 0.745
   canDash: 0
-  arrow: {fileID: 1138041549763168}
+  arrow: {fileID: 0}
   grounded: 0
   facingRight: 0
   groundMask:
@@ -9746,7 +9747,7 @@ MonoBehaviour:
   interactableObject: {fileID: 0}
   distanciaBordeSprite: 0.745
   canDash: 0
-  arrow: {fileID: 1138041549763168}
+  arrow: {fileID: 0}
   grounded: 0
   facingRight: 0
   groundMask:
@@ -13424,6 +13425,21 @@ MonoBehaviour:
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: -2, y: 2}
   m_UseGraphicAlpha: 1
+--- !u!114 &114960741246356906
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1138041549763168}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70b5997db22c56d4b9a89bbcf3402ca4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sprite: {fileID: 0}
+  dashSprite: {fileID: 21300000, guid: 73da39110b9d7f74eac7dfaea395ec80, type: 3}
+  punchSprite: {fileID: 21300000, guid: aace0d0366055de48b02f72f04978044, type: 3}
+  deflectSprite: {fileID: 21300000, guid: c80611af447578b4f813788e59c2c6da, type: 3}
 --- !u!114 &114965846468860836
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -46999,7 +47015,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 8e673dad74a766245884b25b90c99706, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c80611af447578b4f813788e59c2c6da, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

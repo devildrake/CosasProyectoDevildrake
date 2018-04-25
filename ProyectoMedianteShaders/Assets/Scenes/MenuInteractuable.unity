@@ -31891,6 +31891,11 @@ Prefab:
       propertyPath: m_AABB.m_Extent.y
       value: 12.312296
       objectReference: {fileID: 0}
+    - target: {fileID: 137542314815378610, guid: afaa219e4c111a74d8da6a1ed558368f,
+        type: 2}
+      propertyPath: m_AABB.m_Extent.z
+      value: 0.06350368
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: afaa219e4c111a74d8da6a1ed558368f, type: 2}
   m_IsPrefabParent: 0
@@ -53975,7 +53980,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1601771591
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -61,7 +61,7 @@ public static class PlayerUtilsStatic {
      *      
      * Return: Devuelve un vector normalizado equivalente a la flecha que aparece en la pantalla (sprite que se pinta)
      */
-    public static Vector2 UseDirectionCircle(GameObject arrowAnchor, GameObject PJ, int behav,bool dawn) {
+    public static Vector2 UseDirectionCircle(ArrowScript arrowAnchor, GameObject PJ, int behav,bool dawn) {
         if (!GameLogic.instance.levelFinished) {
             if (InputManager.instance != null) { 
                 if (!InputManager.gamePadConnected) {
@@ -71,7 +71,7 @@ public static class PlayerUtilsStatic {
                         if (once) {
                             Cursor.visible = false;
                             Cursor.lockState = CursorLockMode.Locked; //Se engancha el cursor en el centro de la pantalla.
-                            arrowAnchor.SetActive(false); //no se ve la flecha
+                            arrowAnchor.gameObject.SetActive(false); //no se ve la flecha
                             once = false;
                             mousePositions = new Vector2[2];
                         }
@@ -81,12 +81,13 @@ public static class PlayerUtilsStatic {
                             mousePositions[1] = Input.mousePosition; //posicion donde se ha hecho click
                                                                      //se activan la linea y la flecha para que se pinten en la pantalla.
                             draw = true;
-                            arrowAnchor.SetActive(true);
+                            arrowAnchor.gameObject.SetActive(true);
+                            arrowAnchor.SetSprite("dash");
 
                         } else if (Input.GetMouseButtonUp(0)) {
                             Cursor.lockState = CursorLockMode.Locked; //se vuelve a bloquear el raton en el centro
                             draw = false;
-                            arrowAnchor.SetActive(false);
+                            arrowAnchor.gameObject.SetActive(false);
                             once = false;
                         }
 
@@ -115,7 +116,7 @@ public static class PlayerUtilsStatic {
                         if (once) {
                             Cursor.visible = false;
                             Cursor.lockState = CursorLockMode.Locked; //Se engancha el cursor en el centro de la pantalla.
-                            arrowAnchor.SetActive(false); //no se ve la flecha
+                            arrowAnchor.gameObject.SetActive(false); //no se ve la flecha
                             once = false;
                             mousePositions = new Vector2[2];
                         }
@@ -124,12 +125,12 @@ public static class PlayerUtilsStatic {
                             mousePositions[1] = Input.mousePosition; //posicion donde se ha hecho click
                                                                      //se activan la linea y la flecha para que se pinten en la pantalla.
                             draw = true;
-                            arrowAnchor.SetActive(true);
+                            arrowAnchor.gameObject.SetActive(true);
 
                         } else if (Input.GetMouseButtonUp(1)) {
                             Cursor.lockState = CursorLockMode.Locked; //se vuelve a bloquear el raton en el centro
                             draw = false;
-                            arrowAnchor.SetActive(false);
+                            arrowAnchor.gameObject.SetActive(false);
                             once = false;
                         }
 
@@ -177,7 +178,7 @@ public static class PlayerUtilsStatic {
                                 if (once) {
                                     Cursor.visible = false;
                                     Cursor.lockState = CursorLockMode.Locked; //Se engancha el cursor en el centro de la pantalla.
-                                    arrowAnchor.SetActive(false); //no se ve la flecha
+                                    arrowAnchor.gameObject.SetActive(false); //no se ve la flecha
                                     once = false;
                                     mousePositions = new Vector2[2];
                                 }
@@ -188,12 +189,13 @@ public static class PlayerUtilsStatic {
                                     Cursor.lockState = CursorLockMode.None; //Se puede volver a mover el cursor
                                     mousePositions[1] = new Vector2(0, 0);
                                     draw = true;
-                                    arrowAnchor.SetActive(true);
+                                    arrowAnchor.gameObject.SetActive(true);
+                                    arrowAnchor.SetSprite("dash");
 
                                 } else if (!InputManager.instance.dashButton&&InputManager.instance.prevDashButton) {
                                     Cursor.lockState = CursorLockMode.Locked; //se vuelve a bloquear el raton en el centro
                                     draw = false;
-                                    arrowAnchor.SetActive(false);
+                                    arrowAnchor.gameObject.SetActive(false);
                                     once = false;
                                 }
 
@@ -222,7 +224,7 @@ public static class PlayerUtilsStatic {
                                 if (once) {
                                     Cursor.visible = false;
                                     Cursor.lockState = CursorLockMode.Locked; //Se engancha el cursor en el centro de la pantalla.
-                                    arrowAnchor.SetActive(false); //no se ve la flecha
+                                    arrowAnchor.gameObject.SetActive(false); //no se ve la flecha
                                     once = false;
                                     mousePositions = new Vector2[2];
                                 }
@@ -230,12 +232,12 @@ public static class PlayerUtilsStatic {
                                     Cursor.lockState = CursorLockMode.None; //Se puede volver a mover el cursor
                                     mousePositions[1] = new Vector2(0, 0);
                                     draw = true;
-                                    arrowAnchor.SetActive(true);
+                                    arrowAnchor.gameObject.SetActive(true);
 
                                 } else if (!InputManager.instance.deflectButton && InputManager.instance.prevDeflectButton) {
                                     Cursor.lockState = CursorLockMode.Locked; //se vuelve a bloquear el raton en el centro
                                     draw = false;
-                                    arrowAnchor.SetActive(false);
+                                    arrowAnchor.gameObject.SetActive(false);
                                     once = false;
                                 }
 
@@ -271,7 +273,7 @@ public static class PlayerUtilsStatic {
                                     if (once) {
                                         Cursor.visible = false;
                                         Cursor.lockState = CursorLockMode.Locked; //Se engancha el cursor en el centro de la pantalla.
-                                        arrowAnchor.SetActive(false); //no se ve la flecha
+                                        arrowAnchor.gameObject.SetActive(false); //no se ve la flecha
                                         once = false;
                                         mousePositions = new Vector2[2];
                                     }
@@ -281,12 +283,14 @@ public static class PlayerUtilsStatic {
                                         mousePositions[1] = Input.mousePosition; //posicion donde se ha hecho click
                                                                                  //se activan la linea y la flecha para que se pinten en la pantalla.
                                         draw = true;
-                                        arrowAnchor.SetActive(true);
+                                        arrowAnchor.gameObject.SetActive(true);
+                                        arrowAnchor.SetSprite("dash");
+
 
                                     } else if (Input.GetMouseButtonUp(0)) {
                                         Cursor.lockState = CursorLockMode.Locked; //se vuelve a bloquear el raton en el centro
                                         draw = false;
-                                        arrowAnchor.SetActive(false);
+                                        arrowAnchor.gameObject.SetActive(false);
                                         once = false;
                                     }
 
@@ -315,7 +319,7 @@ public static class PlayerUtilsStatic {
                                     if (once) {
                                         Cursor.visible = false;
                                         Cursor.lockState = CursorLockMode.Locked; //Se engancha el cursor en el centro de la pantalla.
-                                        arrowAnchor.SetActive(false); //no se ve la flecha
+                                        arrowAnchor.gameObject.SetActive(false); //no se ve la flecha
                                         once = false;
                                         mousePositions = new Vector2[2];
                                     }
@@ -324,12 +328,12 @@ public static class PlayerUtilsStatic {
                                         mousePositions[1] = Input.mousePosition; //posicion donde se ha hecho click
                                                                                  //se activan la linea y la flecha para que se pinten en la pantalla.
                                         draw = true;
-                                        arrowAnchor.SetActive(true);
+                                        arrowAnchor.gameObject.SetActive(true);
 
                                     } else if (Input.GetMouseButtonUp(1)) {
                                         Cursor.lockState = CursorLockMode.Locked; //se vuelve a bloquear el raton en el centro
                                         draw = false;
-                                        arrowAnchor.SetActive(false);
+                                        arrowAnchor.gameObject.SetActive(false);
                                         once = false;
                                     }
 
@@ -359,7 +363,7 @@ public static class PlayerUtilsStatic {
                                     if (once) {
                                         Cursor.visible = false;
                                         Cursor.lockState = CursorLockMode.Locked; //Se engancha el cursor en el centro de la pantalla.
-                                        arrowAnchor.SetActive(false); //no se ve la flecha
+                                        arrowAnchor.gameObject.SetActive(false); //no se ve la flecha
                                         once = false;
                                         mousePositions = new Vector2[2];
                                     }
@@ -370,12 +374,14 @@ public static class PlayerUtilsStatic {
                                         Cursor.lockState = CursorLockMode.None; //Se puede volver a mover el cursor
                                         mousePositions[1] = new Vector2(0, 0);
                                         draw = true;
-                                        arrowAnchor.SetActive(true);
+                                        arrowAnchor.SetSprite("dash");
+
+                                        arrowAnchor.gameObject.SetActive(true);
 
                                     } else if ((!dawn && !InputManager.instance.dashButton2 && InputManager.instance.prevDashButton2)) {
                                         Cursor.lockState = CursorLockMode.Locked; //se vuelve a bloquear el raton en el centro
                                         draw = false;
-                                        arrowAnchor.SetActive(false);
+                                        arrowAnchor.gameObject.SetActive(false);
                                         once = false;
                                     }
 
@@ -404,7 +410,7 @@ public static class PlayerUtilsStatic {
                                     if (once) {
                                         Cursor.visible = false;
                                         Cursor.lockState = CursorLockMode.Locked; //Se engancha el cursor en el centro de la pantalla.
-                                        arrowAnchor.SetActive(false); //no se ve la flecha
+                                        arrowAnchor.gameObject.SetActive(false); //no se ve la flecha
                                         once = false;
                                         mousePositions = new Vector2[2];
                                     }
@@ -412,12 +418,12 @@ public static class PlayerUtilsStatic {
                                         Cursor.lockState = CursorLockMode.None; //Se puede volver a mover el cursor
                                         mousePositions[1] = new Vector2(0, 0);
                                         draw = true;
-                                        arrowAnchor.SetActive(true);
+                                        arrowAnchor.gameObject.SetActive(true);
 
                                     } else if (!InputManager.instance.deflectButton && InputManager.instance.prevDeflectButton) {
                                         Cursor.lockState = CursorLockMode.Locked; //se vuelve a bloquear el raton en el centro
                                         draw = false;
-                                        arrowAnchor.SetActive(false);
+                                        arrowAnchor.gameObject.SetActive(false);
                                         once = false;
                                     }
 
@@ -454,7 +460,7 @@ public static class PlayerUtilsStatic {
                                     if (once) {
                                         Cursor.visible = false;
                                         Cursor.lockState = CursorLockMode.Locked; //Se engancha el cursor en el centro de la pantalla.
-                                        arrowAnchor.SetActive(false); //no se ve la flecha
+                                        arrowAnchor.gameObject.SetActive(false); //no se ve la flecha
                                         once = false;
                                         mousePositions = new Vector2[2];
                                     }
@@ -462,14 +468,15 @@ public static class PlayerUtilsStatic {
                                     if (Input.GetMouseButtonDown(0)) {
                                         Cursor.lockState = CursorLockMode.None; //Se puede volver a mover el cursor
                                         mousePositions[1] = Input.mousePosition; //posicion donde se ha hecho click
-                                                                                 //se activan la linea y la flecha para que se pinten en la pantalla.
+                                        arrowAnchor.SetSprite("dash");
+                                        //se activan la linea y la flecha para que se pinten en la pantalla.
                                         draw = true;
-                                        arrowAnchor.SetActive(true);
+                                        arrowAnchor.gameObject.SetActive(true);
 
                                     } else if (Input.GetMouseButtonUp(0)) {
                                         Cursor.lockState = CursorLockMode.Locked; //se vuelve a bloquear el raton en el centro
                                         draw = false;
-                                        arrowAnchor.SetActive(false);
+                                        arrowAnchor.gameObject.SetActive(false);
                                         once = false;
                                     }
 
@@ -498,7 +505,7 @@ public static class PlayerUtilsStatic {
                                     if (once) {
                                         Cursor.visible = false;
                                         Cursor.lockState = CursorLockMode.Locked; //Se engancha el cursor en el centro de la pantalla.
-                                        arrowAnchor.SetActive(false); //no se ve la flecha
+                                        arrowAnchor.gameObject.SetActive(false); //no se ve la flecha
                                         once = false;
                                         mousePositions = new Vector2[2];
                                     }
@@ -507,12 +514,12 @@ public static class PlayerUtilsStatic {
                                         mousePositions[1] = Input.mousePosition; //posicion donde se ha hecho click
                                                                                  //se activan la linea y la flecha para que se pinten en la pantalla.
                                         draw = true;
-                                        arrowAnchor.SetActive(true);
+                                        arrowAnchor.gameObject.SetActive(true);
 
                                     } else if (Input.GetMouseButtonUp(1)) {
                                         Cursor.lockState = CursorLockMode.Locked; //se vuelve a bloquear el raton en el centro
                                         draw = false;
-                                        arrowAnchor.SetActive(false);
+                                        arrowAnchor.gameObject.SetActive(false);
                                         once = false;
                                     }
 
@@ -542,7 +549,7 @@ public static class PlayerUtilsStatic {
                                     if (once) {
                                         Cursor.visible = false;
                                         Cursor.lockState = CursorLockMode.Locked; //Se engancha el cursor en el centro de la pantalla.
-                                        arrowAnchor.SetActive(false); //no se ve la flecha
+                                        arrowAnchor.gameObject.SetActive(false); //no se ve la flecha
                                         once = false;
                                         mousePositions = new Vector2[2];
                                     }
@@ -553,12 +560,13 @@ public static class PlayerUtilsStatic {
                                         Cursor.lockState = CursorLockMode.None; //Se puede volver a mover el cursor
                                         mousePositions[1] = new Vector2(0, 0);
                                         draw = true;
-                                        arrowAnchor.SetActive(true);
+                                        arrowAnchor.gameObject.SetActive(true);
+                                        arrowAnchor.SetSprite("dash");
 
                                     } else if ((!InputManager.instance.dashButton && InputManager.instance.prevDashButton)) {
                                         Cursor.lockState = CursorLockMode.Locked; //se vuelve a bloquear el raton en el centro
                                         draw = false;
-                                        arrowAnchor.SetActive(false);
+                                        arrowAnchor.gameObject.SetActive(false);
                                         once = false;
                                     }
 
@@ -587,7 +595,7 @@ public static class PlayerUtilsStatic {
                                     if (once) {
                                         Cursor.visible = false;
                                         Cursor.lockState = CursorLockMode.Locked; //Se engancha el cursor en el centro de la pantalla.
-                                        arrowAnchor.SetActive(false); //no se ve la flecha
+                                        arrowAnchor.gameObject.SetActive(false); //no se ve la flecha
                                         once = false;
                                         mousePositions = new Vector2[2];
                                     }
@@ -595,12 +603,12 @@ public static class PlayerUtilsStatic {
                                         Cursor.lockState = CursorLockMode.None; //Se puede volver a mover el cursor
                                         mousePositions[1] = new Vector2(0, 0);
                                         draw = true;
-                                        arrowAnchor.SetActive(true);
+                                        arrowAnchor.gameObject.SetActive(true);
 
                                     } else if (!InputManager.instance.deflectButton && InputManager.instance.prevDeflectButton) {
                                         Cursor.lockState = CursorLockMode.Locked; //se vuelve a bloquear el raton en el centro
                                         draw = false;
-                                        arrowAnchor.SetActive(false);
+                                        arrowAnchor.gameObject.SetActive(false);
                                         once = false;
                                     }
 
@@ -635,7 +643,7 @@ public static class PlayerUtilsStatic {
                                 if (once) {
                                     Cursor.visible = false;
                                     Cursor.lockState = CursorLockMode.Locked; //Se engancha el cursor en el centro de la pantalla.
-                                    arrowAnchor.SetActive(false); //no se ve la flecha
+                                    arrowAnchor.gameObject.SetActive(false); //no se ve la flecha
                                     once = false;
                                     mousePositions = new Vector2[2];
                                 }
@@ -646,12 +654,13 @@ public static class PlayerUtilsStatic {
                                     Cursor.lockState = CursorLockMode.None; //Se puede volver a mover el cursor
                                     mousePositions[1] = new Vector2(0, 0);
                                     draw = true;
-                                    arrowAnchor.SetActive(true);
+                                    arrowAnchor.SetSprite("dash");
+                                    arrowAnchor.gameObject.SetActive(true);
 
                                 } else if ((dawn && !InputManager.instance.dashButton && InputManager.instance.prevDashButton) || (!dawn && !InputManager.instance.dashButton2 && InputManager.instance.prevDashButton2)) {
                                     Cursor.lockState = CursorLockMode.Locked; //se vuelve a bloquear el raton en el centro
                                     draw = false;
-                                    arrowAnchor.SetActive(false);
+                                    arrowAnchor.gameObject.SetActive(false);
                                     once = false;
                                 }
 
@@ -680,7 +689,7 @@ public static class PlayerUtilsStatic {
                                 if (once) {
                                     Cursor.visible = false;
                                     Cursor.lockState = CursorLockMode.Locked; //Se engancha el cursor en el centro de la pantalla.
-                                    arrowAnchor.SetActive(false); //no se ve la flecha
+                                    arrowAnchor.gameObject.SetActive(false); //no se ve la flecha
                                     once = false;
                                     mousePositions = new Vector2[2];
                                 }
@@ -688,12 +697,12 @@ public static class PlayerUtilsStatic {
                                     Cursor.lockState = CursorLockMode.None; //Se puede volver a mover el cursor
                                     mousePositions[1] = new Vector2(0, 0);
                                     draw = true;
-                                    arrowAnchor.SetActive(true);
+                                    arrowAnchor.gameObject.SetActive(true);
 
                                 } else if (!InputManager.instance.deflectButton && InputManager.instance.prevDeflectButton) {
                                     Cursor.lockState = CursorLockMode.Locked; //se vuelve a bloquear el raton en el centro
                                     draw = false;
-                                    arrowAnchor.SetActive(false);
+                                    arrowAnchor.gameObject.SetActive(false);
                                     once = false;
                                 }
 
@@ -736,7 +745,7 @@ public static class PlayerUtilsStatic {
      * Sobrecarga del direction circle con angulo maximo y minimo.
      */
     private static Vector3 finalDirection = new Vector3();
-    public static Vector2 UseDirectionCircle(GameObject arrowAnchor, GameObject PJ, int behav, float minAngle, float maxAngle,bool dawn) {
+    public static Vector2 UseDirectionCircle(ArrowScript arrowAnchor, GameObject PJ, int behav, float minAngle, float maxAngle,bool dawn) {
         if (!GameLogic.instance.levelFinished) {
             if (InputManager.instance != null) {
                 if (!InputManager.gamePadConnected) {
@@ -748,7 +757,7 @@ public static class PlayerUtilsStatic {
                         if (once) {
                             Cursor.visible = false;
                             Cursor.lockState = CursorLockMode.Locked; //Se engancha el cursor en el centro de la pantalla.
-                            arrowAnchor.SetActive(false); //no se ve la flecha
+                            arrowAnchor.gameObject.SetActive(false); //no se ve la flecha
                             once = false;
                             mousePositions = new Vector2[2];
                         }
@@ -757,14 +766,17 @@ public static class PlayerUtilsStatic {
                             mousePositions[1] = Input.mousePosition; //posicion donde se ha hecho click
                                                                      //se activan la linea y la flecha para que se pinten en la pantalla.
                             draw = true;
-                            arrowAnchor.SetActive(true);
+                            if (!dawn) {
+                                arrowAnchor.SetSprite("punch");
+                            }
+                            arrowAnchor.gameObject.SetActive(true);
                             Debug.Log("C");
 
 
                         } else if (Input.GetMouseButtonUp(0)) {
                             Cursor.lockState = CursorLockMode.Locked; //se vuelve a bloquear el raton en el centro
                             draw = false;
-                            arrowAnchor.SetActive(false);
+                            arrowAnchor.gameObject.SetActive(false);
                             once = false;
                         }
 
@@ -809,7 +821,7 @@ public static class PlayerUtilsStatic {
                         if (once) {
                             Cursor.visible = false;
                             Cursor.lockState = CursorLockMode.Locked; //Se engancha el cursor en el centro de la pantalla.
-                            arrowAnchor.SetActive(false); //no se ve la flecha
+                            arrowAnchor.gameObject.SetActive(false); //no se ve la flecha
                             once = false;
                             mousePositions = new Vector2[2];
                         }
@@ -818,13 +830,16 @@ public static class PlayerUtilsStatic {
                             mousePositions[1] = Input.mousePosition; //posicion donde se ha hecho click
                                                                      //se activan la linea y la flecha para que se pinten en la pantalla.
                             draw = true;
-                            arrowAnchor.SetActive(true);
+                            if (dawn) {
+                                arrowAnchor.SetSprite("deflect");
+                            }
+                            arrowAnchor.gameObject.SetActive(true);
                             Debug.Log("D");
 
                         } else if (Input.GetMouseButtonUp(1)) {
                             Cursor.lockState = CursorLockMode.Locked; //se vuelve a bloquear el raton en el centro
                             draw = false;
-                            arrowAnchor.SetActive(false);
+                            arrowAnchor.gameObject.SetActive(false);
                             once = false;
                         }
 
@@ -878,7 +893,7 @@ public static class PlayerUtilsStatic {
                                 if (once) {
                                     Cursor.visible = false;
                                     Cursor.lockState = CursorLockMode.Locked; //Se engancha el cursor en el centro de la pantalla.
-                                    arrowAnchor.SetActive(false); //no se ve la flecha
+                                    arrowAnchor.gameObject.SetActive(false); //no se ve la flecha
                                     once = false;
                                     mousePositions = new Vector2[2];
                                 }
@@ -886,13 +901,16 @@ public static class PlayerUtilsStatic {
                                     Cursor.lockState = CursorLockMode.None; //Se puede volver a mover el cursor
                                     mousePositions[1] = new Vector2(0, 0);
                                     draw = true;
-                                    arrowAnchor.SetActive(true);
+                                    arrowAnchor.gameObject.SetActive(true);
                                     Debug.Log("A");
+                                    if (!dawn) {
+                                        arrowAnchor.SetSprite("punch");
+                                    }
 
                                 } else if ((dawn && !InputManager.instance.dashButton && InputManager.instance.prevDashButton) || (!dawn && !InputManager.instance.dashButton2 && InputManager.instance.prevDashButton2)) {
                                     Cursor.lockState = CursorLockMode.Locked; //se vuelve a bloquear el raton en el centro
                                     draw = false;
-                                    arrowAnchor.SetActive(false);
+                                    arrowAnchor.gameObject.SetActive(false);
                                     once = false;
                                 }
 
@@ -936,7 +954,7 @@ public static class PlayerUtilsStatic {
                                 if (once) {
                                     Cursor.visible = false;
                                     Cursor.lockState = CursorLockMode.Locked; //Se engancha el cursor en el centro de la pantalla.
-                                    arrowAnchor.SetActive(false); //no se ve la flecha
+                                    arrowAnchor.gameObject.SetActive(false); //no se ve la flecha
                                     once = false;
                                     mousePositions = new Vector2[2];
                                 }
@@ -944,14 +962,17 @@ public static class PlayerUtilsStatic {
                                     Cursor.lockState = CursorLockMode.None; //Se puede volver a mover el cursor
                                     mousePositions[1] = new Vector2(0, 0);
                                     draw = true;
-                                    arrowAnchor.SetActive(true);
+                                    arrowAnchor.gameObject.SetActive(true);
+                                    if (dawn) {
+                                        arrowAnchor.SetSprite("deflect");
+                                    }
                                     Debug.Log("B");
 
 
                                 } else if (!InputManager.instance.deflectButton && InputManager.instance.prevDeflectButton) {
                                     Cursor.lockState = CursorLockMode.Locked; //se vuelve a bloquear el raton en el centro
                                     draw = false;
-                                    arrowAnchor.SetActive(false);
+                                    arrowAnchor.gameObject.SetActive(false);
                                     once = false;
                                 }
 
@@ -1004,7 +1025,7 @@ public static class PlayerUtilsStatic {
                                     if (once) {
                                         Cursor.visible = false;
                                         Cursor.lockState = CursorLockMode.Locked; //Se engancha el cursor en el centro de la pantalla.
-                                        arrowAnchor.SetActive(false); //no se ve la flecha
+                                        arrowAnchor.gameObject.SetActive(false); //no se ve la flecha
                                         once = false;
                                         mousePositions = new Vector2[2];
                                     }
@@ -1013,14 +1034,14 @@ public static class PlayerUtilsStatic {
                                         mousePositions[1] = Input.mousePosition; //posicion donde se ha hecho click
                                                                                  //se activan la linea y la flecha para que se pinten en la pantalla.
                                         draw = true;
-                                        arrowAnchor.SetActive(true);
+                                        arrowAnchor.gameObject.SetActive(true);
                                         Debug.Log("C");
 
 
                                     } else if (Input.GetMouseButtonUp(0)) {
                                         Cursor.lockState = CursorLockMode.Locked; //se vuelve a bloquear el raton en el centro
                                         draw = false;
-                                        arrowAnchor.SetActive(false);
+                                        arrowAnchor.gameObject.SetActive(false);
                                         once = false;
                                     }
 
@@ -1065,22 +1086,23 @@ public static class PlayerUtilsStatic {
                                     if (once) {
                                         Cursor.visible = false;
                                         Cursor.lockState = CursorLockMode.Locked; //Se engancha el cursor en el centro de la pantalla.
-                                        arrowAnchor.SetActive(false); //no se ve la flecha
+                                        arrowAnchor.gameObject.SetActive(false); //no se ve la flecha
                                         once = false;
                                         mousePositions = new Vector2[2];
                                     }
                                     if (Input.GetMouseButtonDown(1)) {
                                         Cursor.lockState = CursorLockMode.None; //Se puede volver a mover el cursor
                                         mousePositions[1] = Input.mousePosition; //posicion donde se ha hecho click
-                                                                                 //se activan la linea y la flecha para que se pinten en la pantalla.
+                                            arrowAnchor.SetSprite("deflect");
+                                                          //se activan la linea y la flecha para que se pinten en la pantalla.
                                         draw = true;
-                                        arrowAnchor.SetActive(true);
+                                        arrowAnchor.gameObject.SetActive(true);
                                         Debug.Log("D");
 
                                     } else if (Input.GetMouseButtonUp(1)) {
                                         Cursor.lockState = CursorLockMode.Locked; //se vuelve a bloquear el raton en el centro
                                         draw = false;
-                                        arrowAnchor.SetActive(false);
+                                        arrowAnchor.gameObject.SetActive(false);
                                         once = false;
                                     }
 
@@ -1126,7 +1148,7 @@ public static class PlayerUtilsStatic {
                                     if (once) {
                                         Cursor.visible = false;
                                         Cursor.lockState = CursorLockMode.Locked; //Se engancha el cursor en el centro de la pantalla.
-                                        arrowAnchor.SetActive(false); //no se ve la flecha
+                                        arrowAnchor.gameObject.SetActive(false); //no se ve la flecha
                                         once = false;
                                         mousePositions = new Vector2[2];
                                     }
@@ -1134,13 +1156,15 @@ public static class PlayerUtilsStatic {
                                         Cursor.lockState = CursorLockMode.None; //Se puede volver a mover el cursor
                                         mousePositions[1] = new Vector2(0, 0);
                                         draw = true;
-                                        arrowAnchor.SetActive(true);
+                                            arrowAnchor.SetSprite("punch");
+                                        
+                                        arrowAnchor.gameObject.SetActive(true);
                                         Debug.Log("A");
 
                                     } else if ((dawn && !InputManager.instance.dashButton && InputManager.instance.prevDashButton) || (!dawn && !InputManager.instance.dashButton2 && InputManager.instance.prevDashButton2)) {
                                         Cursor.lockState = CursorLockMode.Locked; //se vuelve a bloquear el raton en el centro
                                         draw = false;
-                                        arrowAnchor.SetActive(false);
+                                        arrowAnchor.gameObject.SetActive(false);
                                         once = false;
                                     }
 
@@ -1184,7 +1208,7 @@ public static class PlayerUtilsStatic {
                                     if (once) {
                                         Cursor.visible = false;
                                         Cursor.lockState = CursorLockMode.Locked; //Se engancha el cursor en el centro de la pantalla.
-                                        arrowAnchor.SetActive(false); //no se ve la flecha
+                                        arrowAnchor.gameObject.SetActive(false); //no se ve la flecha
                                         once = false;
                                         mousePositions = new Vector2[2];
                                     }
@@ -1192,14 +1216,14 @@ public static class PlayerUtilsStatic {
                                         Cursor.lockState = CursorLockMode.None; //Se puede volver a mover el cursor
                                         mousePositions[1] = new Vector2(0, 0);
                                         draw = true;
-                                        arrowAnchor.SetActive(true);
+                                        arrowAnchor.gameObject.SetActive(true);
                                         Debug.Log("B");
 
 
                                     } else if (!InputManager.instance.deflectButton && InputManager.instance.prevDeflectButton) {
                                         Cursor.lockState = CursorLockMode.Locked; //se vuelve a bloquear el raton en el centro
                                         draw = false;
-                                        arrowAnchor.SetActive(false);
+                                        arrowAnchor.gameObject.SetActive(false);
                                         once = false;
                                     }
 
@@ -1250,23 +1274,25 @@ public static class PlayerUtilsStatic {
                                     if (once) {
                                         Cursor.visible = false;
                                         Cursor.lockState = CursorLockMode.Locked; //Se engancha el cursor en el centro de la pantalla.
-                                        arrowAnchor.SetActive(false); //no se ve la flecha
+                                        arrowAnchor.gameObject.SetActive(false); //no se ve la flecha
                                         once = false;
                                         mousePositions = new Vector2[2];
                                     }
                                     if (Input.GetMouseButtonDown(0)) {
                                         Cursor.lockState = CursorLockMode.None; //Se puede volver a mover el cursor
                                         mousePositions[1] = Input.mousePosition; //posicion donde se ha hecho click
-                                                                                 //se activan la linea y la flecha para que se pinten en la pantalla.
+                                            arrowAnchor.SetSprite("punch");
+                                        
+                                        //se activan la linea y la flecha para que se pinten en la pantalla.
                                         draw = true;
-                                        arrowAnchor.SetActive(true);
+                                        arrowAnchor.gameObject.SetActive(true);
                                         Debug.Log("C");
 
 
                                     } else if (Input.GetMouseButtonUp(0)) {
                                         Cursor.lockState = CursorLockMode.Locked; //se vuelve a bloquear el raton en el centro
                                         draw = false;
-                                        arrowAnchor.SetActive(false);
+                                        arrowAnchor.gameObject.SetActive(false);
                                         once = false;
                                     }
 
@@ -1311,7 +1337,7 @@ public static class PlayerUtilsStatic {
                                     if (once) {
                                         Cursor.visible = false;
                                         Cursor.lockState = CursorLockMode.Locked; //Se engancha el cursor en el centro de la pantalla.
-                                        arrowAnchor.SetActive(false); //no se ve la flecha
+                                        arrowAnchor.gameObject.SetActive(false); //no se ve la flecha
                                         once = false;
                                         mousePositions = new Vector2[2];
                                     }
@@ -1320,13 +1346,13 @@ public static class PlayerUtilsStatic {
                                         mousePositions[1] = Input.mousePosition; //posicion donde se ha hecho click
                                                                                  //se activan la linea y la flecha para que se pinten en la pantalla.
                                         draw = true;
-                                        arrowAnchor.SetActive(true);
+                                        arrowAnchor.gameObject.SetActive(true);
                                         Debug.Log("D");
 
                                     } else if (Input.GetMouseButtonUp(1)) {
                                         Cursor.lockState = CursorLockMode.Locked; //se vuelve a bloquear el raton en el centro
                                         draw = false;
-                                        arrowAnchor.SetActive(false);
+                                        arrowAnchor.gameObject.SetActive(false);
                                         once = false;
                                     }
 
@@ -1372,7 +1398,7 @@ public static class PlayerUtilsStatic {
                                     if (once) {
                                         Cursor.visible = false;
                                         Cursor.lockState = CursorLockMode.Locked; //Se engancha el cursor en el centro de la pantalla.
-                                        arrowAnchor.SetActive(false); //no se ve la flecha
+                                        arrowAnchor.gameObject.SetActive(false); //no se ve la flecha
                                         once = false;
                                         mousePositions = new Vector2[2];
                                     }
@@ -1380,13 +1406,13 @@ public static class PlayerUtilsStatic {
                                         Cursor.lockState = CursorLockMode.None; //Se puede volver a mover el cursor
                                         mousePositions[1] = new Vector2(0, 0);
                                         draw = true;
-                                        arrowAnchor.SetActive(true);
+                                        arrowAnchor.gameObject.SetActive(true);
                                         Debug.Log("A");
 
                                     } else if ((dawn && !InputManager.instance.dashButton && InputManager.instance.prevDashButton) || (!dawn && !InputManager.instance.dashButton2 && InputManager.instance.prevDashButton2)) {
                                         Cursor.lockState = CursorLockMode.Locked; //se vuelve a bloquear el raton en el centro
                                         draw = false;
-                                        arrowAnchor.SetActive(false);
+                                        arrowAnchor.gameObject.SetActive(false);
                                         once = false;
                                     }
 
@@ -1430,7 +1456,7 @@ public static class PlayerUtilsStatic {
                                     if (once) {
                                         Cursor.visible = false;
                                         Cursor.lockState = CursorLockMode.Locked; //Se engancha el cursor en el centro de la pantalla.
-                                        arrowAnchor.SetActive(false); //no se ve la flecha
+                                        arrowAnchor.gameObject.SetActive(false); //no se ve la flecha
                                         once = false;
                                         mousePositions = new Vector2[2];
                                     }
@@ -1438,14 +1464,16 @@ public static class PlayerUtilsStatic {
                                         Cursor.lockState = CursorLockMode.None; //Se puede volver a mover el cursor
                                         mousePositions[1] = new Vector2(0, 0);
                                         draw = true;
-                                        arrowAnchor.SetActive(true);
+                                        arrowAnchor.gameObject.SetActive(true);
                                         Debug.Log("B");
 
+                                        arrowAnchor.SetSprite("deflect");
+                                        
 
                                     } else if (!InputManager.instance.deflectButton && InputManager.instance.prevDeflectButton) {
                                         Cursor.lockState = CursorLockMode.Locked; //se vuelve a bloquear el raton en el centro
                                         draw = false;
-                                        arrowAnchor.SetActive(false);
+                                        arrowAnchor.gameObject.SetActive(false);
                                         once = false;
                                     }
 
@@ -1494,7 +1522,7 @@ public static class PlayerUtilsStatic {
                             if (once) {
                                 Cursor.visible = false;
                                 Cursor.lockState = CursorLockMode.Locked; //Se engancha el cursor en el centro de la pantalla.
-                                arrowAnchor.SetActive(false); //no se ve la flecha
+                                arrowAnchor.gameObject.SetActive(false); //no se ve la flecha
                                 once = false;
                                 mousePositions = new Vector2[2];
                             }
@@ -1502,13 +1530,15 @@ public static class PlayerUtilsStatic {
                                 Cursor.lockState = CursorLockMode.None; //Se puede volver a mover el cursor
                                 mousePositions[1] = new Vector2(0, 0);
                                 draw = true;
-                                arrowAnchor.SetActive(true);
+                                arrowAnchor.gameObject.SetActive(true);
                                 Debug.Log("A");
-
-                            } else if ((dawn && !InputManager.instance.dashButton && InputManager.instance.prevDashButton) || (!dawn && !InputManager.instance.dashButton2 && InputManager.instance.prevDashButton2)) {
+                                    if (!dawn) {
+                                        arrowAnchor.SetSprite("punch");
+                                    }
+                                } else if ((dawn && !InputManager.instance.dashButton && InputManager.instance.prevDashButton) || (!dawn && !InputManager.instance.dashButton2 && InputManager.instance.prevDashButton2)) {
                                 Cursor.lockState = CursorLockMode.Locked; //se vuelve a bloquear el raton en el centro
                                 draw = false;
-                                arrowAnchor.SetActive(false);
+                                arrowAnchor.gameObject.SetActive(false);
                                 once = false;
                             }
 
@@ -1552,7 +1582,7 @@ public static class PlayerUtilsStatic {
                             if (once) {
                                 Cursor.visible = false;
                                 Cursor.lockState = CursorLockMode.Locked; //Se engancha el cursor en el centro de la pantalla.
-                                arrowAnchor.SetActive(false); //no se ve la flecha
+                                arrowAnchor.gameObject.SetActive(false); //no se ve la flecha
                                 once = false;
                                 mousePositions = new Vector2[2];
                             }
@@ -1560,14 +1590,16 @@ public static class PlayerUtilsStatic {
                                 Cursor.lockState = CursorLockMode.None; //Se puede volver a mover el cursor
                                 mousePositions[1] = new Vector2(0, 0);
                                 draw = true;
-                                arrowAnchor.SetActive(true);
+                                arrowAnchor.gameObject.SetActive(true);
                                 Debug.Log("B");
+                                    if (dawn) {
+                                        arrowAnchor.SetSprite("deflect");
+                                    }
 
-
-                            } else if (!InputManager.instance.deflectButton && InputManager.instance.prevDeflectButton) {
+                                } else if (!InputManager.instance.deflectButton && InputManager.instance.prevDeflectButton) {
                                 Cursor.lockState = CursorLockMode.Locked; //se vuelve a bloquear el raton en el centro
                                 draw = false;
-                                arrowAnchor.SetActive(false);
+                                arrowAnchor.gameObject.SetActive(false);
                                 once = false;
                             }
 
@@ -1616,11 +1648,11 @@ public static class PlayerUtilsStatic {
         return new Vector2(0, 0);
 
     }
-    public static void ResetDirectionCircle(GameObject arrow) {
+    public static void ResetDirectionCircle(ArrowScript arrow) {
         draw = false;
         once = true;
         Cursor.lockState = CursorLockMode.Locked;
-        arrow.SetActive(false);
+        arrow.gameObject.SetActive(false);
     }
 
  /* ==========================================================================================
