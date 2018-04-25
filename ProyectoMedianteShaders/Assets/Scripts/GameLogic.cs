@@ -447,7 +447,9 @@ public class GameLogic : MonoBehaviour {
 
                     }
                     //En cualquier caso se comprueba el input
-                    CheckPauseInput();
+                    if (currentPlayer != null) {
+                        CheckPauseInput();
+                    }
                 } else {
                     //LevelFinishStuff
                     //Save();
@@ -501,7 +503,7 @@ public class GameLogic : MonoBehaviour {
     //Método que controla cuando se le da al escape para pausar, a su vez activa y desactiva el cursor en función de si 
     //Se abre el menú in game y se modificar la variable isPaused
     void CheckPauseInput() {
-        if (InputManager.instance.pauseButton&&!InputManager.instance.prevPauseButton) {
+        if ((currentPlayer.dawn&&InputManager.instance.pauseButton&&!InputManager.instance.prevPauseButton)||!currentPlayer.dawn&&InputManager.instance.pauseButton2&&!InputManager.instance.prevPauseButton2) {
             if (isPaused) {
                 Cursor.visible = false;
                 Cursor.lockState = CursorLockMode.None; //Se engancha el cursor en el centro de la pantalla.

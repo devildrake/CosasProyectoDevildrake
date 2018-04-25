@@ -447,6 +447,186 @@ public static class PlayerUtilsStatic {
                             
                             break;
                         case InputManager.GAMEMODE.MULTI_CONTROLLER_KEYBOARD:
+                            if (!dawn) {
+                                if (behav == 0) {
+                                    arrowAnchor.transform.position = PJ.transform.position; //se asigna la posicion del personaje a la flecha para que esta siempre aparezca sobre el PJ
+
+                                    if (once) {
+                                        Cursor.visible = false;
+                                        Cursor.lockState = CursorLockMode.Locked; //Se engancha el cursor en el centro de la pantalla.
+                                        arrowAnchor.SetActive(false); //no se ve la flecha
+                                        once = false;
+                                        mousePositions = new Vector2[2];
+                                    }
+
+                                    if (Input.GetMouseButtonDown(0)) {
+                                        Cursor.lockState = CursorLockMode.None; //Se puede volver a mover el cursor
+                                        mousePositions[1] = Input.mousePosition; //posicion donde se ha hecho click
+                                                                                 //se activan la linea y la flecha para que se pinten en la pantalla.
+                                        draw = true;
+                                        arrowAnchor.SetActive(true);
+
+                                    } else if (Input.GetMouseButtonUp(0)) {
+                                        Cursor.lockState = CursorLockMode.Locked; //se vuelve a bloquear el raton en el centro
+                                        draw = false;
+                                        arrowAnchor.SetActive(false);
+                                        once = false;
+                                    }
+
+                                    //EL CONDICIONAL GESTIONA CUANDO TIENE QUE IR CALCULANDO EL ANGULO Y PINTANDO LOS SPRITES
+                                    if (draw) {
+                                        mousePositions[0] = Input.mousePosition;//actualiza el punto de la linea para que esta cambie en funcion de
+                                                                                //de la posicion del raton a cada frame
+
+
+                                        float rotation = Vector3.Angle(new Vector3(1, 0, 0), (mousePositions[1] - mousePositions[0])); //calcula el angulo de inclinacion que tiene tu
+                                                                                                                                       //drag del raton
+
+
+                                        //si la linea es descendente el angulo que calculo antes sera negativo, si no hago esto el angulo siempre será positivo. (SOLUCION RADEV)
+                                        if ((mousePositions[1] - mousePositions[0]).y < 0) {
+                                            rotation *= -1;
+                                        }
+
+                                        rot.eulerAngles = new Vector3(0, 0, rotation); //qaternion de rotacion que es el que le aplico luego a la flecha
+                                        arrowAnchor.transform.rotation = rot; //rota el sprite
+                                    }
+
+                                } else {
+                                    arrowAnchor.transform.position = PJ.transform.position; //se asigna la posicion del personaje a la flecha para que esta siempre aparezca sobre el PJ
+
+                                    if (once) {
+                                        Cursor.visible = false;
+                                        Cursor.lockState = CursorLockMode.Locked; //Se engancha el cursor en el centro de la pantalla.
+                                        arrowAnchor.SetActive(false); //no se ve la flecha
+                                        once = false;
+                                        mousePositions = new Vector2[2];
+                                    }
+                                    if (Input.GetMouseButtonDown(1)) {
+                                        Cursor.lockState = CursorLockMode.None; //Se puede volver a mover el cursor
+                                        mousePositions[1] = Input.mousePosition; //posicion donde se ha hecho click
+                                                                                 //se activan la linea y la flecha para que se pinten en la pantalla.
+                                        draw = true;
+                                        arrowAnchor.SetActive(true);
+
+                                    } else if (Input.GetMouseButtonUp(1)) {
+                                        Cursor.lockState = CursorLockMode.Locked; //se vuelve a bloquear el raton en el centro
+                                        draw = false;
+                                        arrowAnchor.SetActive(false);
+                                        once = false;
+                                    }
+
+                                    //EL CONDICIONAL GESTIONA CUANDO TIENE QUE IR CALCULANDO EL ANGULO Y PINTANDO LOS SPRITES
+                                    if (draw) {
+                                        mousePositions[0] = Input.mousePosition;//actualiza el punto de la linea para que esta cambie en funcion de
+                                                                                //de la posicion del raton a cada frame
+
+
+                                        float rotation = Vector3.Angle(new Vector3(1, 0, 0), (mousePositions[1] - mousePositions[0])); //calcula el angulo de inclinacion que tiene tu
+                                                                                                                                       //drag del raton
+
+
+                                        //si la linea es descendente el angulo que calculo antes sera negativo, si no hago esto el angulo siempre será positivo. (SOLUCION RADEV)
+                                        if ((mousePositions[1] - mousePositions[0]).y < 0) {
+                                            rotation *= -1;
+                                        }
+                                        rot.eulerAngles = new Vector3(0, 0, rotation); //qaternion de rotacion que es el que le aplico luego a la flecha
+                                        arrowAnchor.transform.rotation = rot; //rota el sprite
+                                    }
+                                }
+                            }    //InputManager.instance.UpdatePreviousUtils();
+                            else {
+                                if (behav == 0) {
+                                    arrowAnchor.transform.position = PJ.transform.position; //se asigna la posicion del personaje a la flecha para que esta siempre aparezca sobre el PJ
+
+                                    if (once) {
+                                        Cursor.visible = false;
+                                        Cursor.lockState = CursorLockMode.Locked; //Se engancha el cursor en el centro de la pantalla.
+                                        arrowAnchor.SetActive(false); //no se ve la flecha
+                                        once = false;
+                                        mousePositions = new Vector2[2];
+                                    }
+
+                                    if ((InputManager.instance.dashButton && !InputManager.instance.prevDashButton)) {
+                                        Debug.Log("dawn: " + dawn + " dashButton: " + InputManager.instance.dashButton + " dashButton2: " + InputManager.instance.dashButton2);
+
+                                        Cursor.lockState = CursorLockMode.None; //Se puede volver a mover el cursor
+                                        mousePositions[1] = new Vector2(0, 0);
+                                        draw = true;
+                                        arrowAnchor.SetActive(true);
+
+                                    } else if ((!InputManager.instance.dashButton && InputManager.instance.prevDashButton)) {
+                                        Cursor.lockState = CursorLockMode.Locked; //se vuelve a bloquear el raton en el centro
+                                        draw = false;
+                                        arrowAnchor.SetActive(false);
+                                        once = false;
+                                    }
+
+                                    //EL CONDICIONAL GESTIONA CUANDO TIENE QUE IR CALCULANDO EL ANGULO Y PINTANDO LOS SPRITES
+                                    if (draw) {
+                                        mousePositions[0] = new Vector2(0, 0) + new Vector2(InputManager.instance.rightHorizontalAxis, -InputManager.instance.rightVerticalAxis).normalized;
+
+                                        float rotation = Vector3.Angle(new Vector3(1, 0, 0), (mousePositions[1] - mousePositions[0])); //calcula el angulo de inclinacion que tiene tu
+                                                                                                                                       //drag del raton
+
+
+                                        //si la linea es descendente el angulo que calculo antes sera negativo, si no hago esto el angulo siempre será positivo. (SOLUCION RADEV)
+                                        if ((mousePositions[1] - mousePositions[0]).y < 0) {
+                                            rotation *= -1;
+                                        }
+
+                                        rot.eulerAngles = new Vector3(0, 0, rotation); //qaternion de rotacion que es el que le aplico luego a la flecha
+                                        arrowAnchor.transform.rotation = rot; //rota el sprite
+                                    }
+
+                                } else {
+                                    arrowAnchor.transform.position = PJ.transform.position; //se asigna la posicion del personaje a la flecha para que esta siempre aparezca sobre el PJ
+                                    Debug.Log("BEHAV 1");
+
+
+                                    if (once) {
+                                        Cursor.visible = false;
+                                        Cursor.lockState = CursorLockMode.Locked; //Se engancha el cursor en el centro de la pantalla.
+                                        arrowAnchor.SetActive(false); //no se ve la flecha
+                                        once = false;
+                                        mousePositions = new Vector2[2];
+                                    }
+                                    if (InputManager.instance.deflectButton && !InputManager.instance.prevDeflectButton) {
+                                        Cursor.lockState = CursorLockMode.None; //Se puede volver a mover el cursor
+                                        mousePositions[1] = new Vector2(0, 0);
+                                        draw = true;
+                                        arrowAnchor.SetActive(true);
+
+                                    } else if (!InputManager.instance.deflectButton && InputManager.instance.prevDeflectButton) {
+                                        Cursor.lockState = CursorLockMode.Locked; //se vuelve a bloquear el raton en el centro
+                                        draw = false;
+                                        arrowAnchor.SetActive(false);
+                                        once = false;
+                                    }
+
+                                    //EL CONDICIONAL GESTIONA CUANDO TIENE QUE IR CALCULANDO EL ANGULO Y PINTANDO LOS SPRITES
+                                    if (draw) {
+
+                                        if (dawn)
+                                            mousePositions[0] = new Vector2(0, 0) + new Vector2(InputManager.instance.rightHorizontalAxis, -InputManager.instance.rightVerticalAxis).normalized;
+                                        else
+                                            mousePositions[0] = new Vector2(0, 0) + new Vector2(InputManager.instance.rightHorizontalAxis2, -InputManager.instance.rightVerticalAxis2).normalized;
+
+
+                                        float rotation = Vector3.Angle(new Vector3(1, 0, 0), (mousePositions[1] - mousePositions[0])); //calcula el angulo de inclinacion que tiene tu
+                                                                                                                                       //drag del raton
+
+
+                                        //si la linea es descendente el angulo que calculo antes sera negativo, si no hago esto el angulo siempre será positivo. (SOLUCION RADEV)
+                                        if ((mousePositions[1] - mousePositions[0]).y < 0) {
+                                            rotation *= -1;
+                                        }
+                                        rot.eulerAngles = new Vector3(0, 0, rotation); //qaternion de rotacion que es el que le aplico luego a la flecha
+                                        arrowAnchor.transform.rotation = rot; //rota el sprite
+                                    }
+                                }
+                            }
+                            return (mousePositions[1] - mousePositions[0]).normalized;
                             break;
                         case InputManager.GAMEMODE.MULTI_CONTROLLER_CONTROLLER:
                             if (behav == 0) {
@@ -1062,7 +1242,249 @@ public static class PlayerUtilsStatic {
 
                             break;
                         case InputManager.GAMEMODE.MULTI_CONTROLLER_KEYBOARD:
+                            if (!dawn) {
+                                if (behav == 0) {
+                                    //Debug.Log("RAton");
+                                    arrowAnchor.transform.position = PJ.transform.position; //se asigna la posicion del personaje a la flecha para que esta siempre aparezca sobre el PJ
 
+                                    if (once) {
+                                        Cursor.visible = false;
+                                        Cursor.lockState = CursorLockMode.Locked; //Se engancha el cursor en el centro de la pantalla.
+                                        arrowAnchor.SetActive(false); //no se ve la flecha
+                                        once = false;
+                                        mousePositions = new Vector2[2];
+                                    }
+                                    if (Input.GetMouseButtonDown(0)) {
+                                        Cursor.lockState = CursorLockMode.None; //Se puede volver a mover el cursor
+                                        mousePositions[1] = Input.mousePosition; //posicion donde se ha hecho click
+                                                                                 //se activan la linea y la flecha para que se pinten en la pantalla.
+                                        draw = true;
+                                        arrowAnchor.SetActive(true);
+                                        Debug.Log("C");
+
+
+                                    } else if (Input.GetMouseButtonUp(0)) {
+                                        Cursor.lockState = CursorLockMode.Locked; //se vuelve a bloquear el raton en el centro
+                                        draw = false;
+                                        arrowAnchor.SetActive(false);
+                                        once = false;
+                                    }
+
+                                    //EL CONDICIONAL GESTIONA CUANDO TIENE QUE IR CALCULANDO EL ANGULO Y PINTANDO LOS SPRITES
+                                    if (draw) {
+                                        mousePositions[0] = Input.mousePosition;//actualiza el punto de la linea para que esta cambie en funcion de
+                                                                                //de la posicion del raton a cada frame
+                                        float rotation;
+                                        if (PJ.GetComponent<PlayerController>().facingRight) {
+                                            rotation = Vector3.Angle(new Vector3(1, 0, 0), (mousePositions[1] - mousePositions[0])); //calcula el angulo de inclinacion que tiene tu
+                                                                                                                                     //drag del raton
+                                            if ((mousePositions[1] - mousePositions[0]).y < 0) {
+                                                rotation *= -1;
+                                            }
+                                            rotation = Mathf.Clamp(rotation, minAngle, maxAngle);
+                                            finalDirection = new Vector3(Mathf.Cos(rotation * Mathf.Deg2Rad), Mathf.Sin(rotation * Mathf.Deg2Rad), 0);
+                                        } else {
+                                            rotation = Vector3.Angle(new Vector3(-1, 0, 0), (mousePositions[1] - mousePositions[0]));
+
+                                            if ((mousePositions[1] - mousePositions[0]).y < 0) {
+                                                rotation *= -1;
+                                                rotation = -180 - rotation;
+                                                rotation = Mathf.Clamp(rotation, -180, -180 - minAngle);
+
+                                            } else {
+                                                rotation = 180 - rotation;
+                                                rotation = Mathf.Clamp(rotation, 180 - maxAngle, 180);
+
+                                            }
+                                            //rotation = Mathf.Clamp(rotation, minAngle, 90 - maxAngle);
+                                            finalDirection = new Vector3(Mathf.Cos(rotation * Mathf.Deg2Rad), Mathf.Sin(rotation * Mathf.Deg2Rad), 0);
+                                            //Debug.Log(rotation);
+                                        }
+
+                                        rot.eulerAngles = new Vector3(0, 0, rotation); //qaternion de rotacion que es el que le aplico luego a la flecha
+                                        arrowAnchor.transform.rotation = rot; //rota el sprite
+                                    }
+
+                                } else { //behav == 1 --> funcionalidad para deflect
+                                    arrowAnchor.transform.position = PJ.transform.position; //se asigna la posicion del personaje a la flecha para que esta siempre aparezca sobre el PJ
+
+                                    if (once) {
+                                        Cursor.visible = false;
+                                        Cursor.lockState = CursorLockMode.Locked; //Se engancha el cursor en el centro de la pantalla.
+                                        arrowAnchor.SetActive(false); //no se ve la flecha
+                                        once = false;
+                                        mousePositions = new Vector2[2];
+                                    }
+                                    if (Input.GetMouseButtonDown(1)) {
+                                        Cursor.lockState = CursorLockMode.None; //Se puede volver a mover el cursor
+                                        mousePositions[1] = Input.mousePosition; //posicion donde se ha hecho click
+                                                                                 //se activan la linea y la flecha para que se pinten en la pantalla.
+                                        draw = true;
+                                        arrowAnchor.SetActive(true);
+                                        Debug.Log("D");
+
+                                    } else if (Input.GetMouseButtonUp(1)) {
+                                        Cursor.lockState = CursorLockMode.Locked; //se vuelve a bloquear el raton en el centro
+                                        draw = false;
+                                        arrowAnchor.SetActive(false);
+                                        once = false;
+                                    }
+
+                                    //EL CONDICIONAL GESTIONA CUANDO TIENE QUE IR CALCULANDO EL ANGULO Y PINTANDO LOS SPRITES
+                                    if (draw) {
+                                        mousePositions[0] = Input.mousePosition;//actualiza el punto de la linea para que esta cambie en funcion de
+                                                                                //de la posicion del raton a cada frame
+                                        float rotation;
+                                        if (PJ.GetComponent<PlayerController>().facingRight) {
+                                            rotation = Vector3.Angle(new Vector3(1, 0, 0), (mousePositions[1] - mousePositions[0])); //calcula el angulo de inclinacion que tiene tu
+                                                                                                                                     //drag del raton
+                                            if ((mousePositions[1] - mousePositions[0]).y < 0) {
+                                                rotation *= -1;
+                                            }
+                                            rotation = Mathf.Clamp(rotation, minAngle, maxAngle);
+                                            finalDirection = new Vector3(Mathf.Cos(rotation * Mathf.Deg2Rad), Mathf.Sin(rotation * Mathf.Deg2Rad), 0);
+                                        } else {
+                                            rotation = Vector3.Angle(new Vector3(-1, 0, 0), (mousePositions[1] - mousePositions[0]));
+
+                                            if ((mousePositions[1] - mousePositions[0]).y < 0) {
+                                                rotation *= -1;
+                                                rotation = -180 - rotation;
+                                                rotation = Mathf.Clamp(rotation, -180, -180 - minAngle);
+
+                                            } else {
+                                                rotation = 180 - rotation;
+                                                rotation = Mathf.Clamp(rotation, 180 - maxAngle, 180);
+
+                                            }
+                                            //rotation = Mathf.Clamp(rotation, minAngle, 90 - maxAngle);
+                                            finalDirection = new Vector3(Mathf.Cos(rotation * Mathf.Deg2Rad), Mathf.Sin(rotation * Mathf.Deg2Rad), 0);
+                                            //Debug.Log(rotation);
+                                        }
+
+                                        rot.eulerAngles = new Vector3(0, 0, rotation); //qaternion de rotacion que es el que le aplico luego a la flecha
+                                        arrowAnchor.transform.rotation = rot; //rota el sprite
+                                    }
+                                }
+                            } else {
+                                if (behav == 0) {
+                                    arrowAnchor.transform.position = PJ.transform.position; //se asigna la posicion del personaje a la flecha para que esta siempre aparezca sobre el PJ
+
+                                    if (once) {
+                                        Cursor.visible = false;
+                                        Cursor.lockState = CursorLockMode.Locked; //Se engancha el cursor en el centro de la pantalla.
+                                        arrowAnchor.SetActive(false); //no se ve la flecha
+                                        once = false;
+                                        mousePositions = new Vector2[2];
+                                    }
+                                    if ((dawn && InputManager.instance.dashButton && !InputManager.instance.prevDashButton) || !dawn && InputManager.instance.dashButton2 && !InputManager.instance.prevDashButton2) {
+                                        Cursor.lockState = CursorLockMode.None; //Se puede volver a mover el cursor
+                                        mousePositions[1] = new Vector2(0, 0);
+                                        draw = true;
+                                        arrowAnchor.SetActive(true);
+                                        Debug.Log("A");
+
+                                    } else if ((dawn && !InputManager.instance.dashButton && InputManager.instance.prevDashButton) || (!dawn && !InputManager.instance.dashButton2 && InputManager.instance.prevDashButton2)) {
+                                        Cursor.lockState = CursorLockMode.Locked; //se vuelve a bloquear el raton en el centro
+                                        draw = false;
+                                        arrowAnchor.SetActive(false);
+                                        once = false;
+                                    }
+
+                                    //EL CONDICIONAL GESTIONA CUANDO TIENE QUE IR CALCULANDO EL ANGULO Y PINTANDO LOS SPRITES
+                                    if (draw) {
+                                        mousePositions[0] = new Vector2(0, 0) + new Vector2(InputManager.instance.rightHorizontalAxis, -InputManager.instance.rightVerticalAxis);
+                                        float rotation;
+                                        if (PJ.GetComponent<PlayerController>().facingRight) {
+                                            rotation = Vector3.Angle(new Vector3(1, 0, 0), (mousePositions[1] - mousePositions[0])); //calcula el angulo de inclinacion que tiene tu
+                                                                                                                                     //drag del raton
+                                            if ((mousePositions[1] - mousePositions[0]).y < 0) {
+                                                rotation *= -1;
+                                            }
+                                            rotation = Mathf.Clamp(rotation, minAngle, maxAngle);
+                                            finalDirection = new Vector3(Mathf.Cos(rotation * Mathf.Deg2Rad), Mathf.Sin(rotation * Mathf.Deg2Rad), 0);
+                                        } else {
+                                            rotation = Vector3.Angle(new Vector3(-1, 0, 0), (mousePositions[1] - mousePositions[0]));
+
+                                            if ((mousePositions[1] - mousePositions[0]).y < 0) {
+                                                rotation *= -1;
+                                                rotation = -180 - rotation;
+                                                rotation = Mathf.Clamp(rotation, -180, -180 - minAngle);
+
+                                            } else {
+                                                rotation = 180 - rotation;
+                                                rotation = Mathf.Clamp(rotation, 180 - maxAngle, 180);
+
+                                            }
+                                            //rotation = Mathf.Clamp(rotation, minAngle, 90 - maxAngle);
+                                            finalDirection = new Vector3(Mathf.Cos(rotation * Mathf.Deg2Rad), Mathf.Sin(rotation * Mathf.Deg2Rad), 0);
+                                            //Debug.Log(rotation);
+                                        }
+
+                                        rot.eulerAngles = new Vector3(0, 0, rotation); //qaternion de rotacion que es el que le aplico luego a la flecha
+                                        arrowAnchor.transform.rotation = rot; //rota el sprite
+                                    }
+
+                                } else { //behav == 1 --> funcionalidad para deflect
+                                    arrowAnchor.transform.position = PJ.transform.position; //se asigna la posicion del personaje a la flecha para que esta siempre aparezca sobre el PJ
+
+                                    if (once) {
+                                        Cursor.visible = false;
+                                        Cursor.lockState = CursorLockMode.Locked; //Se engancha el cursor en el centro de la pantalla.
+                                        arrowAnchor.SetActive(false); //no se ve la flecha
+                                        once = false;
+                                        mousePositions = new Vector2[2];
+                                    }
+                                    if (InputManager.instance.deflectButton && !InputManager.instance.prevDeflectButton) {
+                                        Cursor.lockState = CursorLockMode.None; //Se puede volver a mover el cursor
+                                        mousePositions[1] = new Vector2(0, 0);
+                                        draw = true;
+                                        arrowAnchor.SetActive(true);
+                                        Debug.Log("B");
+
+
+                                    } else if (!InputManager.instance.deflectButton && InputManager.instance.prevDeflectButton) {
+                                        Cursor.lockState = CursorLockMode.Locked; //se vuelve a bloquear el raton en el centro
+                                        draw = false;
+                                        arrowAnchor.SetActive(false);
+                                        once = false;
+                                    }
+
+                                    //EL CONDICIONAL GESTIONA CUANDO TIENE QUE IR CALCULANDO EL ANGULO Y PINTANDO LOS SPRITES
+                                    if (draw) {
+                                        mousePositions[0] = new Vector2(0, 0) + new Vector2(InputManager.instance.rightHorizontalAxis, -InputManager.instance.rightVerticalAxis);
+                                        float rotation;
+                                        if (PJ.GetComponent<PlayerController>().facingRight) {
+                                            rotation = Vector3.Angle(new Vector3(1, 0, 0), (mousePositions[1] - mousePositions[0])); //calcula el angulo de inclinacion que tiene tu
+                                                                                                                                     //drag del raton
+                                            if ((mousePositions[1] - mousePositions[0]).y < 0) {
+                                                rotation *= -1;
+                                            }
+                                            rotation = Mathf.Clamp(rotation, minAngle, maxAngle);
+                                            finalDirection = new Vector3(Mathf.Cos(rotation * Mathf.Deg2Rad), Mathf.Sin(rotation * Mathf.Deg2Rad), 0);
+                                        } else {
+                                            rotation = Vector3.Angle(new Vector3(-1, 0, 0), (mousePositions[1] - mousePositions[0]));
+
+                                            if ((mousePositions[1] - mousePositions[0]).y < 0) {
+                                                rotation *= -1;
+                                                rotation = -180 - rotation;
+                                                rotation = Mathf.Clamp(rotation, -180, -180 - minAngle);
+
+                                            } else {
+                                                rotation = 180 - rotation;
+                                                rotation = Mathf.Clamp(rotation, 180 - maxAngle, 180);
+
+                                            }
+                                            //rotation = Mathf.Clamp(rotation, minAngle, 90 - maxAngle);
+                                            finalDirection = new Vector3(Mathf.Cos(rotation * Mathf.Deg2Rad), Mathf.Sin(rotation * Mathf.Deg2Rad), 0);
+                                            //Debug.Log(rotation);
+                                        }
+
+                                        rot.eulerAngles = new Vector3(0, 0, rotation); //qaternion de rotacion que es el que le aplico luego a la flecha
+                                        arrowAnchor.transform.rotation = rot; //rota el sprite
+                                    }
+                                }
+                            }
+                            return finalDirection.normalized;
                             break;
                         case InputManager.GAMEMODE.MULTI_CONTROLLER_CONTROLLER:
                             //Vector3 finalDirection = new Vector3();

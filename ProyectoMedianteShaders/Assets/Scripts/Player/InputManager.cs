@@ -7,10 +7,17 @@ public class InputManager : MonoBehaviour {
     public static InputManager instance = null;
 
     public enum GAMEMODE { SINGLEPLAYER, MULTI_KEYBOARD_CONTROLLER, MULTI_CONTROLLER_KEYBOARD, MULTI_CONTROLLER_CONTROLLER};
-    public static GAMEMODE currentGameMode = GAMEMODE.SINGLEPLAYER;
+    public static GAMEMODE currentGameMode = GAMEMODE.MULTI_CONTROLLER_KEYBOARD;
 
     [SerializeField]
     private static bool blocked;
+    float comprovarMandoTimer=3.0f;
+
+    bool[] PS4_Controllers = { false, false };
+    bool[] Xbox_One_Controllers = { false, false };
+    bool[] Windows_Controllers = { false, false };
+    string[] names;
+    List<string> namesList = new List<string>();
 
     public static bool gamePadConnected;
 
@@ -308,55 +315,58 @@ public class InputManager : MonoBehaviour {
     // Update is called once per frame
     void Update() {
 
-        bool[] PS4_Controllers = { false, false };
-        bool[] Xbox_One_Controllers = { false, false };
-        bool[] Windows_Controllers = { false, false };
-        string[] names = Input.GetJoystickNames();
-        List<string> namesList = new List<string>();
-        for(int i = 0; i < names.Length; i++) {
-            if (names[i].Length > 0) {
-                namesList.Add(names[i]);
+        if (comprovarMandoTimer > 3.0f) {
+            comprovarMandoTimer = 0;
+            names = Input.GetJoystickNames();
+            namesList.Clear();
+            for (int i = 0; i < names.Length; i++) {
+                if (names[i].Length > 0) {
+                    namesList.Add(names[i]);
+                }
             }
+
+            for (int x = 0; x < namesList.Count; x++) {
+                //Debug.Log(namesList[x]);
+            }
+
+            for (int x = 0; x < namesList.Count; x++) {
+                //print(names[x].Length);
+                if (namesList[x].Length == 19) {
+                    if (x == 0) {
+                        PS4_Controllers[0] = true;
+                        Xbox_One_Controllers[0] = false;
+                        Windows_Controllers[0] = false;
+                        print("PS4 CONTROLLER1 IS CONNECTED");
+                    } else if (x == 1) {
+                        PS4_Controllers[1] = true;
+                        Xbox_One_Controllers[1] = false;
+                        Windows_Controllers[1] = false;
+                        print("PS4 CONTROLLER2 IS CONNECTED");
+                    }
+                }
+                if (namesList[x].Length == 33 || namesList[x].Length == 24) {
+                    if (x == 0) {
+                        Xbox_One_Controllers[0] = true;
+                        print("XBOX ONE CONTROLLER1 IS CONNECTED");
+                    } else if (x == 1) {
+                        Xbox_One_Controllers[1] = true;
+                        print("XBOX ONE CONTROLLER2 IS CONNECTED");
+                    }
+                }
+                if (namesList[x].Length == 31) {
+                    if (x == 0) {
+                        print("WINDOWS CONTROLLER1 IS CONNECTED");
+                        Windows_Controllers[0] = true;
+                    } else if (x == 1) {
+                        Windows_Controllers[1] = true;
+                        print("WINDOWS CONTROLLER2 IS CONNECTED");
+                    }
+                }
+            }
+        } else {
+            comprovarMandoTimer += Time.deltaTime;
         }
 
-        for (int x = 0; x < namesList.Count; x++) {
-            //Debug.Log(namesList[x]);
-        }
-
-        for (int x = 0; x < namesList.Count; x++) {
-        //print(names[x].Length);
-            if (namesList[x].Length == 19) {
-                if (x == 0) {
-                    PS4_Controllers[0] = true;
-                    Xbox_One_Controllers[0] = false;
-                    Windows_Controllers[0] = false;
-                    print("PS4 CONTROLLER1 IS CONNECTED");
-                }else if(x == 1){
-                    PS4_Controllers[1] = true;
-                    Xbox_One_Controllers[1] = false;
-                    Windows_Controllers[1] = false;
-                    print("PS4 CONTROLLER2 IS CONNECTED");
-                }
-            }
-            if (namesList[x].Length == 33 || namesList[x].Length == 24) {
-                if (x == 0) {
-                    Xbox_One_Controllers[0] = true;
-                    print("XBOX ONE CONTROLLER1 IS CONNECTED");
-                }else if (x == 1) {
-                    Xbox_One_Controllers[1] = true;
-                    print("XBOX ONE CONTROLLER2 IS CONNECTED");
-                }
-            }
-            if (namesList[x].Length == 31) {
-                if (x == 0) {
-                    print("WINDOWS CONTROLLER1 IS CONNECTED");
-                    Windows_Controllers[0] = true;
-                } else if (x == 1) {
-                    Windows_Controllers[1] = true;
-                    print("WINDOWS CONTROLLER2 IS CONNECTED");
-                }
-            } 
-        }
         UpdatePrevious();
 
 
@@ -542,7 +552,7 @@ public class InputManager : MonoBehaviour {
             case GAMEMODE.MULTI_CONTROLLER_KEYBOARD:
                 gamePadConnected = true;
 
-                if (blocked) {
+                if (!blocked) {
                     ///////////////PLAYER 1 (MANDO)/////////////////
                     ///////////////PLAYER 1 (MANDO)/////////////////
                     ///////////////PLAYER 1 (MANDO)/////////////////

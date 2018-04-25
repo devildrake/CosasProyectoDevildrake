@@ -550,7 +550,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1644740725108654}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 7.6670403, y: -3.6896014, z: 0.95}
+  m_LocalPosition: {x: 8.958298, y: -13.717361, z: 0.31234378}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4923852296007652}
@@ -592,7 +592,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1254941489860776}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.97, y: 0.48, z: 0}
+  m_LocalPosition: {x: 6.93, y: 0.48, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4923852296007652}
@@ -818,7 +818,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1795415416612142}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 4.2, y: 0.5, z: 0}
+  m_LocalPosition: {x: 1.2, y: 0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4923852296007652}
@@ -1127,7 +1127,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.3400154, y: 1.0363345}
+  m_Offset: {x: 0.34677887, y: 1.0363345}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -1138,7 +1138,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.1584778, y: 0.48087692}
+  m_Size: {x: 1.4966393, y: 0.48087692}
   m_EdgeRadius: 0
 --- !u!61 &61218208936450312
 BoxCollider2D:
@@ -1202,7 +1202,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.34228933, y: 0.5937042}
+  m_Offset: {x: 0.34905148, y: 0.5937042}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -1213,7 +1213,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.1623757, y: 1.0523329}
+  m_Size: {x: 1.473486, y: 1.0523329}
   m_EdgeRadius: 0
 --- !u!95 &95400062615743174
 Animator:
@@ -1496,8 +1496,8 @@ SkinnedMeshRenderer:
   m_BlendShapeWeights: []
   m_RootBone: {fileID: 0}
   m_AABB:
-    m_Center: {x: 1.8175316, y: -0.0000019073486, z: 0.063500404}
-    m_Extent: {x: 12.312298, y: 12.3123, z: 0.06350368}
+    m_Center: {x: 1.817524, y: 0, z: 0.06349945}
+    m_Extent: {x: 12.312298, y: 12.3123, z: 0.0635032}
   m_DirtyAABB: 0
 --- !u!137 &137643857128012850
 SkinnedMeshRenderer:
