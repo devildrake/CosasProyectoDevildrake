@@ -477,6 +477,8 @@ public class InputManager : MonoBehaviour {
                 }
                 break;
             case GAMEMODE.MULTI_KEYBOARD_CONTROLLER:
+                gamePadConnected = true;
+
                 if (!blocked) {
                     instance.upKey = Input.GetAxisRaw("ControllerUpArrow") == 1.0;
                     instance.downKey = Input.GetAxisRaw("ControllerDownArrow") == -1.0;
@@ -538,6 +540,8 @@ public class InputManager : MonoBehaviour {
                 }
                 break;
             case GAMEMODE.MULTI_CONTROLLER_KEYBOARD:
+                gamePadConnected = true;
+
                 if (blocked) {
                     ///////////////PLAYER 1 (MANDO)/////////////////
                     ///////////////PLAYER 1 (MANDO)/////////////////
@@ -591,20 +595,42 @@ public class InputManager : MonoBehaviour {
                 }
                 break;
             case GAMEMODE.MULTI_CONTROLLER_CONTROLLER:
+                gamePadConnected = true;
                 if (!blocked) {
+
+                    //for (int i = 0; i < 20; i++) {
+                    //    if (Input.GetKeyDown("joystick 1 button " + i)) {
+                    //        print("joystick 1 button " + i);
+                    //    }
+                    //}
+                    //for (int i = 0; i < 20; i++) {
+                    //    if (Input.GetKeyDown("joystick 2 button " + i)) {
+                    //        print("joystick 2 button " + i);
+                    //    }
+                    //}
+
 
                     ///////////////PLAYER 1 (MANDO)/////////////////
                     ///////////////PLAYER 1 (MANDO)/////////////////
                     ///////////////PLAYER 1 (MANDO)/////////////////
                     ///////////////PLAYER 1 (MANDO)/////////////////
-                    instance.deflectButton = (Input.GetAxisRaw("DeflectDrag1") == 1.0);
+                    //instance.deflectButton = (Input.GetAxisRaw("DeflectDrag1") == 1.0);
+
+                    instance.deflectButton = Input.GetKeyDown("joystick 1 button 5");
+
                     instance.crawlButton = (Input.GetAxisRaw("CrawlSmash1") == 1.0);
-                    instance.jumpButton = (Input.GetAxisRaw("Jump1") == 1.0);
+                    //instance.jumpButton = (Input.GetAxisRaw("Jump1") == 1.0);
+                    instance.jumpButton = Input.GetKeyDown("joystick 1 button 0");
                     instance.pauseButton = (Input.GetAxisRaw("Pause1") == 1.0);
                     instance.selectButton = (Input.GetAxisRaw("Select1") == 1.0);
                     instance.resetButton = Input.GetAxisRaw("Reset1") == 1.0;
-                    instance.interactButton = (Input.GetAxisRaw("Interact1") == 1.0);
-                    instance.cameraButton = Input.GetAxisRaw("Camera1") == 1.0;
+                    //instance.interactButton = (Input.GetAxisRaw("Interact1") == 1.0);
+
+                    instance.interactButton = Input.GetKeyDown("joystick 1 button 1");
+
+                    //instance.cameraButton = Input.GetAxisRaw("Camera1") == 1.0;
+                    instance.cameraButton = Input.GetKeyDown("joystick 1 button 3");
+
                     instance.cancelButton = Input.GetAxisRaw("Cancel1") == 1.0;
                     instance.horizontalAxis = Input.GetAxisRaw("HorizontalPad1");
                     instance.verticalAxis = Input.GetAxisRaw("VerticalPad1");
@@ -622,14 +648,30 @@ public class InputManager : MonoBehaviour {
                     ///////////////PLAYER 2 (MANDO)/////////////////
                     ///////////////PLAYER 2 (MANDO)/////////////////
                     ///////////////PLAYER 2 (MANDO)/////////////////
-                    instance.deflectButton2 = (Input.GetAxisRaw("DeflectDrag2") == 1.0);
+                    //instance.deflectButton2 = (Input.GetAxisRaw("DeflectDrag2") == 1.0);
+
+                    instance.deflectButton2 = Input.GetKeyDown("joystick 2 button 5");
+
                     instance.crawlButton2 = (Input.GetAxisRaw("CrawlSmash2") == 1.0);
-                    instance.jumpButton2 = (Input.GetAxisRaw("Jump2") == 1.0);
+                    //instance.jumpButton2 = (Input.GetAxisRaw("Jump2") == 1.0);
+                    instance.jumpButton2 = Input.GetKeyDown("joystick 2 button 0");
+
+
+
                     instance.pauseButton2 = (Input.GetAxisRaw("Pause2") == 1.0);
                     instance.selectButton2 = (Input.GetAxisRaw("Select2") == 1.0);
                     instance.resetButton2 = Input.GetAxisRaw("Reset2") == 1.0;
-                    instance.interactButton2 = (Input.GetAxisRaw("Interact2") == 1.0);
-                    instance.cameraButton2 = Input.GetAxisRaw("Camera2") == 1.0;
+
+                    instance.interactButton2 = Input.GetKeyDown("joystick 2 button 1");
+
+                    //instance.interactButton2 = (Input.GetAxisRaw("Interact2") == 1.0);
+                    //instance.cameraButton2 = Input.GetAxisRaw("Camera2") == 1.0;
+
+                    instance.cameraButton2 = Input.GetKeyDown("joystick 2 button 3");
+
+                    instance.interactButton2 = Input.GetKeyDown("joystick 2 button 1");
+
+
                     instance.cancelButton2 = Input.GetAxisRaw("Cancel2") == 1.0;
                     instance.horizontalAxis2 = Input.GetAxisRaw("HorizontalPad2");
                     instance.verticalAxis2 = Input.GetAxisRaw("VerticalPad2");

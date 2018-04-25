@@ -34,6 +34,7 @@ public class PlayerController : DoubleObject {
     public float whichX;
     //Objeto con el transform de la posición a la que queremos que llegue el pj
     public GameObject placeToGo;
+    public AnimationSounds animationSound;
     public bool mustEnd;
 
     private float dashTimer;
@@ -169,7 +170,7 @@ public class PlayerController : DoubleObject {
 
     //Se inicializan las cosas
     void Start() {
-
+        animationSound = GetComponentInChildren<AnimationSounds>();
         grabPositions = new Vector3[4];
 
         //armPositions = new Vector3[9];
@@ -437,7 +438,10 @@ public class PlayerController : DoubleObject {
 
         if (added) {
             if ((worldAssignation == world.DAWN && dawn) || (worldAssignation == world.DUSK && !dawn)) {
+                animationSound.active = true;
                 MoveEvents();
+            } else {
+                animationSound.active = false;
             }
 
             if (armTarget != null) {
@@ -865,8 +869,8 @@ public class PlayerController : DoubleObject {
                                 moving = true;
                                 if (!audioSource.isPlaying && !crawling) {
                                     audioSource.pitch = 0.3f;
-                                    audioSource.clip = walkClip;
-                                    audioSource.Play();
+                                    //audioSource.clip = walkClip;
+                                    //audioSource.Play();
                                 } else if (crawling) {
                                     audioSource.pitch = 0.3f;
                                     audioSource.clip = crawlClip;
@@ -939,8 +943,8 @@ public class PlayerController : DoubleObject {
                                 moving = true;
                                 if (!audioSource.isPlaying && !crawling) {
                                     audioSource.pitch = 0.3f;
-                                    audioSource.clip = walkClip;
-                                    audioSource.Play();
+                                    //audioSource.clip = walkClip;
+                                    //audioSource.Play();
                                 } else if (crawling) {
                                     audioSource.pitch = 0.3f;
                                     audioSource.clip = crawlClip;
@@ -1122,11 +1126,20 @@ public class PlayerController : DoubleObject {
     //Metodo que añade una fuerza al personaje para simular un salto
     public void Jump() {
         rb.velocity= new Vector2(0,0);
-        audioSource.pitch = 1.0f;
+        //audioSource.pitch = 1.0f;
 
         rb.AddForce(transform.up * jumpStrenght, ForceMode2D.Impulse);
-        audioSource.clip = jumpClip;
-        audioSource.Play();
+        //audioSource.clip = jumpClip;
+        //audioSource.Play();
+        string characterToString = "";
+        if (worldAssignation == world.DAWN) {
+            characterToString = "Dawn";
+        } else {
+            characterToString = "Dusk";
+        }
+
+        SoundManager.Instance.PlayOneShotSound("event:/Jump" + characterToString, transform);
+
         sliding = false;
     }
 
@@ -1134,7 +1147,7 @@ public class PlayerController : DoubleObject {
 
         if (!grounded) {
             if (canDash && dashTimer > dashCoolDown) {
-                direction = PlayerUtilsStatic.UseDirectionCircle(arrow, gameObject, 0);
+                direction = PlayerUtilsStatic.UseDirectionCircle(arrow, gameObject, 0,dawn);
 
                 if (PSdawnDash1 != null) {
                     mainModuleDash1.simulationSpeed = 1;
@@ -1163,7 +1176,7 @@ public class PlayerController : DoubleObject {
         }
 
         if (objectsInDeflectArea.Count != 0) {
-            deflectDirection = PlayerUtilsStatic.UseDirectionCircle(arrow, gameObject, 1,-10,60);
+            deflectDirection = PlayerUtilsStatic.UseDirectionCircle(arrow, gameObject, 1,-10,60,dawn);
             if (PSdawnDeflectFeedback != null) {
                 PSdawnDeflectFeedback.Play();
             }
@@ -1290,7 +1303,7 @@ public class PlayerController : DoubleObject {
         void DuskBehavior() {
 
         if (armstate == ARMSTATE.IDLE && grounded && leftPressed) {
-                Debug.Log("BASD");
+                //Debug.Log("BASD");
                 armstate = ARMSTATE.PUNCHCHARGE;
                 currentArmTargetIndex = 0;
         }
@@ -1343,7 +1356,7 @@ public class PlayerController : DoubleObject {
         //Se renderizan las flechas en caso de clicar solo si esta en el suelo
         else {
                 if(!grabbing)
-                direction = PlayerUtilsStatic.UseDirectionCircle(arrow, gameObject, 0, 0, 60);
+                direction = PlayerUtilsStatic.UseDirectionCircle(arrow, gameObject, 0, 0, 60,dawn);
 
                 if (/*Input.GetMouseButtonDown(1)*/InputManager.instance.deflectButton2 && !InputManager.instance.prevDeflectButton2) {
                     if (armstate == ARMSTATE.IDLE) {
@@ -1612,5 +1625,7 @@ public class PlayerController : DoubleObject {
         audioSource.Play();
         GameLogic.instance.timesDied++;
     }
+
+
 
 }
