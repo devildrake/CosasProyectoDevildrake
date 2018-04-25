@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,6 +8,7 @@ using UnityEngine.UI;
  * Al activar el canvas de opciones se añaden todas las opciones a los
  * elementos del menu.
  */
+ [Obsolete("Class deprecated, use options_logic instead")]
 public class SetUpOptions : MonoBehaviour {
     public Slider music, sfx;
     public Dropdown resolution, fullscreen, refreshRate, fps;
