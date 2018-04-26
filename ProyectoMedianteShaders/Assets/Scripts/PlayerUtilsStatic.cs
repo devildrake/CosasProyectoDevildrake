@@ -749,7 +749,7 @@ public static class PlayerUtilsStatic {
         if (!GameLogic.instance.levelFinished) {
             if (InputManager.instance != null) {
                 if (!InputManager.gamePadConnected) {
-                    Debug.Log("NOGAMEPAD");
+                    //Debug.Log("NOGAMEPAD");
                     //Vector3 finalDirection = new Vector3();
                     if (behav == 0) {
                         arrowAnchor.transform.position = PJ.transform.position; //se asigna la posicion del personaje a la flecha para que esta siempre aparezca sobre el PJ

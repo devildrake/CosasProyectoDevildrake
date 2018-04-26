@@ -8,9 +8,9 @@ public class ArrowScript : MonoBehaviour {
     public Sprite punchSprite;
     public Sprite deflectSprite;
     string spritesPath = "Sprites";
+    bool set;
 	// Use this for initialization
 	void Start () {
-
         sprite = GetComponentInChildren<SpriteRenderer>();
     }
 
@@ -32,6 +32,13 @@ public class ArrowScript : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-		
-	}
+        if (!set) {
+            if (GameLogic.instance.currentPlayer != null) {
+                gameObject.SetActive(false);
+                GameLogic.instance.currentPlayer.arrow = this;
+                GameLogic.instance.currentPlayer.brotherScript.arrow = this;
+                set = true;
+            }
+        }
+    }
 }

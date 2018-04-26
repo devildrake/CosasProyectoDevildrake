@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using FMOD.Studio;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 public class PlayerController : DoubleObject {
@@ -14,6 +15,9 @@ public class PlayerController : DoubleObject {
     AudioClip slideClip;
     AudioClip dieClip;
     AudioClip punchClip;
+
+    float timeGrounded;
+    bool groundedSound;
 
     public Vector2 originalSizeCollider;
     public Vector2 originalOffsetCollider;
@@ -123,7 +127,7 @@ public class PlayerController : DoubleObject {
     public LayerMask groundMask;
     public LayerMask slideMask;
     public LayerMask[] grabbableMask;
-
+    EventInstance punchChargeEvent;
     //Referencia al RigidBody2D del personaje, se inicializa en el start.
     public Rigidbody2D rb;
 
@@ -277,6 +281,9 @@ public class PlayerController : DoubleObject {
                 //Debug.Log(capaObject);
 
             }
+            if (arrow != null) {
+                arrow.gameObject.SetActive(false);
+            }
         }
 
     }
@@ -419,6 +426,24 @@ public class PlayerController : DoubleObject {
 
     void Update() {
 
+        if (grounded) {
+            timeGrounded += Time.deltaTime;
+        } else {
+            timeGrounded = 0;
+        }
+        
+
+        if (timeGrounded > 0.1f) {
+            if (!groundedSound) {
+                groundedSound = true;
+                SoundManager.Instance.PlayOneShotSound("event:/Dusk/StepsDusk", transform);
+                SoundManager.Instance.PlayOneShotSound("event:/Dusk/StepsDusk", transform);
+                SoundManager.Instance.PlayOneShotSound("event:/Dusk/StepsDusk", transform);
+            }
+        } else {
+            groundedSound = false;
+        }
+
         //if (placeToGo == null) {
         if (rb.velocity.y < 0) {
             rb.gravityScale = 1.5f;
@@ -452,6 +477,8 @@ public class PlayerController : DoubleObject {
                     }
 
                     #region armStuff
+                    PLAYBACK_STATE state = PLAYBACK_STATE.STOPPED;
+                    punchChargeEvent.getPlaybackState(out state);
 
                     switch (armstate){
                         case ARMSTATE.IDLE:
@@ -460,8 +487,24 @@ public class PlayerController : DoubleObject {
                             punchTrigger.enabled = false;
                             punchContact.enabled = false;
                             armParticleSystem.Stop();
+                            punchChargeEvent.getPlaybackState(out state);
+                            if (state == PLAYBACK_STATE.PLAYING) { 
+                                punchChargeEvent.stop(STOP_MODE.IMMEDIATE);
+                            }
                             break;
                         case ARMSTATE.PUNCHCHARGE:
+
+                            if (punchChargeEvent.Equals(null)) {
+                                Debug.Log("CREADO");
+                                punchChargeEvent = SoundManager.Instance.PlayEvent("event:/Dusk/ArmCharge", transform);
+                            } else {
+                                Debug.Log("USADO");
+                                if (state != PLAYBACK_STATE.PLAYING) {
+                                    punchChargeEvent = SoundManager.Instance.PlayEvent("event:/Dusk/ArmCharge", transform);
+                                    punchChargeEvent.start();
+                                }
+                            }
+
                             if (currentArmTargetIndex < 4) {
                                 arm.meshObject.SetActive(true);
                                 armParticleSystem.Play();
@@ -499,6 +542,9 @@ public class PlayerController : DoubleObject {
 
                             break;
                         case ARMSTATE.PUNCH:
+                            if (state == PLAYBACK_STATE.PLAYING) {
+                                punchChargeEvent.stop(STOP_MODE.IMMEDIATE);
+                            }
                             armParticleSystem.Play();
                             if (currentArmTargetIndex < 8) { 
                                 if (!arm.meshObject.activeInHierarchy) {
@@ -550,6 +596,16 @@ public class PlayerController : DoubleObject {
                             }
                             break;
                         case ARMSTATE.GRAB:
+                            if (punchChargeEvent.Equals(null)) {
+                                Debug.Log("CREADO");
+                                punchChargeEvent = SoundManager.Instance.PlayEvent("event:/Dusk/ArmCharge", transform);
+                            } else {
+                                punchChargeEvent.getPlaybackState(out state);
+                                if (state != PLAYBACK_STATE.PLAYING) {
+                                    punchChargeEvent.start();
+                                }
+                            }
+
                             //Aqui hay que hacer que el brazo se coloque en la posición original y vaya justo a la posición central + new Vector3(0,2,0) del objeto grabbeable delante suyo 
                             //Y después hasta alcanzar a chocar con el objeto Draggable
                             armParticleSystem.Play();
@@ -646,9 +702,9 @@ public class PlayerController : DoubleObject {
                 //Debug.Log(grounded);
                 //Add del transformable
 
-                if (arrow == null) {
-                    arrow = GameObject.FindGameObjectWithTag("Arrow").GetComponent<ArrowScript>();
-                }
+                //if (arrow == null) {
+                //    arrow = GameObject.FindGameObjectWithTag("Arrow").GetComponent<ArrowScript>();
+                //}
 
                 //Comportamiento sin pausar
                 if (!GameLogic.instance.isPaused) {
@@ -1138,7 +1194,7 @@ public class PlayerController : DoubleObject {
             characterToString = "Dusk";
         }
 
-        SoundManager.Instance.PlayOneShotSound("event:/Jump" + characterToString, transform);
+        SoundManager.Instance.PlayOneShotSound("event:/" + characterToString + "/Jump" + characterToString, transform);
 
         sliding = false;
     }
@@ -1210,16 +1266,19 @@ public class PlayerController : DoubleObject {
                     }
 
                 }
-                audioSource.pitch = 1.0f;
+                //audioSource.pitch = 1.0f;
 
-                audioSource.clip = dashClip;
-                audioSource.Play();
+                //audioSource.clip = dashClip;
+                //audioSource.Play();
                 canJumpOnImpulsor = false;
                 rb.velocity = new Vector2(0, 0);
                 if (direction.x == 0 && direction.y == 0) {
                     direction.x = 0;
                     direction.y = 1;
                 }
+
+
+                SoundManager.Instance.PlayOneShotSound("event:/Dawn/DashEffort",transform);
                 PlayerUtilsStatic.DoDash(gameObject, direction, dashForce,true);
                 //control de error del sistema de particulas del release del dash
                 if (PSDawnDashRelease != null) {
@@ -1299,26 +1358,29 @@ public class PlayerController : DoubleObject {
 
     }
 
-        //Método para aglotinar comportamiento de Dusk 
-        void DuskBehavior() {
+    //Método para aglotinar comportamiento de Dusk 
+    void DuskBehavior() {
+
+
+
 
         if (armstate == ARMSTATE.IDLE && grounded && leftPressed) {
-                //Debug.Log("BASD");
-                armstate = ARMSTATE.PUNCHCHARGE;
-                currentArmTargetIndex = 0;
+            //Debug.Log("BASD");
+            armstate = ARMSTATE.PUNCHCHARGE;
+            currentArmTargetIndex = 0;
         }
 
         //Si se suelta el botón izquierdo del ratón y se habia pulsado previamente, el tiempo pasa a cero
         //En caso de estar grounded Se hace una llamada a Punch
         if (/*Input.GetMouseButtonUp(0)*/!InputManager.instance.dashButton2 && InputManager.instance.prevDashButton2 && punchTimer > punchCoolDown) {
-            if (leftPressed&&(armstate == ARMSTATE.IDLE||armstate==ARMSTATE.PUNCHCHARGE)) {
+            if (leftPressed && (armstate == ARMSTATE.IDLE || armstate == ARMSTATE.PUNCHCHARGE)) {
                 GameLogic.instance.SetTimeScaleLocal(1.0f);
                 if (grounded) {
                     currentArmTargetIndex = 0;
                     //Punch(direction, 40000);
                     punchTimer = 0;
                     armstate = ARMSTATE.PUNCH;
-                    if (armTarget!= null) {
+                    if (armTarget != null) {
                         if (facingRight) {
                             armTarget.transform.position = punchRightPositions[0].position;
                         } else {
@@ -1338,7 +1400,6 @@ public class PlayerController : DoubleObject {
                 leftPressed = false;
             }
         }
-
         //En caso de pulsar el botón izquierdo del ratón y estar grounded, se pone el timepo a 0.5
         else if (/*Input.GetMouseButtonDown(0)*/InputManager.instance.dashButton2 && !InputManager.instance.prevDashButton2 && grounded&&punchTimer>punchCoolDown) {
             if (!grabbing) {
@@ -1385,10 +1446,11 @@ public class PlayerController : DoubleObject {
             audioSource.Play();
         }
 
-    }
 
-    //Método que pone smashing en true modificando la velocidad del personaje para que solo vaya hacia abajo
-    void Smash() {
+}
+
+//Método que pone smashing en true modificando la velocidad del personaje para que solo vaya hacia abajo
+void Smash() {
         if (!smashing) {
             rb.AddForce(new Vector2(-rb.velocity.x,0),ForceMode2D.Impulse);
             audioSource.clip = smashClip;

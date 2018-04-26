@@ -16,18 +16,68 @@ MonoBehaviour:
   - {fileID: 114267371235567832}
   - {fileID: 114791079414110432}
   - {fileID: 114856197706786048}
+  - {fileID: 114589921802376892}
   EditorEvents:
   - {fileID: 114469857400087768}
   - {fileID: 114666040216342722}
   - {fileID: 114765937579993802}
-  - {fileID: 114233452690641622}
-  - {fileID: 114373216819272302}
-  - {fileID: 114641269667950144}
-  - {fileID: 114960078886542024}
+  - {fileID: 114352343273826422}
+  - {fileID: 114485994235514484}
+  - {fileID: 114167814517536382}
+  - {fileID: 114130061613741806}
+  - {fileID: 114177823363325908}
+  - {fileID: 114507393896803046}
+  - {fileID: 114399215079529126}
+  - {fileID: 114403669375450474}
+  - {fileID: 114136443848146720}
   MasterBankRef: {fileID: 114267371235567832}
   StringsBankRef: {fileID: 114867409791930004}
-  stringsBankWriteTime: 636601980992995087
+  stringsBankWriteTime: 636603654625021214
   cacheVersion: 2
+--- !u!114 &114130061613741806
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Path: event:/Dusk/JumpDusk
+  guid: 4f34bef9ce65b34891168648e74e4cb6
+  Banks:
+  - {fileID: 114856197706786048}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 824
+--- !u!114 &114136443848146720
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Path: event:/Dawn/JumpDawn
+  guid: f13471b7365f5747aa74bee577cb6c11
+  Banks:
+  - {fileID: 114856197706786048}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 735
 --- !u!114 &114147294262243666
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -47,6 +97,50 @@ MonoBehaviour:
   - Name: 
     Value: 12474
   Exists: 1
+--- !u!114 &114167814517536382
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Path: event:/Dawn/StepsDawn
+  guid: 2cf5815e87107b4aa9bbda2ebc11e748
+  Banks:
+  - {fileID: 114856197706786048}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 84
+--- !u!114 &114177823363325908
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Path: event:/Dusk/ArmCharge
+  guid: 6d8d27a1716e0349b9087f1b9c788881
+  Banks:
+  - {fileID: 114856197706786048}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 4046
 --- !u!114 &114178679674208936
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -103,8 +197,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Path: event:/stepsDawn
   guid: 2cf5815e87107b4aa9bbda2ebc11e748
-  Banks:
-  - {fileID: 114856197706786048}
+  Banks: []
   IsStream: 0
   Is3D: 1
   IsOneShot: 1
@@ -125,12 +218,34 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Path: C:\Users\MSI-D\Documents\CosasProyectoDevildrake\ProyectoMedianteShaders\Assets\Resources\FModBuild\DesktopConfig\Master
     Bank.bank
-  lastModified: 636601980992985084
+  lastModified: 636603654625006214
   LoadResult: 0
   FileSizes:
   - Name: 
     Value: 12962
   Exists: 1
+--- !u!114 &114352343273826422
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Path: event:/Enemies/Bouncer/Bounce
+  guid: 2f915d98b6015c448f5bfa67d022cce2
+  Banks:
+  - {fileID: 114589921802376892}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 534
 --- !u!114 &114373216819272302
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -144,8 +259,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Path: event:/stepsDusk
   guid: 7aa12622522e3d4a9d0ef91015938e1c
-  Banks:
-  - {fileID: 114856197706786048}
+  Banks: []
   IsStream: 0
   Is3D: 1
   IsOneShot: 1
@@ -153,6 +267,50 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 84
+--- !u!114 &114399215079529126
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Path: event:/Dusk/PunchEffort
+  guid: e1c07e55f6069e4399ab8c89e9231f52
+  Banks:
+  - {fileID: 114856197706786048}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 835
+--- !u!114 &114403669375450474
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Path: event:/Dawn/DashEffort
+  guid: eb1569312258b54ba5779f0ad884a375
+  Banks:
+  - {fileID: 114856197706786048}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 731
 --- !u!114 &114451959670837968
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -215,6 +373,68 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 59489
+--- !u!114 &114485994235514484
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Path: event:/Enemies/Walker/Steps
+  guid: e303b04c968d9546932391b407b7e355
+  Banks:
+  - {fileID: 114589921802376892}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 70
+--- !u!114 &114507393896803046
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Path: event:/Dusk/StepsDusk
+  guid: 7aa12622522e3d4a9d0ef91015938e1c
+  Banks:
+  - {fileID: 114856197706786048}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 84
+--- !u!114 &114589921802376892
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Path: C:\Users\MSI-D\Documents\CosasProyectoDevildrake\ProyectoMedianteShaders\Assets\Resources\FModBuild\DesktopConfig\EnemySounds.bank
+  lastModified: 636603654626452238
+  LoadResult: 0
+  FileSizes:
+  - Name: 
+    Value: 59200
+  Exists: 1
 --- !u!114 &114641269667950144
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -228,8 +448,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Path: event:/JumpDawn
   guid: 0e4245e9735f1342ad4fe8c0ab95ef1b
-  Banks:
-  - {fileID: 114856197706786048}
+  Banks: []
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -312,7 +531,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Path: C:\Users\MSI-D\Documents\CosasProyectoDevildrake\ProyectoMedianteShaders\Assets\Resources\FModBuild\DesktopConfig\LevelMusic.bank
-  lastModified: 636601980993675580
+  lastModified: 636603654626237068
   LoadResult: 0
   FileSizes:
   - Name: 
@@ -385,11 +604,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Path: C:\Users\MSI-D\Documents\CosasProyectoDevildrake\ProyectoMedianteShaders\Assets\Resources\FModBuild\DesktopConfig\CharacterSounds.bank
-  lastModified: 636601980993310320
+  lastModified: 636603654625586612
   LoadResult: 0
   FileSizes:
   - Name: 
-    Value: 50368
+    Value: 1106944
   Exists: 1
 --- !u!114 &114867409791930004
 MonoBehaviour:
@@ -403,11 +622,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Path: Assets\Resources\FModBuild\DesktopConfig\Master Bank.strings.bank
-  lastModified: 636601980992995087
+  lastModified: 636603654625021214
   LoadResult: 0
   FileSizes:
   - Name: 
-    Value: 1240
+    Value: 1534
   Exists: 1
 --- !u!114 &114960078886542024
 MonoBehaviour:
@@ -422,8 +641,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Path: event:/JumpDusk
   guid: 629af4ce9d3128468dda3752cceeccb0
-  Banks:
-  - {fileID: 114856197706786048}
+  Banks: []
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
