@@ -426,6 +426,19 @@ public class InputManager : MonoBehaviour {
                         instance.verticalAxis2 = (Input.GetAxisRaw("Vertical"));
 
                     } else {
+
+
+                        for (int i = 0; i < 20; i++) {
+                            if (Input.GetKeyDown("joystick 1 button " + i)) {
+                                print("joystick 1 button " + i);
+                            }
+                        }
+                        for (int i = 0; i < 20; i++) {
+                            if (Input.GetKeyDown("joystick 2 button " + i)) {
+                                print("joystick 2 button " + i);
+                            }
+                        }
+
                         //Debug.Log("MANDO");
                         //dashButtonPlayer = (Input.GetAxisRaw("DashPunch") == 1.0);
 
@@ -444,6 +457,13 @@ public class InputManager : MonoBehaviour {
                         } else if (instance.downKey&&!instance.prevDownKey) {
                             Debug.Log("DOWN");
                         }
+                        if (instance.rightKey && !instance.prevRightKey) {
+                            Debug.Log("RIGHT");
+                        }else if (instance.leftKey && !instance.prevLeftKey) {
+                            Debug.Log("LEFT");
+                        }
+
+
 
                         instance.pauseButton = (Input.GetAxisRaw("Pause1") == 1.0);
                         instance.selectButton = (Input.GetAxisRaw("Select1") == 1.0);
