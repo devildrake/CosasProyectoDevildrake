@@ -94,6 +94,7 @@ public class DoubleCheckPoint : DoubleObject
         }
         if (GetComponent<AudioSource>() != null) {
             GetComponent<AudioSource>().clip = interactSound;
+            GetComponent<AudioSource>().volume = 0.1f;
             GetComponent<AudioSource>().Play();
         } else {
             //Debug.Log("No Audio Source");

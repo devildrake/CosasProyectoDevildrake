@@ -18,7 +18,7 @@ public class AnimationSounds : MonoBehaviour {
         if (active) {
             SoundManager.Instance.PlayOneShotSound(path, transform);
         } else {
-            Debug.Log("NotActive");
+            //Debug.Log("NotActive");
         }
     }
 }
