@@ -129,6 +129,8 @@ public class Options_Logic : MonoBehaviour {
                 ReplegandoVideo();
                 break;
         }
+
+        print(currentItem.gameObject.name);
     }
 
 
@@ -167,44 +169,61 @@ public class Options_Logic : MonoBehaviour {
                 currentItem.InteractClick();
             }
         }
-        //accionar los sliders y movimiento horizontal
-        //else if(InputManager.instance.horizontalAxis > 0 || InputManager.instance.horizontalAxis2 > 0) { //derecha
-        //    if(type == NavMenuItem.MENU_ITEM_TYPE.SLIDER) {
-        //        currentItem.InteractRight();
-        //    }
-        //    else if((InputManager.instance.horizontalAxis > 0 && InputManager.instance.prevHorizontalAxis == 0) || (InputManager.instance.horizontalAxis2 > 0 && InputManager.instance.prevHorizontalAxis2 == 0) ) {
-        //        if (type == NavMenuItem.MENU_ITEM_TYPE.MY_SLIDER) {
-        //            currentItem.InteractRight();
-        //        }
-        //        else {
-        //            currentItem = currentItem.RightElement();
-        //        }
-        //    }
-        //}
-        else if (InputManager.instance.horizontalAxis < 0 && InputManager.instance.prevHorizontalAxis == 0 ||
-            InputManager.instance.horizontalAxis2 < 0 && InputManager.instance.prevHorizontalAxis2 == 0) {//izquierda
-            if (type == NavMenuItem.MENU_ITEM_TYPE.MY_SLIDER || type == NavMenuItem.MENU_ITEM_TYPE.SLIDER) {
+        if (type == NavMenuItem.MENU_ITEM_TYPE.SLIDER) {
+            if (InputManager.instance.horizontalAxis > 0.1 || InputManager.instance.horizontalAxis2 > 0.1 || InputManager.instance.rightKey) {//derecha
+                currentItem.InteractRight();
+            }
+            else if (InputManager.instance.horizontalAxis < -0.1 || InputManager.instance.horizontalAxis2 < -0.1 || InputManager.instance.leftKey) {//izquierda
                 currentItem.InteractLeft();
             }
-            else {
-                currentItem = currentItem.LeftElement();
+        }
+        else if (type == NavMenuItem.MENU_ITEM_TYPE.MY_SLIDER) {
+            //derecha
+            if ((InputManager.instance.horizontalAxis > 0.1 && InputManager.instance.prevHorizontalAxis == 0) || (InputManager.instance.horizontalAxis2 > 0.1 && InputManager.instance.prevHorizontalAxis2 == 0) || (InputManager.instance.rightKey && !InputManager.instance.prevRightKey)) {
+                currentItem.InteractRight();
+            }
+            //izquierda
+            else if ((InputManager.instance.horizontalAxis < -0.1 && InputManager.instance.prevHorizontalAxis == 0) || (InputManager.instance.horizontalAxis2 < -0.1 && InputManager.instance.prevHorizontalAxis2 == 0) || (InputManager.instance.leftKey && !InputManager.instance.prevLeftKey)) {
+                currentItem.InteractLeft();
             }
         }
-        //navegar arriba y abajo
-        /*
-         * =============ERRORES
-         * no va hacia arriba
-         * Cuando cambias de menu (setas) no cambias a navegar al otro lado.
-         * 
-         */
-        else if(InputManager.instance.verticalAxis < -0.5 && InputManager.instance.prevVerticalAxis > -0.5 ||
-            InputManager.instance.verticalAxis2 < -0.5 && InputManager.instance.prevVerticalAxis2 > -0.5) {//abajo
-            currentItem = currentItem.DownElement();
+
+        //MOVIMIENTO VERTICAL
+        //abajo
+        if ((InputManager.instance.verticalAxis < 0 && InputManager.instance.prevVerticalAxis == 0) || (InputManager.instance.verticalAxis2 < 0 && InputManager.instance.prevVerticalAxis2 == 0) || (InputManager.instance.downKey && !InputManager.instance.prevDownKey)) {//abajo
+            if (type == NavMenuItem.MENU_ITEM_TYPE.SHROOM_BUTTON && currentState == OptionsState.AUDIO_DESPLEGADO) {
+                currentItem = currentItem.DownElement(0);
+            }
+            else if(type == NavMenuItem.MENU_ITEM_TYPE.SHROOM_BUTTON && currentState == OptionsState.VIDEO_DESPLEGADO){
+                currentItem = currentItem.DownElement(1);
+            }
+            else {
+                currentItem = currentItem.DownElement(0);
+            }
         }
-        else if(InputManager.instance.verticalAxis > 0.5 && InputManager.instance.verticalAxis < 0.5 ||
-            InputManager.instance.verticalAxis2 > 0.5 && InputManager.instance.verticalAxis2 < 0.5) {//arriba
-            currentItem = currentItem.UpElement();
+        //arriba
+        else if ((InputManager.instance.verticalAxis > 0 && InputManager.instance.prevVerticalAxis == 0) || (InputManager.instance.verticalAxis2 > 0 && InputManager.instance.prevVerticalAxis2 == 0) || (InputManager.instance.upKey && !InputManager.instance.prevUpKey)) {//arriba
+            if (type == NavMenuItem.MENU_ITEM_TYPE.BUTTON && currentState == OptionsState.AUDIO_DESPLEGADO) {
+                currentItem = currentItem.UpElement(0);
+            }
+            else if (type == NavMenuItem.MENU_ITEM_TYPE.BUTTON && currentState == OptionsState.VIDEO_DESPLEGADO) {
+                currentItem = currentItem.UpElement(1);
+            }
+            else {
+                currentItem = currentItem.UpElement();
+            }
         }
+
+        //MOVIMIENTO HORIZONTAL
+        //derecha
+        if ((InputManager.instance.horizontalAxis > 0 && InputManager.instance.prevHorizontalAxis == 0) || (InputManager.instance.horizontalAxis2 > 0 && InputManager.instance.prevHorizontalAxis2 == 0) || (InputManager.instance.rightKey && !InputManager.instance.prevRightKey)) {
+            currentItem = currentItem.RightElement();
+        }
+        //izquierda
+        else if ((InputManager.instance.horizontalAxis < 0 && InputManager.instance.prevHorizontalAxis == 0) || (InputManager.instance.horizontalAxis2 < 0 && InputManager.instance.prevHorizontalAxis2 == 0) || (InputManager.instance.leftKey && !InputManager.instance.prevLeftKey)) {
+            currentItem = currentItem.LeftElement();
+        }
+
     }
 
     private void ReplegandoVideo() {
@@ -346,6 +365,10 @@ public class Options_Logic : MonoBehaviour {
         transformSetaVideo.localPosition = originalSetaVideoPos;
         transformSetaAudio.localPosition += new Vector3(0, setaOffset, 0);
         transformBG.localPosition += new Vector3(0, bgOffset, 0);
+
+        //se highlightea el shroom del audio
+        currentItem = firstAudio;
+        currentItem.highlight.SetActive(true);
 
         //resetear todos los cambios que se le hayan hecho al menu
         musica.value = prevMusic;

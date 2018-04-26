@@ -175,6 +175,7 @@ public class NavMenuItem : MonoBehaviour {
     public void InteractClick() {
         switch (myType) {
             case MENU_ITEM_TYPE.BUTTON:
+                deselectButtons.SetSelectedGameObject(null);
                 button1.onClick.Invoke();
                 break;
             case MENU_ITEM_TYPE.TOGGLE:
