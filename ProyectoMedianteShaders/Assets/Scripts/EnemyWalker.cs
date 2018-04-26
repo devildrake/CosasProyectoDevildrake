@@ -173,6 +173,7 @@ public class EnemyWalker : DoubleObject {
                 timeSinceStompedOn = 0;
                 if (other.GetComponent<Rigidbody2D>().velocity.y <= 0) {
                     other.GetComponent<Rigidbody2D>().velocity = new Vector2(other.GetComponent<Rigidbody2D>().velocity.x, 0);
+                    SoundManager.Instance.PlayEvent("event:/Enemies/Bouncer/Bounce", transform);
                     other.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, 1 * bounceForce), ForceMode2D.Impulse);
                     other.GetComponent<PlayerController>().SetCanDash(true);
                     //Debug.Log(other.GetComponent<Rigidbody2D>().velocity);
@@ -180,6 +181,7 @@ public class EnemyWalker : DoubleObject {
             } else if (other.GetComponent<DoubleObject>() != null) {
                 timeSinceStompedOn = 0;
                 if (other.GetComponent<DoubleObject>().canBounce) {
+                    SoundManager.Instance.PlayEvent("event:/Enemies/Bouncer/Bounce", transform);
                     other.GetComponent<Rigidbody2D>().velocity = new Vector2(other.GetComponent<Rigidbody2D>().velocity.x, 0);
                     other.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, other.GetComponent<Rigidbody2D>().mass * bounceForce), ForceMode2D.Impulse);
                 }

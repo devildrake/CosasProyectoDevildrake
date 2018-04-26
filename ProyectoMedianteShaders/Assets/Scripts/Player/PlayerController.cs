@@ -355,7 +355,7 @@ public class PlayerController : DoubleObject {
                         }
                     } else {
 
-                        if (placeToGo.tag == "Finish") {
+                        if (placeToGo.tag == "Finish"&&grounded) {
                             myAnimator.gameObject.transform.rotation = Quaternion.identity;
                             //brotherAnimator.gameObject.transform.rotation = q;
                             if (transform.position.z > 1.8f) {
@@ -540,6 +540,11 @@ public class PlayerController : DoubleObject {
 
                             }
 
+                            if (!grounded) {
+                                armstate = ARMSTATE.IDLE;
+                                arm.meshObject.SetActive(false);
+                            }
+
                             break;
                         case ARMSTATE.PUNCH:
                             if (state == PLAYBACK_STATE.PLAYING) {
@@ -604,6 +609,11 @@ public class PlayerController : DoubleObject {
                                 if (state != PLAYBACK_STATE.PLAYING) {
                                     punchChargeEvent.start();
                                 }
+                            }
+
+                            if (NearbyObjects.Count == 0) {
+                                armstate = ARMSTATE.IDLE;
+                                break;
                             }
 
                             //Aqui hay que hacer que el brazo se coloque en la posición original y vaya justo a la posición central + new Vector3(0,2,0) del objeto grabbeable delante suyo 
@@ -1181,6 +1191,12 @@ public class PlayerController : DoubleObject {
 
     //Metodo que añade una fuerza al personaje para simular un salto
     public void Jump() {
+
+        if (arm != null) {
+            armstate = ARMSTATE.IDLE;
+            arm.meshObject.SetActive(false);
+        }
+
         rb.velocity= new Vector2(0,0);
         //audioSource.pitch = 1.0f;
 
