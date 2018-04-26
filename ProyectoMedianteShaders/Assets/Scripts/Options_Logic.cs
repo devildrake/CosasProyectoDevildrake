@@ -106,6 +106,27 @@ public class Options_Logic : MonoBehaviour {
         //se activa el highlight del primer elemento de navegacion con mando/teclado
         currentItem = firstAudio;
         currentItem.highlight.SetActive(true);
+
+        musica.onValueChanged.AddListener(delegate {
+            if (!mute.isOn) {
+                SoundManager.Instance.ChangeMusicVolume(musica.value);
+            }
+        });
+        sfx.onValueChanged.AddListener(delegate {
+            if (!mute.isOn) {
+                SoundManager.Instance.ChangeFXVolume(sfx.value);
+            }
+        });
+        mute.onValueChanged.AddListener(delegate {
+            if (mute.isOn) {
+                SoundManager.Instance.ChangeMusicVolume(0);
+                SoundManager.Instance.ChangeFXVolume(0);
+            }
+            else {
+                SoundManager.Instance.ChangeMusicVolume(musica.value);
+                SoundManager.Instance.ChangeFXVolume(sfx.value);
+            }
+        });
     }
 
     void Update() {
@@ -392,19 +413,19 @@ public class Options_Logic : MonoBehaviour {
     public void MyScrollingOptionRight(GameObject go) {
         if (go.name.Equals("resolution_group")) {
             if (resolutionSel < resolutions.Count - 1) {
-                go.transform.position -= new Vector3(slideItemOffset, 0, 0);
+                go.transform.localPosition -= new Vector3(slideItemOffset, 0, 0);
                 resolutionSel++;
             }
         }
         else if (go.name.Equals("fps_group")) {
             if (fpsSel < fpsList.Count - 1) {
-                go.transform.position -= new Vector3(slideItemOffset, 0, 0);
+                go.transform.localPosition -= new Vector3(slideItemOffset, 0, 0);
                 fpsSel++;
             }
         }
         else if (go.name.Equals("calidad_group")) {
             if (qualitySel < qualityElements - 1) {
-                go.transform.position -= new Vector3(slideItemOffset, 0, 0);
+                go.transform.localPosition -= new Vector3(slideItemOffset, 0, 0);
                 qualitySel++;
             }
         }
@@ -413,19 +434,19 @@ public class Options_Logic : MonoBehaviour {
     public void MyScrollingOptionsLeft(GameObject go) {
         if (go.name.Equals("resolution_group")) {
             if (resolutionSel > 0) {
-                go.transform.position += new Vector3(slideItemOffset, 0, 0);
+                go.transform.localPosition += new Vector3(slideItemOffset, 0, 0);
                 resolutionSel--;
             }
         }
         else if (go.name.Equals("fps_group")) {
             if (fpsSel > 0) {
-                go.transform.position += new Vector3(slideItemOffset, 0, 0);
+                go.transform.localPosition += new Vector3(slideItemOffset, 0, 0);
                 fpsSel--;
             }
         }
         else if (go.name.Equals("calidad_group")) {
             if (qualitySel > 0) {
-                go.transform.position += new Vector3(slideItemOffset, 0, 0);
+                go.transform.localPosition += new Vector3(slideItemOffset, 0, 0);
                 qualitySel--;
             }
         }
