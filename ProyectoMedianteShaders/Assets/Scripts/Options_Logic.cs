@@ -34,6 +34,9 @@ public class Options_Logic : MonoBehaviour {
     private int prevResolution, prevQuality, prevFps;
     private bool prevMute, prevMostrarTiempo;
 
+    [SerializeField] private NavMenuItem firstAudio, firstVideo;
+    private NavMenuItem currentItem;
+
     void Awake() {
         transformSetaAudio = setaAudio.GetComponent<RectTransform>();
         transformSetaVideo = setaVideo.GetComponent<RectTransform>();
@@ -99,7 +102,10 @@ public class Options_Logic : MonoBehaviour {
         foreach(GameObject g in menuElements) {
             g.SetActive(false);
         }
-        
+
+        //se activa el highlight del primer elemento de navegacion con mando/teclado
+        currentItem = firstAudio;
+        currentItem.highlight.SetActive(true);
     }
 
     void Update() {
@@ -127,22 +133,46 @@ public class Options_Logic : MonoBehaviour {
 
 
     private void AudioDesplegado() {
-        if (InputManager.instance.cancelButton) {
+        //cerrar el menu si se le da a escape
+        if (InputManager.instance.cancelButton || InputManager.instance.cancelButton2) {
             goingTo = OptionsState.CERRAR;
             currentState = OptionsState.REPLEGANDO_AUDIO;
             foreach (GameObject go in menuElements) {
                 go.SetActive(false);
             }
         }
-    
+        MenuNav();
     }
 
     private void VideoDesplegado() {
-        if (InputManager.instance.cancelButton) {
+        //cerrar el menu si se le da a escape
+        if (InputManager.instance.cancelButton || InputManager.instance.cancelButton2) {
             goingTo = OptionsState.CERRAR;
             currentState = OptionsState.REPLEGANDO_VIDEO;
             foreach (GameObject go in menuElements) {
                 go.SetActive(false);
+            }
+        }
+        MenuNav();
+    }
+
+    private void MenuNav() {
+        NavMenuItem.MENU_ITEM_TYPE type = currentItem.myType;
+
+        //accionar una opcion
+        if (InputManager.instance.selectButton || InputManager.instance.selectButton2) {
+            if(type == NavMenuItem.MENU_ITEM_TYPE.BUTTON || type == NavMenuItem.MENU_ITEM_TYPE.SHROOM_BUTTON || type == NavMenuItem.MENU_ITEM_TYPE.TOGGLE) {
+                currentItem.InteractClick();
+            }
+        }
+        else if(InputManager.instance.horizontalAxis > 0 || InputManager.instance.horizontalAxis2 > 0) {
+            if(type == NavMenuItem.MENU_ITEM_TYPE.MY_SLIDER || type == NavMenuItem.MENU_ITEM_TYPE.SLIDER) {
+                currentItem.InteractRight();
+            }
+        }
+        else if (InputManager.instance.horizontalAxis < 0 || InputManager.instance.horizontalAxis2 < 0) {
+            if (type == NavMenuItem.MENU_ITEM_TYPE.MY_SLIDER || type == NavMenuItem.MENU_ITEM_TYPE.SLIDER) {
+                currentItem.InteractLeft();
             }
         }
     }
@@ -210,6 +240,9 @@ public class Options_Logic : MonoBehaviour {
             }
             transformSetaVideo.localPosition = originalSetaVideoPos;
             transformSetaAudio.localPosition += new Vector3(0, setaOffset, 0);
+            currentItem.highlight.SetActive(false);
+            currentItem = firstAudio;
+            currentItem.highlight.SetActive(true);
         }
     }
 
@@ -222,6 +255,9 @@ public class Options_Logic : MonoBehaviour {
             }
             transformSetaAudio.localPosition = originalSetaAudioPos;
             transformSetaVideo.localPosition += new Vector3(0, setaOffset, 0);
+            currentItem.highlight.SetActive(false);
+            currentItem = firstVideo;
+            currentItem.highlight.SetActive(true);
         }
     }
 

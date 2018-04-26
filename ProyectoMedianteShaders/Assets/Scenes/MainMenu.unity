@@ -544,6 +544,7 @@ GameObject:
   m_Component:
   - component: {fileID: 90405621}
   - component: {fileID: 90405622}
+  - component: {fileID: 90405623}
   m_Layer: 5
   m_Name: Music_Slider
   m_TagString: Untagged
@@ -620,6 +621,28 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.Slider+SliderEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &90405623
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 90405620}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39a43fb14b2896d4b92c3985eea38674, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  upItem: {fileID: 484172403}
+  upItem2: {fileID: 0}
+  downItem: {fileID: 115998244}
+  downItem2: {fileID: 0}
+  rightItem: {fileID: 0}
+  leftItem: {fileID: 0}
+  highlight: {fileID: 1170072096}
+  selectableElement1: {fileID: 90405622}
+  selectableElement2: {fileID: 0}
+  myType: 2
+  optionsPart: 2
 --- !u!1 &115998241
 GameObject:
   m_ObjectHideFlags: 0
@@ -629,6 +652,7 @@ GameObject:
   m_Component:
   - component: {fileID: 115998242}
   - component: {fileID: 115998243}
+  - component: {fileID: 115998244}
   m_Layer: 5
   m_Name: Sfx_Slider
   m_TagString: Untagged
@@ -705,6 +729,28 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.Slider+SliderEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &115998244
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 115998241}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39a43fb14b2896d4b92c3985eea38674, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  upItem: {fileID: 90405623}
+  upItem2: {fileID: 0}
+  downItem: {fileID: 1595706027}
+  downItem2: {fileID: 0}
+  rightItem: {fileID: 0}
+  leftItem: {fileID: 0}
+  highlight: {fileID: 644723272}
+  selectableElement1: {fileID: 115998243}
+  selectableElement2: {fileID: 0}
+  myType: 2
+  optionsPart: 2
 --- !u!1 &116828354
 GameObject:
   m_ObjectHideFlags: 0
@@ -2141,6 +2187,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 391082692}
+  - component: {fileID: 391082693}
   m_Layer: 5
   m_Name: Resoluciones
   m_TagString: Untagged
@@ -2170,6 +2217,28 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 53}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &391082693
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 391082691}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39a43fb14b2896d4b92c3985eea38674, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  upItem: {fileID: 664687501}
+  upItem2: {fileID: 0}
+  downItem: {fileID: 690685689}
+  downItem2: {fileID: 0}
+  rightItem: {fileID: 0}
+  leftItem: {fileID: 0}
+  highlight: {fileID: 148111072}
+  selectableElement1: {fileID: 11542076}
+  selectableElement2: {fileID: 1063081198}
+  myType: 3
+  optionsPart: 1
 --- !u!1 &409400858
 GameObject:
   m_ObjectHideFlags: 0
@@ -2831,6 +2900,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 484172402}
+  - component: {fileID: 484172403}
   m_Layer: 5
   m_Name: Seta_Audio
   m_TagString: Untagged
@@ -2858,6 +2928,28 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &484172403
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 484172401}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39a43fb14b2896d4b92c3985eea38674, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  upItem: {fileID: 975743074}
+  upItem2: {fileID: 0}
+  downItem: {fileID: 90405623}
+  downItem2: {fileID: 947843434}
+  rightItem: {fileID: 1294985508}
+  leftItem: {fileID: 1294985508}
+  highlight: {fileID: 1816121152}
+  selectableElement1: {fileID: 1193619841}
+  selectableElement2: {fileID: 0}
+  myType: 0
+  optionsPart: 0
 --- !u!1 &484331050
 GameObject:
   m_ObjectHideFlags: 0
@@ -3680,6 +3772,7 @@ GameObject:
   m_Component:
   - component: {fileID: 664687499}
   - component: {fileID: 664687500}
+  - component: {fileID: 664687501}
   m_Layer: 5
   m_Name: Pantalla_Completa_Toggle
   m_TagString: Untagged
@@ -3752,6 +3845,28 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.Toggle+ToggleEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
   m_IsOn: 1
+--- !u!114 &664687501
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 664687498}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39a43fb14b2896d4b92c3985eea38674, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  upItem: {fileID: 947843434}
+  upItem2: {fileID: 0}
+  downItem: {fileID: 391082693}
+  downItem2: {fileID: 0}
+  rightItem: {fileID: 0}
+  leftItem: {fileID: 0}
+  highlight: {fileID: 548002956}
+  selectableElement1: {fileID: 664687500}
+  selectableElement2: {fileID: 0}
+  myType: 4
+  optionsPart: 1
 --- !u!1 &670943124
 GameObject:
   m_ObjectHideFlags: 0
@@ -3783,7 +3898,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -3896,6 +4011,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 690685688}
+  - component: {fileID: 690685689}
   m_Layer: 5
   m_Name: FPS
   m_TagString: Untagged
@@ -3925,6 +4041,28 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -42}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &690685689
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 690685687}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39a43fb14b2896d4b92c3985eea38674, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  upItem: {fileID: 391082693}
+  upItem2: {fileID: 0}
+  downItem: {fileID: 1664743092}
+  downItem2: {fileID: 0}
+  rightItem: {fileID: 0}
+  leftItem: {fileID: 0}
+  highlight: {fileID: 1374798437}
+  selectableElement1: {fileID: 200010205}
+  selectableElement2: {fileID: 2085042654}
+  myType: 3
+  optionsPart: 1
 --- !u!1 &726096653
 GameObject:
   m_ObjectHideFlags: 0
@@ -3936,6 +4074,7 @@ GameObject:
   - component: {fileID: 726096657}
   - component: {fileID: 726096656}
   - component: {fileID: 726096655}
+  - component: {fileID: 726096658}
   m_Layer: 5
   m_Name: Aceptar_Button
   m_TagString: Untagged
@@ -4048,6 +4187,28 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 726096653}
+--- !u!114 &726096658
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 726096653}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39a43fb14b2896d4b92c3985eea38674, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  upItem: {fileID: 1595706027}
+  upItem2: {fileID: 1664743092}
+  downItem: {fileID: 1294985508}
+  downItem2: {fileID: 0}
+  rightItem: {fileID: 975743074}
+  leftItem: {fileID: 975743074}
+  highlight: {fileID: 0}
+  selectableElement1: {fileID: 726096655}
+  selectableElement2: {fileID: 0}
+  myType: 1
+  optionsPart: 0
 --- !u!1 &733178079
 GameObject:
   m_ObjectHideFlags: 0
@@ -4586,6 +4747,7 @@ GameObject:
   m_Component:
   - component: {fileID: 947843432}
   - component: {fileID: 947843433}
+  - component: {fileID: 947843434}
   m_Layer: 5
   m_Name: Mostrar_Tiempo_Toggle
   m_TagString: Untagged
@@ -4658,6 +4820,28 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.Toggle+ToggleEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
   m_IsOn: 1
+--- !u!114 &947843434
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 947843431}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39a43fb14b2896d4b92c3985eea38674, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  upItem: {fileID: 1294985508}
+  upItem2: {fileID: 0}
+  downItem: {fileID: 664687501}
+  downItem2: {fileID: 0}
+  rightItem: {fileID: 0}
+  leftItem: {fileID: 0}
+  highlight: {fileID: 521446296}
+  selectableElement1: {fileID: 947843433}
+  selectableElement2: {fileID: 0}
+  myType: 4
+  optionsPart: 1
 --- !u!1 &960732354
 GameObject:
   m_ObjectHideFlags: 0
@@ -4903,6 +5087,7 @@ GameObject:
   - component: {fileID: 975743073}
   - component: {fileID: 975743072}
   - component: {fileID: 975743071}
+  - component: {fileID: 975743074}
   m_Layer: 5
   m_Name: Cancelar_Button
   m_TagString: Untagged
@@ -5015,6 +5200,28 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 975743069}
+--- !u!114 &975743074
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 975743069}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39a43fb14b2896d4b92c3985eea38674, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  upItem: {fileID: 1595706027}
+  upItem2: {fileID: 1664743092}
+  downItem: {fileID: 484172403}
+  downItem2: {fileID: 0}
+  rightItem: {fileID: 726096658}
+  leftItem: {fileID: 726096658}
+  highlight: {fileID: 0}
+  selectableElement1: {fileID: 975743071}
+  selectableElement2: {fileID: 0}
+  myType: 1
+  optionsPart: 0
 --- !u!1 &988511033
 GameObject:
   m_ObjectHideFlags: 0
@@ -9769,7 +9976,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1260324086
 RectTransform:
   m_ObjectHideFlags: 0
@@ -9784,8 +9991,8 @@ RectTransform:
   - {fileID: 90405621}
   - {fileID: 1340168208}
   - {fileID: 115998242}
-  - {fileID: 1595706025}
   - {fileID: 1347644706}
+  - {fileID: 1595706025}
   m_Father: {fileID: 736544783}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -10285,6 +10492,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 1294985507}
+  - component: {fileID: 1294985508}
   m_Layer: 5
   m_Name: Seta_Video
   m_TagString: Untagged
@@ -10312,6 +10520,28 @@ RectTransform:
   m_AnchoredPosition: {x: 88.92007, y: 185.44005}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1294985508
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1294985506}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39a43fb14b2896d4b92c3985eea38674, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  upItem: {fileID: 726096658}
+  upItem2: {fileID: 0}
+  downItem: {fileID: 90405623}
+  downItem2: {fileID: 947843434}
+  rightItem: {fileID: 484172403}
+  leftItem: {fileID: 484172403}
+  highlight: {fileID: 1562596343}
+  selectableElement1: {fileID: 733178083}
+  selectableElement2: {fileID: 0}
+  myType: 0
+  optionsPart: 0
 --- !u!1 &1306267906
 GameObject:
   m_ObjectHideFlags: 0
@@ -10546,7 +10776,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1328916589
 RectTransform:
   m_ObjectHideFlags: 0
@@ -10814,7 +11044,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1260324086}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -12024,6 +12254,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1595706025}
   - component: {fileID: 1595706026}
+  - component: {fileID: 1595706027}
   m_Layer: 5
   m_Name: Mute_Toggle
   m_TagString: Untagged
@@ -12044,7 +12275,7 @@ RectTransform:
   - {fileID: 677984430}
   - {fileID: 1032336318}
   m_Father: {fileID: 1260324086}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -12096,6 +12327,28 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.Toggle+ToggleEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
   m_IsOn: 1
+--- !u!114 &1595706027
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1595706024}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39a43fb14b2896d4b92c3985eea38674, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  upItem: {fileID: 115998244}
+  upItem2: {fileID: 0}
+  downItem: {fileID: 975743074}
+  downItem2: {fileID: 0}
+  rightItem: {fileID: 0}
+  leftItem: {fileID: 0}
+  highlight: {fileID: 677984429}
+  selectableElement1: {fileID: 1595706026}
+  selectableElement2: {fileID: 0}
+  myType: 4
+  optionsPart: 2
 --- !u!1 &1614019824
 GameObject:
   m_ObjectHideFlags: 0
@@ -12134,6 +12387,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 1664743091}
+  - component: {fileID: 1664743092}
   m_Layer: 5
   m_Name: Calidad
   m_TagString: Untagged
@@ -12163,6 +12417,28 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -129}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1664743092
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1664743090}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39a43fb14b2896d4b92c3985eea38674, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  upItem: {fileID: 690685689}
+  upItem2: {fileID: 0}
+  downItem: {fileID: 975743074}
+  downItem2: {fileID: 0}
+  rightItem: {fileID: 0}
+  leftItem: {fileID: 0}
+  highlight: {fileID: 1836825024}
+  selectableElement1: {fileID: 1790706523}
+  selectableElement2: {fileID: 610087202}
+  myType: 0
+  optionsPart: 0
 --- !u!1 &1683309496
 GameObject:
   m_ObjectHideFlags: 0
@@ -12361,7 +12637,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -12691,6 +12967,8 @@ MonoBehaviour:
   resolutionGroup: {fileID: 1336585452}
   fpsGroup: {fileID: 158884484}
   qualityGroup: {fileID: 173967169}
+  firstAudio: {fileID: 484172403}
+  firstVideo: {fileID: 1294985508}
 --- !u!1 &1790706521
 GameObject:
   m_ObjectHideFlags: 0
@@ -14045,7 +14323,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -14114,7 +14392,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
