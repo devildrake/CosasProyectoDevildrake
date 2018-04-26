@@ -166,7 +166,7 @@ public class MenuLogic : MonoBehaviour {
 
     private void State1Behavior() {
         //MOVIMIENTO ENTRE LAS OPCIONES
-        if (((InputManager.instance.prevVerticalAxis == 0 && InputManager.instance.prevVerticalAxis2 == 0)&&!InputManager.instance.prevDownKey&&!InputManager.instance.prevUpKey) && (InputManager.instance.verticalAxis > 0 || InputManager.instance.verticalAxis2 > 0||InputManager.instance.downKey)) {//+1
+        if (((InputManager.instance.prevVerticalAxis == 0 && InputManager.instance.prevVerticalAxis2 == 0)&&!InputManager.instance.prevDownKey&&!InputManager.instance.prevUpKey) && (InputManager.instance.verticalAxis < 0 || InputManager.instance.verticalAxis2 < 0||InputManager.instance.downKey)) {//-1
             if (!axisInUse) {
                 axisInUse = true;
                 selected--;
@@ -175,7 +175,7 @@ public class MenuLogic : MonoBehaviour {
                 }
             }
         }
-        else if (((InputManager.instance.prevVerticalAxis == 0 && InputManager.instance.prevVerticalAxis2 == 0) && !InputManager.instance.prevDownKey && !InputManager.instance.prevUpKey) && (InputManager.instance.verticalAxis < 0 || InputManager.instance.verticalAxis2 < 0||InputManager.instance.upKey)) {//-1
+        else if (((InputManager.instance.prevVerticalAxis == 0 && InputManager.instance.prevVerticalAxis2 == 0) && !InputManager.instance.prevDownKey && !InputManager.instance.prevUpKey) && (InputManager.instance.verticalAxis > 0 || InputManager.instance.verticalAxis2 > 0||InputManager.instance.upKey)) {//+1
             if (!axisInUse) {
                 axisInUse = true;
                 selected++;

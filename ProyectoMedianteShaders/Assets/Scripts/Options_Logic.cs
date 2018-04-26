@@ -156,24 +156,54 @@ public class Options_Logic : MonoBehaviour {
         MenuNav();
     }
 
+    //METODO DE CONTROL DE LA NAVEGACION DE LAS OPCIONES
     private void MenuNav() {
         NavMenuItem.MENU_ITEM_TYPE type = currentItem.myType;
 
         //accionar una opcion
-        if (InputManager.instance.selectButton || InputManager.instance.selectButton2) {
+        if (InputManager.instance.selectButton && !InputManager.instance.prevSelectButton || 
+            InputManager.instance.selectButton2 &&  !InputManager.instance.prevSelectButton2) {
             if(type == NavMenuItem.MENU_ITEM_TYPE.BUTTON || type == NavMenuItem.MENU_ITEM_TYPE.SHROOM_BUTTON || type == NavMenuItem.MENU_ITEM_TYPE.TOGGLE) {
                 currentItem.InteractClick();
             }
         }
-        else if(InputManager.instance.horizontalAxis > 0 || InputManager.instance.horizontalAxis2 > 0) {
-            if(type == NavMenuItem.MENU_ITEM_TYPE.MY_SLIDER || type == NavMenuItem.MENU_ITEM_TYPE.SLIDER) {
-                currentItem.InteractRight();
-            }
-        }
-        else if (InputManager.instance.horizontalAxis < 0 || InputManager.instance.horizontalAxis2 < 0) {
+        //accionar los sliders y movimiento horizontal
+        //else if(InputManager.instance.horizontalAxis > 0 || InputManager.instance.horizontalAxis2 > 0) { //derecha
+        //    if(type == NavMenuItem.MENU_ITEM_TYPE.SLIDER) {
+        //        currentItem.InteractRight();
+        //    }
+        //    else if((InputManager.instance.horizontalAxis > 0 && InputManager.instance.prevHorizontalAxis == 0) || (InputManager.instance.horizontalAxis2 > 0 && InputManager.instance.prevHorizontalAxis2 == 0) ) {
+        //        if (type == NavMenuItem.MENU_ITEM_TYPE.MY_SLIDER) {
+        //            currentItem.InteractRight();
+        //        }
+        //        else {
+        //            currentItem = currentItem.RightElement();
+        //        }
+        //    }
+        //}
+        else if (InputManager.instance.horizontalAxis < 0 && InputManager.instance.prevHorizontalAxis == 0 ||
+            InputManager.instance.horizontalAxis2 < 0 && InputManager.instance.prevHorizontalAxis2 == 0) {//izquierda
             if (type == NavMenuItem.MENU_ITEM_TYPE.MY_SLIDER || type == NavMenuItem.MENU_ITEM_TYPE.SLIDER) {
                 currentItem.InteractLeft();
             }
+            else {
+                currentItem = currentItem.LeftElement();
+            }
+        }
+        //navegar arriba y abajo
+        /*
+         * =============ERRORES
+         * no va hacia arriba
+         * Cuando cambias de menu (setas) no cambias a navegar al otro lado.
+         * 
+         */
+        else if(InputManager.instance.verticalAxis < -0.5 && InputManager.instance.prevVerticalAxis > -0.5 ||
+            InputManager.instance.verticalAxis2 < -0.5 && InputManager.instance.prevVerticalAxis2 > -0.5) {//abajo
+            currentItem = currentItem.DownElement();
+        }
+        else if(InputManager.instance.verticalAxis > 0.5 && InputManager.instance.verticalAxis < 0.5 ||
+            InputManager.instance.verticalAxis2 > 0.5 && InputManager.instance.verticalAxis2 < 0.5) {//arriba
+            currentItem = currentItem.UpElement();
         }
     }
 
