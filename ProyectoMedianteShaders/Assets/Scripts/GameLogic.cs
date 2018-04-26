@@ -42,6 +42,7 @@ public class GameLogic : MonoBehaviour {
     //////////////////////VARIABLES LOAD/SAVE////////////////////////////
     //////////////////////VARIABLES LOAD/SAVE////////////////////////////
 
+    public bool canBePaused=true;
     public bool showTimeCounter=false;
     public string levelName = "NonSet";
 
@@ -503,7 +504,7 @@ public class GameLogic : MonoBehaviour {
     //Método que controla cuando se le da al escape para pausar, a su vez activa y desactiva el cursor en función de si 
     //Se abre el menú in game y se modificar la variable isPaused
     void CheckPauseInput() {
-        if ((currentPlayer.dawn&&InputManager.instance.pauseButton&&!InputManager.instance.prevPauseButton)||!currentPlayer.dawn&&InputManager.instance.pauseButton2&&!InputManager.instance.prevPauseButton2) {
+        if ((currentPlayer.dawn&&InputManager.instance.pauseButton&&!InputManager.instance.prevPauseButton)||!currentPlayer.dawn&&InputManager.instance.pauseButton2&&!InputManager.instance.prevPauseButton2&&canBePaused) {
             if (isPaused) {
                 Cursor.visible = false;
                 Cursor.lockState = CursorLockMode.None; //Se engancha el cursor en el centro de la pantalla.
