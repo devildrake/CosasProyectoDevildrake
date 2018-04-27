@@ -209,7 +209,7 @@ public class MenuLogic : MonoBehaviour {
                     InputManager.currentGameMode = InputManager.GAMEMODE.SINGLEPLAYER;
                     GameLogic.instance.SetTimeScaleLocal(1);
                     InputManager.BlockInput();
-                    GameLogic.instance.LoadScene(2);
+                    GameLogic.instance.LoadScene(3);
                 }
             }
             else if (selected == 2) {
@@ -232,7 +232,7 @@ public class MenuLogic : MonoBehaviour {
                     InputManager.currentGameMode = InputManager.GAMEMODE.MULTI_KEYBOARD_CONTROLLER;
                     GameLogic.instance.SetTimeScaleLocal(1);
                     InputManager.BlockInput();
-                    GameLogic.instance.LoadScene(2);
+                    GameLogic.instance.LoadScene(3);
                 }
             }
         }
@@ -242,20 +242,36 @@ public class MenuLogic : MonoBehaviour {
             RaycastHit hit;
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if(Physics.Raycast(ray, out hit, 100.0f)) {
-                if(hit.transform.gameObject.name == "jugar") {
+                if(hit.transform.gameObject.name == "1 jugador") {
                     selected = 0;
                     if (GameLogic.instance.firstOpening) {
                         GameLogic.instance.SetTimeScaleLocal(1);
+                        InputManager.BlockInput();
+                        InputManager.currentGameMode = InputManager.GAMEMODE.SINGLEPLAYER;
                         GameLogic.instance.LoadScene(2);
-
                         GameLogic.instance.firstOpening = true;
                     } else {
+                        InputManager.currentGameMode = InputManager.GAMEMODE.SINGLEPLAYER;
                         GameLogic.instance.SetTimeScaleLocal(1);
-                        GameLogic.instance.LoadScene(2);
-
+                        InputManager.BlockInput();
+                        GameLogic.instance.LoadScene(3);
                     }
                 }
-                else if(hit.transform.gameObject.name == "opciones") {
+                else if (hit.transform.gameObject.name == "2 jugadores") {
+                    selected = 3;
+                    if (GameLogic.instance.firstOpening) {
+                        GameLogic.instance.SetTimeScaleLocal(1);
+                        InputManager.BlockInput();
+                        InputManager.currentGameMode = InputManager.GAMEMODE.MULTI_KEYBOARD_CONTROLLER;
+                        GameLogic.instance.LoadScene(2);
+                        GameLogic.instance.firstOpening = true;
+                    } else {
+                        InputManager.currentGameMode = InputManager.GAMEMODE.MULTI_KEYBOARD_CONTROLLER;
+                        GameLogic.instance.SetTimeScaleLocal(1);
+                        InputManager.BlockInput();
+                        GameLogic.instance.LoadScene(3);
+                    }
+                } else if(hit.transform.gameObject.name == "opciones") {
                     selected = 2;
                     newOptionsCanvas.SetActive(true);
                     menuState = 2;
