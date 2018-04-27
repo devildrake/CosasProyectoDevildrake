@@ -55,6 +55,7 @@ public class DoubleCheckPoint : DoubleObject
     void Update() {
         AddToGameLogicList();
         BrotherBehavior();
+
         if (interacted) {
             if (particulasInteraccion != null) {
 

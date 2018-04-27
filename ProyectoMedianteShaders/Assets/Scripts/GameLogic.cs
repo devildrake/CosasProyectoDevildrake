@@ -329,6 +329,13 @@ public class GameLogic : MonoBehaviour {
 
     void Update() {
 
+        if (currentPlayer != null) {
+            if (Input.GetKey(KeyCode.N)) {
+                Debug.Log("Trying to load scene" + instance.pauseCanvas.nextSceneIndex);
+                instance.LoadScene(instance.pauseCanvas.nextSceneIndex);
+            }
+        }
+
         transformableObjects.RemoveAll(isNull);
 
         TimeScaleStuff();
