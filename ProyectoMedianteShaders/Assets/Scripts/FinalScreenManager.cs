@@ -38,7 +38,10 @@ public class FinalScreenManager : MonoBehaviour {
         }
 
         if (creditsObject.transform.position.y > creditsLimitY||earlyFade) {
+
+            if(!earlyFade)
             toBeContinued.SetActive(true);
+
             timer += Time.deltaTime;
             if (timer > screenTime) {
                 fadeCanvas.alpha -= Time.deltaTime;
