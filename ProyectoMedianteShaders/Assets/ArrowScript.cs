@@ -15,7 +15,7 @@ public class ArrowScript : MonoBehaviour {
     }
 
     public void SetSprite(string skill) {
-        Debug.Log("Set sprite as " + skill);
+        //Debug.Log("Set sprite as " + skill);
         switch (skill) {
             case "dash":
                 sprite.sprite = dashSprite;

@@ -184,7 +184,7 @@ public static class PlayerUtilsStatic {
                                 }
 
                                 if (( InputManager.instance.dashButton && !InputManager.instance.prevDashButton)){ 
-                                    Debug.Log("dawn: " + dawn + " dashButton: " + InputManager.instance.dashButton + " dashButton2: " + InputManager.instance.dashButton2);
+                                    //Debug.Log("dawn: " + dawn + " dashButton: " + InputManager.instance.dashButton + " dashButton2: " + InputManager.instance.dashButton2);
 
                                     Cursor.lockState = CursorLockMode.None; //Se puede volver a mover el cursor
                                     mousePositions[1] = new Vector2(0, 0);

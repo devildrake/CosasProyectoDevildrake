@@ -324,7 +324,7 @@ public class GameLogic : MonoBehaviour {
             musicEvent.stop(STOP_MODE.ALLOWFADEOUT);
 
             musicEvent = SoundManager.Instance.PlayEvent("event:/song" + songId.ToString(),transform.position);
-        Debug.Log("PlaySong");
+        //Debug.Log("PlaySong");
     }
 
     void Update() {
@@ -524,7 +524,7 @@ public class GameLogic : MonoBehaviour {
             levelsData[GetCurrentLevelIndex()].timeLapse = timeElapsed;
 
 
-            Debug.Log("SAVE");
+            //Debug.Log("SAVE");
             BinaryFormatter bf = new BinaryFormatter();
             FileStream file = File.Create(Application.persistentDataPath + "/playerInfoSave.dat");
             PlayerData data = new PlayerData();

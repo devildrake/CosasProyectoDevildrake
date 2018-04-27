@@ -428,16 +428,16 @@ public class InputManager : MonoBehaviour {
                     } else {
 
 
-                        for (int i = 0; i < 20; i++) {
-                            if (Input.GetKeyDown("joystick 1 button " + i)) {
-                                print("joystick 1 button " + i);
-                            }
-                        }
-                        for (int i = 0; i < 20; i++) {
-                            if (Input.GetKeyDown("joystick 2 button " + i)) {
-                                print("joystick 2 button " + i);
-                            }
-                        }
+                        //for (int i = 0; i < 20; i++) {
+                        //    if (Input.GetKeyDown("joystick 1 button " + i)) {
+                        //        print("joystick 1 button " + i);
+                        //    }
+                        //}
+                        //for (int i = 0; i < 20; i++) {
+                        //    if (Input.GetKeyDown("joystick 2 button " + i)) {
+                        //        print("joystick 2 button " + i);
+                        //    }
+                        //}
 
                         //Debug.Log("MANDO");
                         //dashButtonPlayer = (Input.GetAxisRaw("DashPunch") == 1.0);
