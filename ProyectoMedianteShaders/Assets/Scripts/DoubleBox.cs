@@ -10,6 +10,7 @@ public class DoubleBox : DoubleObject {
     public LayerMask groundMask;
     float timerToBecomePunchable;
     float timeToBecomePunchable;
+    bool grounded=false;
 	void Start () {
         brotherScript = brotherObject.GetComponent<DoubleBox>();
         canBounce = true;
@@ -139,6 +140,21 @@ public class DoubleBox : DoubleObject {
 
     // Update is called once per frame
     void Update () {
+
+        if (rb.velocity.y < -0.1f || rb.velocity.y > 0.1f) {
+            grounded = false;
+        } else {
+            if (!grounded) {
+                SoundManager.Instance.PlayEvent("event:/Enemies/Walker/Steps", transform);
+                SoundManager.Instance.PlayEvent("event:/Enemies/Walker/Steps", transform);
+                SoundManager.Instance.PlayEvent("event:/Enemies/Walker/Steps", transform);
+                SoundManager.Instance.PlayEvent("event:/Enemies/Walker/Steps", transform);
+                SoundManager.Instance.PlayEvent("event:/Enemies/Walker/Steps", transform);
+                SoundManager.Instance.PlayEvent("event:/Enemies/Walker/Steps", transform);
+                grounded = true;
+            }
+        }
+
         AddToGameLogicList();
         BrotherBehavior();
 

@@ -127,7 +127,8 @@ public class PlayerController : DoubleObject {
     public LayerMask groundMask;
     public LayerMask slideMask;
     public LayerMask[] grabbableMask;
-    EventInstance punchChargeEvent;
+    //EventInstance punchChargeEvent;
+    bool firstPunch;
     //Referencia al RigidBody2D del personaje, se inicializa en el start.
     public Rigidbody2D rb;
 
@@ -366,10 +367,10 @@ public class PlayerController : DoubleObject {
                                 myAnimator.SetBool("moving", true);
                                 myAnimator.SetFloat("timeMoving", 1.0f);
                                 if (whichX > 0) {
-                                    Debug.Log("A");
+                                    //Debug.Log("A");
                                     transform.Translate(Vector3.forward * 1.4f * Time.deltaTime);
                                 } else if(whichX < 0) {
-                                    Debug.Log("B");
+                                    //Debug.Log("B");
                                     transform.Translate(Vector3.back * 1.4f * Time.deltaTime);
                                 }
                             }
@@ -477,8 +478,8 @@ public class PlayerController : DoubleObject {
                     }
 
                     #region armStuff
-                    PLAYBACK_STATE state = PLAYBACK_STATE.STOPPED;
-                    punchChargeEvent.getPlaybackState(out state);
+                    PLAYBACK_STATE state = PLAYBACK_STATE.PLAYING;
+                    //punchChargeEvent.getPlaybackState(out state);
 
                     switch (armstate){
                         case ARMSTATE.IDLE:
@@ -487,21 +488,23 @@ public class PlayerController : DoubleObject {
                             punchTrigger.enabled = false;
                             punchContact.enabled = false;
                             armParticleSystem.Stop();
-                            punchChargeEvent.getPlaybackState(out state);
-                            if (state == PLAYBACK_STATE.PLAYING) { 
-                                punchChargeEvent.stop(STOP_MODE.IMMEDIATE);
+                            //punchChargeEvent.getPlaybackState(out state);
+                            if (state == PLAYBACK_STATE.PLAYING) {
+                                //punchChargeEvent.stop(STOP_MODE.IMMEDIATE);
+                                //SoundManager.Instance.StopEvent(punchChargeEvent,false);
                             }
                             break;
                         case ARMSTATE.PUNCHCHARGE:
 
-                            if (punchChargeEvent.Equals(null)) {
-                                Debug.Log("CREADO");
-                                punchChargeEvent = SoundManager.Instance.PlayEvent("event:/Dusk/ArmCharge", transform);
+                            if (/*punchChargeEvent.Equals(null)||*/!firstPunch) {
+                                //Debug.Log("CREADO");
+                                firstPunch = true;
+                                //punchChargeEvent = SoundManager.Instance.PlayEvent("event:/Dusk/ArmCharge", transform);
                             } else {
-                                Debug.Log("USADO");
                                 if (state != PLAYBACK_STATE.PLAYING) {
-                                    punchChargeEvent = SoundManager.Instance.PlayEvent("event:/Dusk/ArmCharge", transform);
-                                    punchChargeEvent.start();
+                                    //Debug.Log("USADO");
+                                    //punchChargeEvent = SoundManager.Instance.PlayEvent("event:/Dusk/ArmCharge", transform);
+                                    //punchChargeEvent.start();
                                 }
                             }
 
@@ -548,7 +551,9 @@ public class PlayerController : DoubleObject {
                             break;
                         case ARMSTATE.PUNCH:
                             if (state == PLAYBACK_STATE.PLAYING) {
-                                punchChargeEvent.stop(STOP_MODE.IMMEDIATE);
+                                //punchChargeEvent.stop(STOP_MODE.IMMEDIATE);
+                                //SoundManager.Instance.StopEvent(punchChargeEvent, false);
+
                             }
                             armParticleSystem.Play();
                             if (currentArmTargetIndex < 8) { 
@@ -601,17 +606,19 @@ public class PlayerController : DoubleObject {
                             }
                             break;
                         case ARMSTATE.GRAB:
-                            if (punchChargeEvent.Equals(null)) {
-                                Debug.Log("CREADO");
-                                punchChargeEvent = SoundManager.Instance.PlayEvent("event:/Dusk/ArmCharge", transform);
-                            } else {
-                                punchChargeEvent.getPlaybackState(out state);
-                                if (state != PLAYBACK_STATE.PLAYING) {
-                                    punchChargeEvent.start();
-                                }
-                            }
+                            //if (punchChargeEvent.Equals(null)) {
+                            //    Debug.Log("CREADO");
+                            //    punchChargeEvent = SoundManager.Instance.PlayEvent("event:/Dusk/ArmCharge", transform);
+                            //} else {
+                            //    punchChargeEvent.getPlaybackState(out state);
+                            //    if (state != PLAYBACK_STATE.PLAYING) {
+                            //        Debug.Log("Play");
+                            //        //punchChargeEvent.start();
+                            //    }
+                            //}
 
                             if (NearbyObjects.Count == 0) {
+                               // SoundManager.Instance.StopEvent(punchChargeEvent);
                                 armstate = ARMSTATE.IDLE;
                                 break;
                             }
@@ -1396,6 +1403,10 @@ public class PlayerController : DoubleObject {
                     //Punch(direction, 40000);
                     punchTimer = 0;
                     armstate = ARMSTATE.PUNCH;
+                    //punchChargeEvent.stop(STOP_MODE.ALLOWFADEOUT);
+                   // SoundManager.Instance.StopEvent(punchChargeEvent);
+                    //SoundManager.Instance.StopAllEvents(true);
+                  //  Debug.Log("Trying to stop " + punchChargeEvent);
                     if (armTarget != null) {
                         if (facingRight) {
                             armTarget.transform.position = punchRightPositions[0].position;
