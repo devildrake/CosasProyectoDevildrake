@@ -7,7 +7,7 @@ public class InputManager : MonoBehaviour {
     public static InputManager instance = null;
 
     public enum GAMEMODE { SINGLEPLAYER, MULTI_KEYBOARD_CONTROLLER, MULTI_CONTROLLER_KEYBOARD, MULTI_CONTROLLER_CONTROLLER};
-    public static GAMEMODE currentGameMode = GAMEMODE.SINGLEPLAYER;
+    public static GAMEMODE currentGameMode = GAMEMODE.MULTI_KEYBOARD_CONTROLLER;
 
     [SerializeField]
     private static bool blocked;

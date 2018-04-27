@@ -1170,7 +1170,7 @@ public static class PlayerUtilsStatic {
 
                                     //EL CONDICIONAL GESTIONA CUANDO TIENE QUE IR CALCULANDO EL ANGULO Y PINTANDO LOS SPRITES
                                     if (draw) {
-                                        mousePositions[0] = new Vector2(0, 0) + new Vector2(InputManager.instance.rightHorizontalAxis, -InputManager.instance.rightVerticalAxis);
+                                        mousePositions[0] = new Vector2(0, 0) + new Vector2(InputManager.instance.rightHorizontalAxis2, -InputManager.instance.rightVerticalAxis2);
                                         float rotation;
                                         if (PJ.GetComponent<PlayerController>().facingRight) {
                                             rotation = Vector3.Angle(new Vector3(1, 0, 0), (mousePositions[1] - mousePositions[0])); //calcula el angulo de inclinacion que tiene tu
