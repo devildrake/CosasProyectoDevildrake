@@ -8,6 +8,10 @@ public class DoubleDirectionalLight : DoubleObject {
     public Material duskSkybox, dawnSkybox;
     private Light changingLight;
 
+    [Header("Lluvia")]
+    [SerializeField] private ParticleSystem lluviaDusk;
+    [SerializeField] private ParticleSystem lluviaDawn;
+    
 	void Start () {
         changingLight = GetComponent<Light>();
         if (dawn) {
