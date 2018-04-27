@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class FinalScreenManager : MonoBehaviour {
-    float scrollSpeed = 20.0f;
+    [SerializeField]float scrollSpeed = 40.0f;
     float multiplier = 1.0f;
     public float creditsLimitY;
     bool earlyFade;
