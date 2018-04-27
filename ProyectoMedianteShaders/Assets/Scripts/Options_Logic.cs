@@ -51,11 +51,11 @@ public class Options_Logic : MonoBehaviour {
         //se ponen por defecto los valores de las opciones y se guardan los iniciales por si se le da a cancelar
         //para que la proxima vez que se abran las opciones no aparezcan cambiadas.
         //AUDIO
-        musica.value = prevMusic = 1;
-        sfx.value = prevSfx = 1;
-        mute.isOn = prevMute = false;
+        musica.value = prevMusic = SoundManager.Instance.GetMusicVolume();
+        sfx.value = prevSfx = SoundManager.Instance.GetFXVolume();
+        mute.isOn = prevMute = GameLogic.instance.muteVolume;
         //VIDEO
-        mostrarTiempo.isOn = prevMostrarTiempo = false;
+        mostrarTiempo.isOn = prevMostrarTiempo = GameLogic.instance.mostrarTiempo;
         pantallaCompleta.isOn = Screen.fullScreen;
         
         //buscar la resolucion de la pantalla para marcarla.
@@ -150,8 +150,6 @@ public class Options_Logic : MonoBehaviour {
                 ReplegandoVideo();
                 break;
         }
-
-        print(currentItem.gameObject.name);
     }
 
 
@@ -249,7 +247,7 @@ public class Options_Logic : MonoBehaviour {
 
     private void ReplegandoVideo() {
         if (transformBG.localPosition.y < originalBgPos.y+bgOffset) {
-            transformBG.localPosition += new Vector3(0, scrollSpeed * Time.deltaTime, 0);
+            transformBG.localPosition += new Vector3(0, scrollSpeed, 0);
         }
         else {
             if (goingTo == OptionsState.CERRAR) {
@@ -263,7 +261,7 @@ public class Options_Logic : MonoBehaviour {
 
     private void ReplegandoAudio() {
         if (transformBG.localPosition.y < originalBgPos.y + bgOffset) {
-            transformBG.localPosition += new Vector3(0,  scrollSpeed * Time.deltaTime, 0);
+            transformBG.localPosition += new Vector3(0,  scrollSpeed, 0);
         }
         else {
             if (goingTo == OptionsState.CERRAR) {
@@ -277,7 +275,7 @@ public class Options_Logic : MonoBehaviour {
 
     private void DesplegandoVideo() {
         if (transformBG.localPosition.y > originalBgPos.y) {
-            transformBG.localPosition -= new Vector3(0, scrollSpeed * Time.deltaTime, 0);
+            transformBG.localPosition -= new Vector3(0, scrollSpeed, 0);
         }
         else {
             transformBG.localPosition = originalBgPos;
@@ -290,7 +288,7 @@ public class Options_Logic : MonoBehaviour {
 
     private void DesplegandoAudio() {
         if (transformBG.localPosition.y > originalBgPos.y) {
-            transformBG.localPosition -= new Vector3(0, scrollSpeed * Time.deltaTime, 0);
+            transformBG.localPosition -= new Vector3(0, scrollSpeed, 0);
         }
         else {
             transformBG.localPosition = originalBgPos;
@@ -379,7 +377,7 @@ public class Options_Logic : MonoBehaviour {
         }
     }
 
-    private void OnEnable() {
+    private void OnDisable() {
         currentState = OptionsState.DESPLEGANDO_AUDIO;
         goingTo = OptionsState.NONE;
         transformSetaAudio.localPosition = originalSetaAudioPos;

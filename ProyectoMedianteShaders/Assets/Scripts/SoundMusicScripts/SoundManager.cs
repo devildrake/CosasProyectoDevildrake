@@ -293,6 +293,14 @@ public class SoundManager : MonoBehaviour {
         vca.setVolume(musicVolume);
     }
 
+    public float GetMusicVolume() {
+        return musicVolume;
+    }
+
+    public float GetFXVolume() {
+        return fxVolume;
+    }
+
     #endregion Mixer
 
     #endregion FMOD Wrapper

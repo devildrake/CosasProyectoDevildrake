@@ -49,7 +49,6 @@ public class MenuLogic : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        print("calidad--> "+QualitySettings.GetQualityLevel());
         GameLogic.instance.isPaused = false;
         GameLogic.instance.SetTimeScaleLocal(0.5f);
         canvas.gameObject.SetActive(false);
