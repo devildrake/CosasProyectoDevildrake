@@ -110,7 +110,7 @@ public class PlayerController : DoubleObject {
     public ArrowScript arrow;
 
     //Velocidad hacia los laterales base
-    float characterSpeed = 5;
+    float characterSpeed = 6;
 
     //Fuerza del salto
     float jumpStrenght = 7;

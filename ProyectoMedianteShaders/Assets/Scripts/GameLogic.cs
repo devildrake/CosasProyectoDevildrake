@@ -323,7 +323,7 @@ public class GameLogic : MonoBehaviour {
         if (!musicEvent.Equals(null))
             musicEvent.stop(STOP_MODE.ALLOWFADEOUT);
 
-            musicEvent = SoundManager.Instance.PlayEvent("event:/song" + songId.ToString(),transform.position);
+            musicEvent = SoundManager.Instance.PlayEvent("event:/Music/song" + songId.ToString(),transform.position);
         //Debug.Log("PlaySong");
     }
 

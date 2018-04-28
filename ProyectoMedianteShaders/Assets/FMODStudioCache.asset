@@ -18,9 +18,6 @@ MonoBehaviour:
   - {fileID: 114856197706786048}
   - {fileID: 114589921802376892}
   EditorEvents:
-  - {fileID: 114469857400087768}
-  - {fileID: 114666040216342722}
-  - {fileID: 114765937579993802}
   - {fileID: 114352343273826422}
   - {fileID: 114485994235514484}
   - {fileID: 114167814517536382}
@@ -30,9 +27,13 @@ MonoBehaviour:
   - {fileID: 114399215079529126}
   - {fileID: 114403669375450474}
   - {fileID: 114136443848146720}
+  - {fileID: 114952938077433214}
+  - {fileID: 114338500643628182}
+  - {fileID: 114338760928592152}
+  - {fileID: 114455395518213372}
   MasterBankRef: {fileID: 114267371235567832}
   StringsBankRef: {fileID: 114867409791930004}
-  stringsBankWriteTime: 636603654625021214
+  stringsBankWriteTime: 636605084733890556
   cacheVersion: 2
 --- !u!114 &114130061613741806
 MonoBehaviour:
@@ -218,12 +219,56 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Path: C:\Users\MSI-D\Documents\CosasProyectoDevildrake\ProyectoMedianteShaders\Assets\Resources\FModBuild\DesktopConfig\Master
     Bank.bank
-  lastModified: 636603654625006214
+  lastModified: 636605084733870550
   LoadResult: 0
   FileSizes:
   - Name: 
     Value: 12962
   Exists: 1
+--- !u!114 &114338500643628182
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Path: event:/Music/song2
+  guid: 13edaad5a2a7764389e3a41f9ef43232
+  Banks:
+  - {fileID: 114791079414110432}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 59489
+--- !u!114 &114338760928592152
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Path: event:/Music/song3
+  guid: 325e52dccf5b0149bc295433249f449a
+  Banks:
+  - {fileID: 114791079414110432}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 69996
 --- !u!114 &114352343273826422
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -246,6 +291,27 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 534
+--- !u!114 &114366949482398726
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Path: event:/song1
+  guid: 030a49d719579944b55ba53a0b7229f3
+  Banks: []
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 91811
 --- !u!114 &114373216819272302
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -351,6 +417,28 @@ MonoBehaviour:
   - Name: 
     Value: 4848064
   Exists: 0
+--- !u!114 &114455395518213372
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Path: event:/Music/song4
+  guid: 91bf99be6c578f4a9563f79515fe2a3a
+  Banks:
+  - {fileID: 114791079414110432}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 72655
 --- !u!114 &114469857400087768
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -364,8 +452,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Path: event:/song2
   guid: 13edaad5a2a7764389e3a41f9ef43232
-  Banks:
-  - {fileID: 114791079414110432}
+  Banks: []
   IsStream: 1
   Is3D: 0
   IsOneShot: 0
@@ -429,7 +516,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Path: C:\Users\MSI-D\Documents\CosasProyectoDevildrake\ProyectoMedianteShaders\Assets\Resources\FModBuild\DesktopConfig\EnemySounds.bank
-  lastModified: 636603654626452238
+  lastModified: 636605084734766174
   LoadResult: 0
   FileSizes:
   - Name: 
@@ -469,8 +556,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Path: event:/song3
   guid: 325e52dccf5b0149bc295433249f449a
-  Banks:
-  - {fileID: 114791079414110432}
+  Banks: []
   IsStream: 1
   Is3D: 0
   IsOneShot: 0
@@ -491,8 +577,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Path: event:/song4
   guid: 91bf99be6c578f4a9563f79515fe2a3a
-  Banks:
-  - {fileID: 114791079414110432}
+  Banks: []
   IsStream: 1
   Is3D: 0
   IsOneShot: 0
@@ -531,11 +616,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Path: C:\Users\MSI-D\Documents\CosasProyectoDevildrake\ProyectoMedianteShaders\Assets\Resources\FModBuild\DesktopConfig\LevelMusic.bank
-  lastModified: 636603654626237068
+  lastModified: 636605084735516713
   LoadResult: 0
   FileSizes:
   - Name: 
-    Value: 4848064
+    Value: 7287904
   Exists: 1
 --- !u!114 &114815881578368254
 MonoBehaviour:
@@ -604,7 +689,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Path: C:\Users\MSI-D\Documents\CosasProyectoDevildrake\ProyectoMedianteShaders\Assets\Resources\FModBuild\DesktopConfig\CharacterSounds.bank
-  lastModified: 636603654625586612
+  lastModified: 636605084734515997
   LoadResult: 0
   FileSizes:
   - Name: 
@@ -622,12 +707,34 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Path: Assets\Resources\FModBuild\DesktopConfig\Master Bank.strings.bank
-  lastModified: 636603654625021214
+  lastModified: 636605084733890556
   LoadResult: 0
   FileSizes:
   - Name: 
-    Value: 1534
+    Value: 1572
   Exists: 1
+--- !u!114 &114952938077433214
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Path: event:/Music/song1
+  guid: 030a49d719579944b55ba53a0b7229f3
+  Banks:
+  - {fileID: 114791079414110432}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 91811
 --- !u!114 &114960078886542024
 MonoBehaviour:
   m_ObjectHideFlags: 0
