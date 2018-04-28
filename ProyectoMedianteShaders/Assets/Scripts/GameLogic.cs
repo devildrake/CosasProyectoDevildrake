@@ -24,6 +24,7 @@ public class LevelData {
 public class GameLogic : MonoBehaviour {
 
     SoundManager soundManager;
+    static bool awoken = false;
     public EventInstance musicEvent;
     //////////////////////VARIABLES LOAD/SAVE////////////////////////////
     //////////////////////VARIABLES LOAD/SAVE////////////////////////////
@@ -209,7 +210,11 @@ public class GameLogic : MonoBehaviour {
 
 
         cameraTransition = true;
-        Load();
+
+        if (!awoken) {
+            Load();
+            awoken = true;
+        }
 
 
     }
@@ -526,7 +531,7 @@ public class GameLogic : MonoBehaviour {
     public void Save() {
 
 
-        if (!saved) {
+        //if (!saved) {
             levelsData[GetCurrentLevelIndex()].completed = levelFinished;
             levelsData[GetCurrentLevelIndex()].timeLapse = timeElapsed;
 
@@ -538,7 +543,8 @@ public class GameLogic : MonoBehaviour {
 
             //Igualar variables a cargar (Locales) a las de data
 
-            data.firstOpening = firstOpening;
+            data.firstOpening = true;
+            Debug.Log("Saving firstOpening as" + data.firstOpening);
             //data.completedLevels = completedLevels;
             //data.fragments = fragments;
             data.lastEntranceIndex = lastEntranceIndex;
@@ -547,8 +553,8 @@ public class GameLogic : MonoBehaviour {
             data.levelData = levelsData;
             bf.Serialize(file, data);
             file.Close();
-            saved = true;
-        }
+           //saved = true;
+        //}
     }
 
     void InitLoadSaveVariables() {
@@ -581,6 +587,7 @@ public class GameLogic : MonoBehaviour {
             file.Close();
 
             firstOpening = data.firstOpening;
+            Debug.Log("Cargando FirstOpening as " + firstOpening);
             levelsData = data.levelData;
             lastEntranceIndex = data.lastEntranceIndex;
 

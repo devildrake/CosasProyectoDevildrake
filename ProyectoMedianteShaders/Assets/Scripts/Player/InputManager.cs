@@ -7,7 +7,7 @@ public class InputManager : MonoBehaviour {
     public static InputManager instance = null;
 
     public enum GAMEMODE { SINGLEPLAYER, MULTI_KEYBOARD_CONTROLLER, MULTI_CONTROLLER_KEYBOARD, MULTI_CONTROLLER_CONTROLLER};
-    public static GAMEMODE currentGameMode = GAMEMODE.MULTI_KEYBOARD_CONTROLLER;
+    public static GAMEMODE currentGameMode = GAMEMODE.SINGLEPLAYER;
 
     [SerializeField]
     private static bool blocked;
@@ -522,8 +522,6 @@ public class InputManager : MonoBehaviour {
                     instance.deflectButton = (Input.GetAxisRaw("DeflectDrag") == 1.0);
                     instance.crawlButton = (Input.GetAxisRaw("CrawlSmash") == 1.0);
                     instance.jumpButton = (Input.GetAxisRaw("Jump") == 1.0);
-
-                    Debug.Log(instance.jumpButton);
 
                     instance.pauseButton = (Input.GetAxisRaw("Pause") == 1.0);
                     instance.selectButton = (Input.GetAxisRaw("Select") == 1.0);

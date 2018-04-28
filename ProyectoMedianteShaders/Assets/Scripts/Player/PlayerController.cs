@@ -379,7 +379,7 @@ public class PlayerController : DoubleObject {
                         } else {
                             InputManager.UnBlockInput();
                             whichX = 0;
-                            if (placeToGo != null) {
+                            if (placeToGo != null&&placeToGo.tag!="Finish") {
                                 Destroy(placeToGo.gameObject);
                             }
                         }
@@ -1198,7 +1198,6 @@ public class PlayerController : DoubleObject {
 
     //Metodo que añade una fuerza al personaje para simular un salto
     public void Jump() {
-
         if (arm != null) {
             armstate = ARMSTATE.IDLE;
             arm.meshObject.SetActive(false);
