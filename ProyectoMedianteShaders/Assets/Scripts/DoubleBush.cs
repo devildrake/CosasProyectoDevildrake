@@ -5,6 +5,8 @@ using UnityEngine;
 public class DoubleBush : DoubleObject {
     // Use this for initialization
     Rigidbody2D rb;
+    DoubleBush brotherScript;
+    bool spawnSound = false;
 	void Start () {
         rb = GetComponent<Rigidbody2D>();
         InitTransformable();
@@ -14,6 +16,7 @@ public class DoubleBush : DoubleObject {
         if (worldAssignation == world.DAWN) {
            rb.bodyType = RigidbodyType2D.Kinematic;
         }
+        brotherScript = brotherObject.GetComponent<DoubleBush>();
 
 
     }
@@ -42,6 +45,11 @@ public class DoubleBush : DoubleObject {
     }
 
     void DuskBehavior() {
+
+        if (!spawnSound) {
+            PlayDuskCrunch();
+            spawnSound = true;
+        }
         //if (colliderSubida.transform.localPosition.y < 0) {
         //    colliderSubida.GetComponent<Rigidbody2D>().velocity = new Vector2(0, upVelocity);
         //    colliderSubida.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
@@ -92,6 +100,9 @@ public class DoubleBush : DoubleObject {
                 brotherObject.SetActive(true);
                 rb.isKinematic = true;
                 brotherObject.GetComponent<Rigidbody2D>().isKinematic = false;
+                if (brotherScript != null) {
+                    brotherScript.PlayDuskCrunch();
+                }
             } else {
                 rb.isKinematic = false;
                 brotherObject.GetComponent<Rigidbody2D>().isKinematic = true;
@@ -99,6 +110,10 @@ public class DoubleBush : DoubleObject {
             }
         }
         dawn = !dawn;
+    }
+
+    public void PlayDuskCrunch() {
+        SoundManager.Instance.PlayOneShotSound("event:/Props/DuskBushCrunch",transform);
     }
 
     // Update is called once per frame
