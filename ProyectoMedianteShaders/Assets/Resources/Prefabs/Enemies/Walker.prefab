@@ -202,7 +202,7 @@ GameObject:
   - component: {fileID: 50668861803325026}
   - component: {fileID: 114574717280509350}
   - component: {fileID: 61033888212849726}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: EnemyBouncer
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -477,7 +477,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4565799439169642}
   - component: {fileID: 108774474623046372}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: Point light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -550,7 +550,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1644740725108654}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 18.1, y: -1.69, z: 0.31234378}
+  m_LocalPosition: {x: 8.958298, y: -13.717361, z: 0.31234378}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4923852296007652}
@@ -592,7 +592,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1254941489860776}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.73, y: 0.48, z: 0}
+  m_LocalPosition: {x: 5.92, y: 0.48, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4923852296007652}
@@ -818,7 +818,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1795415416612142}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2.13, y: 0.5, z: 0}
+  m_LocalPosition: {x: -6.06, y: 0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4923852296007652}
@@ -1496,8 +1496,8 @@ SkinnedMeshRenderer:
   m_BlendShapeWeights: []
   m_RootBone: {fileID: 0}
   m_AABB:
-    m_Center: {x: 1.817543, y: 0, z: 0.06350136}
-    m_Extent: {x: 12.312294, y: 12.312293, z: 0.0635032}
+    m_Center: {x: 1.817524, y: 0, z: 0.06349945}
+    m_Extent: {x: 12.312298, y: 12.3123, z: 0.0635032}
   m_DirtyAABB: 0
 --- !u!137 &137643857128012850
 SkinnedMeshRenderer:

@@ -61,8 +61,10 @@ public class SoundManager : MonoBehaviour {
                 if (state == PLAYBACK_STATE.STOPPED) {
                     positionEvents.RemoveAt(i);
                 } else {
-                    if(!eventInst.Equals(null)&&positionEvents.Count>i)
-                    eventInst.set3DAttributes(RuntimeUtils.To3DAttributes(positionEvents[i].GetTransform().position));
+                    if (!eventInst.Equals(null) && positionEvents.Count > i) {
+                        if(!positionEvents[i].Equals(null))
+                        eventInst.set3DAttributes(RuntimeUtils.To3DAttributes(positionEvents[i].GetTransform().position));
+                    }
                 }
             }
         }

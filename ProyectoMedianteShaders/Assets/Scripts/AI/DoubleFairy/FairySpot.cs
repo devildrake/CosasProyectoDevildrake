@@ -12,7 +12,6 @@ public class FairySpot : DoubleObject {
     public FairySpot brotherScript;
 
     public bool mustStopHere;
-    public bool hasMessage;
     public Sprite messageSprite;
 
     public DoubleFairyGuide parentFairy;

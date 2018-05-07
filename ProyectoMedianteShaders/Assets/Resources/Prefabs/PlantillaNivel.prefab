@@ -992,6 +992,8 @@ GameObject:
   - component: {fileID: 33936027216310510}
   - component: {fileID: 23125276988542798}
   - component: {fileID: 95916951725507614}
+  - component: {fileID: 58297742664953748}
+  - component: {fileID: 114194964464732020}
   m_Layer: 0
   m_Name: mascaradawn
   m_TagString: Untagged
@@ -4282,6 +4284,7 @@ GameObject:
   - component: {fileID: 33299021194879592}
   - component: {fileID: 23465649354295150}
   - component: {fileID: 95803400255985124}
+  - component: {fileID: 114802273397388166}
   m_Layer: 29
   m_Name: mascaradusk
   m_TagString: Untagged
@@ -8150,6 +8153,21 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!58 &58297742664953748
+CircleCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1174294747951554}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -831943.8, y: -10.113552}
+  serializedVersion: 2
+  m_Radius: 1.0891576
 --- !u!58 &58614411715855902
 CircleCollider2D:
   m_ObjectHideFlags: 1
@@ -9500,6 +9518,7 @@ MonoBehaviour:
   imagenDusk: {fileID: 21300000, guid: 56d34cd31f9899541bec469041dc2754, type: 3}
   imagenDawn: {fileID: 21300000, guid: d197577acb4423a46939ec134c5aa2ff, type: 3}
   originalPos: {x: 0, y: 0}
+  mascaraRayCast: {fileID: 0}
   originalSizeCollider: {x: 0, y: 0}
   originalOffsetCollider: {x: 0, y: 0}
   hasACrystal: 0
@@ -9880,6 +9899,7 @@ MonoBehaviour:
   imagenDusk: {fileID: 0}
   imagenDawn: {fileID: 21300000, guid: d197577acb4423a46939ec134c5aa2ff, type: 3}
   originalPos: {x: 0, y: 0}
+  mascaraRayCast: {fileID: 0}
   originalSizeCollider: {x: 0, y: 0}
   originalOffsetCollider: {x: 0, y: 0}
   hasACrystal: 0
@@ -9988,6 +10008,18 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114194964464732020
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1174294747951554}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ecf7d06da7482945aae5fb2ffb48002, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerController: {fileID: 0}
 --- !u!114 &114196131024781344
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -12569,6 +12601,18 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114802273397388166
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1872056982604406}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ecf7d06da7482945aae5fb2ffb48002, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerController: {fileID: 0}
 --- !u!114 &114812757340445020
 MonoBehaviour:
   m_ObjectHideFlags: 1

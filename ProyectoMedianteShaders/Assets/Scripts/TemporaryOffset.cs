@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class TemporaryOffset : DoubleObject {
     //int localKillCount;
+    public bool disableBasicOffset;
+    public bool lookAtPlayer;
     public Vector3 additionalOffset;
     Rigidbody2D rb;
     GameObject player;
@@ -18,7 +20,7 @@ public class TemporaryOffset : DoubleObject {
         rb.mass = 5000;
         rb.gravityScale = 0;
         brotherScript = brotherObject.GetComponent<TemporaryOffset>();
-
+        disableBasicOffset = false;
 
 
         if (worldAssignation == world.DAWN) {
@@ -114,24 +116,56 @@ public class TemporaryOffset : DoubleObject {
             } else {
                 GameLogic.instance.cameraAttenuation = 1;
             }
+            PlayerController playerController = player.GetComponent<PlayerController>();
+            if (disableBasicOffset) {
+                playerController.useXOffset = false;
+                playerController.brotherScript.useXOffset = false;
+
+            } else {
+                playerController.useXOffset = true;
+                playerController.brotherScript.useXOffset = true;
+            }
+
+            if (lookAtPlayer) {
+                playerController.lookAtMe = true;
+                playerController.brotherScript.lookAtMe = true;
+            } else{
+                playerController.lookAtMe = false;
+                playerController.brotherScript.lookAtMe = false;
+            }
 
         }   
     }
 
 
-    private void OnTriggerStay2D(Collider2D collision) {
-        if (player == null) {
-            if (collision.tag == "Player") {
-                GameLogic.instance.additionalOffset = additionalOffset;
-                player = collision.gameObject;
-                if (temporalCameraAttenuation != 0) {
-                    GameLogic.instance.cameraAttenuation = temporalCameraAttenuation;
-                } else {
-                    GameLogic.instance.cameraAttenuation = 1;
-                }
-            }
-        }
-    }
+    //private void OnTriggerStay2D(Collider2D collision) {
+    //    if (player == null) {
+    //        if (collision.tag == "Player") {
+    //            GameLogic.instance.additionalOffset = additionalOffset;
+    //            player = collision.gameObject;
+    //            if (temporalCameraAttenuation != 0) {
+    //                GameLogic.instance.cameraAttenuation = temporalCameraAttenuation;
+    //            } else {
+    //                GameLogic.instance.cameraAttenuation = 1;
+    //            }
+    //            PlayerController playerController = player.GetComponent<PlayerController>();
+    //            if (disableBasicOffset) {
+    //                playerController.useXOffset = false;
+    //                playerController.brotherScript.useXOffset = false;
+
+    //            } else {
+    //                playerController.useXOffset = true;
+    //                playerController.brotherScript.useXOffset = true;
+    //            }
+
+    //            if (lookAtPlayer) {
+    //                playerController.lookAtMe = true;
+    //            } else {
+    //                playerController.lookAtMe = false;
+    //            }
+    //        }
+    //    }
+    //}
 
     public void ResetOffset() {
         GameLogic.instance.additionalOffset = new Vector3(0, 0, 0);

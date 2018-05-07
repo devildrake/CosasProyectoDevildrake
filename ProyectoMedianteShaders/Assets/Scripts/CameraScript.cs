@@ -43,8 +43,11 @@ public class CameraScript : MonoBehaviour {
     [Tooltip("Tipo de nivel")]
     public LevelType levelType;
 
-
+    PlayerController playerController;
     float slidingMultiplier;
+
+    Vector3 lookTarget;
+    float rotationSpeed = 5;
 
     private void Start() {
         slidingMultiplier = 1;
@@ -56,7 +59,8 @@ public class CameraScript : MonoBehaviour {
         transitionTime = 2;
         distanceThreshold = 0.3f;
         transform.Rotate(new Vector3(1, 1, 0), 2.50f);
-
+        playerController = target.GetComponent<PlayerController>();
+        lookTarget = transform.position + Vector3.forward;
     }
 
     public void ResetCamera() {
@@ -66,10 +70,42 @@ public class CameraScript : MonoBehaviour {
 
     bool once;
 
+    void LateUpdate() {
+        //if (!playerController.lookAtMe) {
+        //    if (Vector3.Distance(lookTarget, transform.position + Vector3.forward) > 0.2f) {
+        //        lookTarget = Vector3.Lerp(lookTarget, transform.position + Vector3.forward, Time.deltaTime * 2 * slidingMultiplier * GameLogic.instance.cameraAttenuation);
+        //    } else {
+        //        lookTarget = transform.position + Vector3.forward;
+        //    }
+        //    //lookTarget = transform.position + Vector3.forward;
+
+        //} else {
+        //    if (Vector3.Distance(lookTarget, playerController.transform.position) > 0.2f) {
+        //        lookTarget = Vector3.Lerp(lookTarget, playerController.transform.position, Time.deltaTime * 2 * slidingMultiplier * GameLogic.instance.cameraAttenuation);
+
+        //    } else {
+        //        lookTarget = playerController.transform.position;
+        //    }
+        //}
+        //transform.LookAt(lookTarget);
+        if (playerController.lookAtMe) {
+            Vector3 lTargetDir = target.position - transform.position;
+            lTargetDir.y = 0.0f;
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(lTargetDir), Time.deltaTime  * rotationSpeed);
+        } else {
+            Vector3 lTargetDir = transform.position + Vector3.forward - transform.position;
+            lTargetDir.y = 0.0f;
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(lTargetDir), Time.deltaTime  * rotationSpeed * 2);
+
+        }
+
+    }
+
     private void FixedUpdate() {
+
         if (GameLogic.instance != null) {
-            if (target.GetComponent<PlayerController>() != null) {
-                if (target.GetComponent<PlayerController>().sliding) {
+            if (playerController != null) {
+                if (playerController.sliding) {
                     slidingMultiplier = 3;
 
                 } else {
@@ -78,7 +114,11 @@ public class CameraScript : MonoBehaviour {
                 }
 
 
+            } else {
+                playerController = target.GetComponent<PlayerController>();
             }
+
+
 
 
             if (GameLogic.instance.cameraTransition) {
@@ -99,11 +139,16 @@ public class CameraScript : MonoBehaviour {
             ////////////////////////////STATICLEVEL////////////////////////////////////////
             ////////////////////////////STATICLEVEL////////////////////////////////////////
 
-            if (target.gameObject.GetComponent<PlayerController>() != null) {
-                if (target.gameObject.GetComponent<PlayerController>().facingRight) {
-                    offset.x = OffsetX;
-                } else
-                    offset.x = -OffsetX;
+            if (playerController != null) {
+                if (playerController.useXOffset) {
+                    if (playerController.facingRight) {
+                        offset.x = OffsetX;
+                    } else
+                        offset.x = -OffsetX;
+                } else {
+                    offset.x = 0;
+                    Debug.Log("NO X");
+                }
             }
 
             Vector3 desiredPosition;

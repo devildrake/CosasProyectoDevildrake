@@ -18,7 +18,7 @@ public class PlayerController : DoubleObject {
 
     float timeGrounded;
     bool groundedSound;
-
+    public MascaraRayCast mascaraRayCast;
     public Vector2 originalSizeCollider;
     public Vector2 originalOffsetCollider;
 
@@ -169,7 +169,8 @@ public class PlayerController : DoubleObject {
     public PunchContact punchContact;
     public BoxCollider2D punchTrigger;
     [SerializeField] private ParticleSystem armParticleSystem;
-
+    public bool useXOffset = true;
+    public bool lookAtMe = false;
 
     Vector3[] grabPositions;
 
@@ -776,6 +777,13 @@ public class PlayerController : DoubleObject {
 
     }
 
+
+    public void LateUpdate() {
+        if (placeToGo != null){
+            rb.gravityScale = 10;
+        }
+    }
+
     void SetAnimValues() {
         if (myAnimator != null&&!InputManager.GetBlocked()) {
 
@@ -930,11 +938,14 @@ public class PlayerController : DoubleObject {
 
                             rb.velocity = new Vector2(0, rb.velocity.y);
                             //Debug.Log("Se para");
-                            if (facingRight)
+                            if (facingRight&&!mascaraRayCast.hit2D) {
                                 transform.Translate(Vector3.right * InputManager.instance.horizontalAxis * characterSpeed * Time.deltaTime);
-                            else
+                            } else if (!mascaraRayCast.hit2D){
                                 transform.Translate(Vector3.left * InputManager.instance.horizontalAxis * characterSpeed * Time.deltaTime);
-
+                            } else {
+                                myAnimator.SetBool("moving", false);
+                                myAnimator.SetFloat("timeMoving", 0);
+                            }
                             slowedInTheAir = false;
                             if (InputManager.instance.horizontalAxis != 0) {
                                 timeMoving += Time.deltaTime;
@@ -963,11 +974,11 @@ public class PlayerController : DoubleObject {
                             slowedInTheAir = true;
                             mustSlow = 0.5f;
 
-                            if (facingRight)
+                            if (facingRight && !mascaraRayCast.hit2D) {
                                 transform.Translate(Vector3.right * InputManager.instance.horizontalAxis * characterSpeed * 0.75f * mustSlow * Time.deltaTime);
-                            else
+                            } else if (!mascaraRayCast.hit2D) {
                                 transform.Translate(Vector3.left * InputManager.instance.horizontalAxis * characterSpeed * 0.75f * mustSlow * Time.deltaTime);
-
+                            }
 
                             //Velocidad X a 0
                             rb.AddForce(new Vector2(-rb.velocity.x, 0), ForceMode2D.Impulse);
@@ -980,12 +991,11 @@ public class PlayerController : DoubleObject {
                                 mustSlow = 0.5f;
                             }
 
-                            if (facingRight)
+                            if (facingRight && !mascaraRayCast.hit2D) {
                                 transform.Translate(Vector3.right * InputManager.instance.horizontalAxis * characterSpeed * 0.75f * mustSlow * Time.deltaTime);
-
-                            else
+                            } else if (!mascaraRayCast.hit2D) {
                                 transform.Translate(Vector3.left * InputManager.instance.horizontalAxis * characterSpeed * 0.75f * mustSlow * Time.deltaTime);
-
+                            }
                         }
 
                         if (changed) {
@@ -1004,11 +1014,14 @@ public class PlayerController : DoubleObject {
 
                             rb.velocity = new Vector2(0, rb.velocity.y);
                             //Debug.Log("Se para");
-                            if (facingRight)
+                            if (facingRight&& !mascaraRayCast.hit2D) {
                                 transform.Translate(Vector3.right * InputManager.instance.horizontalAxis2 * characterSpeed * Time.deltaTime);
-                            else
+                            } else if(!mascaraRayCast.hit2D) {
                                 transform.Translate(Vector3.left * InputManager.instance.horizontalAxis2 * characterSpeed * Time.deltaTime);
-
+                            } else {
+                                myAnimator.SetBool("moving", false);
+                                myAnimator.SetFloat("timeMoving", 0);
+                            }
                             slowedInTheAir = false;
                             if (InputManager.instance.horizontalAxis2 != 0) {
                                 timeMoving += Time.deltaTime;
@@ -1037,11 +1050,11 @@ public class PlayerController : DoubleObject {
                             slowedInTheAir = true;
                             mustSlow = 0.5f;
 
-                            if (facingRight)
+                            if (facingRight) {
                                 transform.Translate(Vector3.right * InputManager.instance.horizontalAxis2 * characterSpeed * 0.75f * mustSlow * Time.deltaTime);
-                            else
+                            } else if (!mascaraRayCast.hit2D) {
                                 transform.Translate(Vector3.left * InputManager.instance.horizontalAxis2 * characterSpeed * 0.75f * mustSlow * Time.deltaTime);
-
+                            }
 
                             //Velocidad X a 0
                             rb.AddForce(new Vector2(-rb.velocity.x, 0), ForceMode2D.Impulse);
@@ -1054,12 +1067,11 @@ public class PlayerController : DoubleObject {
                                 mustSlow = 0.5f;
                             }
 
-                            if (facingRight)
+                            if (facingRight && !mascaraRayCast.hit2D) {
                                 transform.Translate(Vector3.right * InputManager.instance.horizontalAxis2 * characterSpeed * 0.75f * mustSlow * Time.deltaTime);
-
-                            else
+                            } else if (!mascaraRayCast.hit2D) {
                                 transform.Translate(Vector3.left * InputManager.instance.horizontalAxis2 * characterSpeed * 0.75f * mustSlow * Time.deltaTime);
-
+                            }
                         }
 
                         if (changed) {
@@ -1705,7 +1717,6 @@ void Smash() {
 
         }
 
-
         if (rb != null) {
             rb.velocity = new Vector2(0, 0);
         }
@@ -1713,7 +1724,5 @@ void Smash() {
         audioSource.Play();
         GameLogic.instance.timesDied++;
     }
-
-
 
 }
