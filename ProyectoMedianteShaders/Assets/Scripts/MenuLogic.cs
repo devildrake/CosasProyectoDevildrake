@@ -15,11 +15,13 @@ public class MenuLogic : MonoBehaviour {
 
     //-----------------------state 1
     //El primer elemento es el highlight del seleccionado, los siguientes son los botones que hay
-    public GameObject[] state1Elements = new GameObject[3];
+    //public GameObject[] state1Elements = new GameObject[3];
+    [SerializeField] private GameObject mainCanvas;
     public GameObject optionsCanvas; //referencia al canvas que tiene el menu de las opciones
     [SerializeField] private GameObject newOptionsCanvas;
     private Animator newOptionsAnimator;
     private int selected; //variable para controlar que elemento esta seleccionado en el menu
+    private const int totalMainMenuItems = 4;
     private Transform highlight;
     //------------------------------------------------------------
 
@@ -62,11 +64,11 @@ public class MenuLogic : MonoBehaviour {
         pressAnyKeyObj.SetActive(false);
         delayCounter = 0;
 
-        foreach(GameObject go in state1Elements) {
-            go.SetActive(false);
-        }
+        //foreach(GameObject go in state1Elements) {
+        //    go.SetActive(false);
+        //}
         selected = 0;
-        highlight = state1Elements[state1Elements.Length - 1].transform;
+        //highlight = state1Elements[state1Elements.Length - 1].transform;
         //optionsCanvas.SetActive(false);
         newOptionsCanvas.SetActive(false);
         GameLogic.instance.transformableObjects.Add(gameObject);
@@ -100,9 +102,10 @@ public class MenuLogic : MonoBehaviour {
                 if (Input.anyKeyDown) {
                     menuState = 1;
                     pressAnyKeyObj.SetActive(false);
-                    foreach (GameObject go in state1Elements) {
-                        go.SetActive(true);
-                    }
+                    mainCanvas.SetActive(true);
+                    //foreach (GameObject go in state1Elements) {
+                    //    go.SetActive(true);
+                    //}
                 }
                 break;
 
@@ -170,7 +173,7 @@ public class MenuLogic : MonoBehaviour {
                 axisInUse = true;
                 selected--;
                 if (selected < 0) {
-                    selected = state1Elements.Length - 2;
+                    selected = totalMainMenuItems-1;
                 }
             }
         }
@@ -178,7 +181,7 @@ public class MenuLogic : MonoBehaviour {
             if (!axisInUse) {
                 axisInUse = true;
                 selected++;
-                if (selected > state1Elements.Length - 2) {
+                if (selected > totalMainMenuItems-1) {
                     selected = 0;
                 }
             }
@@ -188,7 +191,7 @@ public class MenuLogic : MonoBehaviour {
             axisInUse = false;
         }
 
-        highlight.position = new Vector3(highlight.position.x, state1Elements[selected].transform.position.y, highlight.position.z);
+        //highlight.position = new Vector3(highlight.position.x, state1Elements[selected].transform.position.y, highlight.position.z);
 
         //SELECCION
         if(!InputManager.instance.prevSelectButton && InputManager.instance.selectButton) {
