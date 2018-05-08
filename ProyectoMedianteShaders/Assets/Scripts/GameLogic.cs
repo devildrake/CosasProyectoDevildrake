@@ -22,6 +22,7 @@ public class LevelData {
 //si el jugador se encuentra en el menu 
 
 public class GameLogic : MonoBehaviour {
+    public int levelToLoad;
 
     SoundManager soundManager;
     static bool awoken = false;
@@ -84,8 +85,10 @@ public class GameLogic : MonoBehaviour {
     public bool levelFinished;
 
     //Booleano privado pero visible que gestiona si se esta en el menu principal o no
-    [SerializeField]
-    private bool isInMainMenu;
+    //[SerializeField]
+    //private bool isInMainMenu;
+    public enum GameState { LEVEL, MENU, LOADINGSCREEN}
+    public GameState gameState = GameState.MENU;
 
     [HideInInspector]
     public bool setSpawnPoint;
@@ -286,7 +289,8 @@ public class GameLogic : MonoBehaviour {
         cameraAttenuation = 1;
         cameraTransition = true;
         SetWaitAFrame(false);
-        isInMainMenu = false;
+        //isInMainMenu = false;
+        checkMainMenu = false;
         currentSceneName = SceneManager.GetActiveScene().name;
         DirectionCircle.SetOnce(true);
         //timeElapsed = 0;
@@ -369,110 +373,123 @@ public class GameLogic : MonoBehaviour {
         else if (!checkMainMenu) {
             menuScripts = FindObjectOfType<MenuLogic>();
             if (menuScripts != null) {
-                isInMainMenu = true;
+                //isInMainMenu = true;
+                gameState = GameState.MENU;
+            } else if (FindObjectOfType<LoadingScreenLogic>() != null) { 
+                gameState = GameState.LOADINGSCREEN;
+
+            } else {
+                gameState = GameState.LEVEL;
             }
             SetCheckMainMenu(true);
         }
 
         //Una vez comprobado si estamos o no en el menu principal se pondria el comportamiento deseado
         else {
-            if (!isInMainMenu) {
-                if (!levelFinished) {
-                    if (/*Input.GetKey(KeyCode.R)*/InputManager.instance.resetButton) {
-                        timerToReset += Time.deltaTime;
-                    } else {
-                        timerToReset = 0;
-                    }
-
-                    if (timerToReset > maxTimeToReset) {
-                        timerToReset = 0;
-                        //Debug.Log("Bruh");
-                        RestartScene();
-                    }
-
-                    //Si el juego no esta pausado
-                    if (!isPaused) {
-                        if (currentPlayer.placeToGo == null) {
-                            timeElapsed += Time.deltaTime;
+            switch (gameState) {
+                case GameState.LEVEL:
+                    if (!levelFinished) {
+                        if (/*Input.GetKey(KeyCode.R)*/InputManager.instance.resetButton) {
+                            timerToReset += Time.deltaTime;
+                        } else {
+                            timerToReset = 0;
                         }
 
-                        if (!setSpawnPoint) {
-                            GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
-                            GameObject startingPoint = GameObject.FindGameObjectWithTag("Start");
-                            if (playerObject.GetComponent<PlayerController>().worldAssignation == DoubleObject.world.DUSK) {
-                                if (startingPoint != null) {
-                                    spawnPoint = startingPoint.transform.position;
-                                } else {
-                                    spawnPoint = playerObject.transform.position;
-                                }
-                            } else {
-                                if (startingPoint != null) {
-                                    //spawnPoint = startingPoint.transform.position;
-                                    spawnPoint = startingPoint.transform.position - new Vector3(0, worldOffset);
-                                } else {
-                                    //spawnPoint = playerObject.transform.position;
-                                    spawnPoint = playerObject.transform.position - new Vector3(0, worldOffset);
+                        if (timerToReset > maxTimeToReset) {
+                            timerToReset = 0;
+                            //Debug.Log("Bruh");
+                            RestartScene();
+                        }
+
+                        //Si el juego no esta pausado
+                        if (!isPaused) {
+                            if (currentPlayer != null) {
+                                if (currentPlayer.placeToGo == null) {
+                                    timeElapsed += Time.deltaTime;
                                 }
 
-                                //spawnPoint = playerObject.transform.position - new Vector3(0, worldOffset);
+                                if (!setSpawnPoint) {
+                                    GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
+                                    GameObject startingPoint = GameObject.FindGameObjectWithTag("Start");
+                                    if (playerObject.GetComponent<PlayerController>().worldAssignation == DoubleObject.world.DUSK) {
+                                        if (startingPoint != null) {
+                                            spawnPoint = startingPoint.transform.position;
+                                        } else {
+                                            spawnPoint = playerObject.transform.position;
+                                        }
+                                    } else {
+                                        if (startingPoint != null) {
+                                            //spawnPoint = startingPoint.transform.position;
+                                            spawnPoint = startingPoint.transform.position - new Vector3(0, worldOffset);
+                                        } else {
+                                            //spawnPoint = playerObject.transform.position;
+                                            spawnPoint = playerObject.transform.position - new Vector3(0, worldOffset);
+                                        }
 
+                                        //spawnPoint = playerObject.transform.position - new Vector3(0, worldOffset);
+
+                                    }
+                                    setSpawnPoint = true;
+                                }
                             }
-                            setSpawnPoint = true;
+                            if (currentPlayer != null) {
+
+                                if (currentPlayer.dawn) {
+                                    //CAMBIO DE MUNDO
+                                    if (InputManager.instance.changeButton && !InputManager.instance.prevChangeButton && !cameraTransition) {
+                                        if (!currentPlayer.crawling) {
+                                            if (gameObject.GetComponent<AudioSource>().pitch == 1.5) {
+                                                gameObject.GetComponent<AudioSource>().pitch = 0.5f;
+                                            } else {
+                                                gameObject.GetComponent<AudioSource>().pitch = 1.5f;
+                                            }
+                                            gameObject.GetComponent<AudioSource>().Play();
+                                            foreach (GameObject g in transformableObjects) {
+                                                g.GetComponent<DoubleObject>().Change();
+                                            }
+                                        }
+                                    }
+                                } else {
+                                    if (InputManager.instance.changeButton2 && !InputManager.instance.prevChangeButton2 && !cameraTransition) {
+                                        if (!currentPlayer.crawling) {
+                                            if (gameObject.GetComponent<AudioSource>().pitch == 1.5) {
+                                                gameObject.GetComponent<AudioSource>().pitch = 0.5f;
+                                            } else {
+                                                gameObject.GetComponent<AudioSource>().pitch = 1.5f;
+                                            }
+                                            gameObject.GetComponent<AudioSource>().Play();
+                                            foreach (GameObject g in transformableObjects) {
+                                                g.GetComponent<DoubleObject>().Change();
+                                            }
+                                        }
+                                    }
+                                }
+                            }
                         }
+                        //Si el juego SI esta pausado
+                        else {
+                            Cursor.visible = true;
+                            Cursor.lockState = CursorLockMode.None; //Se puede volver a mover el cursor
+
+                        }
+                        //En cualquier caso se comprueba el input
                         if (currentPlayer != null) {
-
-                            if (currentPlayer.dawn) {
-                                //CAMBIO DE MUNDO
-                                if (InputManager.instance.changeButton && !InputManager.instance.prevChangeButton && !cameraTransition) {
-                                    if (!currentPlayer.crawling) {
-                                        if (gameObject.GetComponent<AudioSource>().pitch == 1.5) {
-                                            gameObject.GetComponent<AudioSource>().pitch = 0.5f;
-                                        } else {
-                                            gameObject.GetComponent<AudioSource>().pitch = 1.5f;
-                                        }
-                                        gameObject.GetComponent<AudioSource>().Play();
-                                        foreach (GameObject g in transformableObjects) {
-                                            g.GetComponent<DoubleObject>().Change();
-                                        }
-                                    }
-                                }
-                            } else {
-                                if (InputManager.instance.changeButton2 && !InputManager.instance.prevChangeButton2 && !cameraTransition) {
-                                    if (!currentPlayer.crawling) {
-                                        if (gameObject.GetComponent<AudioSource>().pitch == 1.5) {
-                                            gameObject.GetComponent<AudioSource>().pitch = 0.5f;
-                                        } else {
-                                            gameObject.GetComponent<AudioSource>().pitch = 1.5f;
-                                        }
-                                        gameObject.GetComponent<AudioSource>().Play();
-                                        foreach (GameObject g in transformableObjects) {
-                                            g.GetComponent<DoubleObject>().Change();
-                                        }
-                                    }
-                                }
-                            }
+                            CheckPauseInput();
                         }
-                    }
-                    //Si el juego SI esta pausado
-                    else {
-                        Cursor.visible = true;
-                        Cursor.lockState = CursorLockMode.None; //Se puede volver a mover el cursor
-
-                    }
-                    //En cualquier caso se comprueba el input
-                    if (currentPlayer != null) {
-                        CheckPauseInput();
-                    }
-                } else {
-                    //LevelFinishStuff
-                    //Save();
+                    } else {
+                        //LevelFinishStuff
+                        //Save();
 
 
-                }
-            } else {
-                currentPlayer = null;
-                Cursor.visible = true;
-                Cursor.lockState = CursorLockMode.None; //Se puede volver a mover el cursor
+                    }
+                    break;
+                case GameState.MENU:
+                    currentPlayer = null;
+                    Cursor.visible = true;
+                    Cursor.lockState = CursorLockMode.None; //Se puede volver a mover el cursor
+                    break;
+                case GameState.LOADINGSCREEN:
+                    break;
             }
         }
 
@@ -483,16 +500,53 @@ public class GameLogic : MonoBehaviour {
 
     }
 
+    public void LoadScene(string which) {
+        instance.levelFinished = false;
+        StartCoroutine(LoadYourAsyncScene(which));
+        ResetSceneData();
+        saved = false;
+    }
+
+    IEnumerator LoadYourAsyncScene(string name) {
+        // The Application loads the Scene in the background as the current Scene runs.
+        // This is particularly good for creating loading screens.
+        // You could also load the Scene by using sceneBuildIndex. In this case Scene2 has
+        // a sceneBuildIndex of 1 as shown in Build Settings.
+
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(name);
+
+        // Wait until the asynchronous scene fully loads
+        while (!asyncLoad.isDone) {
+            yield return null;
+        }
+    }
+
+    IEnumerator LoadYourAsyncScene(int buildIndex) {
+        // The Application loads the Scene in the background as the current Scene runs.
+        // This is particularly good for creating loading screens.
+        // You could also load the Scene by using sceneBuildIndex. In this case Scene2 has
+        // a sceneBuildIndex of 1 as shown in Build Settings.
+
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(buildIndex);
+
+        // Wait until the asynchronous scene fully loads
+        while (!asyncLoad.isDone) {
+            yield return null;
+        }
+    }
+
     public void LoadScene(Scene which) {
         instance.levelFinished = false;
-        SceneManager.LoadScene(which.name);
+        //SceneManager.LoadScene(which.name);
+        StartCoroutine(LoadYourAsyncScene(which.name));
         ResetSceneData();
         saved = false;
     }
 
     public void LoadScene(int which) {
         instance.levelFinished = false;
-        SceneManager.LoadScene(which);
+        //SceneManager.LoadScene(which);
+        StartCoroutine(LoadYourAsyncScene(which));
         ResetSceneData();
         saved = false;
     }
@@ -508,7 +562,8 @@ public class GameLogic : MonoBehaviour {
     public void RestartScene() {
         saved = false;
         instance.levelFinished = false;
-        SceneManager.LoadScene(currentSceneName);
+        //SceneManager.LoadScene(currentSceneName);
+        StartCoroutine(LoadYourAsyncScene(currentSceneName));
         isPaused = false;
         ResetSceneData();
     }

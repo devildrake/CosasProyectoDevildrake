@@ -62,8 +62,11 @@ public class SoundManager : MonoBehaviour {
                     positionEvents.RemoveAt(i);
                 } else {
                     if (!eventInst.Equals(null) && positionEvents.Count > i) {
-                        if(!positionEvents[i].Equals(null))
-                        eventInst.set3DAttributes(RuntimeUtils.To3DAttributes(positionEvents[i].GetTransform().position));
+                        if (!positionEvents[i].Equals(null)) {
+                            if (positionEvents[i].GetTransform() != null) {
+                                eventInst.set3DAttributes(RuntimeUtils.To3DAttributes(positionEvents[i].GetTransform().position));
+                            }
+                        }
                     }
                 }
             }

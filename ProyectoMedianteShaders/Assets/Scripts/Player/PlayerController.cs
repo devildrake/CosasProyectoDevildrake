@@ -1092,12 +1092,34 @@ public class PlayerController : DoubleObject {
 
                             } else if (timeCountToDrag < timeToRest + timeToDrag) {
 
-                                if (facingRight)
-                                    transform.Translate(Vector3.right * InputManager.instance.horizontalAxis * characterSpeed / 2 * Time.deltaTime);
+                                if (facingRight) {
+                                    if (InputManager.instance.horizontalAxis < 0) {
+                                        Debug.Log("A");
+                                        transform.Translate(Vector3.right * InputManager.instance.horizontalAxis * characterSpeed / 2 * Time.deltaTime);
+                                    } else {
+                                        Debug.Log("b");
 
-                                else
-                                    transform.Translate(Vector3.left * InputManager.instance.horizontalAxis * characterSpeed / 2 * Time.deltaTime);
+                                        RaycastHit2D hitFromBox = Physics2D.Raycast(NearbyObjects[0].transform.position, Vector2.right, 24.0f);
+                                        if (!hitFromBox) {
+                                            Debug.Log("c");
 
+                                            transform.Translate(Vector3.right * InputManager.instance.horizontalAxis * characterSpeed / 2 * Time.deltaTime);
+                                        } else {
+                                            Debug.Log(hitFromBox.collider.gameObject);
+                                        }
+                                    }
+                                } else {
+                                    if (InputManager.instance.horizontalAxis > 0) {
+                                        transform.Translate(Vector3.left * InputManager.instance.horizontalAxis * characterSpeed / 2 * Time.deltaTime);
+                                    } else {
+                                        RaycastHit2D hitFromBox = Physics2D.Raycast(NearbyObjects[0].transform.position, Vector2.right, 4.0f);
+                                        if (!hitFromBox) {
+                                            transform.Translate(Vector3.left * InputManager.instance.horizontalAxis * characterSpeed / 2 * Time.deltaTime);
+                                        } else {
+                                            Debug.Log(hitFromBox.collider.gameObject);
+                                        }
+                                    }
+                                }
 
                                 NearbyObjects[0].transform.position = transform.position - distanceToGrabbedObject;
                                 //Debug.Log(distanceToGrabbedObject);
@@ -1123,11 +1145,34 @@ public class PlayerController : DoubleObject {
 
                             } else if (timeCountToDrag < timeToRest + timeToDrag) {
 
-                                if (facingRight)
-                                    transform.Translate(Vector3.right * InputManager.instance.horizontalAxis2 * characterSpeed / 2 * Time.deltaTime);
+                                if (facingRight) {
+                                    if (InputManager.instance.horizontalAxis2 < 0) {
+                                        Debug.Log("A");
+                                        transform.Translate(Vector3.right * InputManager.instance.horizontalAxis2 * characterSpeed / 2 * Time.deltaTime);
+                                    } else {
+                                        Debug.Log("b");
 
-                                else
-                                    transform.Translate(Vector3.left * InputManager.instance.horizontalAxis2 * characterSpeed / 2 * Time.deltaTime);
+                                        RaycastHit2D hitFromBox = Physics2D.Raycast(NearbyObjects[0].transform.position, Vector2.right, 0.7f, LayerMask.GetMask("Ground"));
+                                        if (!hitFromBox) {
+                                            Debug.Log("c");
+
+                                            transform.Translate(Vector3.right * InputManager.instance.horizontalAxis2 * characterSpeed / 2 * Time.deltaTime);
+                                        } else {
+                                            Debug.Log(hitFromBox.collider.gameObject);
+                                        }
+                                    }
+                                } else {
+                                    if (InputManager.instance.horizontalAxis2 > 0) {
+                                        transform.Translate(Vector3.left * InputManager.instance.horizontalAxis2 * characterSpeed / 2 * Time.deltaTime);
+                                    } else {
+                                        RaycastHit2D hitFromBox = Physics2D.Raycast(NearbyObjects[0].transform.position, Vector2.left, 0.7f, LayerMask.GetMask("Ground"));
+                                        if (!hitFromBox) {
+                                            transform.Translate(Vector3.left * InputManager.instance.horizontalAxis2 * characterSpeed / 2 * Time.deltaTime);
+                                        } else {
+                                            Debug.Log(hitFromBox.collider.gameObject);
+                                        }
+                                    }
+                                }
 
 
                                 NearbyObjects[0].transform.position = transform.position - distanceToGrabbedObject;

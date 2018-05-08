@@ -770,7 +770,6 @@ public static class PlayerUtilsStatic {
                                 arrowAnchor.SetSprite("punch");
                             }
                             arrowAnchor.gameObject.SetActive(true);
-                            Debug.Log("C");
 
 
                         } else if (Input.GetMouseButtonUp(0)) {

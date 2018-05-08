@@ -88,15 +88,28 @@ public class CameraScript : MonoBehaviour {
         //    }
         //}
         //transform.LookAt(lookTarget);
-        if (playerController.lookAtMe) {
-            Vector3 lTargetDir = target.position - transform.position;
-            lTargetDir.y = 0.0f;
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(lTargetDir), Time.deltaTime  * rotationSpeed);
-        } else {
-            Vector3 lTargetDir = transform.position + Vector3.forward - transform.position;
-            lTargetDir.y = 0.0f;
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(lTargetDir), Time.deltaTime  * rotationSpeed * 2);
+        Vector3 lTargetDir = new Vector3(0, 0, 0);
+        switch (cameraState) {
+            case CameraState.CLOSE:
+                if (playerController.lookAtMe) {
+                    lTargetDir = target.position - transform.position;
+                    lTargetDir.y = 0.0f;
+                    transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(lTargetDir), Time.deltaTime * rotationSpeed);
+                } else {
+                    lTargetDir = transform.position + Vector3.forward - transform.position;
+                    lTargetDir.y = 0.0f;
+                    transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(lTargetDir), Time.deltaTime * rotationSpeed * 2);
 
+                }
+                break;
+            case CameraState.FAR:
+
+                    lTargetDir = transform.position + Vector3.forward - transform.position;
+                    lTargetDir.y = 0.0f;
+                    transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(lTargetDir), Time.deltaTime * rotationSpeed * 2);
+
+                
+                break;
         }
 
     }

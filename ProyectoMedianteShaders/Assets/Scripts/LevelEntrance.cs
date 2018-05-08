@@ -308,6 +308,7 @@ public class LevelEntrance : DoubleObject {
             //GameLogic.instance.LoadScene(levelToLoad);
 
             GameLogic.instance.pauseCanvas.nextSceneIndex = levelToLoad;
+            GameLogic.instance.levelToLoad = levelToLoad;
             GameLogic.instance.lastEntranceIndex = levelToLoad;
             InputManager.BlockInput();
             GameLogic.instance.currentPlayer.placeToGo = gameObject;

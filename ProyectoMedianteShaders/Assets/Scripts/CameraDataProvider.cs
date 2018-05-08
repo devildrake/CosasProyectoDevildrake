@@ -40,6 +40,8 @@ public class CameraDataProvider : MonoBehaviour {
 	void Update () {
         if (GameLogic.instance != null&&GameLogic.instance.pauseCanvas!=null) {
             GameLogic.instance.pauseCanvas.nextSceneIndex = nextSceneIndex;
+            GameLogic.instance.levelToLoad = nextSceneIndex;
+
             GameLogic.instance.levelName = levelName;
 
             if (startPosObj != null) {

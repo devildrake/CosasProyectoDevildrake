@@ -17,12 +17,17 @@ public class AñadirListenerGameLogic : MonoBehaviour {
         switch (index) {
             case 0:
                 myselfButton.onClick.AddListener(() => GameLogic.instance.LoadMenu());
+                GameLogic.instance.gameState = GameLogic.GameState.MENU;
                 break;
             case 1:
                 myselfButton.onClick.AddListener(() => GameLogic.instance.RestartScene());
                 break;
             case 2:
                 myselfButton.onClick.AddListener(() => GameLogic.instance.LoadScene(GameLogic.instance.pauseCanvas.nextSceneIndex));//(GameLogic.instance.GetCurrentLevelIndex()+1));
+                break;
+            case 3:
+                myselfButton.onClick.AddListener(() => GameLogic.instance.LoadScene("LoadingScreen"));//(GameLogic.instance.GetCurrentLevelIndex()+1));
+                GameLogic.instance.gameState = GameLogic.GameState.LOADINGSCREEN;
                 break;
             default:
                 break;
