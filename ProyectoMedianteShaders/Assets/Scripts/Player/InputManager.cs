@@ -322,6 +322,7 @@ public class InputManager : MonoBehaviour {
             for (int i = 0; i < names.Length; i++) {
                 if (names[i].Length > 0) {
                     namesList.Add(names[i]);
+                    Debug.Log("DETECTADO : " + names[i]);
                 }
             }
 

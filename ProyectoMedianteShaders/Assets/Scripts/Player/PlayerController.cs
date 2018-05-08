@@ -1153,6 +1153,11 @@ public class PlayerController : DoubleObject {
                                         Debug.Log("b");
 
                                         RaycastHit2D hitFromBox = Physics2D.Raycast(NearbyObjects[0].transform.position, Vector2.right, 0.7f, LayerMask.GetMask("Ground"));
+
+                                        if (!hitFromBox) {
+                                            hitFromBox = Physics2D.Raycast(NearbyObjects[0].transform.position, Vector2.right, 0.7f, LayerMask.GetMask("Platform"));
+                                        }
+
                                         if (!hitFromBox) {
                                             Debug.Log("c");
 
@@ -1166,6 +1171,11 @@ public class PlayerController : DoubleObject {
                                         transform.Translate(Vector3.left * InputManager.instance.horizontalAxis2 * characterSpeed / 2 * Time.deltaTime);
                                     } else {
                                         RaycastHit2D hitFromBox = Physics2D.Raycast(NearbyObjects[0].transform.position, Vector2.left, 0.7f, LayerMask.GetMask("Ground"));
+
+                                        if (!hitFromBox) {
+                                            hitFromBox = Physics2D.Raycast(NearbyObjects[0].transform.position, Vector2.right, 0.7f, LayerMask.GetMask("Platform"));
+                                        }
+
                                         if (!hitFromBox) {
                                             transform.Translate(Vector3.left * InputManager.instance.horizontalAxis2 * characterSpeed / 2 * Time.deltaTime);
                                         } else {
