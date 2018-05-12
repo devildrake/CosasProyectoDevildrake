@@ -20,7 +20,6 @@ public class TemporaryOffset : DoubleObject {
         rb.mass = 5000;
         rb.gravityScale = 0;
         brotherScript = brotherObject.GetComponent<TemporaryOffset>();
-        disableBasicOffset = false;
 
 
         if (worldAssignation == world.DAWN) {
@@ -119,6 +118,7 @@ public class TemporaryOffset : DoubleObject {
             PlayerController playerController = player.GetComponent<PlayerController>();
             if (disableBasicOffset) {
                 playerController.useXOffset = false;
+                Debug.Log("NO LO USES " + playerController.useXOffset);
                 playerController.brotherScript.useXOffset = false;
 
             } else {

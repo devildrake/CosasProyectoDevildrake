@@ -16,7 +16,7 @@ public class DoubleUselessDoor : DoubleObject {
     private void Update() {
         if (!done) {
             if (GameLogic.instance != null) {
-                if (GameLogic.instance.currentPlayer != null) {
+                if (GameLogic.instance.currentPlayer != null&&GameLogic.instance.currentPlayer.placeToGo==null) {
                     if (GameLogic.instance.currentPlayer.transform.position.x - transform.position.x > 2) {
                         if (particleSystem != null) {
                             particleSystem.Stop();
