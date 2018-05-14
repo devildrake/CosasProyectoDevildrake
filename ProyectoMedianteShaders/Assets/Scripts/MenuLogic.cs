@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class MenuLogic : MonoBehaviour {
     //referencia al Canvas para hacer el fade in
@@ -14,15 +16,21 @@ public class MenuLogic : MonoBehaviour {
     //------------------------------------------------------------
 
     //-----------------------state 1
-    //El primer elemento es el highlight del seleccionado, los siguientes son los botones que hay
-    //public GameObject[] state1Elements = new GameObject[3];
+    // 0--> 1 jugador
+    // 1--> 2 jugdores
+    // 3--> opciones
+    // 4--> salir
+    private const int totalMainMenuItems = 4;
+    public Button[] state1Elements = new Button[totalMainMenuItems];
     [SerializeField] private GameObject mainCanvas;
     public GameObject optionsCanvas; //referencia al canvas que tiene el menu de las opciones
     [SerializeField] private GameObject newOptionsCanvas;
-    private Animator newOptionsAnimator;
     private int selected; //variable para controlar que elemento esta seleccionado en el menu
-    private const int totalMainMenuItems = 4;
-    private Transform highlight;
+    //------------------------------------------------------------
+
+    //------------------------state 3
+    public Button[] controlErroresButtons = new Button[2];
+    private short controlErroresSelected;
     //------------------------------------------------------------
 
     /*
@@ -48,6 +56,7 @@ public class MenuLogic : MonoBehaviour {
     public GameObject uselessCanvas;
     private bool upAlpha=true, downAlpha= true;
     private int delayCounter;
+    private EventSystem eventSystem; //referencia al event system para highlightear los botones del canvas.
 
 	// Use this for initialization
 	void Start () {
@@ -63,16 +72,13 @@ public class MenuLogic : MonoBehaviour {
         timeToBlink = 0.4f;
         pressAnyKeyObj.SetActive(false);
         delayCounter = 0;
-
-        //foreach(GameObject go in state1Elements) {
-        //    go.SetActive(false);
-        //}
         selected = 0;
-        //highlight = state1Elements[state1Elements.Length - 1].transform;
-        //optionsCanvas.SetActive(false);
         newOptionsCanvas.SetActive(false);
         GameLogic.instance.transformableObjects.Add(gameObject);
         InputManager.UnBlockInput();
+        mainCanvas.SetActive(false);
+        eventSystem = FindObjectOfType<EventSystem>();
+        controlErroresSelected = 0;
 	}
 	
 	// Update is called once per frame
@@ -103,9 +109,6 @@ public class MenuLogic : MonoBehaviour {
                     menuState = 1;
                     pressAnyKeyObj.SetActive(false);
                     mainCanvas.SetActive(true);
-                    //foreach (GameObject go in state1Elements) {
-                    //    go.SetActive(true);
-                    //}
                 }
                 break;
 
@@ -125,6 +128,7 @@ public class MenuLogic : MonoBehaviour {
             case 3:
                 State3Behavior();
                 break;
+
             default:
                 break;
         }
@@ -191,15 +195,17 @@ public class MenuLogic : MonoBehaviour {
             axisInUse = false;
         }
 
-        //highlight.position = new Vector3(highlight.position.x, state1Elements[selected].transform.position.y, highlight.position.z);
+        //HIGHLIGHT
+        eventSystem.SetSelectedGameObject(state1Elements[selected].gameObject);
+        print(selected);
 
         //SELECCION
         if(!InputManager.instance.prevSelectButton && InputManager.instance.selectButton) {
             /*
              * Selected = 0 --> Boton 1 jugador
-             * Selected = 1 --> Boton salir
+             * Selected = 1 --> 2 jugadores
              * Selected = 2 --> Boton opciones
-             * Selected = 3 --> Boton 2 jugadores
+             * Selected = 3 --> Salir
              */
             if (selected == 0) {
                 if (GameLogic.instance.firstOpening) {
@@ -215,15 +221,7 @@ public class MenuLogic : MonoBehaviour {
                     GameLogic.instance.LoadScene(3);
                 }
             }
-            else if (selected == 2) {
-                newOptionsCanvas.SetActive(true);
-                menuState = 2;
-            }
             else if (selected == 1) {
-                controlErrores.SetActive(true);
-                menuState = 3;
-            }
-            else if (selected == 3) {
                 if (GameLogic.instance.firstOpening) {
                     GameLogic.instance.SetTimeScaleLocal(1);
                     InputManager.BlockInput();
@@ -238,6 +236,14 @@ public class MenuLogic : MonoBehaviour {
                     GameLogic.instance.LoadScene(3);
                 }
             }
+            else if (selected == 2) {
+                newOptionsCanvas.SetActive(true);
+                menuState = 2;
+            }
+            else if (selected == 3) {
+                controlErrores.SetActive(true);
+                menuState = 3;
+            } 
         }
 
         //CLICK CON EL RATON
@@ -261,7 +267,7 @@ public class MenuLogic : MonoBehaviour {
                     }
                 }
                 else if (hit.transform.gameObject.name == "2 jugadores") {
-                    selected = 3;
+                    selected = 1;
                     if (GameLogic.instance.firstOpening) {
                         GameLogic.instance.SetTimeScaleLocal(1);
                         InputManager.BlockInput();
@@ -280,7 +286,7 @@ public class MenuLogic : MonoBehaviour {
                     menuState = 2;
                 }
                 else if(hit.transform.gameObject.name == "salir") {
-                    selected = 1;
+                    selected = 3;
                     controlErrores.SetActive(true);
                     menuState = 3;
                 }
@@ -301,8 +307,20 @@ public class MenuLogic : MonoBehaviour {
         if (!controlErrores.activeInHierarchy) {
             menuState = 1;
         }
-        if (Input.GetKeyDown(KeyCode.Escape)) {
+        if (InputManager.instance.cancelButton) {
             controlErrores.SetActive(false);
+        }
+        print("SELECTED--> " + controlErroresSelected);
+        eventSystem.SetSelectedGameObject(controlErroresButtons[Mathf.Abs(controlErroresSelected)].gameObject);
+        
+
+        if ((InputManager.instance.horizontalAxis < 0 && InputManager.instance.horizontalAxis == 0) || (InputManager.instance.horizontalAxis2 < 0 && InputManager.instance.prevHorizontalAxis2 == 0) || (InputManager.instance.rightKey && !InputManager.instance.prevRightKey)) { //derecha
+            controlErroresSelected++;
+            controlErroresSelected %= 2;
+        }
+        else if (((InputManager.instance.horizontalAxis > 0 && InputManager.instance.horizontalAxis == 0) || (InputManager.instance.horizontalAxis2 > 0 && InputManager.instance.prevHorizontalAxis2 == 0) || (InputManager.instance.leftKey && !InputManager.instance.prevLeftKey))) { //izquierda
+            controlErroresSelected--;
+            controlErroresSelected %= 2;
         }
     }
 
@@ -316,6 +334,11 @@ public class MenuLogic : MonoBehaviour {
             timer = 0;
         }
         timer += Time.deltaTime;
+    }
+
+    public void CloseControlErrores() {
+        delayCounter = 0;
+        controlErrores.SetActive(false);
     }
 
     public void QuitGame() {

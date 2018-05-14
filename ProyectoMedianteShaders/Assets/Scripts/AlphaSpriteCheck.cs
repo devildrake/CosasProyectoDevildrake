@@ -9,9 +9,9 @@ public class AlphaSpriteCheck : MonoBehaviour {
     [Range(0.0f,1.0f)]
     private float alphaThreshhold = 0.5f;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start() {
         i = GetComponent<Image>();
         i.alphaHitTestMinimumThreshold = alphaThreshhold;
-	}
+    }
 }
