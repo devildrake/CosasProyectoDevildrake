@@ -20,6 +20,11 @@ public class GroundCheck : MonoBehaviour {
         RaycastHit2D hit2DLeft = PlayerUtilsStatic.RayCastArrayMask(transform.position + new Vector3(-player.distanciaBordeSprite, 0, 0), Vector3.down, 0.05f, mascaras);
         RaycastHit2D hit2DRight = PlayerUtilsStatic.RayCastArrayMask(transform.position + new Vector3(player.distanciaBordeSprite, 0, 0), Vector3.down, 0.05f, mascaras);
 
+        Debug.DrawLine(transform.position, Vector3.down * 0.05f);
+        Debug.DrawLine(transform.position + new Vector3(-player.distanciaBordeSprite, 0, 0), Vector3.down * 0.05f);
+        Debug.DrawLine(transform.position + new Vector3(player.distanciaBordeSprite, 0, 0), Vector3.down * 0.05f);
+
+
         //if (hit2D.collider != null) 
         //Debug.Log(hit2D.collider);
 

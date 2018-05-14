@@ -437,6 +437,7 @@ public class GameLogic : MonoBehaviour {
                                 if (currentPlayer.dawn) {
                                     //CAMBIO DE MUNDO
                                     if (InputManager.instance.changeButton && !InputManager.instance.prevChangeButton && !cameraTransition) {
+                                        Debug.Log("CHANGE");
                                         if (!currentPlayer.crawling) {
                                             if (gameObject.GetComponent<AudioSource>().pitch == 1.5) {
                                                 gameObject.GetComponent<AudioSource>().pitch = 0.5f;
@@ -452,6 +453,7 @@ public class GameLogic : MonoBehaviour {
                                 } else {
                                     if (InputManager.instance.changeButton2 && !InputManager.instance.prevChangeButton2 && !cameraTransition) {
                                         if (!currentPlayer.crawling) {
+                                            Debug.Log("CHANGE");
                                             if (gameObject.GetComponent<AudioSource>().pitch == 1.5) {
                                                 gameObject.GetComponent<AudioSource>().pitch = 0.5f;
                                             } else {
@@ -599,7 +601,7 @@ public class GameLogic : MonoBehaviour {
             //Igualar variables a cargar (Locales) a las de data
 
             data.firstOpening = true;
-            Debug.Log("Saving firstOpening as" + data.firstOpening);
+//          Debug.Log("Saving firstOpening as" + data.firstOpening);
             //data.completedLevels = completedLevels;
             //data.fragments = fragments;
             data.lastEntranceIndex = lastEntranceIndex;

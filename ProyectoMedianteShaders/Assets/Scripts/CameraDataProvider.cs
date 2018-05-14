@@ -64,6 +64,7 @@ public class CameraDataProvider : MonoBehaviour {
                                 GameLogic.instance.currentPlayer.transform.position = startPosObj.transform.position + new Vector3(-2, GameLogic.instance.worldOffset + 0.25f, 0);
                             }
                     }
+                    GameLogic.instance.gameState = GameLogic.GameState.LEVEL;
                     Destroy(gameObject);
                 }
             } 
