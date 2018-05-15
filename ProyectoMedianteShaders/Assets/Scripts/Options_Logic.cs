@@ -403,6 +403,11 @@ public class Options_Logic : MonoBehaviour {
         qualityGroup.transform.localPosition = initialQualityGroupPos - new Vector2(prevQuality * slideItemOffset, 0);
     }
 
+    private void OnEnable() {
+        transformSetaVideo.localPosition = originalSetaVideoPos;
+        transformSetaAudio.localPosition = originalSetaAudioPos + new Vector2(0, setaOffset);
+    }
+
     /*
      * Controla los botones de las opciones para deslizar la seleccion a derecha e izquierda.
      * Recibe un gameobject que es el que se va a deslizar y un bool que marca si va a la derecha (true)

@@ -190,7 +190,7 @@ public class NavMenuItem : MonoBehaviour {
     public void InteractRight(float offset = 0.5f) {
         switch (myType) {
             case MENU_ITEM_TYPE.SLIDER:
-                slider.value += offset*Time.deltaTime;
+                slider.value += offset*0.02f;
                 break;
             case MENU_ITEM_TYPE.MY_SLIDER:
                 button2.onClick.Invoke();
@@ -201,7 +201,7 @@ public class NavMenuItem : MonoBehaviour {
     public void InteractLeft(float offset = 0.5f) {
         switch (myType) {
             case MENU_ITEM_TYPE.SLIDER:
-                slider.value -= offset*Time.deltaTime;
+                slider.value -= offset* 0.02f;
                 break;
             case MENU_ITEM_TYPE.MY_SLIDER:
                 button1.onClick.Invoke();
