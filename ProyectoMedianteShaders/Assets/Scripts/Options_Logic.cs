@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class Options_Logic : MonoBehaviour {
     enum OptionsState { NONE, DESPLEGANDO_AUDIO, AUDIO_DESPLEGADO, REPLEGANDO_AUDIO, DESPLEGANDO_VIDEO, VIDEO_DESPLEGADO, REPLEGANDO_VIDEO, CERRAR };
@@ -13,6 +14,7 @@ public class Options_Logic : MonoBehaviour {
     [SerializeField] private int bgOffset, scrollSpeed = 3500, setaOffset = 30;
     private Vector2 originalBgPos, originalSetaAudioPos, originalSetaVideoPos;
     private int bgMovThreshold = 3;
+    private EventSystem eventSystem;
 
     //VARIABLES PARA CONTROLAR LA SELECCION DE LAS OPCIONES
     //VARIABLES PARA CONTROLAR LA SELECCION DE LAS OPCIONES
@@ -127,6 +129,8 @@ public class Options_Logic : MonoBehaviour {
                 SoundManager.Instance.ChangeFXVolume(sfx.value);
             }
         });
+
+        FindObjectOfType<EventSystem>().sendNavigationEvents = false;
     }
 
     void Update() {
