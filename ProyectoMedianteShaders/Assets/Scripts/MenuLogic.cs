@@ -54,12 +54,12 @@ public class MenuLogic : MonoBehaviour {
     private bool doneFadeIn = false;
     private float timerM2; //timer para el estado -2
     public GameObject uselessCanvas;
-    private bool upAlpha=true, downAlpha= true;
+    private bool upAlpha = true, downAlpha = true;
     private int delayCounter;
     private EventSystem eventSystem; //referencia al event system para highlightear los botones del canvas.
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start() {
         GameLogic.instance.isPaused = false;
         GameLogic.instance.SetTimeScaleLocal(0.5f);
         canvas.gameObject.SetActive(false);
@@ -79,13 +79,13 @@ public class MenuLogic : MonoBehaviour {
         mainCanvas.SetActive(false);
         eventSystem = FindObjectOfType<EventSystem>();
         controlErroresSelected = 0;
-	}
-	
-	// Update is called once per frame
-	void Update () { 
+    }
+
+    // Update is called once per frame
+    void Update() {
         switch (menuState) {
             case -2:
-                if(InputManager.instance.pauseButton && !InputManager.instance.prevPauseButton) {
+                if (InputManager.instance.pauseButton && !InputManager.instance.prevPauseButton) {
                     menuState = -1;
                 }
                 StateM2Behavior();
@@ -95,7 +95,7 @@ public class MenuLogic : MonoBehaviour {
                 canvasGroup.gameObject.SetActive(true);
                 canvasFadeSplash.gameObject.SetActive(false);
                 Destroy(uselessCanvas);
-                if(canvasGroup.alpha > 0) {
+                if (canvasGroup.alpha > 0) {
                     canvasGroup.alpha -= Time.deltaTime;
                 } else {
                     pressAnyKeyObj.SetActive(true);
@@ -132,18 +132,18 @@ public class MenuLogic : MonoBehaviour {
             default:
                 break;
         }
-	}
+    }
 
     private void StateM2Behavior() {
-        if(canvasFadeSplash.alpha < 0.5f && !doneFadeIn) {
-            canvasFadeSplash.alpha += Time.deltaTime/5;
+        if (canvasFadeSplash.alpha < 0.5f && !doneFadeIn) {
+            canvasFadeSplash.alpha += Time.deltaTime / 5;
         }
         else {
             doneFadeIn = true;
             timerM2 += Time.deltaTime;
-            if(timerM2 > 0.5f) {
+            if (timerM2 > 0.5f) {
                 if (upAlpha) {
-                    if(canvasFadeSplash.alpha < 0.999) {
+                    if (canvasFadeSplash.alpha < 0.999) {
                         canvasFadeSplash.alpha += Time.deltaTime;
                     }
                     else {
@@ -151,7 +151,7 @@ public class MenuLogic : MonoBehaviour {
                     }
                 }
                 else if (downAlpha) {
-                    if(canvasFadeSplash.alpha > 0.5) {
+                    if (canvasFadeSplash.alpha > 0.5) {
                         canvasFadeSplash.alpha -= Time.deltaTime;
                     }
                     else {
@@ -172,35 +172,34 @@ public class MenuLogic : MonoBehaviour {
 
     private void State1Behavior() {
         //MOVIMIENTO ENTRE LAS OPCIONES
-        if (((InputManager.instance.prevVerticalAxis == 0 && InputManager.instance.prevVerticalAxis2 == 0)&&!InputManager.instance.prevDownKey&&!InputManager.instance.prevUpKey) && (InputManager.instance.verticalAxis < 0 || InputManager.instance.verticalAxis2 < 0||InputManager.instance.downKey)) {//-1
+        if (((InputManager.instance.prevVerticalAxis == 0 && InputManager.instance.prevVerticalAxis2 == 0) && !InputManager.instance.prevDownKey && !InputManager.instance.prevUpKey) && (InputManager.instance.verticalAxis < 0 || InputManager.instance.verticalAxis2 < 0 || InputManager.instance.downKey)) {//-1
             if (!axisInUse) {
                 axisInUse = true;
                 selected--;
                 if (selected < 0) {
-                    selected = totalMainMenuItems-1;
+                    selected = totalMainMenuItems - 1;
                 }
             }
         }
-        else if (((InputManager.instance.prevVerticalAxis == 0 && InputManager.instance.prevVerticalAxis2 == 0) && !InputManager.instance.prevDownKey && !InputManager.instance.prevUpKey) && (InputManager.instance.verticalAxis > 0 || InputManager.instance.verticalAxis2 > 0||InputManager.instance.upKey)) {//+1
+        else if (((InputManager.instance.prevVerticalAxis == 0 && InputManager.instance.prevVerticalAxis2 == 0) && !InputManager.instance.prevDownKey && !InputManager.instance.prevUpKey) && (InputManager.instance.verticalAxis > 0 || InputManager.instance.verticalAxis2 > 0 || InputManager.instance.upKey)) {//+1
             if (!axisInUse) {
                 axisInUse = true;
                 selected++;
-                if (selected > totalMainMenuItems-1) {
+                if (selected > totalMainMenuItems - 1) {
                     selected = 0;
                 }
             }
         }
 
-        if (InputManager.instance.verticalAxis == 0 && InputManager.instance.verticalAxis2 == 0&&!InputManager.instance.downKey&&!InputManager.instance.upKey) {
+        if (InputManager.instance.verticalAxis == 0 && InputManager.instance.verticalAxis2 == 0 && !InputManager.instance.downKey && !InputManager.instance.upKey) {
             axisInUse = false;
         }
 
         //HIGHLIGHT
         eventSystem.SetSelectedGameObject(state1Elements[selected].gameObject);
-        print(selected);
 
         //SELECCION
-        if(!InputManager.instance.prevSelectButton && InputManager.instance.selectButton) {
+        if (!InputManager.instance.prevSelectButton && InputManager.instance.selectButton) {
             /*
              * Selected = 0 --> Boton 1 jugador
              * Selected = 1 --> 2 jugadores
@@ -208,91 +207,20 @@ public class MenuLogic : MonoBehaviour {
              * Selected = 3 --> Salir
              */
             if (selected == 0) {
-                if (GameLogic.instance.firstOpening) {
-                    GameLogic.instance.SetTimeScaleLocal(1);
-                    InputManager.BlockInput();
-                    InputManager.currentGameMode = InputManager.GAMEMODE.SINGLEPLAYER;
-                    GameLogic.instance.LoadScene(2);
-                    GameLogic.instance.firstOpening = true;
-                } else {
-                    InputManager.currentGameMode = InputManager.GAMEMODE.SINGLEPLAYER;
-                    GameLogic.instance.SetTimeScaleLocal(1);
-                    InputManager.BlockInput();
-                    GameLogic.instance.LoadScene(3);
-                }
+                PlayOnePlayer();
             }
             else if (selected == 1) {
-                if (GameLogic.instance.firstOpening) {
-                    GameLogic.instance.SetTimeScaleLocal(1);
-                    InputManager.BlockInput();
-                    InputManager.currentGameMode = InputManager.GAMEMODE.MULTI_KEYBOARD_CONTROLLER;
-                    GameLogic.instance.LoadScene(2);
-                    GameLogic.instance.firstOpening = true;
-                }
-                else {
-                    InputManager.currentGameMode = InputManager.GAMEMODE.MULTI_KEYBOARD_CONTROLLER;
-                    GameLogic.instance.SetTimeScaleLocal(1);
-                    InputManager.BlockInput();
-                    GameLogic.instance.LoadScene(3);
-                }
+                PlayTwoPlayers();
             }
             else if (selected == 2) {
-                newOptionsCanvas.SetActive(true);
-                menuState = 2;
+                Options();
             }
             else if (selected == 3) {
-                controlErrores.SetActive(true);
-                menuState = 3;
-            } 
-        }
-
-        //CLICK CON EL RATON
-        if (Input.GetMouseButtonDown(0)) {
-            RaycastHit hit;
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if(Physics.Raycast(ray, out hit, 100.0f)) {
-                if(hit.transform.gameObject.name == "1 jugador") {
-                    selected = 0;
-                    if (GameLogic.instance.firstOpening) {
-                        GameLogic.instance.SetTimeScaleLocal(1);
-                        InputManager.BlockInput();
-                        InputManager.currentGameMode = InputManager.GAMEMODE.SINGLEPLAYER;
-                        GameLogic.instance.LoadScene(2);
-                        GameLogic.instance.firstOpening = true;
-                    } else {
-                        InputManager.currentGameMode = InputManager.GAMEMODE.SINGLEPLAYER;
-                        GameLogic.instance.SetTimeScaleLocal(1);
-                        InputManager.BlockInput();
-                        GameLogic.instance.LoadScene(3);
-                    }
-                }
-                else if (hit.transform.gameObject.name == "2 jugadores") {
-                    selected = 1;
-                    if (GameLogic.instance.firstOpening) {
-                        GameLogic.instance.SetTimeScaleLocal(1);
-                        InputManager.BlockInput();
-                        InputManager.currentGameMode = InputManager.GAMEMODE.MULTI_KEYBOARD_CONTROLLER;
-                        GameLogic.instance.LoadScene(2);
-                        GameLogic.instance.firstOpening = true;
-                    } else {
-                        InputManager.currentGameMode = InputManager.GAMEMODE.MULTI_KEYBOARD_CONTROLLER;
-                        GameLogic.instance.SetTimeScaleLocal(1);
-                        InputManager.BlockInput();
-                        GameLogic.instance.LoadScene(3);
-                    }
-                } else if(hit.transform.gameObject.name == "opciones") {
-                    selected = 2;
-                    newOptionsCanvas.SetActive(true);
-                    menuState = 2;
-                }
-                else if(hit.transform.gameObject.name == "salir") {
-                    selected = 3;
-                    controlErrores.SetActive(true);
-                    menuState = 3;
-                }
+                Exit();
             }
         }
     }
+
 
     //Funcionamiento del menu cuando tienes la ventana de opciones abierta
     void State2Behavior() {
@@ -336,6 +264,8 @@ public class MenuLogic : MonoBehaviour {
         timer += Time.deltaTime;
     }
 
+
+#region BUTTON_METHODS
     public void CloseControlErrores() {
         delayCounter = 0;
         controlErrores.SetActive(false);
@@ -344,4 +274,51 @@ public class MenuLogic : MonoBehaviour {
     public void QuitGame() {
         Application.Quit();
     }
+
+    //Metodo que llama el boton de 1 jugador
+    public void PlayOnePlayer() {
+        if (GameLogic.instance.firstOpening) {
+            GameLogic.instance.SetTimeScaleLocal(1);
+            InputManager.BlockInput();
+            InputManager.currentGameMode = InputManager.GAMEMODE.SINGLEPLAYER;
+            GameLogic.instance.LoadScene(2);
+            GameLogic.instance.firstOpening = true;
+        }
+        else {
+            InputManager.currentGameMode = InputManager.GAMEMODE.SINGLEPLAYER;
+            GameLogic.instance.SetTimeScaleLocal(1);
+            InputManager.BlockInput();
+            GameLogic.instance.LoadScene(3);
+        }
+    }
+
+    //Metodo que llama el boton de 2 jugadores
+    public void PlayTwoPlayers() {
+        if (GameLogic.instance.firstOpening) {
+            GameLogic.instance.SetTimeScaleLocal(1);
+            InputManager.BlockInput();
+            InputManager.currentGameMode = InputManager.GAMEMODE.MULTI_KEYBOARD_CONTROLLER;
+            GameLogic.instance.LoadScene(2);
+            GameLogic.instance.firstOpening = true;
+        }
+        else {
+            InputManager.currentGameMode = InputManager.GAMEMODE.MULTI_KEYBOARD_CONTROLLER;
+            GameLogic.instance.SetTimeScaleLocal(1);
+            InputManager.BlockInput();
+            GameLogic.instance.LoadScene(3);
+        }
+    }
+
+    //Metodo que llama el boton de opciones
+    public void Options() {
+        newOptionsCanvas.SetActive(true);
+        menuState = 2;
+    }
+
+    //Metodo que llama el boton de salir
+    public void Exit() {
+        controlErrores.SetActive(true);
+        menuState = 3;
+    }
+#endregion
 }

@@ -1128,7 +1128,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 870748080}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1212409166}
+        m_MethodName: Exit
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!222 &402209203
@@ -5383,7 +5394,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 714879004}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1212409166}
+        m_MethodName: PlayOnePlayer
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!222 &697298203
@@ -9854,7 +9876,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1590953660}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1212409166}
+        m_MethodName: PlayTwoPlayers
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!222 &1284598247
@@ -11324,8 +11357,8 @@ SkinnedMeshRenderer:
   m_BlendShapeWeights: []
   m_RootBone: {fileID: 0}
   m_AABB:
-    m_Center: {x: 0.008221264, y: 0.19520462, z: -0.10597235}
-    m_Extent: {x: 0.68803155, y: 0.73928654, z: 0.76964736}
+    m_Center: {x: -0.008220916, y: 0.19520438, z: -0.10597226}
+    m_Extent: {x: 0.6880317, y: 0.73928666, z: 0.76964724}
   m_DirtyAABB: 0
 --- !u!33 &1835361993
 MeshFilter:
@@ -11660,7 +11693,7 @@ Prefab:
     - target: {fileID: 137669912589254114, guid: c7399ddfa2aa4a34381473b845315525,
         type: 2}
       propertyPath: m_AABB.m_Center.z
-      value: 0.000000059604645
+      value: 0.00000011920929
       objectReference: {fileID: 0}
     - target: {fileID: 137669912589254114, guid: c7399ddfa2aa4a34381473b845315525,
         type: 2}
@@ -11670,12 +11703,12 @@ Prefab:
     - target: {fileID: 137669912589254114, guid: c7399ddfa2aa4a34381473b845315525,
         type: 2}
       propertyPath: m_AABB.m_Extent.y
-      value: 0.41581315
+      value: 0.4158132
       objectReference: {fileID: 0}
     - target: {fileID: 137669912589254114, guid: c7399ddfa2aa4a34381473b845315525,
         type: 2}
       propertyPath: m_AABB.m_Extent.z
-      value: 0.35766688
+      value: 0.35766694
       objectReference: {fileID: 0}
     - target: {fileID: 4184397224688258, guid: c7399ddfa2aa4a34381473b845315525, type: 2}
       propertyPath: m_LocalEulerAnglesHint.y
@@ -15341,7 +15374,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1692059245}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1212409166}
+        m_MethodName: Options
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!222 &2125725987
