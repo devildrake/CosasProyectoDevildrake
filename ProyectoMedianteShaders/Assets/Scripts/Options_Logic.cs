@@ -130,6 +130,7 @@ public class Options_Logic : MonoBehaviour {
             }
         });
 
+        //fix del bug por el que los sliders se movian sin tenerlos seleccionados.
         FindObjectOfType<EventSystem>().sendNavigationEvents = false;
     }
 
@@ -405,11 +406,16 @@ public class Options_Logic : MonoBehaviour {
         fpsGroup.transform.localPosition = initialFpsGroupPos - new Vector2(prevFps * slideItemOffset, 0);
         qualitySel = prevQuality;
         qualityGroup.transform.localPosition = initialQualityGroupPos - new Vector2(prevQuality * slideItemOffset, 0);
+
+        StopAllCoroutines();
     }
 
     private void OnEnable() {
         transformSetaVideo.localPosition = originalSetaVideoPos;
         transformSetaAudio.localPosition = originalSetaAudioPos + new Vector2(0, setaOffset);
+
+        StartCoroutine("ShroomAnimation", setaAudio);
+        StartCoroutine("ShroomAnimation", setaVideo);
     }
 
     /*
@@ -456,6 +462,16 @@ public class Options_Logic : MonoBehaviour {
                 go.transform.localPosition += new Vector3(slideItemOffset, 0, 0);
                 qualitySel--;
             }
+        }
+    }
+
+    private IEnumerator ShroomAnimation(GameObject g) {
+        yield return new WaitForSecondsRealtime(Random.value);
+        while (true) {
+            g.transform.localPosition += new Vector3(0.0f,2.0f,0.0f);
+            yield return new WaitForSecondsRealtime(0.2f);
+            g.transform.localPosition -= new Vector3(0.0f, 2.0f, 0.0f);
+            yield return new WaitForSecondsRealtime(Random.value*0.5f+1.5f);
         }
     }
 }
