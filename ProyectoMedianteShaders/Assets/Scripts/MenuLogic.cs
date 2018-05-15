@@ -26,6 +26,7 @@ public class MenuLogic : MonoBehaviour {
     public GameObject optionsCanvas; //referencia al canvas que tiene el menu de las opciones
     [SerializeField] private GameObject newOptionsCanvas;
     private int selected; //variable para controlar que elemento esta seleccionado en el menu
+    private CanvasGroup mainCanvasGroup;
     //------------------------------------------------------------
 
     //------------------------state 3
@@ -79,6 +80,8 @@ public class MenuLogic : MonoBehaviour {
         mainCanvas.SetActive(false);
         eventSystem = FindObjectOfType<EventSystem>();
         controlErroresSelected = 0;
+        mainCanvasGroup = mainCanvas.GetComponent<CanvasGroup>();
+        mainCanvasGroup.alpha = 0.0f;
     }
 
     // Update is called once per frame
@@ -113,6 +116,9 @@ public class MenuLogic : MonoBehaviour {
                 break;
 
             case 1:
+                if(mainCanvasGroup.alpha < 1.0f) {
+                    mainCanvasGroup.alpha += Time.deltaTime*2;
+                }
                 if (delayCounter < 2) {
                     delayCounter++;
                 }
