@@ -12,25 +12,50 @@ public class DoubleFairyGuide : DoubleObject {
     // Use this for initialization
     Rigidbody2D rb;
     DoubleFairyGuide brotherScript;
-    public GameObject spriteRendererObject;
+    public GameObject bocadilloRendererObject;
+    public GameObject feedBackRendererObject;
     public GameObject fairyModel;
-    public SpriteRenderer spriteRenderer;
+
+    public SpriteRenderer feedBackRenderer;
+    public SpriteRenderer bocadilloRenderer;
+
     float myAlpha;
     float idleTimer=0;
     bool setIdle;
     public int currentIdlePattern = 0;
-
+    public bool hasAMessage;
     bool NotDAWN(DoubleObject d) {
         return d.worldAssignation != world.DAWN;
     }
 
+    float dotAnimationTimer;
+
+    Sprite spriteE;
+    Sprite spriteB;
+
+    [SerializeField]
+    Sprite[] dotsAnimation;
+
     void Start() {
+        PauseCanvas.textIndex = -1;
+        PauseCanvas.lastIndex = -1;
+
+        dotAnimationTimer = 0;
+        spriteE = Resources.Load<Sprite>("Sprites/Fairy/EButton") as Sprite;
+        spriteB = Resources.Load<Sprite>("Sprites/Fairy/BButton") as Sprite;
+        dotsAnimation = new Sprite[3];
+        dotsAnimation[0] = Resources.Load<Sprite>("Sprites/Fairy/dots/Puntos1") as Sprite;
+        dotsAnimation[1] = Resources.Load<Sprite>("Sprites/Fairy/dots/Puntos2") as Sprite;
+        dotsAnimation[2] = Resources.Load<Sprite>("Sprites/Fairy/dots/Puntos3") as Sprite;
+
+
         setIdle = false;
-        spriteRenderer = GetComponentInChildren<SpriteRenderer>();
-        spriteRendererObject = spriteRenderer.gameObject;
+        //spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        feedBackRendererObject = feedBackRenderer.gameObject;
+        bocadilloRendererObject = bocadilloRenderer.gameObject;
         myAlpha = 0;
 
-        distanceFromPlayerThreshold = 4.0f;
+        distanceFromPlayerThreshold = 1.5f;
         brotherScript = brotherObject.GetComponent<DoubleFairyGuide>();
         targetIndex = 0;
 
@@ -68,7 +93,9 @@ public class DoubleFairyGuide : DoubleObject {
 
         rb.mass = 5000;
         rb.gravityScale = 0;
-        spriteRendererObject.SetActive(true);
+        feedBackRendererObject.SetActive(true);
+        bocadilloRendererObject.SetActive(true);
+
     }
 
     protected override void BrotherBehavior() {
@@ -159,22 +186,29 @@ public class DoubleFairyGuide : DoubleObject {
                 fairyModel.transform.localPosition = new Vector3(0, 0, 0);
                 idleTimer = 0;
                 FadeOut();
+
+                if (GameLogic.instance.currentPlayer.interactableObject == this) {
+                    GameLogic.instance.currentPlayer.interactableObject = null;
+                    GameLogic.instance.eventState = GameLogic.EventState.NONE;
+                }
+
                 if (Vector2.Distance(transform.position, fairySpotList[targetIndex].transform.position) < 1.0f) {
                     currentSpot = fairySpotList[targetIndex];
 
                     brotherScript.currentSpot = fairySpotList[targetIndex].brotherScript;
 
-                    if (spriteRendererObject != null) {
-                        if (currentSpot.messageSprite != null) {
-                            //spriteRendererObject.SetActive(false);
-                            FadeOut();
-                            spriteRenderer.sprite = currentSpot.messageSprite;
-                            brotherScript.spriteRenderer.sprite = currentSpot.brotherScript.messageSprite;
-                        } else {
-                            spriteRenderer.sprite = null;
-                            brotherScript.spriteRenderer.sprite = null;
-                        }
-                    }
+                    ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                    //if (spriteRendererObject != null) {
+                    //    if (currentSpot.messageSprite != null) {
+                    //        //spriteRendererObject.SetActive(false);
+                    //        FadeOut();
+                    //        spriteRenderer.sprite = currentSpot.messageSprite;
+                    //        brotherScript.spriteRenderer.sprite = currentSpot.brotherScript.messageSprite;
+                    //    } else {
+                    //        spriteRenderer.sprite = null;
+                    //        brotherScript.spriteRenderer.sprite = null;
+                    //    }
+                    //}
                     //rb.velocity = new Vector2(0, 0);
                 } else {
                     Vector2 DesiredVelocity = fairySpotList[targetIndex].transform.position - transform.position;
@@ -203,7 +237,13 @@ public class DoubleFairyGuide : DoubleObject {
                     brotherScript.currentSpot = null;
                     //spriteRendererObject.SetActive(false);
                     FadeOut();
-                } else {
+
+                    if (GameLogic.instance.currentPlayer.interactableObject == this) {
+                        GameLogic.instance.currentPlayer.interactableObject = null;
+                        GameLogic.instance.eventState = GameLogic.EventState.NONE;
+                    }
+
+            } else {
 
                     if (!setIdle) {
                         setIdle = true;
@@ -276,18 +316,61 @@ public class DoubleFairyGuide : DoubleObject {
                     //////IDLE
 
                     if (Vector2.Distance(GameLogic.instance.currentPlayer.transform.position, transform.position) < distanceFromPlayerThreshold) {
-                        if (spriteRenderer != null) {
-                            if (spriteRenderer.sprite != null) {
+                        if (feedBackRenderer != null) {
+                            //if (feedBackRenderer.sprite != null) {
+                                if (GameLogic.instance.currentPlayer != null) {
+                                    GameLogic.instance.currentPlayer.interactableObject = this;
+                                }
+
+                                if (!InputManager.gamePadConnected) {
+                                    feedBackRenderer.sprite = spriteE;
+                                    //spriteRenderer.transform.localScale = new Vector3(0.11f, 0.11f, 0.11f);
+                                    //feedBackRenderer.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+
+                                } else {
+                                    feedBackRenderer.sprite = spriteB;
+                                   // feedBackRenderer.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+                                    //spriteRenderer.transform.localScale = new Vector3(0.11f, 0.11f, 0.11f);
+                                }
+
                                 FadeIn();
 
-                            } else {
-                            }
+                            //} else {
+
+                            //}
                         } else {
                             Debug.Log("Null SpriteRenderers");
 
                         }
                     } else {
-                        FadeOut();
+                        if (GameLogic.instance.currentPlayer != null) {
+                            if(GameLogic.instance.currentPlayer.interactableObject == this) {
+                                    GameLogic.instance.currentPlayer.interactableObject = null;
+                                    GameLogic.instance.eventState = GameLogic.EventState.NONE;
+                            }
+                        }
+
+                        if (!hasAMessage) {
+                            FadeOut();
+                        } else{
+                            int currentFrame=0;
+
+                            if (dotAnimationTimer > 0.3f && dotAnimationTimer < 0.6f)
+                                currentFrame = 1;
+                            else if (dotAnimationTimer > 0.6f && dotAnimationTimer < 0.9f)
+                                currentFrame = 2;
+                            else if (dotAnimationTimer > 0.9f) {
+                                dotAnimationTimer = 0;
+                                currentFrame = 0;
+                            }
+                            feedBackRenderer.sprite = dotsAnimation[currentFrame];
+
+
+
+                            dotAnimationTimer += Time.deltaTime;
+
+                            FadeIn();
+                        }
                     }
 
                     if (currentSpot.messageSprite != null) {
@@ -329,33 +412,50 @@ public class DoubleFairyGuide : DoubleObject {
         
     }
 
+    public override void Interact() {
+        base.Interact();
+
+        if (PauseCanvas.lastIndex < 0){
+
+        }
+
+        PauseCanvas.textIndex++;
+
+        GameLogic.instance.eventState = GameLogic.EventState.TEXT;
+    }
+
     void FadeIn() {
         if (myAlpha < 0) {
             myAlpha = 0;
         }
 
 
-        if (spriteRenderer.color.a < 0.75f) {
+        if (feedBackRenderer.color.a < 0.75f) {
             myAlpha += Time.deltaTime;
-            if (spriteRenderer.sprite != null) {
-                spriteRenderer.color = new Color(spriteRenderer.color.r, spriteRenderer.color.g, spriteRenderer.color.b, myAlpha);
-            }
+            //if (feedBackRenderer.sprite != null) {
+                feedBackRenderer.color = new Color(feedBackRenderer.color.r, feedBackRenderer.color.g, feedBackRenderer.color.b, myAlpha);
+            //}
+            bocadilloRenderer.color = new Color(bocadilloRenderer.color.r, bocadilloRenderer.color.g, bocadilloRenderer.color.b, myAlpha);
+
         }
         brotherScript.myAlpha = myAlpha;
 
     }
 
     void FadeOut() {
+        PauseCanvas.textIndex = -1;
+        PauseCanvas.lastIndex = -1;
         if (myAlpha < 0) {
             myAlpha = 0;
         }
 
-        if (spriteRenderer.color.a > 0) {
+        if (feedBackRenderer.color.a > 0) {
 
             myAlpha -= Time.deltaTime;
-            if (spriteRenderer.sprite != null) {
-                spriteRenderer.color = new Color(spriteRenderer.color.r, spriteRenderer.color.g, spriteRenderer.color.b, myAlpha);
-            }
+            //if (feedBackRenderer.sprite != null) {
+                feedBackRenderer.color = new Color(feedBackRenderer.color.r, feedBackRenderer.color.g, feedBackRenderer.color.b, myAlpha);
+            //}
+            bocadilloRenderer.color = new Color(bocadilloRenderer.color.r, bocadilloRenderer.color.g, bocadilloRenderer.color.b, myAlpha);
         }
         brotherScript.myAlpha = myAlpha;
 
@@ -370,6 +470,8 @@ public class DoubleFairyGuide : DoubleObject {
             FairyBehaviour();
 
         }
+
+
 
         if (added) {
             fairySpotList.RemoveAll(isNotFromThisWorld);

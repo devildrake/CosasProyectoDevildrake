@@ -16,8 +16,14 @@ public class PauseCanvas : MonoBehaviour {
     public GameObject gris;
     Text[] texts;
 
+    public GameObject fairyTextObject;
+    public Text fairyText;
     public GameObject blackForFade;
     public GameObject scoreScreen;
+
+    public static int textIndex;
+    public static int lastIndex;
+
 
     //referencia al canvas de las opciones
     public GameObject opcionesCanvas;
@@ -112,20 +118,29 @@ public class PauseCanvas : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-
-        if (GameLogic.instance.showTimeCounter) {
-            if (timeFeedBackObject != null) {
-                timeFeedBackObject.SetActive(true);
-                timeFeedBackObject.GetComponent<Text>().text =(Mathf.Floor((GameLogic.instance.timeElapsed))).ToString() + "s";
+        if (GameLogic.instance!=null) {
+            if (GameLogic.instance.showTimeCounter) {
+                if (timeFeedBackObject != null) {
+                    timeFeedBackObject.SetActive(true);
+                    timeFeedBackObject.GetComponent<Text>().text = (Mathf.Floor((GameLogic.instance.timeElapsed))).ToString() + "s";
+                }
             }
+
+
+            //CheckNull();
+            CheckPause();
+            if (InputManager.instance.resetButton) {
+                Barra.SetActive(true);
+            } else
+                Barra.SetActive(false);
+
+            if (GameLogic.instance.eventState == GameLogic.EventState.TEXT) {
+                fairyTextObject.SetActive(true);
+            } else {
+                fairyTextObject.SetActive(false);
+            }
+
         }
 
-
-        //CheckNull();
-        CheckPause();
-        if (InputManager.instance.resetButton) {
-            Barra.SetActive(true);
-        } else
-            Barra.SetActive(false);
     }
 }

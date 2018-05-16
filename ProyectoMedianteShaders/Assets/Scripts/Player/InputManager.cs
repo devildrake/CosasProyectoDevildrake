@@ -326,6 +326,15 @@ public class InputManager : MonoBehaviour {
                 }
             }
 
+            if (namesList.Count == 0) {
+                Windows_Controllers[0] = false;
+                Xbox_One_Controllers[0] = false;
+                PS4_Controllers[0] = false;
+                Windows_Controllers[1] = false;
+                Xbox_One_Controllers[1] = false;
+                PS4_Controllers[1] = false;
+            }
+
             for (int x = 0; x < namesList.Count; x++) {
                 //Debug.Log(namesList[x]);
             }
@@ -345,7 +354,7 @@ public class InputManager : MonoBehaviour {
                        // print("PS4 CONTROLLER2 IS CONNECTED");
                     }
                 }
-                if (namesList[x].Length == 33 || namesList[x].Length == 24) {
+                else if (namesList[x].Length == 33 || namesList[x].Length == 24) {
                     if (x == 0) {
                         Xbox_One_Controllers[0] = true;
                        /// print("XBOX ONE CONTROLLER1 IS CONNECTED");
@@ -354,13 +363,24 @@ public class InputManager : MonoBehaviour {
                         ///print("XBOX ONE CONTROLLER2 IS CONNECTED");
                     }
                 }
-                if (namesList[x].Length == 31) {
+                else if (namesList[x].Length == 31) {
                     if (x == 0) {
                         //print("WINDOWS CONTROLLER1 IS CONNECTED");
                         Windows_Controllers[0] = true;
                     } else if (x == 1) {
                         Windows_Controllers[1] = true;
                         //print("WINDOWS CONTROLLER2 IS CONNECTED");
+                    }
+                } else {
+                    if (x == 0) {
+                        Windows_Controllers[0] = false;
+                        Xbox_One_Controllers[0] = false;
+                        PS4_Controllers[0] = false;
+
+                    } else {
+                        Windows_Controllers[1] = false;
+                        Xbox_One_Controllers[1] = false;
+                        PS4_Controllers[1] = false;
                     }
                 }
             }

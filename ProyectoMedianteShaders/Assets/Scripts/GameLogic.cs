@@ -89,6 +89,8 @@ public class GameLogic : MonoBehaviour {
     //private bool isInMainMenu;
     public enum GameState { LEVEL, MENU, LOADINGSCREEN}
     public GameState gameState = GameState.MENU;
+    public enum EventState { NONE, TEXT, IMAGE }
+    public EventState eventState;
 
     [HideInInspector]
     public bool setSpawnPoint;
@@ -112,6 +114,9 @@ public class GameLogic : MonoBehaviour {
 
     public float worldOffset;
 
+    bool dawn = false;
+    float dawnValue = 0;
+
     ///////////////////////////////OPCIONES///////////////////////////
     ///////////////////////////////OPCIONES///////////////////////////
     ///////////////////////////////OPCIONES///////////////////////////
@@ -126,7 +131,9 @@ public class GameLogic : MonoBehaviour {
     [HideInInspector] public int graficos = 0; //Varia la configuración grafica del juego
     [HideInInspector] public int maxFrameRate = -1; //limita el framerate
     [HideInInspector] public Vector2 resolutionSelected = new Vector2(1920,1080); //que resolucion de pantalla se ha escogido. Se inicializa desde SetUpMenu
-    
+
+    FMOD.Studio.ParameterInstance dawnParameter;
+
 
     /*
      * Conjunto de metodos que se llamaran al cambiar las opciones de juego
@@ -175,7 +182,7 @@ public class GameLogic : MonoBehaviour {
     }
 
     void Awake() {
-
+        eventState = EventState.NONE;
         soundManager = SoundManager.Instance;
 
         cameraAttenuation = 1;
@@ -329,14 +336,51 @@ public class GameLogic : MonoBehaviour {
     }
 
     public void PlaySong(int songId) {
-        if (!musicEvent.Equals(null))
+        if (!musicEvent.Equals(null)) {
             musicEvent.stop(STOP_MODE.ALLOWFADEOUT);
+        }
+            musicEvent = SoundManager.Instance.PlayMusic("event:/Music/song" + songId.ToString(),transform.position);
 
-            musicEvent = SoundManager.Instance.PlayEvent("event:/Music/song" + songId.ToString(),transform.position);
+        SoundManager.Instance.music = musicEvent;
+
+        FMOD.RESULT result = musicEvent.getParameter("Dawn", out dawnParameter);
+
+        Debug.Log(result);
+
+
         //Debug.Log("PlaySong");
     }
 
+    public void UpdateEventParameter(EventInstance soundEvent, SoundManagerParameter parameter) {
+        soundEvent.setParameterValue(parameter.GetName(), parameter.GetValue());
+    }
+
     void Update() {
+
+        if (!soundManager.music.Equals(null)) {
+            if (dawn) {
+                dawnValue += Time.deltaTime;
+                dawnValue = Mathf.Clamp(dawnValue, 0, 1);
+            } else {
+                dawnValue -= Time.deltaTime;
+                dawnValue = Mathf.Clamp(dawnValue, 0, 1);
+            }
+
+            dawnParameter.setValue(dawnValue);
+            
+
+            //SoundManager.Instance.UpdateEventParameter(musicEvent, dawnParameter);
+
+            //FMOD.RESULT result;
+
+            //result = soundManager.music.setParameterValue("Dawn", dawnValue);
+
+            //if (result == FMOD.RESULT.OK) {
+            //    Debug.Log(dawnValue);
+            //} else {
+            //    Debug.Log(result);
+            //}
+        }
 
         if (currentPlayer != null) {
             if (Input.GetKey(KeyCode.N)) {
@@ -357,7 +401,7 @@ public class GameLogic : MonoBehaviour {
         if (!SoundManager.Instance.Equals(null)) {
             if (!musicEvent.Equals(null)) {
                 if (SoundManager.Instance.isPlaying(musicEvent)) {
-
+                    //SoundManager.Instance.music.setParameterValue("Dawn", dawnValue);
                 }
             }
         }
@@ -388,6 +432,18 @@ public class GameLogic : MonoBehaviour {
         else {
             switch (gameState) {
                 case GameState.LEVEL:
+                    switch (eventState) {
+                        case EventState.NONE:
+
+                            break;
+                        case EventState.TEXT:
+
+                            break;
+                        case EventState.IMAGE:
+                            break;
+                    }
+
+
                     if (!levelFinished) {
                         if (/*Input.GetKey(KeyCode.R)*/InputManager.instance.resetButton) {
                             timerToReset += Time.deltaTime;
@@ -438,6 +494,7 @@ public class GameLogic : MonoBehaviour {
                                     //CAMBIO DE MUNDO
                                     if (InputManager.instance.changeButton && !InputManager.instance.prevChangeButton && !cameraTransition) {
                                         Debug.Log("CHANGE");
+                                        dawn = !dawn;
                                         if (!currentPlayer.crawling) {
                                             if (gameObject.GetComponent<AudioSource>().pitch == 1.5) {
                                                 gameObject.GetComponent<AudioSource>().pitch = 0.5f;
@@ -452,6 +509,7 @@ public class GameLogic : MonoBehaviour {
                                     }
                                 } else {
                                     if (InputManager.instance.changeButton2 && !InputManager.instance.prevChangeButton2 && !cameraTransition) {
+                                        dawn = !dawn;
                                         if (!currentPlayer.crawling) {
                                             Debug.Log("CHANGE");
                                             if (gameObject.GetComponent<AudioSource>().pitch == 1.5) {
@@ -484,6 +542,7 @@ public class GameLogic : MonoBehaviour {
 
 
                     }
+
                     break;
                 case GameState.MENU:
                     currentPlayer = null;

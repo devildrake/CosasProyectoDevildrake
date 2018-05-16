@@ -15,7 +15,7 @@ public class SoundManager : MonoBehaviour {
 
     private List<EventInstance> eventsList;
 
-    private EventInstance music;
+    public EventInstance music;
 
     private List<SoundManagerMovingSound> positionEvents;
 
@@ -127,6 +127,18 @@ public class SoundManager : MonoBehaviour {
             soundEvent.set3DAttributes(RuntimeUtils.To3DAttributes(pos));
             soundEvent.start();
             Instance.eventsList.Add(soundEvent);
+        }
+        return soundEvent;
+    }
+
+
+    public EventInstance PlayMusic(string path, Vector3 pos) {
+        EventInstance soundEvent = RuntimeManager.CreateInstance(path);
+        if (!soundEvent.Equals(null)) {
+            soundEvent.set3DAttributes(RuntimeUtils.To3DAttributes(pos));
+            soundEvent.start();
+            //Instance.eventsList.Add(soundEvent);
+            Instance.music = soundEvent;
         }
         return soundEvent;
     }
