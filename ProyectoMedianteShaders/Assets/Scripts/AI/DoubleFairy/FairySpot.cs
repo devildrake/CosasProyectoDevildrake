@@ -12,11 +12,19 @@ public class FairySpot : DoubleObject {
     public FairySpot brotherScript;
 
     public bool mustStopHere;
-    public Sprite messageSprite;
+
+    public int idFirstMessage;
+    public int idLastMessage;
+
+    public int idFirstImage;
+    public int idLastImage;
+
+    //public Sprite messageSprite;
 
     public DoubleFairyGuide parentFairy;
 
     void Start() {
+
         brotherScript = brotherObject.GetComponent<FairySpot>();
         canBounce = false;
         InitTransformable();

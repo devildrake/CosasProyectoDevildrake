@@ -136,9 +136,19 @@ public class PauseCanvas : MonoBehaviour {
 
             if (GameLogic.instance.eventState == GameLogic.EventState.TEXT) {
                 fairyTextObject.SetActive(true);
+                fairyText.text = MessagesFairy.GetMessage(textIndex) ;
+
             } else {
                 fairyTextObject.SetActive(false);
+
+                if (GameLogic.instance.eventState == GameLogic.EventState.IMAGE) {
+
+                }
+
             }
+
+            
+
 
         }
 

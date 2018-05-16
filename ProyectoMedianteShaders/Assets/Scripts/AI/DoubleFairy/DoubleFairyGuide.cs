@@ -24,6 +24,7 @@ public class DoubleFairyGuide : DoubleObject {
     bool setIdle;
     public int currentIdlePattern = 0;
     public bool hasAMessage;
+    bool messageSet;
     bool NotDAWN(DoubleObject d) {
         return d.worldAssignation != world.DAWN;
     }
@@ -190,6 +191,8 @@ public class DoubleFairyGuide : DoubleObject {
                 if (GameLogic.instance.currentPlayer.interactableObject == this) {
                     GameLogic.instance.currentPlayer.interactableObject = null;
                     GameLogic.instance.eventState = GameLogic.EventState.NONE;
+                    PauseCanvas.textIndex = -1;
+                    PauseCanvas.lastIndex = -1;
                 }
 
                 if (Vector2.Distance(transform.position, fairySpotList[targetIndex].transform.position) < 1.0f) {
@@ -241,6 +244,8 @@ public class DoubleFairyGuide : DoubleObject {
                     if (GameLogic.instance.currentPlayer.interactableObject == this) {
                         GameLogic.instance.currentPlayer.interactableObject = null;
                         GameLogic.instance.eventState = GameLogic.EventState.NONE;
+                        PauseCanvas.textIndex = -1;
+                        PauseCanvas.lastIndex = -1;
                     }
 
             } else {
@@ -347,6 +352,8 @@ public class DoubleFairyGuide : DoubleObject {
                             if(GameLogic.instance.currentPlayer.interactableObject == this) {
                                     GameLogic.instance.currentPlayer.interactableObject = null;
                                     GameLogic.instance.eventState = GameLogic.EventState.NONE;
+                                PauseCanvas.textIndex = -1;
+                                PauseCanvas.lastIndex = -1;
                             }
                         }
 
@@ -373,9 +380,10 @@ public class DoubleFairyGuide : DoubleObject {
                         }
                     }
 
-                    if (currentSpot.messageSprite != null) {
-                        if (GameLogic.instance.currentPlayer.transform.position.x > transform.position.x + distanceFromPlayerThreshold/2) {
+                    if (currentSpot.idLastMessage-currentSpot.idFirstMessage>0) {
+                        if (GameLogic.instance.currentPlayer.transform.position.x > transform.position.x + distanceFromPlayerThreshold*2) {
                             currentSpot = null;
+                            messageSet = false;
                             brotherScript.currentSpot = null;
                             setIdle = false;
                             brotherScript.setIdle = false;
@@ -385,6 +393,9 @@ public class DoubleFairyGuide : DoubleObject {
                             //spriteRendererObject.SetActive(false);
                             FadeOut();
 
+                        } else if(!messageSet){
+                            hasAMessage = true;
+                            messageSet = true;
                         }
                     } else {
                         if (GameLogic.instance.currentPlayer.transform.position.x >= transform.position.x) {
@@ -392,7 +403,7 @@ public class DoubleFairyGuide : DoubleObject {
                             brotherScript.currentSpot = null;
                             setIdle = false;
                             brotherScript.setIdle = false;
-
+                            messageSet = false;
 
                             targetIndex++;
                             brotherScript.targetIndex++;
@@ -415,13 +426,23 @@ public class DoubleFairyGuide : DoubleObject {
     public override void Interact() {
         base.Interact();
 
-        if (PauseCanvas.lastIndex < 0){
+        if (PauseCanvas.lastIndex  !=currentSpot.idLastMessage){
+            PauseCanvas.lastIndex = currentSpot.idLastMessage;
+            PauseCanvas.textIndex = currentSpot.idFirstMessage-1;
 
+            GameLogic.instance.eventState = GameLogic.EventState.TEXT;
         }
 
         PauseCanvas.textIndex++;
 
-        GameLogic.instance.eventState = GameLogic.EventState.TEXT;
+        if (PauseCanvas.textIndex > PauseCanvas.lastIndex) {
+            GameLogic.instance.eventState = GameLogic.EventState.NONE;
+            PauseCanvas.lastIndex = -1;
+            hasAMessage = false;
+        }
+
+
+
     }
 
     void FadeIn() {
@@ -443,8 +464,11 @@ public class DoubleFairyGuide : DoubleObject {
     }
 
     void FadeOut() {
-        PauseCanvas.textIndex = -1;
-        PauseCanvas.lastIndex = -1;
+
+
+        Debug.Log(PauseCanvas.textIndex);
+
+
         if (myAlpha < 0) {
             myAlpha = 0;
         }
