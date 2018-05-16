@@ -633,15 +633,26 @@ public class GameLogic : MonoBehaviour {
     //Se abre el menú in game y se modificar la variable isPaused
     void CheckPauseInput() {
         if ((currentPlayer.dawn&&InputManager.instance.pauseButton&&!InputManager.instance.prevPauseButton)||!currentPlayer.dawn&&InputManager.instance.pauseButton2&&!InputManager.instance.prevPauseButton2&&canBePaused) {
-            if (isPaused) {
+            /*if (isPaused) {
                 Cursor.visible = false;
-                Cursor.lockState = CursorLockMode.None; //Se engancha el cursor en el centro de la pantalla.
-            } else if (!isPaused) {
+                Cursor.lockState = CursorLockMode.None;
+            } else*/
+            if (!isPaused) {
+                isPaused = true;
                 Cursor.visible = true;
                 Cursor.lockState = CursorLockMode.Locked; //Se engancha el cursor en el centro de la pantalla.
+                return;
             }
-            isPaused = !isPaused;
+            //isPaused = !isPaused;
         }
+        if (!isPaused) {
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.None;
+        }
+    }
+
+    public void SetPause(bool p) {
+        isPaused = p;
     }
 
     public void Save() {
