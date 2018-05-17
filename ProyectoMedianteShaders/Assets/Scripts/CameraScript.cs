@@ -158,7 +158,7 @@ public class CameraScript : MonoBehaviour {
                                 offset.x = -OffsetX;
                         } else {
                             offset.x = 0;
-                            Debug.Log("NO X");
+                            //Debug.Log("NO X");
                         }
                     }
 

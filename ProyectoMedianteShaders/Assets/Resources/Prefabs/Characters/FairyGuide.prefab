@@ -690,7 +690,10 @@ MonoBehaviour:
   originalPos: {x: 0, y: 0}
   brotherScript: {fileID: 0}
   mustStopHere: 1
-  messageSprite: {fileID: 21300000, guid: 0c037a1d56e471641a62c92a7faeaf32, type: 3}
+  idFirstMessage: 0
+  idLastMessage: 2
+  idFirstImage: 0
+  idLastImage: 0
   parentFairy: {fileID: 0}
 --- !u!114 &114464468493501056
 MonoBehaviour:
@@ -718,7 +721,10 @@ MonoBehaviour:
   originalPos: {x: 0, y: 0}
   brotherScript: {fileID: 0}
   mustStopHere: 1
-  messageSprite: {fileID: 0}
+  idFirstMessage: 0
+  idLastMessage: 0
+  idFirstImage: 0
+  idLastImage: 0
   parentFairy: {fileID: 0}
 --- !u!114 &114464663194223330
 MonoBehaviour:
@@ -746,7 +752,10 @@ MonoBehaviour:
   originalPos: {x: 0, y: 0}
   brotherScript: {fileID: 0}
   mustStopHere: 1
-  messageSprite: {fileID: 0}
+  idFirstMessage: 0
+  idLastMessage: 0
+  idFirstImage: 0
+  idLastImage: 0
   parentFairy: {fileID: 0}
 --- !u!114 &114628567926027560
 MonoBehaviour:
@@ -774,7 +783,10 @@ MonoBehaviour:
   originalPos: {x: 0, y: 0}
   brotherScript: {fileID: 0}
   mustStopHere: 1
-  messageSprite: {fileID: 21300000, guid: 0c037a1d56e471641a62c92a7faeaf32, type: 3}
+  idFirstMessage: 0
+  idLastMessage: 2
+  idFirstImage: 0
+  idLastImage: 0
   parentFairy: {fileID: 0}
 --- !u!114 &114733635536189530
 MonoBehaviour:
@@ -802,7 +814,10 @@ MonoBehaviour:
   originalPos: {x: 0, y: 0}
   brotherScript: {fileID: 0}
   mustStopHere: 1
-  messageSprite: {fileID: 0}
+  idFirstMessage: 0
+  idLastMessage: 0
+  idFirstImage: 0
+  idLastImage: 0
   parentFairy: {fileID: 0}
 --- !u!114 &114845862720877346
 MonoBehaviour:
@@ -830,7 +845,10 @@ MonoBehaviour:
   originalPos: {x: 0, y: 0}
   brotherScript: {fileID: 0}
   mustStopHere: 1
-  messageSprite: {fileID: 0}
+  idFirstMessage: 0
+  idLastMessage: 0
+  idFirstImage: 0
+  idLastImage: 0
   parentFairy: {fileID: 0}
 --- !u!114 &114867012458299486
 MonoBehaviour:
@@ -864,7 +882,8 @@ MonoBehaviour:
   feedBackRenderer: {fileID: 212344115489637458}
   bocadilloRenderer: {fileID: 212861623168415286}
   currentIdlePattern: 0
-  hasAMessage: 1
+  hasAMessage: 0
+  messageSet: 0
   dotsAnimation: []
 --- !u!114 &114917973061374786
 MonoBehaviour:
@@ -898,7 +917,8 @@ MonoBehaviour:
   feedBackRenderer: {fileID: 212147556019112024}
   bocadilloRenderer: {fileID: 212582559593016680}
   currentIdlePattern: 0
-  hasAMessage: 1
+  hasAMessage: 0
+  messageSet: 0
   dotsAnimation: []
 --- !u!198 &198166252709368094
 ParticleSystem:
@@ -4083,7 +4103,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -524018884
+  randomSeed: 1694077936
   InitialModule:
     serializedVersion: 3
     enabled: 1

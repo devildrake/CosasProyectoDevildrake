@@ -24,7 +24,7 @@ public class DoubleFairyGuide : DoubleObject {
     bool setIdle;
     public int currentIdlePattern = 0;
     public bool hasAMessage;
-    bool messageSet;
+    public bool messageSet;
     bool NotDAWN(DoubleObject d) {
         return d.worldAssignation != world.DAWN;
     }
@@ -96,7 +96,7 @@ public class DoubleFairyGuide : DoubleObject {
         rb.gravityScale = 0;
         feedBackRendererObject.SetActive(true);
         bocadilloRendererObject.SetActive(true);
-
+        dawn = false;
     }
 
     protected override void BrotherBehavior() {
@@ -200,6 +200,8 @@ public class DoubleFairyGuide : DoubleObject {
 
                     brotherScript.currentSpot = fairySpotList[targetIndex].brotherScript;
 
+                    
+
                     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
                     //if (spriteRendererObject != null) {
                     //    if (currentSpot.messageSprite != null) {
@@ -222,6 +224,7 @@ public class DoubleFairyGuide : DoubleObject {
                     Vector2 acceleration = SteeringForce*2;
                     rb.velocity += acceleration * Time.deltaTime;
 
+
                     //rb.velocity.Normalize();
 
                     //rb.velocity *= max_Speed;
@@ -241,6 +244,7 @@ public class DoubleFairyGuide : DoubleObject {
                     //spriteRendererObject.SetActive(false);
                     FadeOut();
 
+                    brotherScript.FadeOut();
                     if (GameLogic.instance.currentPlayer.interactableObject == this) {
                         GameLogic.instance.currentPlayer.interactableObject = null;
                         GameLogic.instance.eventState = GameLogic.EventState.NONE;
@@ -359,6 +363,7 @@ public class DoubleFairyGuide : DoubleObject {
 
                         if (!hasAMessage) {
                             FadeOut();
+                            brotherScript.FadeOut();
                         } else{
                             int currentFrame=0;
 
@@ -377,11 +382,12 @@ public class DoubleFairyGuide : DoubleObject {
                             dotAnimationTimer += Time.deltaTime;
 
                             FadeIn();
+                            brotherScript.FadeIn();
                         }
                     }
 
                     if (currentSpot.idLastMessage-currentSpot.idFirstMessage>0) {
-                        if (GameLogic.instance.currentPlayer.transform.position.x > transform.position.x + distanceFromPlayerThreshold*2) {
+                        if (GameLogic.instance.currentPlayer.transform.position.x > transform.position.x + distanceFromPlayerThreshold*2.5) {
                             currentSpot = null;
                             messageSet = false;
                             brotherScript.currentSpot = null;
@@ -392,9 +398,12 @@ public class DoubleFairyGuide : DoubleObject {
                             brotherScript.targetIndex++;
                             //spriteRendererObject.SetActive(false);
                             FadeOut();
-
+                            brotherScript.FadeOut();
                         } else if(!messageSet){
                             hasAMessage = true;
+                            brotherScript.messageSet = true;
+                            brotherScript.hasAMessage = true;
+
                             messageSet = true;
                         }
                     } else {
@@ -409,7 +418,9 @@ public class DoubleFairyGuide : DoubleObject {
                             brotherScript.targetIndex++;
                             //spriteRendererObject.SetActive(false);
                             FadeOut();
-
+                            hasAMessage = false;
+                            brotherScript.hasAMessage = false;
+                            brotherScript.FadeOut();
                         }
                     }
 
@@ -419,6 +430,8 @@ public class DoubleFairyGuide : DoubleObject {
             }
         } else {
             FadeOut();
+
+            brotherScript.FadeOut();
         }
         
     }
@@ -439,6 +452,7 @@ public class DoubleFairyGuide : DoubleObject {
             GameLogic.instance.eventState = GameLogic.EventState.NONE;
             PauseCanvas.lastIndex = -1;
             hasAMessage = false;
+            brotherScript.hasAMessage = false;
         }
 
 
@@ -466,9 +480,6 @@ public class DoubleFairyGuide : DoubleObject {
     void FadeOut() {
 
 
-        Debug.Log(PauseCanvas.textIndex);
-
-
         if (myAlpha < 0) {
             myAlpha = 0;
         }
@@ -491,7 +502,12 @@ public class DoubleFairyGuide : DoubleObject {
         AddToGameLogicList();
         BrotherBehavior();
         if ((worldAssignation == world.DAWN && dawn) || (worldAssignation == world.DUSK && !dawn)) {
-            FairyBehaviour();
+            if (GameLogic.instance != null && GameLogic.instance.currentPlayer != null) {
+                FairyBehaviour();
+            }
+
+        } else {
+
 
         }
 

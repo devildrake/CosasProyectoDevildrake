@@ -1587,7 +1587,10 @@ MonoBehaviour:
   originalPos: {x: 0, y: 0}
   brotherScript: {fileID: 0}
   mustStopHere: 1
-  messageSprite: {fileID: 0}
+  idFirstMessage: -1
+  idLastMessage: -1
+  idFirstImage: 0
+  idLastImage: 0
   parentFairy: {fileID: 0}
 --- !u!4 &360621478 stripped
 Transform:
@@ -1821,7 +1824,10 @@ MonoBehaviour:
   originalPos: {x: 0, y: 0}
   brotherScript: {fileID: 0}
   mustStopHere: 1
-  messageSprite: {fileID: 0}
+  idFirstMessage: -1
+  idLastMessage: -1
+  idFirstImage: 0
+  idLastImage: 0
   parentFairy: {fileID: 0}
 --- !u!4 &521639235
 Transform:
@@ -3490,7 +3496,10 @@ MonoBehaviour:
   originalPos: {x: 0, y: 0}
   brotherScript: {fileID: 0}
   mustStopHere: 1
-  messageSprite: {fileID: 0}
+  idFirstMessage: -1
+  idLastMessage: -1
+  idFirstImage: 0
+  idLastImage: 0
   parentFairy: {fileID: 0}
 --- !u!1001 &910812335
 Prefab:
@@ -4007,7 +4016,10 @@ MonoBehaviour:
   originalPos: {x: 0, y: 0}
   brotherScript: {fileID: 0}
   mustStopHere: 1
-  messageSprite: {fileID: 0}
+  idFirstMessage: 6
+  idLastMessage: 6
+  idFirstImage: 0
+  idLastImage: 0
   parentFairy: {fileID: 0}
 --- !u!4 &1137910467 stripped
 Transform:
@@ -4519,7 +4531,10 @@ MonoBehaviour:
   originalPos: {x: 0, y: 0}
   brotherScript: {fileID: 0}
   mustStopHere: 1
-  messageSprite: {fileID: 0}
+  idFirstMessage: -1
+  idLastMessage: -1
+  idFirstImage: 0
+  idLastImage: 0
   parentFairy: {fileID: 0}
 --- !u!4 &1214243831
 Transform:
@@ -5155,7 +5170,10 @@ MonoBehaviour:
   originalPos: {x: 0, y: 0}
   brotherScript: {fileID: 0}
   mustStopHere: 1
-  messageSprite: {fileID: 0}
+  idFirstMessage: -1
+  idLastMessage: -1
+  idFirstImage: 0
+  idLastImage: 0
   parentFairy: {fileID: 0}
 --- !u!1001 &1463888203
 Prefab:
@@ -5297,7 +5315,10 @@ MonoBehaviour:
   originalPos: {x: 0, y: 0}
   brotherScript: {fileID: 0}
   mustStopHere: 1
-  messageSprite: {fileID: 0}
+  idFirstMessage: -1
+  idLastMessage: -1
+  idFirstImage: 0
+  idLastImage: 0
   parentFairy: {fileID: 0}
 --- !u!4 &1486482364
 Transform:
@@ -5511,6 +5532,66 @@ Prefab:
     - target: {fileID: 4320701141980526, guid: 06d5204fd4894f745a4b5bd0963911d3, type: 2}
       propertyPath: m_LocalPosition.x
       value: 5.54
+      objectReference: {fileID: 0}
+    - target: {fileID: 114733635536189530, guid: 06d5204fd4894f745a4b5bd0963911d3,
+        type: 2}
+      propertyPath: idFirstMessage
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 114464663194223330, guid: 06d5204fd4894f745a4b5bd0963911d3,
+        type: 2}
+      propertyPath: idFirstMessage
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114733635536189530, guid: 06d5204fd4894f745a4b5bd0963911d3,
+        type: 2}
+      propertyPath: idLastMessage
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 114464663194223330, guid: 06d5204fd4894f745a4b5bd0963911d3,
+        type: 2}
+      propertyPath: idLastMessage
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114464468493501056, guid: 06d5204fd4894f745a4b5bd0963911d3,
+        type: 2}
+      propertyPath: idFirstMessage
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114415547504078728, guid: 06d5204fd4894f745a4b5bd0963911d3,
+        type: 2}
+      propertyPath: idFirstMessage
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114628567926027560, guid: 06d5204fd4894f745a4b5bd0963911d3,
+        type: 2}
+      propertyPath: idFirstMessage
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114845862720877346, guid: 06d5204fd4894f745a4b5bd0963911d3,
+        type: 2}
+      propertyPath: idFirstMessage
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114415547504078728, guid: 06d5204fd4894f745a4b5bd0963911d3,
+        type: 2}
+      propertyPath: idLastMessage
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114628567926027560, guid: 06d5204fd4894f745a4b5bd0963911d3,
+        type: 2}
+      propertyPath: idLastMessage
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114464468493501056, guid: 06d5204fd4894f745a4b5bd0963911d3,
+        type: 2}
+      propertyPath: idLastMessage
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114845862720877346, guid: 06d5204fd4894f745a4b5bd0963911d3,
+        type: 2}
+      propertyPath: idLastMessage
+      value: -1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 06d5204fd4894f745a4b5bd0963911d3, type: 2}
@@ -6836,7 +6917,10 @@ MonoBehaviour:
   originalPos: {x: 0, y: 0}
   brotherScript: {fileID: 0}
   mustStopHere: 1
-  messageSprite: {fileID: 0}
+  idFirstMessage: 6
+  idLastMessage: 6
+  idFirstImage: 0
+  idLastImage: 0
   parentFairy: {fileID: 0}
 --- !u!4 &1958473392
 Transform:

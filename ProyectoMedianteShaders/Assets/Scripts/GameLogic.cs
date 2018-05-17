@@ -271,6 +271,7 @@ public class GameLogic : MonoBehaviour {
         SetWaitAFrame(false);
         SetCheckMainMenu(false);
         setSpawnPoint = false;
+        MessagesFairy.StartMessages();
         //Pongo esta condicion para ver si estamos en el menu principal
         //si no me machacaba la cancion.
         if (FindObjectOfType<MenuLogic>() == null) {
@@ -345,7 +346,7 @@ public class GameLogic : MonoBehaviour {
 
         FMOD.RESULT result = musicEvent.getParameter("Dawn", out dawnParameter);
 
-        Debug.Log(result);
+        //Debug.Log(result);
 
 
         //Debug.Log("PlaySong");
@@ -493,7 +494,6 @@ public class GameLogic : MonoBehaviour {
                                 if (currentPlayer.dawn) {
                                     //CAMBIO DE MUNDO
                                     if (InputManager.instance.changeButton && !InputManager.instance.prevChangeButton && !cameraTransition) {
-                                        Debug.Log("CHANGE");
                                         dawn = !dawn;
                                         if (!currentPlayer.crawling) {
                                             if (gameObject.GetComponent<AudioSource>().pitch == 1.5) {

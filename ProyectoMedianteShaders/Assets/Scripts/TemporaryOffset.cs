@@ -118,7 +118,6 @@ public class TemporaryOffset : DoubleObject {
             PlayerController playerController = player.GetComponent<PlayerController>();
             if (disableBasicOffset) {
                 playerController.useXOffset = false;
-                Debug.Log("NO LO USES " + playerController.useXOffset);
                 playerController.brotherScript.useXOffset = false;
 
             } else {
