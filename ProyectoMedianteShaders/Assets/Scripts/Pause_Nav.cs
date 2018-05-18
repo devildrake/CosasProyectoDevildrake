@@ -58,6 +58,7 @@ public class Pause_Nav : MonoBehaviour {
         state = PAUSE_STATE.MAIN;
         mainSelected = 0;
         salirSelected = 0;
+        waitAFrame = 1;
     }
 
     #region STATE_METHODS
@@ -91,7 +92,9 @@ public class Pause_Nav : MonoBehaviour {
             controlErroresSalir.SetActive(false);
             state = PAUSE_STATE.MAIN;
         }
-
+        else if ((InputManager.instance.selectButton && !InputManager.instance.prevSelectButton) || (InputManager.instance.selectButton2 && !InputManager.instance.prevSelectButton2)) {
+            closeButtons[salirSelected].GetComponent<Button>().onClick.Invoke();
+        }
         eventSystem.SetSelectedGameObject(closeButtons[salirSelected]);
     }
     #endregion
@@ -105,6 +108,22 @@ public class Pause_Nav : MonoBehaviour {
     public void ExitGame() {
         controlErroresSalir.SetActive(true);
         state = PAUSE_STATE.CLOSE;
+    }
+
+    public void YesButton() {
+        GameLogic.instance.LoadMenu();
+    }
+
+    public void NoButton() {
+        controlErroresSalir.SetActive(false);
+        state = PAUSE_STATE.MAIN;
+        waitAFrame = 0;
+        InputManager.instance.prevSelectButton = true;
+        InputManager.instance.prevSelectButton2 = true;
+    }
+
+    public void ContinuarButton() {
+        GameLogic.instance.SetPause(false);
     }
     #endregion
 }
