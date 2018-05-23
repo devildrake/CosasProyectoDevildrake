@@ -161,7 +161,7 @@ public class DoubleFairyGuide : DoubleObject {
             }
 
             dawn = !dawn;
-            brotherScript.dawn = !brotherScript.dawn;
+            brotherScript.dawn = dawn;
         }
 
                 
