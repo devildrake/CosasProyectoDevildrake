@@ -19,6 +19,8 @@ public class LevelEntrance : DoubleObject {
     public bool finalBeta;
     public ParticleSystem[] particleSystems;
     public bool[] particleMustDo;
+    bool waitAFrame;
+    bool waitASecondFrame;
     void Start() {
         particleMustDo = new bool[3];
 
@@ -306,14 +308,15 @@ public class LevelEntrance : DoubleObject {
         if (activated) {
             //GameLogic.instance.lastEntranceIndex = levelToLoad;
             //GameLogic.instance.LoadScene(levelToLoad);
-
-            GameLogic.instance.pauseCanvas.nextSceneIndex = levelToLoad;
-            GameLogic.instance.levelToLoad = levelToLoad;
-            GameLogic.instance.lastEntranceIndex = levelToLoad;
-            InputManager.BlockInput();
-            GameLogic.instance.currentPlayer.placeToGo = gameObject;
-            GameLogic.instance.currentPlayer.brotherScript.placeToGo = brotherObject;
-            interacted = true;
+            if (GameLogic.instance != null) {
+                GameLogic.instance.pauseCanvas.nextSceneIndex = levelToLoad;
+                GameLogic.instance.levelToLoad = levelToLoad;
+                GameLogic.instance.lastEntranceIndex = levelToLoad;
+                InputManager.BlockInput();
+                GameLogic.instance.currentPlayer.placeToGo = gameObject;
+                GameLogic.instance.currentPlayer.brotherScript.placeToGo = brotherObject;
+                interacted = true;
+            }
         }
     }
 
@@ -438,10 +441,17 @@ public class LevelEntrance : DoubleObject {
     void Update() {
         AddToGameLogicList();
 
-        if (added) {
+        if (!waitAFrame) {
+            waitAFrame = true;
+        }else if (!waitASecondFrame) {
+            waitASecondFrame = true;
+        }
+
+        if (added&&waitASecondFrame) {
             if (!finalBeta) {
                 if (GameLogic.instance.currentPlayer != null && !interacted) {
                     if (!tryMovePlayer && levelToLoad == GameLogic.instance.lastEntranceIndex) {
+                        GameLogic.instance.gameState = GameLogic.GameState.LEVEL;
                         if (worldAssignation == world.DAWN) {
                             if (!GameLogic.instance.setSpawnPoint) {
                                 if (GameLogic.instance.currentPlayer.worldAssignation == world.DAWN) {
@@ -491,6 +501,8 @@ public class LevelEntrance : DoubleObject {
                         //Debug.Log(GameLogic.instance.currentPlayer.transform.position);
                         tryMovePlayer = true;
                         //brotherScript.tryMovePlayer = true;
+                    } else if(!tryMovePlayer){
+                        tryMovePlayer = true;
                     }
 
 

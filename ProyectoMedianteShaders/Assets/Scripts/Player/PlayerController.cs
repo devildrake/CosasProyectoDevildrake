@@ -433,17 +433,19 @@ public class PlayerController : DoubleObject {
         } else {
             timeGrounded = 0;
         }
-        
 
-        if (timeGrounded > 0.1f) {
-            if (!groundedSound) {
-                groundedSound = true;
-                SoundManager.Instance.PlayOneShotSound("event:/Dusk/StepsDusk", transform);
-                SoundManager.Instance.PlayOneShotSound("event:/Dusk/StepsDusk", transform);
-                SoundManager.Instance.PlayOneShotSound("event:/Dusk/StepsDusk", transform);
+
+        if (SoundManager.Instance != null) {
+            if (timeGrounded > 0.1f) {
+                if (!groundedSound) {
+                    groundedSound = true;
+                    SoundManager.Instance.PlayOneShotSound("event:/Dusk/StepsDusk", transform);
+                    SoundManager.Instance.PlayOneShotSound("event:/Dusk/StepsDusk", transform);
+                    SoundManager.Instance.PlayOneShotSound("event:/Dusk/StepsDusk", transform);
+                }
+            } else {
+                groundedSound = false;
             }
-        } else {
-            groundedSound = false;
         }
 
         //if (placeToGo == null) {
@@ -1292,7 +1294,11 @@ public class PlayerController : DoubleObject {
 
         if (!grounded) {
             if (canDash && dashTimer > dashCoolDown) {
-                direction = PlayerUtilsStatic.UseDirectionCircle(arrow, gameObject, 0,dawn);
+                if (arrow != null) {
+                    direction = PlayerUtilsStatic.UseDirectionCircle(arrow, gameObject, 0, dawn);
+                } else {
+                    arrow = GameObject.FindGameObjectWithTag("Arrow").GetComponent<ArrowScript>();
+                }
 
                 if (PSdawnDash1 != null) {
                     mainModuleDash1.simulationSpeed = 1;
@@ -1321,7 +1327,12 @@ public class PlayerController : DoubleObject {
         }
 
         if (objectsInDeflectArea.Count != 0) {
-            deflectDirection = PlayerUtilsStatic.UseDirectionCircle(arrow, gameObject, 1,-10,60,dawn);
+            if (arrow != null) {
+                deflectDirection = PlayerUtilsStatic.UseDirectionCircle(arrow, gameObject, 1, -10, 60, dawn);
+            } else {
+                arrow = GameObject.FindGameObjectWithTag("Arrow").GetComponent<ArrowScript>();
+            }
+
             if (PSdawnDeflectFeedback != null) {
                 PSdawnDeflectFeedback.Play();
             }
@@ -1509,9 +1520,13 @@ public class PlayerController : DoubleObject {
         }
         //Se renderizan las flechas en caso de clicar solo si esta en el suelo
         else {
-                if(!grabbing)
-                direction = PlayerUtilsStatic.UseDirectionCircle(arrow, gameObject, 0, 0, 60,dawn);
-
+            if (!grabbing) {
+                if (arrow != null) {
+                    direction = PlayerUtilsStatic.UseDirectionCircle(arrow, gameObject, 0, 0, 60, dawn);
+                } else {
+                    arrow = GameObject.FindGameObjectWithTag("Arrow").GetComponent<ArrowScript>();
+                }
+            }
                 if (/*Input.GetMouseButtonDown(1)*/InputManager.instance.deflectButton2 && !InputManager.instance.prevDeflectButton2) {
                     if (armstate == ARMSTATE.IDLE) {
 
@@ -1576,84 +1591,83 @@ void Smash() {
 
     //Método que comprueba los inputs y actua en consecuencia
     void CheckInputs() {
-        bool someRayCastChecks = false;
+        if (InputManager.instance != null) {
+            bool someRayCastChecks = false;
 
- 
+
             RaycastHit2D hit2D = Physics2D.Raycast(rb.position - new Vector2(0f, 0.5f), Vector2.down, 0.1f, groundMask);
             RaycastHit2D hit2DLeft = Physics2D.Raycast(rb.position - new Vector2(0f, 0.5f) + new Vector2(-distanciaBordeSprite, 0), Vector2.down, 0.1f, groundMask);
             RaycastHit2D hit2DRight = Physics2D.Raycast(rb.position - new Vector2(0f, 0.5f) + new Vector2(distanciaBordeSprite, 0), Vector2.down, 0.1f, groundMask);
 
-            if (hit2D || hit2DLeft || hit2DRight)
-            {
+            if (hit2D || hit2DLeft || hit2DRight) {
                 someRayCastChecks = true;
             }
-            if (!calledImpuslorBool)
-            {
+            if (!calledImpuslorBool) {
                 Invoke("ImpulsorBool", 0.4f);
                 calledImpuslorBool = true;
             }
 
-        if (dawn) {
-            //BARRA ESPACIADORA = SALTO
-            if (/*Input.GetKeyDown(KeyCode.Space)*/InputManager.instance.jumpButton && !InputManager.instance.prevJumpButton && grounded && !crawling ||/*Input.GetKeyDown(KeyCode.Space)*/InputManager.instance.jumpButton && !InputManager.instance.prevJumpButton && timeNotSliding < 0.2f) {
-                Jump();
-            }
-
-            if (onImpulsor) {
-
-                if (someRayCastChecks && /*Input.GetKeyDown(KeyCode.Space)*/InputManager.instance.jumpButton && !InputManager.instance.prevJumpButton) {
-                    if (!calledImpuslorBool) {
-                        Invoke("ImpulsorBool", 0.2f);
-                        calledImpuslorBool = true;
-                    }
-                    canJumpOnImpulsor = false;
-                    //Debug.Log("JUMP");
+            if (dawn) {
+                //BARRA ESPACIADORA = SALTO
+                if (/*Input.GetKeyDown(KeyCode.Space)*/InputManager.instance.jumpButton && !InputManager.instance.prevJumpButton && grounded && !crawling ||/*Input.GetKeyDown(KeyCode.Space)*/InputManager.instance.jumpButton && !InputManager.instance.prevJumpButton && timeNotSliding < 0.2f) {
                     Jump();
                 }
-            }
 
-            //Comportamiento de dawn
-              DawnBehavior();
-            
+                if (onImpulsor) {
 
-
-            if (interactableObject != null) {
-                if (/*Input.GetKeyDown(KeyCode.E)*/InputManager.instance.interactButton && !InputManager.instance.prevInteractButton) {
-                    interactableObject.Interact();
-                }
-            }
-        } else {
-            //BARRA ESPACIADORA = SALTO
-            if (/*Input.GetKeyDown(KeyCode.Space)*/InputManager.instance.jumpButton2 && !InputManager.instance.prevJumpButton2 && grounded && !crawling ||/*Input.GetKeyDown(KeyCode.Space)*/InputManager.instance.jumpButton2 && !InputManager.instance.prevJumpButton2 && timeNotSliding < 0.2f) {
-                Jump();
-            }
-
-            if (onImpulsor) {
-
-                if (someRayCastChecks && /*Input.GetKeyDown(KeyCode.Space)*/InputManager.instance.jumpButton2 && !InputManager.instance.prevJumpButton2) {
-                    if (!calledImpuslorBool) {
-                        Invoke("ImpulsorBool", 0.2f);
-                        calledImpuslorBool = true;
+                    if (someRayCastChecks && /*Input.GetKeyDown(KeyCode.Space)*/InputManager.instance.jumpButton && !InputManager.instance.prevJumpButton) {
+                        if (!calledImpuslorBool) {
+                            Invoke("ImpulsorBool", 0.2f);
+                            calledImpuslorBool = true;
+                        }
+                        canJumpOnImpulsor = false;
+                        //Debug.Log("JUMP");
+                        Jump();
                     }
-                    canJumpOnImpulsor = false;
-                    //Debug.Log("JUMP");
+                }
+
+                //Comportamiento de dawn
+                DawnBehavior();
+
+
+
+                if (interactableObject != null) {
+                    if (/*Input.GetKeyDown(KeyCode.E)*/InputManager.instance.interactButton && !InputManager.instance.prevInteractButton) {
+                        interactableObject.Interact();
+                    }
+                }
+            } else {
+                //BARRA ESPACIADORA = SALTO
+                if (/*Input.GetKeyDown(KeyCode.Space)*/InputManager.instance.jumpButton2 && !InputManager.instance.prevJumpButton2 && grounded && !crawling ||/*Input.GetKeyDown(KeyCode.Space)*/InputManager.instance.jumpButton2 && !InputManager.instance.prevJumpButton2 && timeNotSliding < 0.2f) {
                     Jump();
                 }
-            }
+
+                if (onImpulsor) {
+
+                    if (someRayCastChecks && /*Input.GetKeyDown(KeyCode.Space)*/InputManager.instance.jumpButton2 && !InputManager.instance.prevJumpButton2) {
+                        if (!calledImpuslorBool) {
+                            Invoke("ImpulsorBool", 0.2f);
+                            calledImpuslorBool = true;
+                        }
+                        canJumpOnImpulsor = false;
+                        //Debug.Log("JUMP");
+                        Jump();
+                    }
+                }
 
 
 
-            //Comportamiento de dusk
+                //Comportamiento de dusk
                 DuskBehavior();
-            
 
-            if (interactableObject != null) {
-                if (/*Input.GetKeyDown(KeyCode.E)*/InputManager.instance.interactButton2 && !InputManager.instance.prevInteractButton2) {
-                    interactableObject.Interact();
+
+                if (interactableObject != null) {
+                    if (/*Input.GetKeyDown(KeyCode.E)*/InputManager.instance.interactButton2 && !InputManager.instance.prevInteractButton2) {
+                        interactableObject.Interact();
+                    }
                 }
             }
         }
-
 
 
     }

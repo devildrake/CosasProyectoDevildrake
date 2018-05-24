@@ -183,6 +183,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4495295721831912}
   - component: {fileID: 95517660304038362}
+  - component: {fileID: 114938131950868506}
   m_Layer: 28
   m_Name: walkerDawn
   m_TagString: Untagged
@@ -550,7 +551,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1644740725108654}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 8.958298, y: -13.717361, z: 0.31234378}
+  m_LocalPosition: {x: 13.49, y: 0.79905534, z: 0.89}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4923852296007652}
@@ -592,7 +593,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1254941489860776}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.92, y: 0.48, z: 0}
+  m_LocalPosition: {x: 1.27, y: 0.48, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4923852296007652}
@@ -818,7 +819,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1795415416612142}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -6.06, y: 0.5, z: 0}
+  m_LocalPosition: {x: -0.67, y: 0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4923852296007652}
@@ -1399,7 +1400,7 @@ MonoBehaviour:
   imagenDawn: {fileID: 0}
   originalPos: {x: 0, y: 0}
   meshObject: {fileID: 1289238652371882}
-  isStatic: 0
+  isStatic: 1
   groundMask:
     serializedVersion: 2
     m_Bits: 0
@@ -1442,6 +1443,18 @@ MonoBehaviour:
   velocity: 0
   PatrolPoints: []
   VectorPatrolPoints: []
+--- !u!114 &114938131950868506
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1289238652371882}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b757d2f04c898a498d92f1dc8a37610, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  active: 0
 --- !u!136 &136110053778097778
 CapsuleCollider:
   m_ObjectHideFlags: 1
@@ -1496,8 +1509,8 @@ SkinnedMeshRenderer:
   m_BlendShapeWeights: []
   m_RootBone: {fileID: 0}
   m_AABB:
-    m_Center: {x: 1.817524, y: 0, z: 0.06349945}
-    m_Extent: {x: 12.312298, y: 12.3123, z: 0.0635032}
+    m_Center: {x: 1.8175297, y: 0.0000038146973, z: 0.06349993}
+    m_Extent: {x: 12.312296, y: 12.312296, z: 0.06350368}
   m_DirtyAABB: 0
 --- !u!137 &137643857128012850
 SkinnedMeshRenderer:

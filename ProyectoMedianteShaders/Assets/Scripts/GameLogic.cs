@@ -431,6 +431,7 @@ public class GameLogic : MonoBehaviour {
 
         //Una vez comprobado si estamos o no en el menu principal se pondria el comportamiento deseado
         else {
+
             switch (gameState) {
                 case GameState.LEVEL:
                     switch (eventState) {
@@ -460,6 +461,7 @@ public class GameLogic : MonoBehaviour {
 
                         //Si el juego no esta pausado
                         if (!isPaused) {
+
                             if (currentPlayer != null) {
                                 if (currentPlayer.placeToGo == null) {
                                     timeElapsed += Time.deltaTime;
@@ -490,40 +492,55 @@ public class GameLogic : MonoBehaviour {
                                 }
                             }
                             if (currentPlayer != null) {
-
                                 if (currentPlayer.dawn) {
                                     //CAMBIO DE MUNDO
-                                    if (InputManager.instance.changeButton && !InputManager.instance.prevChangeButton && !cameraTransition) {
-                                        dawn = !dawn;
-                                        if (!currentPlayer.crawling) {
-                                            if (gameObject.GetComponent<AudioSource>().pitch == 1.5) {
-                                                gameObject.GetComponent<AudioSource>().pitch = 0.5f;
-                                            } else {
-                                                gameObject.GetComponent<AudioSource>().pitch = 1.5f;
-                                            }
-                                            gameObject.GetComponent<AudioSource>().Play();
-                                            foreach (GameObject g in transformableObjects) {
-                                                g.GetComponent<DoubleObject>().Change();
+                                    if (!cameraTransition) {
+                                        if (InputManager.instance.changeButton && !InputManager.instance.prevChangeButton) {
+
+                                            if (!currentPlayer.crawling) {
+
+                                                if (gameObject.GetComponent<AudioSource>().pitch == 1.5) {
+                                                    gameObject.GetComponent<AudioSource>().pitch = 0.5f;
+                                                } else {
+                                                    gameObject.GetComponent<AudioSource>().pitch = 1.5f;
+                                                }
+                                                gameObject.GetComponent<AudioSource>().Play();
+                                                dawn = !dawn;
+                                                foreach (GameObject g in transformableObjects) {
+                                                    g.GetComponent<DoubleObject>().Change();
+                                                }
                                             }
                                         }
                                     }
                                 } else {
-                                    if (InputManager.instance.changeButton2 && !InputManager.instance.prevChangeButton2 && !cameraTransition) {
-                                        dawn = !dawn;
-                                        if (!currentPlayer.crawling) {
-                                            Debug.Log("CHANGE");
-                                            if (gameObject.GetComponent<AudioSource>().pitch == 1.5) {
-                                                gameObject.GetComponent<AudioSource>().pitch = 0.5f;
-                                            } else {
-                                                gameObject.GetComponent<AudioSource>().pitch = 1.5f;
-                                            }
-                                            gameObject.GetComponent<AudioSource>().Play();
-                                            foreach (GameObject g in transformableObjects) {
-                                                g.GetComponent<DoubleObject>().Change();
+                                    if (!cameraTransition) {
+
+                                        if (InputManager.instance.changeButton2 && !InputManager.instance.prevChangeButton2) {
+
+                                            if (!currentPlayer.crawling) {
+                                                if (gameObject.GetComponent<AudioSource>().pitch == 1.5) {
+                                                    gameObject.GetComponent<AudioSource>().pitch = 0.5f;
+                                                } else {
+                                                    gameObject.GetComponent<AudioSource>().pitch = 1.5f;
+                                                }
+                                                gameObject.GetComponent<AudioSource>().Play();
+                                                dawn = !dawn;
+                                                foreach (GameObject g in transformableObjects) {
+                                                    g.GetComponent<DoubleObject>().Change();
+                                                }
                                             }
                                         }
                                     }
                                 }
+                            } else {
+                                PlayerController[] playerObjects;
+                                playerObjects = FindObjectsOfType<PlayerController>();
+                                for(int i = 0; i < 2; i++) {
+                                    if (playerObjects[i].worldAssignation == DoubleObject.world.DUSK) {
+                                        currentPlayer = playerObjects[i];
+                                    }
+                                }
+
                             }
                         }
                         //Si el juego SI esta pausado
@@ -545,6 +562,7 @@ public class GameLogic : MonoBehaviour {
 
                     break;
                 case GameState.MENU:
+
                     currentPlayer = null;
                     Cursor.visible = true;
                     Cursor.lockState = CursorLockMode.None; //Se puede volver a mover el cursor
