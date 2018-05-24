@@ -356,7 +356,6 @@ public class GameLogic : MonoBehaviour {
     }
 
     void Update() {
-
         if (!soundManager.music.Equals(null)) {
             if (dawn) {
                 dawnValue += Time.deltaTime;
@@ -442,7 +441,6 @@ public class GameLogic : MonoBehaviour {
                         case EventState.IMAGE:
                             break;
                     }
-
 
                     if (!levelFinished) {
                         if (/*Input.GetKey(KeyCode.R)*/InputManager.instance.resetButton) {
@@ -632,11 +630,13 @@ public class GameLogic : MonoBehaviour {
     //Método que controla cuando se le da al escape para pausar, a su vez activa y desactiva el cursor en función de si 
     //Se abre el menú in game y se modificar la variable isPaused
     void CheckPauseInput() {
+        print(isPaused);
         if ((currentPlayer.dawn&&InputManager.instance.pauseButton&&!InputManager.instance.prevPauseButton)||!currentPlayer.dawn&&InputManager.instance.pauseButton2&&!InputManager.instance.prevPauseButton2&&canBePaused) {
             /*if (isPaused) {
                 Cursor.visible = false;
                 Cursor.lockState = CursorLockMode.None;
             } else*/
+            print("PAUSAAAA");
             if (!isPaused) {
                 isPaused = true;
                 Cursor.visible = true;

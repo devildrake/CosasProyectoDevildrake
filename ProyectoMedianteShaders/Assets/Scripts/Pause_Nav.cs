@@ -41,10 +41,12 @@ public class Pause_Nav : MonoBehaviour {
                 break;
 
             case PAUSE_STATE.CLOSE:
+                /*
                 if (!controlErroresSalir.activeInHierarchy) {
                     state = PAUSE_STATE.MAIN;
                     waitAFrame = 0;
                 }
+                */
                 CloseState();
                 break;
         }
@@ -118,8 +120,8 @@ public class Pause_Nav : MonoBehaviour {
         controlErroresSalir.SetActive(false);
         state = PAUSE_STATE.MAIN;
         waitAFrame = 0;
-        InputManager.instance.prevSelectButton = true;
-        InputManager.instance.prevSelectButton2 = true;
+        //InputManager.instance.prevSelectButton = true;
+        //InputManager.instance.prevSelectButton2 = true;
     }
 
     public void ContinuarButton() {
