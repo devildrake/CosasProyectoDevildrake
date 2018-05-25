@@ -10454,17 +10454,17 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1912617004924058}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4975a6e437fc3b149a8cd508ce5bdd69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  threshold: 0.3
-  intensity: 2.5
-  blurSize: 3.68
-  blurIterations: 2
+  threshold: 0.25
+  intensity: 0.75
+  blurSize: 1
+  blurIterations: 1
   blurType: 0
-  fastBloomShader: {fileID: 4800000, guid: 68a00c837b82e4c6d92e7da765dc5f1d, type: 3}
+  fastBloomShader: {fileID: 0}
 --- !u!114 &114282931694979356
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -13588,6 +13588,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levelToLoad: 0
+  ppp: []
+  pppDkNormal: {fileID: 11400000, guid: 4ad68775bda729444afe8478ccff6eb5, type: 2}
+  pppDnNormal: {fileID: 11400000, guid: 1e5c047a100e94e448abb44b426245ae, type: 2}
+  pppDkClosed: {fileID: 11400000, guid: df5aa2beb75798541bdf902149f1f255, type: 2}
+  pppDnClosed: {fileID: 11400000, guid: 84bba07e75096ff4ba82a9219491bc10, type: 2}
   saved: 0
   firstOpening: 0
   lastEntranceIndex: 0
@@ -13613,13 +13618,13 @@ MonoBehaviour:
   transformableObjects: []
   spawnPoint: {x: 0, y: 0, z: 0}
   worldOffset: 0
-  musicVolume: 0
-  sfxVolume: 0
+  musicVolume: 1
+  sfxVolume: 1
   muteVolume: 0
   mostrarTiempo: 1
   fullscreen: 0
   graficos: 0
-  maxFrameRate: 0
+  maxFrameRate: -1
   resolutionSelected: {x: 1920, y: 1080}
 --- !u!114 &114842677144131516
 MonoBehaviour:

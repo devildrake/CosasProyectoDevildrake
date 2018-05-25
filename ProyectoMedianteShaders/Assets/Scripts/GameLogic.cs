@@ -7,6 +7,7 @@ using System;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 using FMOD.Studio;
+using UnityEngine.PostProcessing;
 
 [Serializable]
 public class LevelData {
@@ -23,6 +24,12 @@ public class LevelData {
 
 public class GameLogic : MonoBehaviour {
     public int levelToLoad;
+
+    public PostProcessingBehaviour[] ppp; //referencias a los perfiles de post processo
+    public PostProcessingProfile pppDkNormal, pppDnNormal, pppDkClosed, pppDnClosed;
+    private const float iIntensity = 0.627f, iSmoothness = 0.508f, iRoundness = 0.506f; //Valores de configuración del vignetting normal
+    private const float dIntensity = 0.771f, dSmoothness = 0.411f, dRoundness = 0.95f; //Valores de configuración del vignetting en modo conversación.
+    
 
     SoundManager soundManager;
     static bool awoken = false;
@@ -148,30 +155,6 @@ public class GameLogic : MonoBehaviour {
 
         //CONFIGURACION DE GRAFICOS
         QualitySettings.SetQualityLevel(graficos);
-
-        //CONFIGURACION DE AUDIO
-        //TODO hacer que funcione con el mixer de unity y fmod
-        //if (muteVolume){
-        //    foreach(GameObject g in transformableObjects) {
-        //        if(g.GetComponent<AudioSource>() != null) {
-        //            g.GetComponent<AudioSource>().volume = 0;
-        //        }
-        //    }
-        //}
-        //else {
-        //    foreach(GameObject g in transformableObjects) {
-        //        if(g.GetComponent<AudioSource>() != null) {
-        //            //musica del nivel
-        //            if(g.GetComponent<LevelMusic>() != null) {
-        //                g.GetComponent<AudioSource>().volume = musicVolume;
-        //            }
-        //            //efectos de sonido
-        //            else {
-        //                g.GetComponent<AudioSource>().volume = sfxVolume;
-        //            }
-        //        }
-        //    }
-        //}
     }
     //=====================FINAL DE METODOS DE OPCIONES========================
     //=====================FINAL DE METODOS DE OPCIONES========================
@@ -184,6 +167,20 @@ public class GameLogic : MonoBehaviour {
     void Awake() {
         eventState = EventState.NONE;
         soundManager = SoundManager.Instance;
+
+        //0--> dawn
+        //1--> dusk
+        ppp = FindObjectsOfType<PostProcessingBehaviour>();
+        ppp[1].profile = pppDkNormal;
+        ppp[0].profile = pppDnNormal;
+        
+        //VignetteModel vignetting1 = null, vignetting2 = null;
+
+        //vignetting1 = ppp[0].profile.vignette;
+        //vignetting2 = ppp[1].profile.vignette;
+
+        //vignetting1
+        
 
         cameraAttenuation = 1;
         //completedLevels = new Dictionary<int, bool>();
@@ -430,17 +427,21 @@ public class GameLogic : MonoBehaviour {
 
         //Una vez comprobado si estamos o no en el menu principal se pondria el comportamiento deseado
         else {
-
+            print(eventState);
             switch (gameState) {
                 case GameState.LEVEL:
                     switch (eventState) {
                         case EventState.NONE:
-
+                            ppp[1].profile = pppDkNormal;
+                            ppp[0].profile = pppDnNormal;
                             break;
                         case EventState.TEXT:
-
+                            ppp[1].profile = pppDkClosed;
+                            ppp[0].profile = pppDnClosed;
                             break;
                         case EventState.IMAGE:
+                            ppp[1].profile = pppDkClosed;
+                            ppp[0].profile = pppDnClosed;
                             break;
                     }
 
@@ -771,6 +772,31 @@ public class GameLogic : MonoBehaviour {
         } else {
             InitLoadSaveVariables();
         }
+    }
+
+    private IEnumerator CloseVignetting() {
+        /*
+        bool done1=false, done2= false, done3 = false;
+        float intensityIncrement = dIntensity - ppp[0].profile.vignette.settings.intensity;
+        while (!done1 && !done2 && !done3) {
+            if (ppp[0].profile.vignette.settings.intensity < dIntensity) {
+
+                //ppp[0].profile.vignette.settings.intensity = ppp[0].profile.vignette.settings.intensity + intensityIncrement * Time.deltaTime;
+            }
+            yield return null;
+        }
+        */
+
+
+        yield break;
+    }
+
+    private IEnumerator OpenVignetting() {
+        bool done1 = false, done2 = false, done3 = false;
+        while (!done1 && !done2 && !done3) {
+
+        }
+        return null;
     }
 
     [Serializable]
