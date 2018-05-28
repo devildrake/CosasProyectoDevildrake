@@ -19,12 +19,17 @@ public class ArrowScript : MonoBehaviour {
         switch (skill) {
             case "dash":
                 sprite.sprite = dashSprite;
+                sprite.color = new Color(sprite.color.r, sprite.color.g, sprite.color.b,1.0f);
                 break;
             case "punch":
                 sprite.sprite = punchSprite;
+                sprite.color = new Color(sprite.color.r, sprite.color.g, sprite.color.b, 0.5f);
+
                 break;
             case "deflect":
                 sprite.sprite = deflectSprite;
+                sprite.color = new Color(sprite.color.r, sprite.color.g, sprite.color.b, 1.0f);
+
                 break;
         }
 
