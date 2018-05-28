@@ -13588,7 +13588,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levelToLoad: 0
-  ppp: []
+  ppp:
+  - {fileID: 114074255514805672}
+  - {fileID: 114707292028170350}
   pppDkNormal: {fileID: 11400000, guid: 4ad68775bda729444afe8478ccff6eb5, type: 2}
   pppDnNormal: {fileID: 11400000, guid: 1e5c047a100e94e448abb44b426245ae, type: 2}
   pppDkClosed: {fileID: 11400000, guid: df5aa2beb75798541bdf902149f1f255, type: 2}

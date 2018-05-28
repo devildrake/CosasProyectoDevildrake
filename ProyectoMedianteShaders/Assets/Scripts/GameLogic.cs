@@ -170,7 +170,7 @@ public class GameLogic : MonoBehaviour {
 
         //0--> dawn
         //1--> dusk
-        ppp = FindObjectsOfType<PostProcessingBehaviour>();
+        //ppp = FindObjectsOfType<PostProcessingBehaviour>();
         ppp[1].profile = pppDkNormal;
         ppp[0].profile = pppDnNormal;
         
