@@ -11539,6 +11539,11 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 114203246818003584, guid: f24129821cb800a478ae5adbbffb8bbb,
+        type: 2}
+      propertyPath: ppp.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4464314628085196, guid: f24129821cb800a478ae5adbbffb8bbb, type: 2}
       propertyPath: m_LocalPosition.x
       value: 512
@@ -11576,6 +11581,30 @@ Prefab:
       propertyPath: isInMainMenu
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114203246818003584, guid: f24129821cb800a478ae5adbbffb8bbb,
+        type: 2}
+      propertyPath: pppDnNormal
+      value: 
+      objectReference: {fileID: 11400000, guid: 1e5c047a100e94e448abb44b426245ae,
+        type: 2}
+    - target: {fileID: 114203246818003584, guid: f24129821cb800a478ae5adbbffb8bbb,
+        type: 2}
+      propertyPath: pppDkNormal
+      value: 
+      objectReference: {fileID: 11400000, guid: 4ad68775bda729444afe8478ccff6eb5,
+        type: 2}
+    - target: {fileID: 114203246818003584, guid: f24129821cb800a478ae5adbbffb8bbb,
+        type: 2}
+      propertyPath: pppDkClosed
+      value: 
+      objectReference: {fileID: 11400000, guid: df5aa2beb75798541bdf902149f1f255,
+        type: 2}
+    - target: {fileID: 114203246818003584, guid: f24129821cb800a478ae5adbbffb8bbb,
+        type: 2}
+      propertyPath: pppDnClosed
+      value: 
+      objectReference: {fileID: 11400000, guid: 84bba07e75096ff4ba82a9219491bc10,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f24129821cb800a478ae5adbbffb8bbb, type: 2}
   m_IsPrefabParent: 0

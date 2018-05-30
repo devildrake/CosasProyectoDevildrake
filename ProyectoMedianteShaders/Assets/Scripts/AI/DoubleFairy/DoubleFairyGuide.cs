@@ -439,23 +439,23 @@ public class DoubleFairyGuide : DoubleObject {
     public override void Interact() {
         base.Interact();
 
-        if (PauseCanvas.lastIndex  !=currentSpot.idLastMessage){
-            PauseCanvas.lastIndex = currentSpot.idLastMessage;
-            PauseCanvas.textIndex = currentSpot.idFirstMessage-1;
+        if (currentSpot != null) {
+            if (PauseCanvas.lastIndex != currentSpot.idLastMessage) {
+                PauseCanvas.lastIndex = currentSpot.idLastMessage;
+                PauseCanvas.textIndex = currentSpot.idFirstMessage - 1;
 
-            GameLogic.instance.eventState = GameLogic.EventState.TEXT;
+                GameLogic.instance.eventState = GameLogic.EventState.TEXT;
+            }
+
+            PauseCanvas.textIndex++;
+
+            if (PauseCanvas.textIndex > PauseCanvas.lastIndex) {
+                GameLogic.instance.eventState = GameLogic.EventState.NONE;
+                PauseCanvas.lastIndex = -1;
+                hasAMessage = false;
+                brotherScript.hasAMessage = false;
+            }
         }
-
-        PauseCanvas.textIndex++;
-
-        if (PauseCanvas.textIndex > PauseCanvas.lastIndex) {
-            GameLogic.instance.eventState = GameLogic.EventState.NONE;
-            PauseCanvas.lastIndex = -1;
-            hasAMessage = false;
-            brotherScript.hasAMessage = false;
-        }
-
-
 
     }
 

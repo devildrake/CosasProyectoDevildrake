@@ -61,8 +61,8 @@ public class MenuLogic : MonoBehaviour {
 
     // Use this for initialization
     void Start() {
-        GameLogic.instance.isPaused = false;
         GameLogic.instance.SetTimeScaleLocal(0.5f);
+        GameLogic.instance.isPaused = false;
         canvas.gameObject.SetActive(false);
         canvasGroup = canvas.GetComponent<CanvasGroup>();
         canvasGroup.alpha = 1;
@@ -283,11 +283,14 @@ public class MenuLogic : MonoBehaviour {
 
     //Metodo que llama el boton de 1 jugador
     public void PlayOnePlayer() {
-        if (GameLogic.instance.firstOpening) {
+        if (!GameLogic.instance.firstOpening) {
             GameLogic.instance.SetTimeScaleLocal(1);
             InputManager.BlockInput();
             InputManager.currentGameMode = InputManager.GAMEMODE.SINGLEPLAYER;
-            GameLogic.instance.LoadScene(2);
+
+            GameLogic.instance.LoadScene("VideoScene");
+
+
             GameLogic.instance.firstOpening = true;
         }
         else {
@@ -300,11 +303,11 @@ public class MenuLogic : MonoBehaviour {
 
     //Metodo que llama el boton de 2 jugadores
     public void PlayTwoPlayers() {
-        if (GameLogic.instance.firstOpening) {
+        if (!GameLogic.instance.firstOpening) {
             GameLogic.instance.SetTimeScaleLocal(1);
             InputManager.BlockInput();
             InputManager.currentGameMode = InputManager.GAMEMODE.MULTI_KEYBOARD_CONTROLLER;
-            GameLogic.instance.LoadScene(2);
+            GameLogic.instance.LoadScene("VideoScene");
             GameLogic.instance.firstOpening = true;
         }
         else {

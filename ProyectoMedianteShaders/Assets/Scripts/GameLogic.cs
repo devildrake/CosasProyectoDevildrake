@@ -168,18 +168,6 @@ public class GameLogic : MonoBehaviour {
         eventState = EventState.NONE;
         soundManager = SoundManager.Instance;
 
-        //0--> dawn
-        //1--> dusk
-        //ppp = FindObjectsOfType<PostProcessingBehaviour>();
-        ppp[1].profile = pppDkNormal;
-        ppp[0].profile = pppDnNormal;
-        
-        //VignetteModel vignetting1 = null, vignetting2 = null;
-
-        //vignetting1 = ppp[0].profile.vignette;
-        //vignetting2 = ppp[1].profile.vignette;
-
-        //vignetting1
         
 
         cameraAttenuation = 1;
@@ -203,10 +191,26 @@ public class GameLogic : MonoBehaviour {
             instance = this;
 
         //If instance already exists and it's not this:
-        else if (instance != this)
+        else if (instance != this) {
 
             //Then destroy this. This enforces our singleton pattern, meaning there can only ever be one instance of a GameManager.
             Destroy(gameObject);
+        }
+
+
+        //0--> dawn
+        //1--> dusk
+        //ppp = FindObjectsOfType<PostProcessingBehaviour>();
+        if (instance.gameState == GameState.LEVEL) {
+            ppp[1].profile = pppDkNormal;
+            ppp[0].profile = pppDnNormal;
+        }
+        //VignetteModel vignetting1 = null, vignetting2 = null;
+
+        //vignetting1 = ppp[0].profile.vignette;
+        //vignetting2 = ppp[1].profile.vignette;
+
+        //vignetting1
 
         transform.parent = null;
 
@@ -432,8 +436,10 @@ public class GameLogic : MonoBehaviour {
                 case GameState.LEVEL:
                     switch (eventState) {
                         case EventState.NONE:
-                            ppp[1].profile = pppDkNormal;
-                            ppp[0].profile = pppDnNormal;
+                            if (ppp.Length == 2) {
+                                ppp[1].profile = pppDkNormal;
+                                ppp[0].profile = pppDnNormal;
+                            }
                             break;
                         case EventState.TEXT:
                             ppp[1].profile = pppDkClosed;
@@ -534,12 +540,15 @@ public class GameLogic : MonoBehaviour {
                             } else {
                                 PlayerController[] playerObjects;
                                 playerObjects = FindObjectsOfType<PlayerController>();
-                                for(int i = 0; i < 2; i++) {
-                                    if (playerObjects[i].worldAssignation == DoubleObject.world.DUSK) {
-                                        currentPlayer = playerObjects[i];
+                                if (playerObjects.Length == 2) {
+                                    for (int i = 0; i < 2; i++) {
+                                        if (playerObjects[i].worldAssignation == DoubleObject.world.DUSK) {
+                                            currentPlayer = playerObjects[i];
+                                        }
                                     }
+                                } else {
+                                    Debug.Log("No encuentra players");
                                 }
-
                             }
                         }
                         //Si el juego SI esta pausado
