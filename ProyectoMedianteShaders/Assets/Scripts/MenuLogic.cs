@@ -27,6 +27,7 @@ public class MenuLogic : MonoBehaviour {
     [SerializeField] private GameObject newOptionsCanvas;
     private int selected; //variable para controlar que elemento esta seleccionado en el menu
     private CanvasGroup mainCanvasGroup;
+    private int middleSelected = 0; //me guardo una variable de que item estaba seleccionado de la columna central de elementos para volver al mismo
     //------------------------------------------------------------
 
     //------------------------state 3
@@ -181,19 +182,47 @@ public class MenuLogic : MonoBehaviour {
         if (((InputManager.instance.prevVerticalAxis == 0 && InputManager.instance.prevVerticalAxis2 == 0) && !InputManager.instance.prevDownKey && !InputManager.instance.prevUpKey) && (InputManager.instance.verticalAxis < 0 || InputManager.instance.verticalAxis2 < 0 || InputManager.instance.downKey)) {//-1
             if (!axisInUse) {
                 axisInUse = true;
-                selected--;
-                if (selected < 0) {
-                    selected = totalMainMenuItems - 1;
+                if (selected != 4 && selected != 5) {
+                    selected--;
+                    if (selected < 0) {
+                        selected = 3;
+                    }
                 }
             }
         }
         else if (((InputManager.instance.prevVerticalAxis == 0 && InputManager.instance.prevVerticalAxis2 == 0) && !InputManager.instance.prevDownKey && !InputManager.instance.prevUpKey) && (InputManager.instance.verticalAxis > 0 || InputManager.instance.verticalAxis2 > 0 || InputManager.instance.upKey)) {//+1
             if (!axisInUse) {
                 axisInUse = true;
-                selected++;
-                if (selected > totalMainMenuItems - 1) {
-                    selected = 0;
+                if (selected != 4 && selected != 5) {
+                    selected++;
+                    if (selected > 3) {
+                        selected = 0;
+                    }
                 }
+            }
+        }
+        else if ((InputManager.instance.horizontalAxis > 0 && InputManager.instance.prevHorizontalAxis == 0) || (InputManager.instance.horizontalAxis2 > 0 && InputManager.instance.prevHorizontalAxis2 == 0) || (InputManager.instance.rightKey && !InputManager.instance.prevRightKey)) {
+            if (selected == 5) {
+                selected = 4;
+            }
+            else if (selected == 4) {
+                selected = middleSelected;
+            }
+            else {
+                middleSelected = selected;
+                selected = 5;
+            }
+        }
+        else if ((InputManager.instance.horizontalAxis < 0 && InputManager.instance.prevHorizontalAxis == 0) || (InputManager.instance.horizontalAxis2 < 0 && InputManager.instance.prevHorizontalAxis2 == 0) || (InputManager.instance.leftKey && !InputManager.instance.prevLeftKey)) {
+            if (selected == 5) {
+                selected = middleSelected;
+            }
+            else if (selected == 4) {
+                selected = 5;
+            }
+            else {
+                middleSelected = selected;
+                selected = 4;
             }
         }
 
@@ -223,6 +252,8 @@ public class MenuLogic : MonoBehaviour {
             }
             else if (selected == 3) {
                 Exit();
+            }else if (selected == 4 || selected == 5) {
+                state1Elements[selected].onClick.Invoke();
             }
         }
     }
@@ -328,6 +359,15 @@ public class MenuLogic : MonoBehaviour {
     public void Exit() {
         controlErrores.SetActive(true);
         menuState = 3;
+    }
+
+    public void OpenLink(string url) {
+        if (url != "") {
+            Application.OpenURL(url);
+        }
+        else {
+            print("Falta asignar URL al botón");
+        }
     }
 #endregion
 }
