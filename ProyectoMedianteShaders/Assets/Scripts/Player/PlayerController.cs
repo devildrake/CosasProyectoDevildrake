@@ -1752,17 +1752,17 @@ void Smash() {
 
     //Método de carga de recursos (en este caso sprites y sonidos)
     protected override void LoadResources() {
-        imagenDawn = Resources.Load<Sprite>("Presentacion/DawnSprites/Dawn");
-        imagenDusk = Resources.Load<Sprite>("Presentacion/DuskSprites/Dusk"); ;
-        dashClip = Resources.Load<AudioClip>("Sounds/Dash");
-        jumpClip = Resources.Load<AudioClip>("Sounds/Jump");
+        //imagenDawn = Resources.Load<Sprite>("Presentacion/DawnSprites/Dawn");
+        //imagenDusk = Resources.Load<Sprite>("Presentacion/DuskSprites/Dusk"); ;
+        //dashClip = Resources.Load<AudioClip>("Sounds/Dash");
+        //jumpClip = Resources.Load<AudioClip>("Sounds/Jump");
         smashClip = Resources.Load<AudioClip>("Sounds/Smash");
         crawlClip = Resources.Load<AudioClip>("Sounds/CrawlWalk");
-        walkClip = Resources.Load<AudioClip>("Sounds/WalkLoop");
+        //walkClip = Resources.Load<AudioClip>("Sounds/WalkLoop");
         deflectClip = Resources.Load<AudioClip>("Sounds/Deflect");
         grabClip = Resources.Load<AudioClip>("Sounds/Grab");
         slideClip = Resources.Load<AudioClip>("Sounds/Slide");
-        dieClip = Resources.Load<AudioClip>("Sounds/Die");
+        //dieClip = Resources.Load<AudioClip>("Sounds/Die");
         punchClip = Resources.Load<AudioClip>("Sounds/Punch");
     }
 
@@ -1789,8 +1789,15 @@ void Smash() {
         if (rb != null) {
             rb.velocity = new Vector2(0, 0);
         }
-        audioSource.clip = dieClip;
-        audioSource.Play();
+        //audioSource.clip = dieClip;
+        if (worldAssignation == world.DAWN) {
+            SoundManager.Instance.PlayOneShotSound("event:/Dawn/Death",transform.position);
+        } else {
+            SoundManager.Instance.PlayOneShotSound("event:/Dusk/Death", transform.position);
+        }
+
+
+        //audioSource.Play();
         GameLogic.instance.timesDied++;
     }
 

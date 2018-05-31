@@ -10,7 +10,7 @@ public class DoubleCheckPoint : DoubleObject
     float counterFeedback;
     float maxTimeFeedback = 5;
     public GameObject interactionSprite;
-    public AudioClip interactSound;
+    //public AudioClip interactSound;
     public ParticleSystem particulasInteraccion;
     // Use this for initialization
     void Start()
@@ -93,13 +93,16 @@ public class DoubleCheckPoint : DoubleObject
             //GameLogic.instance.levelFinished = true;
             //Debug.Log(GameLogic.instance.levelFinished);
         }
-        if (GetComponent<AudioSource>() != null) {
-            GetComponent<AudioSource>().clip = interactSound;
-            GetComponent<AudioSource>().volume = 0.1f;
-            GetComponent<AudioSource>().Play();
-        } else {
+
+        SoundManager.Instance.PlayOneShotSound("event:/Props/CheckPointBells", transform.position);
+
+        //if (GetComponent<AudioSource>() != null) {
+            //GetComponent<AudioSource>().clip = interactSound;
+            //GetComponent<AudioSource>().volume = 0.1f;
+            //GetComponent<AudioSource>().Play();
+        //} else {
             //Debug.Log("No Audio Source");
-        }
+        //}
         
     }
 
@@ -175,7 +178,7 @@ public class DoubleCheckPoint : DoubleObject
     }
 
     protected override void LoadResources() {
-        interactSound = Resources.Load<AudioClip>("Sounds/Interact");
+        //interactSound = Resources.Load<AudioClip>("Sounds/Interact");
     }
 }
 
