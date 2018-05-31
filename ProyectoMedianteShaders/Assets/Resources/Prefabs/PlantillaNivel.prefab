@@ -121,6 +121,7 @@ GameObject:
   - component: {fileID: 114935226277517074}
   - component: {fileID: 114529939531789792}
   - component: {fileID: 114707292028170350}
+  - component: {fileID: 114990567967049788}
   m_Layer: 0
   m_Name: Dusk_Camera
   m_TagString: MainCamera
@@ -4809,6 +4810,8 @@ GameObject:
   - component: {fileID: 114475717537003352}
   - component: {fileID: 114074255514805672}
   - component: {fileID: 114260947064984864}
+  - component: {fileID: 81219332699322480}
+  - component: {fileID: 114182770295354882}
   m_Layer: 0
   m_Name: Dawn_Camera
   m_TagString: MainCamera
@@ -8528,6 +8531,13 @@ MeshCollider:
   m_InflateMesh: 0
   m_SkinWidth: 0.01
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!81 &81219332699322480
+AudioListener:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1912617004924058}
+  m_Enabled: 1
 --- !u!81 &81894715633755914
 AudioListener:
   m_ObjectHideFlags: 1
@@ -10242,6 +10252,18 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114182770295354882
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1912617004924058}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86c6556701af9e04380698b89f691b6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ListenerNumber: 0
 --- !u!114 &114189039203687346
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -14500,6 +14522,18 @@ MonoBehaviour:
   selectableElement2: {fileID: 114075548273272900}
   myType: 3
   optionsPart: 1
+--- !u!114 &114990567967049788
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1028251591184920}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86c6556701af9e04380698b89f691b6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ListenerNumber: 0
 --- !u!114 &114992410087693496
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -63539,8 +63573,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 199, y: 115.999985}
-  m_SizeDelta: {x: 400, y: 400}
+  m_AnchoredPosition: {x: 299, y: 202}
+  m_SizeDelta: {x: 200, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224800442972117736
 RectTransform:

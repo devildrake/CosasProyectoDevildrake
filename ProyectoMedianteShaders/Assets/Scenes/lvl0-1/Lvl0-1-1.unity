@@ -3661,16 +3661,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 198881896848094126, guid: 1dc1c32df61779f499b1fbfbd2ad6cee,
-        type: 2}
-      propertyPath: TriggerModule.collisionShape0
-      value: 
-      objectReference: {fileID: 2115692641}
-    - target: {fileID: 198881896848094126, guid: 1dc1c32df61779f499b1fbfbd2ad6cee,
-        type: 2}
-      propertyPath: TriggerModule.collisionShape1
-      value: 
-      objectReference: {fileID: 1112768691}
     - target: {fileID: 198149817566142616, guid: 1dc1c32df61779f499b1fbfbd2ad6cee,
         type: 2}
       propertyPath: TriggerModule.collisionShape0
@@ -3681,16 +3671,30 @@ Prefab:
       propertyPath: TriggerModule.collisionShape1
       value: 
       objectReference: {fileID: 1112768691}
-    - target: {fileID: 114175170577696044, guid: 1dc1c32df61779f499b1fbfbd2ad6cee,
+    - target: {fileID: 198881896848094126, guid: 1dc1c32df61779f499b1fbfbd2ad6cee,
         type: 2}
-      propertyPath: placeToGo
+      propertyPath: TriggerModule.collisionShape0
       value: 
-      objectReference: {fileID: 1449469509}
+      objectReference: {fileID: 2115692641}
+    - target: {fileID: 198881896848094126, guid: 1dc1c32df61779f499b1fbfbd2ad6cee,
+        type: 2}
+      propertyPath: TriggerModule.collisionShape1
+      value: 
+      objectReference: {fileID: 1112768691}
     - target: {fileID: 114115324234499466, guid: 1dc1c32df61779f499b1fbfbd2ad6cee,
         type: 2}
       propertyPath: placeToGo
       value: 
       objectReference: {fileID: 1449469509}
+    - target: {fileID: 114175170577696044, guid: 1dc1c32df61779f499b1fbfbd2ad6cee,
+        type: 2}
+      propertyPath: placeToGo
+      value: 
+      objectReference: {fileID: 1449469509}
+    - target: {fileID: 1611699279320800, guid: 1dc1c32df61779f499b1fbfbd2ad6cee, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 1dc1c32df61779f499b1fbfbd2ad6cee, type: 2}
   m_IsPrefabParent: 0

@@ -147,7 +147,7 @@ public class SetUpOptions : MonoBehaviour {
             //mute
             GameLogic.instance.muteVolume = mute.isOn;
 
-            GameLogic.instance.changeGameSettings();
+            GameLogic.instance.ChangeGameSettings();
             optionsCanvas.SetActive(false);
         });
 

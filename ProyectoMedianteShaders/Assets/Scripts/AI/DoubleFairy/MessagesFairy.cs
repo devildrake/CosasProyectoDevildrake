@@ -10,7 +10,7 @@ public class MessagesFairy : MonoBehaviour {
     static Sprite[] imagesCommand;
     static Sprite[] imagesKeyboard;
     static string imagesPath;
-
+    public static bool asked;
     public static void StartMessages() {
         imagesPath = "Sprites/FeedBackText/";
         messagesKeyboard = new string[50];
@@ -53,18 +53,26 @@ public class MessagesFairy : MonoBehaviour {
         advices[1] = "Puedes reiniciar cualquier nivel manteniendo pulsada la tecla R/LB";
         advices[2] = "Puedes acceder al menú de juego pulsando Escape/Start";
         advices[3] = "Puedes superar los niveles de nuevo para completarlos más rápido o conseguir fragmentos perdidos";
-        advices[4] = "Puedes reiniciar cualquier nivel manteniendo pulsada la tecla R/LB";
-        advices[5] = "Puedes reiniciar cualquier nivel manteniendo pulsada la tecla R/LB";
-        advices[6] = "Puedes reiniciar cualquier nivel manteniendo pulsada la tecla R/LB";
-        advices[7] = "Puedes reiniciar cualquier nivel manteniendo pulsada la tecla R/LB";
-        advices[8] = "Puedes reiniciar cualquier nivel manteniendo pulsada la tecla R/LB";
-        advices[9] = "Puedes reiniciar cualquier nivel manteniendo pulsada la tecla R/LB";
+        advices[4] = "Recuerda que Dusk puede arrastrar las cajas manteniendo puslado Click derecho y moviendose";
+        advices[5] = "Las puertas de nivel indican que niveles tienes disponibles y que logros has obtenido";
+
 
         imagesKeyboard[0] = Resources.Load<Sprite>(imagesPath + "showJump") as Sprite;
         imagesCommand[0] = Resources.Load<Sprite>(imagesPath + "showJump") as Sprite;
     }
 
+    public static string GetAdvice(int wh) {
+        asked = false;
+        if (wh == 0) {
+            int id = Random.Range(0, 5);
 
+            return advices[id];
+        } else {
+            int id = Random.Range(0, 5);
+
+            return advices[id];
+        }
+    }
 
     public static string GetMessage(int id,int wh) {
         if (wh == 0) {

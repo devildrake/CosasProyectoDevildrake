@@ -75,8 +75,8 @@ public class PauseCanvas : MonoBehaviour {
                 if (!textSet) {
                     textSet = true;
                     texts[4].text = GameLogic.instance.pickedFragments + "/3";
-                    texts[5].text = (GameLogic.instance.timesDied + 1).ToString();
-                    texts[6].text = Mathf.Floor((GameLogic.instance.timeElapsed * 100))/100 + " segundos";
+                    texts[6].text = (GameLogic.instance.timesDied + 1).ToString();
+                    texts[5].text = Mathf.Floor((GameLogic.instance.timeElapsed * 100))/100 + " segundos";
                 }
 
                 for (int i = 0; i < GameLogic.instance.interactuableLevelIndexes.Length; i++) {
@@ -137,10 +137,20 @@ public class PauseCanvas : MonoBehaviour {
             if (GameLogic.instance.eventState == GameLogic.EventState.TEXT) {
                 fairyTextObject.SetActive(true);
 
-                if (InputManager.gamePadConnected) {
-                    fairyText.text = MessagesFairy.GetMessage(textIndex,1);
+                if (textIndex > -1) {
+                    if (InputManager.gamePadConnected) {
+                        fairyText.text = MessagesFairy.GetMessage(textIndex, 1);
+                    } else {
+                        fairyText.text = MessagesFairy.GetMessage(textIndex, 0);
+                    }
                 } else {
-                    fairyText.text = MessagesFairy.GetMessage(textIndex, 0);
+                    if (!InputManager.gamePadConnected&& MessagesFairy.asked) {
+                        Debug.Log("AskedForAdvice");
+                        fairyText.text = MessagesFairy.GetAdvice(0);
+                    } else if(MessagesFairy.asked) {
+                        fairyText.text = MessagesFairy.GetAdvice(1);
+                    }
+
                 }
 
             } else {

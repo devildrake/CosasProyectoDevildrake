@@ -227,6 +227,13 @@ public class SoundManager : MonoBehaviour {
                 soundEvent.stop(STOP_MODE.ALLOWFADEOUT);
             else
                 soundEvent.stop(STOP_MODE.IMMEDIATE);
+        } else{
+            if (!soundEvent.Equals(null)) {
+                if (fadeout)
+                    soundEvent.stop(STOP_MODE.ALLOWFADEOUT);
+                else
+                    soundEvent.stop(STOP_MODE.IMMEDIATE);
+            }
         }
     }
 

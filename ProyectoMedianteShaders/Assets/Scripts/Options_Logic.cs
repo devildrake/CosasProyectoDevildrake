@@ -40,6 +40,25 @@ public class Options_Logic : MonoBehaviour {
     private NavMenuItem currentItem;
 
     void Awake() {
+
+
+        if (GameLogic.instance != null) {
+            Debug.Log("Cargando playerprefs");
+            PlayerPrefs.GetFloat("musicVolume", GameLogic.instance.musicVolume);
+            PlayerPrefs.GetFloat("sfxVolume", GameLogic.instance.sfxVolume);
+            int showTimeInt = 0;
+            PlayerPrefs.GetInt("mostrarTiempo", showTimeInt);
+            GameLogic.instance.showTimeCounter = IntToBool(showTimeInt);
+            PlayerPrefs.GetFloat("resolutionSelectedX", GameLogic.instance.resolutionSelected.x);
+            PlayerPrefs.GetFloat("resolutionSelectedY", GameLogic.instance.resolutionSelected.y);
+            PlayerPrefs.GetFloat("maxFrameRate", GameLogic.instance.maxFrameRate);
+            PlayerPrefs.GetInt("graficos", GameLogic.instance.graficos);
+            GameLogic.instance.ChangeGameSettings();
+        } else {
+            Debug.Log("Hay que cambiar esto");
+        }
+
+
         transformSetaAudio = setaAudio.GetComponent<RectTransform>();
         transformSetaVideo = setaVideo.GetComponent<RectTransform>();
         transformBG = bg.GetComponent<RectTransform>();
@@ -95,6 +114,8 @@ public class Options_Logic : MonoBehaviour {
         //Buscar la configuración de graficos
         qualitySel = prevQuality = QualitySettings.GetQualityLevel();
         qualityGroup.transform.localPosition = initialQualityGroupPos - new Vector2(qualitySel * slideItemOffset, 0);
+
+
 
     }
 
@@ -334,6 +355,22 @@ public class Options_Logic : MonoBehaviour {
         }
     }
 
+    public static bool IntToBool(int a) {
+        if (a == 0) {
+            return false;
+        }else {
+            return true;
+        }
+    }
+
+    public static int BoolToInt(bool a) {
+        if (a) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
     public void ClickAceptar() {
         if(currentState == OptionsState.AUDIO_DESPLEGADO) {
             currentState = OptionsState.REPLEGANDO_AUDIO;
@@ -362,7 +399,17 @@ public class Options_Logic : MonoBehaviour {
         GameLogic.instance.maxFrameRate = fpsList[fpsSel];
         GameLogic.instance.graficos = prevQuality = qualitySel;
 
-        GameLogic.instance.changeGameSettings();
+        GameLogic.instance.ChangeGameSettings();
+
+        PlayerPrefs.SetFloat("musicVolume", musica.value);
+        PlayerPrefs.SetFloat("sfxVolume", sfx.value);
+        PlayerPrefs.SetInt("mostrarTiempo", BoolToInt(mostrarTiempo.isOn));
+        PlayerPrefs.SetFloat("resolutionSelectedX", resolutions[resolutionSel].x);
+        PlayerPrefs.SetFloat("resolutionSelectedY", resolutions[resolutionSel].y);
+        PlayerPrefs.SetFloat("maxFrameRate", fpsList[fpsSel]);
+        PlayerPrefs.SetInt("graficos", qualitySel);
+
+
     }
 
     public void ClickCancelar() {
@@ -413,6 +460,8 @@ public class Options_Logic : MonoBehaviour {
     private void OnEnable() {
         transformSetaVideo.localPosition = originalSetaVideoPos;
         transformSetaAudio.localPosition = originalSetaAudioPos + new Vector2(0, setaOffset);
+
+        mostrarTiempo.isOn = GameLogic.instance.showTimeCounter;
 
         StartCoroutine("ShroomAnimation", setaAudio);
         StartCoroutine("ShroomAnimation", setaVideo);

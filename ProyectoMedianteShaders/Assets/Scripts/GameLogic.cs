@@ -145,7 +145,7 @@ public class GameLogic : MonoBehaviour {
     /*
      * Conjunto de metodos que se llamaran al cambiar las opciones de juego
      */
-    public void changeGameSettings() {
+    public void ChangeGameSettings() {
         //Mostrar tiempo de partida
         showTimeCounter = mostrarTiempo;
 
@@ -179,6 +179,8 @@ public class GameLogic : MonoBehaviour {
         fullscreen = Screen.fullScreen; //¿Está la aplicacion en pantalla completa?
 
         currentSceneName = SceneManager.GetActiveScene().name;
+
+
 
         //fragments = new List<FragmentData>();
 
@@ -283,12 +285,15 @@ public class GameLogic : MonoBehaviour {
 
     //Se comprueba si la escena se ha cambiado
     bool ChangedScene() {
+        if (currentSceneName != SceneManager.GetActiveScene().name) {
+            Debug.Log("Detecting ChangedScene");
+        }
         return currentSceneName != SceneManager.GetActiveScene().name;
     }
 
     //Método que reinicia la espera del frame para buscar referencias y reinicia el booleano isInMainMenu
     public void ResetSceneData() {
-
+        Debug.Log("ResetSceneData");
         if (InputManager.instance != null) {
             InputManager.UnBlockInput();
         }
@@ -358,6 +363,7 @@ public class GameLogic : MonoBehaviour {
     }
 
     void Update() {
+
         if (!soundManager.music.Equals(null)) {
             if (dawn) {
                 dawnValue += Time.deltaTime;
@@ -412,16 +418,22 @@ public class GameLogic : MonoBehaviour {
             SetWaitAFrame(true);
             SetCheckMainMenu(false);
             setSpawnPoint = false;
+            Debug.Log("WaitAFrameFalse");
         }
 
         //Una vez realizada la espera, sin haber comprobado si se esta en el menu principal
         else if (!checkMainMenu) {
+            Debug.Log("CheckMainMenuFalse");
             menuScripts = FindObjectOfType<MenuLogic>();
             if (menuScripts != null) {
                 //isInMainMenu = true;
+                Debug.Log("MENUSET");
+
                 gameState = GameState.MENU;
             } else if (FindObjectOfType<LoadingScreenLogic>() != null) { 
                 gameState = GameState.LOADINGSCREEN;
+                Debug.Log("LOADINGSCREENSET");
+
 
             } else {
                 gameState = GameState.LEVEL;
@@ -431,7 +443,6 @@ public class GameLogic : MonoBehaviour {
 
         //Una vez comprobado si estamos o no en el menu principal se pondria el comportamiento deseado
         else {
-            print(eventState);
             switch (gameState) {
                 case GameState.LEVEL:
                     switch (eventState) {
@@ -658,7 +669,7 @@ public class GameLogic : MonoBehaviour {
     //Método que controla cuando se le da al escape para pausar, a su vez activa y desactiva el cursor en función de si 
     //Se abre el menú in game y se modificar la variable isPaused
     void CheckPauseInput() {
-        print(isPaused);
+        //print(isPaused);
         if ((currentPlayer.dawn&&InputManager.instance.pauseButton&&!InputManager.instance.prevPauseButton)||!currentPlayer.dawn&&InputManager.instance.pauseButton2&&!InputManager.instance.prevPauseButton2&&canBePaused) {
             /*if (isPaused) {
                 Cursor.visible = false;
@@ -713,6 +724,15 @@ public class GameLogic : MonoBehaviour {
     }
 
     void InitLoadSaveVariables() {
+
+        PlayerPrefs.SetFloat("musicVolume", musicVolume);
+        PlayerPrefs.SetFloat("sfxVolume", sfxVolume);
+        PlayerPrefs.SetInt("mostrarTiempo", Options_Logic.BoolToInt(mostrarTiempo));
+        PlayerPrefs.SetFloat("resolutionSelectedX", resolutionSelected.x);
+        PlayerPrefs.SetFloat("resolutionSelectedY", resolutionSelected.y);
+        PlayerPrefs.SetFloat("maxFrameRate", maxFrameRate);
+        PlayerPrefs.SetInt("graficos", graficos);
+
         firstOpening = false;
 
         for (int i = 0; i < 30; i++) {
@@ -816,5 +836,10 @@ public class GameLogic : MonoBehaviour {
         //public Dictionary<int, bool> completedLevels;
         //public Dictionary<int, bool> fragments;
     };
+
+    private void OnLevelWasLoaded(int level) {
+        SetWaitAFrame(false);
+        checkMainMenu = false;
+    }
 
 }

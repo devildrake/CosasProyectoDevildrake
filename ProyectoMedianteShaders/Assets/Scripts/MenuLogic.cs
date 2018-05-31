@@ -319,16 +319,17 @@ public class MenuLogic : MonoBehaviour {
             InputManager.BlockInput();
             InputManager.currentGameMode = InputManager.GAMEMODE.SINGLEPLAYER;
 
-            GameLogic.instance.LoadScene("VideoScene");
-
+            SoundManager.Instance.StopEvent(SoundManager.Instance.music,true);
 
             GameLogic.instance.firstOpening = true;
-        }
-        else {
+            GameLogic.instance.LoadScene("VideoScene");
+        } else {
             InputManager.currentGameMode = InputManager.GAMEMODE.SINGLEPLAYER;
+            GameLogic.instance.gameState = GameLogic.GameState.LEVEL;
             GameLogic.instance.SetTimeScaleLocal(1);
             InputManager.BlockInput();
-            GameLogic.instance.LoadScene(3);
+            GameLogic.instance.LoadScene(2);
+            //GameLogic.instance.LoadScene(3);
         }
     }
 
@@ -338,14 +339,19 @@ public class MenuLogic : MonoBehaviour {
             GameLogic.instance.SetTimeScaleLocal(1);
             InputManager.BlockInput();
             InputManager.currentGameMode = InputManager.GAMEMODE.MULTI_KEYBOARD_CONTROLLER;
-            GameLogic.instance.LoadScene("VideoScene");
+
             GameLogic.instance.firstOpening = true;
-        }
-        else {
+            SoundManager.Instance.StopEvent(SoundManager.Instance.music, true);
+            GameLogic.instance.LoadScene("VideoScene");
+
+        } else {
             InputManager.currentGameMode = InputManager.GAMEMODE.MULTI_KEYBOARD_CONTROLLER;
+            GameLogic.instance.gameState = GameLogic.GameState.LEVEL;
+
             GameLogic.instance.SetTimeScaleLocal(1);
             InputManager.BlockInput();
-            GameLogic.instance.LoadScene(3);
+            GameLogic.instance.LoadScene(2);
+            //GameLogic.instance.LoadScene(3);
         }
     }
 

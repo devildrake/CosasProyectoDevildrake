@@ -3,7 +3,7 @@
 public class CameraScript : MonoBehaviour {
     public enum CameraState { CLOSE,FAR,TRANSITION}
     public enum LevelType { STATIC, CHASE }
-
+    AudioListener audioListener;
     [Tooltip("Target que sigue la cámara en modo CameraState.CLOSE (Debería ser el personaje casi siempre)")]
     public Transform target;
 
@@ -61,6 +61,7 @@ public class CameraScript : MonoBehaviour {
         transform.Rotate(new Vector3(1, 1, 0), 2.50f);
         playerController = target.GetComponent<PlayerController>();
         lookTarget = transform.position + Vector3.forward;
+        audioListener = GetComponent<AudioListener>();
     }
 
     public void ResetCamera() {
@@ -122,6 +123,30 @@ public class CameraScript : MonoBehaviour {
 
         if (GameLogic.instance != null) {
             if (playerController != null) {
+
+                if (playerController.worldAssignation == DoubleObject.world.DAWN) {
+                    if (playerController.dawn) {
+                        if (!audioListener.enabled) {
+                            audioListener.enabled = true;
+                        }
+                    } else {
+                        if (audioListener.enabled) {
+                            audioListener.enabled = false;
+                        }
+                    }
+                } else {
+                    if (playerController.dawn) {
+                        if (audioListener.enabled) {
+                            audioListener.enabled = false;
+                        }
+                    } else {
+                        if (!audioListener.enabled) {
+                            audioListener.enabled = true;
+                        }
+                    }
+                }
+
+
                 if (playerController.sliding) {
                     slidingMultiplier = 3;
 

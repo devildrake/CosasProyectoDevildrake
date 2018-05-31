@@ -2958,11 +2958,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4824189013897104, guid: 06d5204fd4894f745a4b5bd0963911d3, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 34.94
+      value: 33.81
       objectReference: {fileID: 0}
     - target: {fileID: 4824189013897104, guid: 06d5204fd4894f745a4b5bd0963911d3, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 8.56
+      value: 7.36
       objectReference: {fileID: 0}
     - target: {fileID: 4320701141980526, guid: 06d5204fd4894f745a4b5bd0963911d3, type: 2}
       propertyPath: m_LocalPosition.x
@@ -3001,12 +3001,52 @@ Prefab:
     - target: {fileID: 114464468493501056, guid: 06d5204fd4894f745a4b5bd0963911d3,
         type: 2}
       propertyPath: mustStopHere
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114845862720877346, guid: 06d5204fd4894f745a4b5bd0963911d3,
         type: 2}
       propertyPath: mustStopHere
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114628567926027560, guid: 06d5204fd4894f745a4b5bd0963911d3,
+        type: 2}
+      propertyPath: idFirstMessage
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114415547504078728, guid: 06d5204fd4894f745a4b5bd0963911d3,
+        type: 2}
+      propertyPath: idFirstMessage
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114628567926027560, guid: 06d5204fd4894f745a4b5bd0963911d3,
+        type: 2}
+      propertyPath: idLastMessage
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114415547504078728, guid: 06d5204fd4894f745a4b5bd0963911d3,
+        type: 2}
+      propertyPath: idLastMessage
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114845862720877346, guid: 06d5204fd4894f745a4b5bd0963911d3,
+        type: 2}
+      propertyPath: idFirstMessage
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114464468493501056, guid: 06d5204fd4894f745a4b5bd0963911d3,
+        type: 2}
+      propertyPath: idFirstMessage
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114845862720877346, guid: 06d5204fd4894f745a4b5bd0963911d3,
+        type: 2}
+      propertyPath: idLastMessage
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114464468493501056, guid: 06d5204fd4894f745a4b5bd0963911d3,
+        type: 2}
+      propertyPath: idLastMessage
+      value: -1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 06d5204fd4894f745a4b5bd0963911d3, type: 2}

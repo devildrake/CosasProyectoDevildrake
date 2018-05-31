@@ -10,7 +10,11 @@ public class DoubleDecorationObject : MonoBehaviour {
     // Use this for initialization
     void Start () {
         if (worldAssignation == DoubleObject.world.DAWN) {
-            transform.position = new Vector3(brotherObject.transform.position.x, brotherObject.transform.position.y+GameLogic.instance.worldOffset, brotherObject.transform.position.z);
+            if (brotherObject != null) {
+                transform.position = new Vector3(brotherObject.transform.position.x, brotherObject.transform.position.y + GameLogic.instance.worldOffset, brotherObject.transform.position.z);
+            } else {
+                Debug.Log(gameObject);
+            }
         }
 	}
 	
