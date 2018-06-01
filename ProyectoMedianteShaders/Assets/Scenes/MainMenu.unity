@@ -1257,6 +1257,7 @@ GameObject:
   - component: {fileID: 366856713}
   - component: {fileID: 366856712}
   - component: {fileID: 366856711}
+  - component: {fileID: 366856714}
   m_Layer: 5
   m_Name: opinion
   m_TagString: Untagged
@@ -1368,6 +1369,20 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 366856709}
+--- !u!114 &366856714
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 366856709}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2b589405b5042a4f917ee7017bead90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prevLanguage: 0
+  EngText: {fileID: 21300000, guid: d87dd35b9b8e2084e9b6d935af71a935, type: 3}
+  SpaText: {fileID: 21300000, guid: fb33cae7a8dc17b41b97e7817c2f5b80, type: 3}
 --- !u!1 &402209199
 GameObject:
   m_ObjectHideFlags: 0

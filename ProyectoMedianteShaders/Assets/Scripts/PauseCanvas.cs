@@ -129,6 +129,10 @@ public class PauseCanvas : MonoBehaviour {
                     timeFeedBackObject.SetActive(true);
                     timeFeedBackObject.GetComponent<Text>().text = (Mathf.Floor((GameLogic.instance.timeElapsed))).ToString() + "s";
                 }
+            } else {
+                if (timeFeedBackObject!=null){
+                    timeFeedBackObject.SetActive(false);
+                }
             }
 
 
