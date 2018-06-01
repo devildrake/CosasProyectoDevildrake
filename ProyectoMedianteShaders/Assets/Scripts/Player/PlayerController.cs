@@ -1777,12 +1777,12 @@ void Smash() {
 
         if (worldAssignation == world.DUSK) {
             transform.position = GameLogic.instance.spawnPoint;
-            Debug.Log("Spawning at" + transform.position);
+            //Debug.Log("Spawning at" + transform.position);
 
         } else {
             //Debug.Log(GameLogic.instance.spawnPoint);
             transform.position = GameLogic.instance.spawnPoint + new Vector3(0, GameLogic.instance.worldOffset, 0);
-            Debug.Log("Spawning at" + transform.position);
+            //Debug.Log("Spawning at" + transform.position);
 
         }
 

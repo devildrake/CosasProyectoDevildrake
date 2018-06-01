@@ -16,8 +16,8 @@ public class FairySpot : DoubleObject {
     public int idFirstMessage;
     public int idLastMessage;
 
-    public int idFirstImage;
-    public int idLastImage;
+    public bool hasAnimation;
+    public int idSequence;
 
     //public Sprite messageSprite;
 

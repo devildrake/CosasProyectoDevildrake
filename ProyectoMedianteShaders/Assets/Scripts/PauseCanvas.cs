@@ -18,13 +18,15 @@ public class PauseCanvas : MonoBehaviour {
 
     public GameObject fairyTextObject;
     public Text fairyText;
+    public Image fairyImage;
     public GameObject blackForFade;
     public GameObject scoreScreen;
 
     public static int textIndex;
     public static int lastIndex;
-
-
+    public static int sequenceIndex;
+    public static int currentFrame;
+    public static float timer;
     //referencia al canvas de las opciones
     public GameObject opcionesCanvas;
     
@@ -37,6 +39,9 @@ public class PauseCanvas : MonoBehaviour {
         scoreScreen.GetComponent<Image>().color = new Color(scoreScreen.GetComponent<Image>().color.r, scoreScreen.GetComponent<Image>().color.g, scoreScreen.GetComponent<Image>().color.b, 0);
         //Debug.Log("Alpha a 0 -> " + scoreScreen.GetComponent<Image>().color.a);
         texts = scoreScreen.GetComponentsInChildren<Text>();
+        sequenceIndex = -1;
+        timer = 0;
+        currentFrame = 0;
     }
 
     /*
@@ -134,24 +139,63 @@ public class PauseCanvas : MonoBehaviour {
             } else
                 Barra.SetActive(false);
 
+            if (sequenceIndex > -1&&(GameLogic.instance.eventState == GameLogic.EventState.TEXT)) {
+                Debug.Log(sequenceIndex);
+                List<Sprite> animation;
+                if (!InputManager.gamePadConnected) {
+                    animation = MessagesFairy.GetSpriteList(sequenceIndex, 0);
+                } else {
+                    animation = MessagesFairy.GetSpriteList(sequenceIndex, 1);
+                }
+
+                if (animation != null) {
+                    Debug.Log("Count = " + animation.Count);
+                    Debug.Log("Frame = " + currentFrame);
+
+                    if (!fairyImage.isActiveAndEnabled) {
+                        fairyImage.enabled = true;
+                        fairyImage.sprite = animation[currentFrame];
+                        //fairyImage.gameObject.SetActive(true);
+                    } else {
+                        if (timer > 0.3f) {
+                            currentFrame++;
+
+                            if (currentFrame >= animation.Count) {
+                                currentFrame = 0;
+                            }
+                            fairyImage.sprite = animation[currentFrame];
+
+                            timer = 0;
+                        }
+                        timer += Time.deltaTime;
+                    }
+                }
+            } else {
+                currentFrame = 0;
+                fairyImage.enabled = false;
+                //fairyImage.gameObject.SetActive(false);
+            }
+
             if (GameLogic.instance.eventState == GameLogic.EventState.TEXT) {
                 fairyTextObject.SetActive(true);
 
                 if (textIndex > -1) {
                     if (InputManager.gamePadConnected) {
-                        fairyText.text = MessagesFairy.GetMessage(textIndex, 1);
+                        fairyText.text = MessagesFairy.GetMessage(textIndex, 1,GameLogic.instance.currentLanguage);
                     } else {
-                        fairyText.text = MessagesFairy.GetMessage(textIndex, 0);
+                        fairyText.text = MessagesFairy.GetMessage(textIndex, 0, GameLogic.instance.currentLanguage);
                     }
                 } else {
                     if (!InputManager.gamePadConnected&& MessagesFairy.asked) {
                         Debug.Log("AskedForAdvice");
-                        fairyText.text = MessagesFairy.GetAdvice(0);
+                        fairyText.text = MessagesFairy.GetAdvice(0, GameLogic.instance.currentLanguage);
                     } else if(MessagesFairy.asked) {
-                        fairyText.text = MessagesFairy.GetAdvice(1);
+                        fairyText.text = MessagesFairy.GetAdvice(1, GameLogic.instance.currentLanguage);
                     }
 
                 }
+
+
 
             } else {
                 fairyTextObject.SetActive(false);

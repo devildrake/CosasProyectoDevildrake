@@ -18,10 +18,14 @@ public class LevelName : MonoBehaviour {
     void Update () {
         if (GameLogic.instance != null&&levelNameObject!=null) {
 
-            if(GameLogic.instance.levelName!= "NonSet") {
-                levelNameObject.GetComponent<Text>().text = GameLogic.instance.levelName;
+            if (GameLogic.instance.GetCurrentLevel() != "MenuInteractuable") {
+                if (GameLogic.instance.levelName != "NonSet") {
+                    levelNameObject.GetComponent<Text>().text = GameLogic.instance.levelName;
+                } else {
+                    levelNameObject.GetComponent<Text>().text = GameLogic.instance.GetCurrentLevel();
+                }
             } else {
-                levelNameObject.GetComponent<Text>().text = GameLogic.instance.GetCurrentLevel();
+                levelNameObject.GetComponent<Text>().text = "";
             }
 
             timer += Time.deltaTime;

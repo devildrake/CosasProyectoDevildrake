@@ -236,16 +236,20 @@ public class DoubleFairyGuide : DoubleObject {
                 }
             } else {
                 if (!currentSpot.mustStopHere) {
-                    setIdle = false;
-                    brotherScript.setIdle = false;
-                    targetIndex++;
-                    brotherScript.targetIndex++;
-                    currentSpot = null;
-                    brotherScript.currentSpot = null;
-                    //spriteRendererObject.SetActive(false);
-                    FadeOut();
 
-                    brotherScript.FadeOut();
+                    if (targetIndex+1 != fairySpotList.Count) {
+                        setIdle = false;
+                        brotherScript.setIdle = false;
+                        targetIndex++;
+                        brotherScript.targetIndex++;
+                        currentSpot = null;
+                        brotherScript.currentSpot = null;
+                        FadeOut();
+
+                        brotherScript.FadeOut();
+                    }
+                    //spriteRendererObject.SetActive(false);
+
                     if (GameLogic.instance.currentPlayer.interactableObject == this) {
                         GameLogic.instance.currentPlayer.interactableObject = null;
                         GameLogic.instance.eventState = GameLogic.EventState.NONE;
@@ -389,18 +393,21 @@ public class DoubleFairyGuide : DoubleObject {
 
                     if (currentSpot.idLastMessage-currentSpot.idFirstMessage>0) {
                         if (GameLogic.instance.currentPlayer.transform.position.x > transform.position.x + distanceFromPlayerThreshold*2.5) {
-                            currentSpot = null;
-                            messageSet = false;
-                            brotherScript.currentSpot = null;
-                            setIdle = false;
-                            brotherScript.setIdle = false;
+                            if (targetIndex + 1 != fairySpotList.Count) {
 
-                            targetIndex++;
-                            brotherScript.targetIndex++;
-                            //spriteRendererObject.SetActive(false);
-                            FadeOut();
-                            brotherScript.FadeOut();
+                                messageSet = false;
+                                setIdle = false;
+                                brotherScript.setIdle = false;
 
+                                currentSpot = null;
+                                brotherScript.currentSpot = null;
+
+                                targetIndex++;
+                                brotherScript.targetIndex++;
+                                //spriteRendererObject.SetActive(false);
+                                FadeOut();
+                                brotherScript.FadeOut();
+                            }
                         } else if(!messageSet){
                             hasANewMessage = true;
                             hasAMessage = true;
@@ -415,19 +422,22 @@ public class DoubleFairyGuide : DoubleObject {
                         hasAMessage = false;
                         hasANewMessage = false;
                         if (GameLogic.instance.currentPlayer.transform.position.x >= transform.position.x) {
-                            currentSpot = null;
-                            brotherScript.currentSpot = null;
-                            setIdle = false;
-                            brotherScript.setIdle = false;
-                            messageSet = false;
+                            if (targetIndex + 1 != fairySpotList.Count) {
 
-                            targetIndex++;
-                            brotherScript.targetIndex++;
-                            //spriteRendererObject.SetActive(false);
-                            FadeOut();
-                            hasANewMessage = false;
-                            brotherScript.hasANewMessage = false;
-                            brotherScript.FadeOut();
+                                currentSpot = null;
+                                brotherScript.currentSpot = null;
+                                setIdle = false;
+                                brotherScript.setIdle = false;
+                                messageSet = false;
+
+                                targetIndex++;
+                                brotherScript.targetIndex++;
+                                //spriteRendererObject.SetActive(false);
+                                FadeOut();
+                                hasANewMessage = false;
+                                brotherScript.hasANewMessage = false;
+                                brotherScript.FadeOut();
+                            }
                         }
                     }
 
@@ -453,12 +463,20 @@ public class DoubleFairyGuide : DoubleObject {
                     PauseCanvas.textIndex = currentSpot.idFirstMessage - 1;
 
                     GameLogic.instance.eventState = GameLogic.EventState.TEXT;
+
+                    if (currentSpot.idSequence > -1&&currentSpot.hasAnimation) {
+                        Debug.Log("Setting Sequence Index To " + currentSpot.idSequence);
+                        PauseCanvas.sequenceIndex = currentSpot.idSequence;
+                    }
+
                 }
 
                 PauseCanvas.textIndex++;
 
                 if (PauseCanvas.textIndex > PauseCanvas.lastIndex) {
                     GameLogic.instance.eventState = GameLogic.EventState.NONE;
+                    PauseCanvas.sequenceIndex = -1;
+                    PauseCanvas.currentFrame = 0;
                     PauseCanvas.lastIndex = -1;
                     hasANewMessage = false;
                     brotherScript.hasANewMessage = false;
@@ -471,9 +489,15 @@ public class DoubleFairyGuide : DoubleObject {
                     PauseCanvas.textIndex = -2;
                     GameLogic.instance.eventState = GameLogic.EventState.TEXT;
                     MessagesFairy.asked = true;
+                    PauseCanvas.sequenceIndex = -1;
+                    PauseCanvas.currentFrame = 0;
+
                 } else {
                     GameLogic.instance.eventState = GameLogic.EventState.NONE;
                     PauseCanvas.textIndex = -1;
+                    PauseCanvas.sequenceIndex = -1;
+                    PauseCanvas.currentFrame = 0;
+
                 }
             }
         }

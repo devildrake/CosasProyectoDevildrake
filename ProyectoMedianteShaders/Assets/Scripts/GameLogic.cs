@@ -23,6 +23,7 @@ public class LevelData {
 //si el jugador se encuentra en el menu 
 
 public class GameLogic : MonoBehaviour {
+    public MessagesFairy.LANGUAGE currentLanguage;
     public int levelToLoad;
 
     public PostProcessingBehaviour[] ppp; //referencias a los perfiles de post processo
@@ -37,6 +38,7 @@ public class GameLogic : MonoBehaviour {
     //////////////////////VARIABLES LOAD/SAVE////////////////////////////
     //////////////////////VARIABLES LOAD/SAVE////////////////////////////
     //////////////////////VARIABLES LOAD/SAVE////////////////////////////
+    int prevSongId;
     public bool saved;
     public bool firstOpening;
     //public Dictionary<int, bool> completedLevels;
@@ -204,8 +206,10 @@ public class GameLogic : MonoBehaviour {
         //1--> dusk
         //ppp = FindObjectsOfType<PostProcessingBehaviour>();
         if (instance.gameState == GameState.LEVEL) {
-            ppp[1].profile = pppDkNormal;
-            ppp[0].profile = pppDnNormal;
+            if (ppp.Length > 1) {
+                ppp[1].profile = pppDkNormal;
+                ppp[0].profile = pppDnNormal;
+            }
         }
         //VignetteModel vignetting1 = null, vignetting2 = null;
 
@@ -271,6 +275,8 @@ public class GameLogic : MonoBehaviour {
     }
 
     void Start() {
+        currentLanguage = MessagesFairy.LANGUAGE.English;
+        prevSongId = -1;
         SetWaitAFrame(false);
         SetCheckMainMenu(false);
         setSpawnPoint = false;
@@ -343,19 +349,21 @@ public class GameLogic : MonoBehaviour {
     }
 
     public void PlaySong(int songId) {
-        if (!musicEvent.Equals(null)) {
-            musicEvent.stop(STOP_MODE.ALLOWFADEOUT);
+        if (songId != prevSongId) {
+            if (!musicEvent.Equals(null)) {
+                musicEvent.stop(STOP_MODE.ALLOWFADEOUT);
+            }
+            musicEvent = SoundManager.Instance.PlayMusic("event:/Music/song" + songId.ToString(), transform.position);
+            prevSongId = songId;
+            SoundManager.Instance.music = musicEvent;
+
+            FMOD.RESULT result = musicEvent.getParameter("Dawn", out dawnParameter);
+
+            //Debug.Log(result);
+
+
+            //Debug.Log("PlaySong");
         }
-            musicEvent = SoundManager.Instance.PlayMusic("event:/Music/song" + songId.ToString(),transform.position);
-
-        SoundManager.Instance.music = musicEvent;
-
-        FMOD.RESULT result = musicEvent.getParameter("Dawn", out dawnParameter);
-
-        //Debug.Log(result);
-
-
-        //Debug.Log("PlaySong");
     }
 
     public void UpdateEventParameter(EventInstance soundEvent, SoundManagerParameter parameter) {
@@ -675,7 +683,7 @@ public class GameLogic : MonoBehaviour {
                 Cursor.visible = false;
                 Cursor.lockState = CursorLockMode.None;
             } else*/
-            print("PAUSAAAA");
+            //print("PAUSAAAA");
             if (!isPaused) {
                 isPaused = true;
                 Cursor.visible = true;

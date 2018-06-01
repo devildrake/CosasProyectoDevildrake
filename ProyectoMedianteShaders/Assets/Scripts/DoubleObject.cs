@@ -87,7 +87,7 @@ public class DoubleObject : MonoBehaviour {
     }
 
     public virtual void Interact() {
-        Debug.Log("Interact");
+        //Debug.Log("Interact");
     }
 
     protected virtual void OnlyFreezeRotation()

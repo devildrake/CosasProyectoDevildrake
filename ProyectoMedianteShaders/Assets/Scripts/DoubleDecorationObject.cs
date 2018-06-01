@@ -13,7 +13,7 @@ public class DoubleDecorationObject : MonoBehaviour {
             if (brotherObject != null) {
                 transform.position = new Vector3(brotherObject.transform.position.x, brotherObject.transform.position.y + GameLogic.instance.worldOffset, brotherObject.transform.position.z);
             } else {
-                Debug.Log(gameObject);
+                //Debug.Log(gameObject);
             }
         }
 	}
