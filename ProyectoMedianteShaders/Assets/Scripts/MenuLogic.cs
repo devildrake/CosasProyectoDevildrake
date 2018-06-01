@@ -375,5 +375,10 @@ public class MenuLogic : MonoBehaviour {
             print("Falta asignar URL al botón");
         }
     }
+
+    public void ChangeLanguage (int i) {
+        GameLogic.instance.currentLanguage = i == 0 ? MessagesFairy.LANGUAGE.Spanish : MessagesFairy.LANGUAGE.English;
+        print(GameLogic.instance.currentLanguage);
+    }
 #endregion
 }
