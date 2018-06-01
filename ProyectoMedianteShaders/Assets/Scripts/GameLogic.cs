@@ -275,7 +275,7 @@ public class GameLogic : MonoBehaviour {
     }
 
     void Start() {
-        currentLanguage = MessagesFairy.LANGUAGE.English;
+        //currentLanguage = MessagesFairy.LANGUAGE.English;
         prevSongId = -1;
         SetWaitAFrame(false);
         SetCheckMainMenu(false);
@@ -732,14 +732,15 @@ public class GameLogic : MonoBehaviour {
     }
 
     void InitLoadSaveVariables() {
-
+        Debug.Log("InoitVariables");
         PlayerPrefs.SetFloat("musicVolume", musicVolume);
         PlayerPrefs.SetFloat("sfxVolume", sfxVolume);
         PlayerPrefs.SetInt("mostrarTiempo", Options_Logic.BoolToInt(mostrarTiempo));
         PlayerPrefs.SetFloat("resolutionSelectedX", resolutionSelected.x);
         PlayerPrefs.SetFloat("resolutionSelectedY", resolutionSelected.y);
-        PlayerPrefs.SetFloat("maxFrameRate", maxFrameRate);
+        PlayerPrefs.SetInt("maxFrameRate", maxFrameRate);
         PlayerPrefs.SetInt("graficos", graficos);
+        PlayerPrefs.SetInt("Language", 1);
 
         firstOpening = false;
 
@@ -770,7 +771,7 @@ public class GameLogic : MonoBehaviour {
             file.Close();
 
             firstOpening = data.firstOpening;
-            Debug.Log("Cargando FirstOpening as " + firstOpening);
+
             levelsData = data.levelData;
             lastEntranceIndex = data.lastEntranceIndex;
 

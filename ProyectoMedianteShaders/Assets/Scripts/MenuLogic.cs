@@ -406,6 +406,7 @@ public class MenuLogic : MonoBehaviour {
 
     public void ChangeLanguage (int i) {
         GameLogic.instance.currentLanguage = i == 0 ? MessagesFairy.LANGUAGE.Spanish : MessagesFairy.LANGUAGE.English;
+        PlayerPrefs.SetInt("Language", (int)GameLogic.instance.currentLanguage);
     }
-#endregion
+    #endregion
 }

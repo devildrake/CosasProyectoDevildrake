@@ -43,17 +43,21 @@ public class Options_Logic : MonoBehaviour {
 
 
         if (GameLogic.instance != null) {
-            Debug.Log("Cargando playerprefs");
-            PlayerPrefs.GetFloat("musicVolume", GameLogic.instance.musicVolume);
-            PlayerPrefs.GetFloat("sfxVolume", GameLogic.instance.sfxVolume);
+           // Debug.Log("Cargando playerprefs");
+            GameLogic.instance.musicVolume = PlayerPrefs.GetFloat("musicVolume", GameLogic.instance.musicVolume);
+            //Debug.Log("Cargando musicVolume" + GameLogic.instance.musicVolume);
+            GameLogic.instance.sfxVolume =  PlayerPrefs.GetFloat("sfxVolume", GameLogic.instance.sfxVolume);
             int showTimeInt = 0;
-            PlayerPrefs.GetInt("mostrarTiempo", showTimeInt);
+            showTimeInt = PlayerPrefs.GetInt("mostrarTiempo", showTimeInt);
             GameLogic.instance.showTimeCounter = IntToBool(showTimeInt);
-            PlayerPrefs.GetFloat("resolutionSelectedX", GameLogic.instance.resolutionSelected.x);
-            PlayerPrefs.GetFloat("resolutionSelectedY", GameLogic.instance.resolutionSelected.y);
-            PlayerPrefs.GetFloat("maxFrameRate", GameLogic.instance.maxFrameRate);
-            PlayerPrefs.GetInt("graficos", GameLogic.instance.graficos);
+            GameLogic.instance.resolutionSelected.x=PlayerPrefs.GetFloat("resolutionSelectedX", GameLogic.instance.resolutionSelected.x);
+            GameLogic.instance.resolutionSelected.y=PlayerPrefs.GetFloat("resolutionSelectedY", GameLogic.instance.resolutionSelected.y);
+            GameLogic.instance.maxFrameRate = PlayerPrefs.GetInt("maxFrameRate", GameLogic.instance.maxFrameRate);
+            GameLogic.instance.graficos =  PlayerPrefs.GetInt("graficos", GameLogic.instance.graficos);
             GameLogic.instance.ChangeGameSettings();
+            GameLogic.instance.currentLanguage = (MessagesFairy.LANGUAGE)PlayerPrefs.GetInt("Language", 1);
+            Debug.Log("Cargando currentLanguage" +  (int)GameLogic.instance.currentLanguage);
+
         } else {
             Debug.Log("Hay que cambiar esto");
         }
@@ -401,15 +405,15 @@ public class Options_Logic : MonoBehaviour {
 
         GameLogic.instance.ChangeGameSettings();
 
+        Debug.Log("SetFloat " + musica.value);
         PlayerPrefs.SetFloat("musicVolume", musica.value);
         PlayerPrefs.SetFloat("sfxVolume", sfx.value);
         PlayerPrefs.SetInt("mostrarTiempo", BoolToInt(mostrarTiempo.isOn));
         PlayerPrefs.SetFloat("resolutionSelectedX", resolutions[resolutionSel].x);
         PlayerPrefs.SetFloat("resolutionSelectedY", resolutions[resolutionSel].y);
-        PlayerPrefs.SetFloat("maxFrameRate", fpsList[fpsSel]);
+        PlayerPrefs.SetInt("maxFrameRate", fpsList[fpsSel]);
         PlayerPrefs.SetInt("graficos", qualitySel);
-
-
+        PlayerPrefs.SetInt("Language", (int)GameLogic.instance.currentLanguage);
     }
 
     public void ClickCancelar() {
@@ -462,6 +466,24 @@ public class Options_Logic : MonoBehaviour {
         transformSetaAudio.localPosition = originalSetaAudioPos + new Vector2(0, setaOffset);
 
         mostrarTiempo.isOn = GameLogic.instance.showTimeCounter;
+        musica.value = GameLogic.instance.musicVolume;
+        sfx.value = GameLogic.instance.sfxVolume;
+
+        for(int i = 0; i < fpsList.Count; i++) {
+            if (fpsList[i] == GameLogic.instance.maxFrameRate) {
+                fpsSel = i;
+            }
+        }
+
+
+        for (int i = 0; i < resolutions.Count; i++) {
+            if(resolutions[i].x == GameLogic.instance.resolutionSelected.x && resolutions[i].y == GameLogic.instance.resolutionSelected.y) {
+                resolutionSel = i;
+            }
+        }
+
+        qualitySel = GameLogic.instance.graficos;
+
 
         StartCoroutine("ShroomAnimation", setaAudio);
         StartCoroutine("ShroomAnimation", setaVideo);
