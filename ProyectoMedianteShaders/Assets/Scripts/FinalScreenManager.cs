@@ -57,4 +57,9 @@ public class FinalScreenManager : MonoBehaviour {
 
 
 	}
+
+    private void OnDestroy() {
+
+    }
+
 }

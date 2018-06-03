@@ -10,7 +10,7 @@ public class MenuLogic : MonoBehaviour {
     //referencia al Canvas para hacer el fade in
     public Canvas canvas;
     private CanvasGroup canvasGroup;
-
+    private float auxTimer;
     //-----------------------state 0
     public GameObject pressAnyKeyObj;//elemento del state 0
     //------------------------------------------------------------
@@ -62,6 +62,7 @@ public class MenuLogic : MonoBehaviour {
 
     // Use this for initialization
     void Start() {
+        auxTimer = 0;
         GameLogic.instance.SetTimeScaleLocal(0.5f);
         GameLogic.instance.isPaused = false;
         canvas.gameObject.SetActive(false);
@@ -87,8 +88,16 @@ public class MenuLogic : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
+
+        Debug.Log("MenuState - " + menuState);
+
         switch (menuState) {
             case -2:
+                auxTimer += Time.deltaTime;
+                if (auxTimer > 2.5) {
+                    auxTimer = 0;
+                    menuState = -1;
+                }
                 if (InputManager.instance.pauseButton && !InputManager.instance.prevPauseButton) {
                     menuState = -1;
                 }
@@ -99,6 +108,13 @@ public class MenuLogic : MonoBehaviour {
                 canvasGroup.gameObject.SetActive(true);
                 canvasFadeSplash.gameObject.SetActive(false);
                 Destroy(uselessCanvas);
+
+                auxTimer += Time.deltaTime;
+                if (auxTimer > 2.0) {
+                    auxTimer = 0;
+                    menuState = 0;
+                }
+
                 if (canvasGroup.alpha > 0) {
                     canvasGroup.alpha -= Time.deltaTime;
                 } else {

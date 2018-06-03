@@ -35,7 +35,7 @@ public class MessagesFairy : MonoBehaviour {
         messagesKeyboardSp[2] = "Para cambiar entre mundos pulsa SHIFT";
         messagesKeyboardSp[3] = "Como ya habreis observado, debido a que no hay espejo los mundos se están afectando entre ellos";
         messagesKeyboardSp[4] = "Debeis colaborar aprovechando el entorno de cada mundo para avanzar y recuperar los fragmentos";
-        messagesKeyboardSp[5] = "Por ejemplo, intenta saltar encima del insecto este en el mundo oscuro";
+        messagesKeyboardSp[5] = "Por ejemplo, intenta saltar encima del walker de aquí delante en el mundo oscuro";
         messagesKeyboardSp[6] = "No te preocupes si no sabes alcanzar algunos fragmentos ahora, podrás volver más adelante";
         messagesKeyboardSp[7] = "Dawn, ahora es el momento de que demuestres de qué estas hecha, utiliza tu habilidad y elevate";
         messagesKeyboardSp[8] = "Recuerdas? Solo tienes que saltar y hacer Click 'n' Drag con el botón izquierdo del ratón (Mundo claro)";
@@ -48,12 +48,12 @@ public class MessagesFairy : MonoBehaviour {
         messagesKeyboardSp[15] = "Tienes que ayudarme a investigar!";
         messagesKeyboardSp[16] = "Puedes moverte con las teclas A/D y saltar con la barra espaciadora";
 
-        messagesKeyboardEn[0] = "Without the mirror both world are in danger!";
+        messagesKeyboardEn[0] = "Without the mirror both worlds are in danger!";
         messagesKeyboardEn[1] = "You have to cooperate to regain all fragments you can find!";
-        messagesKeyboardEn[2] = "In order to change worlds press SHIFT";
+        messagesKeyboardEn[2] = "To change worlds press SHIFT";
         messagesKeyboardEn[3] = "As you've probably seen, since there's no mirror between both worlds they're afecting on another";
         messagesKeyboardEn[4] = "You have to take advantage of each world's environment to move forward and find all fragments";
-        messagesKeyboardEn[5] = "For example, try to jump on that bug while at the dark world";
+        messagesKeyboardEn[5] = "For example, try to jump on that walker just ahead while at the dark world";
         messagesKeyboardEn[6] = "Don't worry if you can't reach some fragments right now you will be able to return for them later";
         messagesKeyboardEn[7] = "Dawn, it's time to show what you're made of, use your ability and !rise";
         messagesKeyboardEn[8] = "Remember? You just have to jump and Click 'n' Drag with the left mouse button (Bright world)";
@@ -71,7 +71,7 @@ public class MessagesFairy : MonoBehaviour {
         messagesCommandSp[2] = "Para cambiar entre mundos pulsa LT";
         messagesCommandSp[3] = "Como ya habreis observado, debido a que no hay espejo los mundos se están afectando entre ellos";
         messagesCommandSp[4] = "Debeis colaborar aprovechando el entorno de cada mundo para avanzar y recuperar los fragmentos";
-        messagesCommandSp[5] = "Por ejemplo, intenta saltar encima del insecto este en el mundo oscuro";
+        messagesCommandSp[5] = "Por ejemplo, intenta saltar encima del walker de aquí delante en el mundo oscuro";
         messagesCommandSp[6] = "No te preocupes si no sabes alcanzar algunos fragmentos ahora, podrás volver más adelante";
         messagesCommandSp[7] = "Dawn, ahora es el momento de que demuestres de qué estas hecha, utiliza tu habilidad y elevate";
         messagesCommandSp[8] = "Recuerdas? Solo tienes que saltar y mantener RT y usar el joystick derecho para definir dirección";
@@ -84,12 +84,12 @@ public class MessagesFairy : MonoBehaviour {
         messagesCommandSp[15] = "Tienes que ayudarme a investigar!";
         messagesCommandSp[16] = "Puedes moverte con el joystick izquierdo y saltar con la tecla A";
 
-        messagesCommandEn[0] = "Without the mirror both world are in danger!";
+        messagesCommandEn[0] = "Without the mirror both worlds are in danger!";
         messagesCommandEn[1] = "You have to cooperate to regain all fragments you can find!";
-        messagesCommandEn[2] = "In order to change worlds press LT";
+        messagesCommandEn[2] = "To change worlds press LT";
         messagesCommandEn[3] = "As you've probably seen, since there's no mirror between both worlds they're afecting on another";
         messagesCommandEn[4] = "You have to take advantage of each world's environment to move forward and find all fragments";
-        messagesCommandEn[5] = "For example, try to jump on that bug while at the dark world";
+        messagesCommandEn[5] = "For example, try to jump on that walker just ahead  while at the dark world";
         messagesCommandEn[6] = "Don't worry if you can't reach some fragments right now you will be able to return for them later";
         messagesCommandEn[7] = "Dawn, it's time to show what you're made of, use your ability and !rise";
         messagesCommandEn[8] = "Remember? You just have to jump, press and hold RT and use the right joystick to choose direction (Bright World)";
