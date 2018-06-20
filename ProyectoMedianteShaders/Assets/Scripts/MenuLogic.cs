@@ -76,7 +76,7 @@ public class MenuLogic : MonoBehaviour {
         timeToBlink = 0.4f;
         pressAnyKeyObj.SetActive(false);
         delayCounter = 0;
-        selected = 0;
+        selected = -1;
         newOptionsCanvas.SetActive(false);
         GameLogic.instance.transformableObjects.Add(gameObject);
         InputManager.UnBlockInput();
