@@ -33,6 +33,9 @@ public class PlayerController : DoubleObject {
     private float punchTimer;
     private float dashCoolDown;
 
+    //Temporizador para byPassear posible problema de Z al entrar en portales
+    private float timer;
+
     //Float que indica si el personaje ha de ir hacia la derecha o hacia la izquierda en su transición inicial, de todas formas
     //Se ha de setear a 0 para que haga la comprovación en un principio.
     public float whichX;
@@ -357,25 +360,31 @@ public class PlayerController : DoubleObject {
                         }
                     } else {
 
-                        if (placeToGo.tag == "Finish"&&grounded) {
-                            myAnimator.gameObject.transform.rotation = Quaternion.identity;
-                            //brotherAnimator.gameObject.transform.rotation = q;
-                            if (transform.position.z > 1.8f) {
-                                //InputManager.UnBlockInput();
-                                GameLogic.instance.levelFinished = true;
-                            } else {
-                                myAnimator.SetBool("grounded", true);
-                                myAnimator.SetBool("moving", true);
-                                myAnimator.SetFloat("timeMoving", 1.0f);
-                                if (whichX > 0) {
-                                    //Debug.Log("A");
-                                    transform.Translate(Vector3.forward * 1.4f * Time.deltaTime);
-                                } else if(whichX < 0) {
-                                    //Debug.Log("B");
-                                    transform.Translate(Vector3.back * 1.4f * Time.deltaTime);
-                                }
-                            }
+                        if (placeToGo.tag == "Finish") {
+                            if (grounded) {
+                                myAnimator.gameObject.transform.rotation = Quaternion.identity;
+                                //brotherAnimator.gameObject.transform.rotation = q;
+                                timer += Time.deltaTime;
 
+                                if (transform.position.z > 1.8f || timer > 2.0f) {
+
+                                    //InputManager.UnBlockInput();
+                                    GameLogic.instance.levelFinished = true;
+                                } else {
+                                    myAnimator.SetBool("grounded", true);
+                                    myAnimator.SetBool("moving", true);
+                                    myAnimator.SetFloat("timeMoving", 1.0f);
+                                    if (whichX > 0) {
+                                        //Debug.Log("A");
+                                        transform.Translate(Vector3.forward * 1.4f * Time.deltaTime);
+                                    } else if (whichX < 0) {
+                                        //Debug.Log("B");
+                                        transform.Translate(Vector3.back * 1.4f * Time.deltaTime);
+                                    }
+                                }
+                            } else {
+                                rb.gravityScale = 3.0f;
+                            }
 
                         } else {
                             InputManager.UnBlockInput();

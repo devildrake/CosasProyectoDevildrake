@@ -358,14 +358,14 @@ public class MenuLogic : MonoBehaviour {
 
     //Metodo que llama el boton de 1 jugador
     public void PlayOnePlayer() {
-        if (!GameLogic.instance.firstOpening) {
+        if (!GameLogic.instance.playedTutorial) {
             GameLogic.instance.SetTimeScaleLocal(1);
             InputManager.BlockInput();
             InputManager.currentGameMode = InputManager.GAMEMODE.SINGLEPLAYER;
 
             SoundManager.Instance.StopEvent(SoundManager.Instance.music,true);
 
-            GameLogic.instance.firstOpening = true;
+            //GameLogic.instance.firstOpening = true;
             GameLogic.instance.LoadScene("VideoScene");
         } else {
             InputManager.currentGameMode = InputManager.GAMEMODE.SINGLEPLAYER;
@@ -379,14 +379,14 @@ public class MenuLogic : MonoBehaviour {
 
     //Metodo que llama el boton de 2 jugadores
     public void PlayTwoPlayers() {
-        if (!GameLogic.instance.firstOpening) {
-            GameLogic.instance.SetTimeScaleLocal(1);
-            InputManager.BlockInput();
-            InputManager.currentGameMode = InputManager.GAMEMODE.MULTI_KEYBOARD_CONTROLLER;
+        if (!GameLogic.instance.playedTutorial) {
+            //GameLogic.instance.SetTimeScaleLocal(1);
+            //InputManager.BlockInput();
+            //InputManager.currentGameMode = InputManager.GAMEMODE.MULTI_KEYBOARD_CONTROLLER;
 
-            GameLogic.instance.firstOpening = true;
-            SoundManager.Instance.StopEvent(SoundManager.Instance.music, true);
-            GameLogic.instance.LoadScene("VideoScene");
+            ////GameLogic.instance.firstOpening = true;
+            //SoundManager.Instance.StopEvent(SoundManager.Instance.music, true);
+            //GameLogic.instance.LoadScene("VideoScene");
 
         } else {
             InputManager.currentGameMode = InputManager.GAMEMODE.MULTI_KEYBOARD_CONTROLLER;

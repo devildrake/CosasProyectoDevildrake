@@ -44,23 +44,41 @@ public class Options_Logic : MonoBehaviour {
 
         if (GameLogic.instance != null) {
            // Debug.Log("Cargando playerprefs");
-            GameLogic.instance.musicVolume = PlayerPrefs.GetFloat("musicVolume", GameLogic.instance.musicVolume);
+            GameLogic.instance.musicVolume = PlayerPrefs.GetFloat("musicVolume",0);
             //Debug.Log("Cargando musicVolume" + GameLogic.instance.musicVolume);
-            GameLogic.instance.sfxVolume =  PlayerPrefs.GetFloat("sfxVolume", GameLogic.instance.sfxVolume);
+            GameLogic.instance.sfxVolume =  PlayerPrefs.GetFloat("sfxVolume",0);
+
+            //mute = PlayerPrefs.GetInt()
+            
+
+            prevMusic = GameLogic.instance.musicVolume;
+            musica.value = prevMusic;
+
+
             int showTimeInt = 0;
-            showTimeInt = PlayerPrefs.GetInt("mostrarTiempo", showTimeInt);
+            showTimeInt = PlayerPrefs.GetInt("mostrarTiempo", 0);
+
+
+
             GameLogic.instance.showTimeCounter = IntToBool(showTimeInt);
+            prevMostrarTiempo = IntToBool(showTimeInt);
+            mostrarTiempo.isOn = IntToBool(showTimeInt);
+            GameLogic.instance.mostrarTiempo = GameLogic.instance.showTimeCounter;
+
+            Debug.Log("Getting mostratTiempo as" + mostrarTiempo.isOn);
+
+
             GameLogic.instance.resolutionSelected.x=PlayerPrefs.GetFloat("resolutionSelectedX", GameLogic.instance.resolutionSelected.x);
             GameLogic.instance.resolutionSelected.y=PlayerPrefs.GetFloat("resolutionSelectedY", GameLogic.instance.resolutionSelected.y);
             GameLogic.instance.maxFrameRate = PlayerPrefs.GetInt("maxFrameRate", GameLogic.instance.maxFrameRate);
             GameLogic.instance.graficos =  PlayerPrefs.GetInt("graficos", GameLogic.instance.graficos);
-            GameLogic.instance.ChangeGameSettings();
             GameLogic.instance.currentLanguage = (MessagesFairy.LANGUAGE)PlayerPrefs.GetInt("Language", 1);
             Debug.Log("Cargando currentLanguage" +  (int)GameLogic.instance.currentLanguage);
 
         } else {
             Debug.Log("Hay que cambiar esto");
         }
+        GameLogic.instance.ChangeGameSettings();
 
 
         transformSetaAudio = setaAudio.GetComponent<RectTransform>();
@@ -76,11 +94,13 @@ public class Options_Logic : MonoBehaviour {
         //se ponen por defecto los valores de las opciones y se guardan los iniciales por si se le da a cancelar
         //para que la proxima vez que se abran las opciones no aparezcan cambiadas.
         //AUDIO
-        musica.value = prevMusic = SoundManager.Instance.GetMusicVolume();
-        sfx.value = prevSfx = SoundManager.Instance.GetFXVolume();
-        mute.isOn = prevMute = GameLogic.instance.muteVolume;
+        //musica.value = prevMusic = SoundManager.Instance.GetMusicVolume();
+        //sfx.value = prevSfx = SoundManager.Instance.GetFXVolume();
+
+        //mute.isOn = prevMute = GameLogic.instance.muteVolume;
+
         //VIDEO
-        mostrarTiempo.isOn = prevMostrarTiempo = GameLogic.instance.mostrarTiempo;
+        //mostrarTiempo.isOn = prevMostrarTiempo = GameLogic.instance.mostrarTiempo;
         pantallaCompleta.isOn = Screen.fullScreen;
         
         //buscar la resolucion de la pantalla para marcarla.
@@ -133,6 +153,8 @@ public class Options_Logic : MonoBehaviour {
         //se activa el highlight del primer elemento de navegacion con mando/teclado
         currentItem = firstAudio;
         currentItem.highlight.SetActive(true);
+
+        SoundManager.Instance.ChangeMusicVolume(musica.value);
 
         musica.onValueChanged.AddListener(delegate {
             if (!mute.isOn) {
@@ -408,6 +430,8 @@ public class Options_Logic : MonoBehaviour {
         Debug.Log("SetFloat " + musica.value);
         PlayerPrefs.SetFloat("musicVolume", musica.value);
         PlayerPrefs.SetFloat("sfxVolume", sfx.value);
+
+        Debug.Log("Setting mostratTiempo as" + mostrarTiempo.isOn);
         PlayerPrefs.SetInt("mostrarTiempo", BoolToInt(mostrarTiempo.isOn));
         PlayerPrefs.SetFloat("resolutionSelectedX", resolutions[resolutionSel].x);
         PlayerPrefs.SetFloat("resolutionSelectedY", resolutions[resolutionSel].y);
@@ -466,6 +490,7 @@ public class Options_Logic : MonoBehaviour {
         transformSetaAudio.localPosition = originalSetaAudioPos + new Vector2(0, setaOffset);
 
         mostrarTiempo.isOn = GameLogic.instance.showTimeCounter;
+        prevMostrarTiempo = mostrarTiempo.isOn;
         musica.value = GameLogic.instance.musicVolume;
         sfx.value = GameLogic.instance.sfxVolume;
 

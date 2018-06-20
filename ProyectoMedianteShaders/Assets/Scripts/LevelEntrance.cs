@@ -21,7 +21,17 @@ public class LevelEntrance : DoubleObject {
     public bool[] particleMustDo;
     bool waitAFrame;
     bool waitASecondFrame;
+
+    //Temporizador para byPassear posible problema de Z al entrar en portales
+    float timer =0;
     void Start() {
+
+        if (GameLogic.instance != null) {
+            if (!GameLogic.instance.playedTutorial) {
+                GameLogic.instance.FinishTutorial();
+            }
+        }
+
         particleMustDo = new bool[3];
 
         interacted = false;
@@ -511,7 +521,8 @@ public class LevelEntrance : DoubleObject {
 
                 }
                 else if (interacted) {
-                    if (GameLogic.instance.currentPlayer.transform.position.z > 4) {
+                    timer += Time.deltaTime;
+                    if (GameLogic.instance.currentPlayer.transform.position.z > 4||timer>2.0f) {
                         GameLogic.instance.LoadScene(levelToLoad);
                     }
                 }

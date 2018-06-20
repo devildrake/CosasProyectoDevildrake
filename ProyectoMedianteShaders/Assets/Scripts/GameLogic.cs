@@ -30,7 +30,7 @@ public class GameLogic : MonoBehaviour {
     public PostProcessingProfile pppDkNormal, pppDnNormal, pppDkClosed, pppDnClosed;
     private const float iIntensity = 0.627f, iSmoothness = 0.508f, iRoundness = 0.506f; //Valores de configuración del vignetting normal
     private const float dIntensity = 0.771f, dSmoothness = 0.411f, dRoundness = 0.95f; //Valores de configuración del vignetting en modo conversación.
-    
+
 
     SoundManager soundManager;
     static bool awoken = false;
@@ -40,12 +40,14 @@ public class GameLogic : MonoBehaviour {
     //////////////////////VARIABLES LOAD/SAVE////////////////////////////
     int prevSongId;
     public bool saved;
-    public bool firstOpening;
+    //public bool firstOpening;
+    public bool playedTutorial;
+
     //public Dictionary<int, bool> completedLevels;
     //public Dictionary<int, bool> fragments;
     public Dictionary<int, LevelData> levelsData;
     public int lastEntranceIndex;
-    public int[] interactuableLevelIndexes = {2};
+    public int[] interactuableLevelIndexes = { 2 };
     //public Dictionary<int,FragmentData> savedFragments;
 
 
@@ -53,8 +55,8 @@ public class GameLogic : MonoBehaviour {
     //////////////////////VARIABLES LOAD/SAVE////////////////////////////
     //////////////////////VARIABLES LOAD/SAVE////////////////////////////
 
-    public bool canBePaused=true;
-    public bool showTimeCounter=false;
+    public bool canBePaused = true;
+    public bool showTimeCounter = false;
     public string levelName = "NonSet";
 
     //Flag para la transición inicial de la camara
@@ -96,7 +98,7 @@ public class GameLogic : MonoBehaviour {
     //Booleano privado pero visible que gestiona si se esta en el menu principal o no
     //[SerializeField]
     //private bool isInMainMenu;
-    public enum GameState { LEVEL, MENU, LOADINGSCREEN}
+    public enum GameState { LEVEL, MENU, LOADINGSCREEN }
     public GameState gameState = GameState.MENU;
     public enum EventState { NONE, TEXT, IMAGE }
     public EventState eventState;
@@ -135,11 +137,11 @@ public class GameLogic : MonoBehaviour {
     [HideInInspector] public float musicVolume = 1; //modificador del volumen de la musica
     [HideInInspector] public float sfxVolume = 1; //modificador del volumen de los efectos de sonido
     [HideInInspector] public bool muteVolume = false; //controla si todo el audio esta desactivado
-    [HideInInspector] public bool mostrarTiempo = true; //controla si se muestra el cronometro en partida
+    [HideInInspector] public bool mostrarTiempo = false; //controla si se muestra el cronometro en partida
     [HideInInspector] public bool fullscreen; //controlar el fullscreen
     [HideInInspector] public int graficos = 0; //Varia la configuración grafica del juego
     [HideInInspector] public int maxFrameRate = -1; //limita el framerate
-    [HideInInspector] public Vector2 resolutionSelected = new Vector2(1920,1080); //que resolucion de pantalla se ha escogido. Se inicializa desde SetUpMenu
+    [HideInInspector] public Vector2 resolutionSelected = new Vector2(1920, 1080); //que resolucion de pantalla se ha escogido. Se inicializa desde SetUpMenu
 
     FMOD.Studio.ParameterInstance dawnParameter;
 
@@ -152,7 +154,7 @@ public class GameLogic : MonoBehaviour {
         showTimeCounter = mostrarTiempo;
 
         //CONFIGURACION DE PANTALLA
-        Screen.SetResolution((int)resolutionSelected.x, (int)resolutionSelected.y,fullscreen,0);
+        Screen.SetResolution((int)resolutionSelected.x, (int)resolutionSelected.y, fullscreen, 0);
         Application.targetFrameRate = maxFrameRate;
 
         //CONFIGURACION DE GRAFICOS
@@ -170,7 +172,7 @@ public class GameLogic : MonoBehaviour {
         eventState = EventState.NONE;
         soundManager = SoundManager.Instance;
 
-        
+
 
         cameraAttenuation = 1;
         //completedLevels = new Dictionary<int, bool>();
@@ -382,7 +384,7 @@ public class GameLogic : MonoBehaviour {
             }
 
             dawnParameter.setValue(dawnValue);
-            
+
 
             //SoundManager.Instance.UpdateEventParameter(musicEvent, dawnParameter);
 
@@ -438,7 +440,7 @@ public class GameLogic : MonoBehaviour {
                 Debug.Log("MENUSET");
 
                 gameState = GameState.MENU;
-            } else if (FindObjectOfType<LoadingScreenLogic>() != null) { 
+            } else if (FindObjectOfType<LoadingScreenLogic>() != null) {
                 gameState = GameState.LOADINGSCREEN;
                 Debug.Log("LOADINGSCREENSET");
 
@@ -487,7 +489,7 @@ public class GameLogic : MonoBehaviour {
                         if (!isPaused) {
 
                             if (currentPlayer != null) {
-                                if (currentPlayer.placeToGo == null) {
+                                if (currentPlayer.placeToGo == null && currentSceneName != "MenuInteractuable") {
                                     timeElapsed += Time.deltaTime;
                                 }
 
@@ -678,7 +680,7 @@ public class GameLogic : MonoBehaviour {
     //Se abre el menú in game y se modificar la variable isPaused
     void CheckPauseInput() {
         //print(isPaused);
-        if ((currentPlayer.dawn&&InputManager.instance.pauseButton&&!InputManager.instance.prevPauseButton)||!currentPlayer.dawn&&InputManager.instance.pauseButton2&&!InputManager.instance.prevPauseButton2&&canBePaused) {
+        if ((currentPlayer.dawn && InputManager.instance.pauseButton && !InputManager.instance.prevPauseButton) || !currentPlayer.dawn && InputManager.instance.pauseButton2 && !InputManager.instance.prevPauseButton2 && canBePaused) {
             /*if (isPaused) {
                 Cursor.visible = false;
                 Cursor.lockState = CursorLockMode.None;
@@ -702,6 +704,11 @@ public class GameLogic : MonoBehaviour {
         isPaused = p;
     }
 
+    public void FinishTutorial() {
+        playedTutorial = true;
+        Save();
+    }
+
     public void Save() {
 
 
@@ -712,12 +719,13 @@ public class GameLogic : MonoBehaviour {
 
             //Debug.Log("SAVE");
             BinaryFormatter bf = new BinaryFormatter();
-            FileStream file = File.Create(Application.persistentDataPath + "/playerInfoSave.dat");
+            FileStream file = File.Create(Application.persistentDataPath + "/saveData_2.15.dat");
             PlayerData data = new PlayerData();
 
             //Igualar variables a cargar (Locales) a las de data
-
-            data.firstOpening = true;
+            data.playedTutorial = playedTutorial;
+            //data.firstOpening = true;
+        
 //          Debug.Log("Saving firstOpening as" + data.firstOpening);
             //data.completedLevels = completedLevels;
             //data.fragments = fragments;
@@ -735,15 +743,16 @@ public class GameLogic : MonoBehaviour {
         Debug.Log("InoitVariables");
         PlayerPrefs.SetFloat("musicVolume", musicVolume);
         PlayerPrefs.SetFloat("sfxVolume", sfxVolume);
+        Debug.Log("Setting mostratTiempo as" + mostrarTiempo);
         PlayerPrefs.SetInt("mostrarTiempo", Options_Logic.BoolToInt(mostrarTiempo));
         PlayerPrefs.SetFloat("resolutionSelectedX", resolutionSelected.x);
         PlayerPrefs.SetFloat("resolutionSelectedY", resolutionSelected.y);
         PlayerPrefs.SetInt("maxFrameRate", maxFrameRate);
         PlayerPrefs.SetInt("graficos", graficos);
         PlayerPrefs.SetInt("Language", 1);
-
-        firstOpening = false;
-
+        
+        //firstOpening = false;
+        playedTutorial = false;
         for (int i = 0; i < 30; i++) {
             //fragments[i] = false;
             //completedLevels[i] = false;
@@ -764,14 +773,14 @@ public class GameLogic : MonoBehaviour {
 
     public void Load() {
         Debug.Log("Cargando Archivos desde " + Application.persistentDataPath);
-        if (File.Exists(Application.persistentDataPath + "/playerInfoSave.dat")) {
+        if (File.Exists(Application.persistentDataPath + "/saveData_2.15.dat")) {
             BinaryFormatter bf = new BinaryFormatter();
-            FileStream file = File.Open(Application.persistentDataPath + "/playerInfoSave.dat",FileMode.Open);
+            FileStream file = File.Open(Application.persistentDataPath + "/saveData_2.15.dat", FileMode.Open);
             PlayerData data = (PlayerData)bf.Deserialize(file);
             file.Close();
 
-            firstOpening = data.firstOpening;
-
+            //firstOpening = data.firstOpening;
+            playedTutorial = data.playedTutorial;
             levelsData = data.levelData;
             lastEntranceIndex = data.lastEntranceIndex;
 
@@ -839,7 +848,8 @@ public class GameLogic : MonoBehaviour {
 
     [Serializable]
     class PlayerData{
-        public bool firstOpening;
+        //public bool firstOpening, playedTutorial;
+        public bool playedTutorial;
         public Dictionary<int, LevelData> levelData;
         public int lastEntranceIndex;
         //public Dictionary<int, bool> completedLevels;
