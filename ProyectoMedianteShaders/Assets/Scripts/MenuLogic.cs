@@ -59,6 +59,7 @@ public class MenuLogic : MonoBehaviour {
     private bool upAlpha = true, downAlpha = true;
     private int delayCounter;
     private EventSystem eventSystem; //referencia al event system para highlightear los botones del canvas.
+    private Vector3 prevMousePos;
 
     // Use this for initialization
     void Start() {
@@ -88,8 +89,7 @@ public class MenuLogic : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-
-        Debug.Log("MenuState - " + menuState);
+        //print(menuState);
 
         switch (menuState) {
             case -2:
@@ -109,11 +109,14 @@ public class MenuLogic : MonoBehaviour {
                 canvasFadeSplash.gameObject.SetActive(false);
                 Destroy(uselessCanvas);
 
+                
                 auxTimer += Time.deltaTime;
                 if (auxTimer > 2.0) {
                     auxTimer = 0;
                     menuState = 0;
+                    canvasGroup.alpha = 0.0f;
                 }
+                
 
                 if (canvasGroup.alpha > 0) {
                     canvasGroup.alpha -= Time.deltaTime;
@@ -140,7 +143,13 @@ public class MenuLogic : MonoBehaviour {
                     delayCounter++;
                 }
                 else {
+                    //Control de movimiento de raton para pasar de navegación de teclado a mouse
+                    if(Input.mousePosition != prevMousePos) {
+                        selected = -1;
+                    }
+
                     State1Behavior();
+                    prevMousePos = Input.mousePosition;
                 }
                 break;
 
@@ -211,6 +220,9 @@ public class MenuLogic : MonoBehaviour {
                         selected = 3;
                     }
                 }
+                else if (selected == -1) {
+                    selected = 0;
+                }
             }
         }
         //abajo
@@ -229,6 +241,9 @@ public class MenuLogic : MonoBehaviour {
                         selected = 0;
                     }
                 }
+                else if (selected == -1) {
+                    selected = 0;
+                }
             }
         }
         //derecha
@@ -244,6 +259,9 @@ public class MenuLogic : MonoBehaviour {
             }
             else if(selected == 7) {
                 selected = middleSelected;
+            }
+            else if (selected == -1) {
+                selected = 0;
             }
             else {
                 middleSelected = selected;
@@ -264,6 +282,9 @@ public class MenuLogic : MonoBehaviour {
             else if (selected == 7) {
                 selected = 6;
             }
+            else if (selected == -1) {
+                selected = 0;
+            }
             else {
                 middleSelected = selected;
                 selected = 4;
@@ -275,7 +296,12 @@ public class MenuLogic : MonoBehaviour {
         }
 
         //HIGHLIGHT
-        eventSystem.SetSelectedGameObject(state1Elements[selected].gameObject);
+        if (selected != -1) {
+            eventSystem.SetSelectedGameObject(state1Elements[selected].gameObject);
+        }
+        else {
+            eventSystem.SetSelectedGameObject(null);
+        }
 
         //SELECCION
         if (!InputManager.instance.prevSelectButton && InputManager.instance.selectButton) {
