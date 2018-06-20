@@ -27,8 +27,14 @@ ProyectoMedianteShaders/Temp/
 
 ProyectoMedianteShaders/Assets/ProCore/
 
-#ignore FMOD
+# ignore FMOD
 /Assets/FMODStudioCache.asset
 /Assets/FMODStudioCache.asset.meta
 fmod.log
 fmod_editor.log
+
+# FMOD studio (In folder FMOD)
+/FMOD/**.user
+/FMOD/**.unsaved
+/FMOD/**.cache
+/FMOD/**.restore
