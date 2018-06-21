@@ -88,72 +88,73 @@ public class MenuLogic : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
+        if (InputManager.instance != null) {
 
-        Debug.Log("MenuState - " + menuState);
+            Debug.Log("MenuState - " + menuState);
 
-        switch (menuState) {
-            case -2:
-                auxTimer += Time.deltaTime;
-                if (auxTimer > 2.5) {
-                    auxTimer = 0;
-                    menuState = -1;
-                }
-                if (InputManager.instance.pauseButton && !InputManager.instance.prevPauseButton) {
-                    menuState = -1;
-                }
-                StateM2Behavior();
-                break;
+            switch (menuState) {
+                case -2:
+                    auxTimer += Time.deltaTime;
+                    if (auxTimer > 2.5) {
+                        auxTimer = 0;
+                        menuState = -1;
+                    }
+                    if (InputManager.instance.pauseButton && !InputManager.instance.prevPauseButton) {
+                        menuState = -1;
+                    }
+                    StateM2Behavior();
+                    break;
 
-            case -1:
-                canvasGroup.gameObject.SetActive(true);
-                canvasFadeSplash.gameObject.SetActive(false);
-                Destroy(uselessCanvas);
+                case -1:
+                    canvasGroup.gameObject.SetActive(true);
+                    canvasFadeSplash.gameObject.SetActive(false);
+                    Destroy(uselessCanvas);
 
-                auxTimer += Time.deltaTime;
-                if (auxTimer > 2.0) {
-                    auxTimer = 0;
-                    menuState = 0;
-                }
+                    auxTimer += Time.deltaTime;
+                    if (auxTimer > 2.0) {
+                        auxTimer = 0;
+                        menuState = 0;
+                    }
 
-                if (canvasGroup.alpha > 0) {
-                    canvasGroup.alpha -= Time.deltaTime;
-                } else {
-                    pressAnyKeyObj.SetActive(true);
-                    menuState = 0;
-                }
-                break;
+                    if (canvasGroup.alpha > 0) {
+                        canvasGroup.alpha -= Time.deltaTime;
+                    } else {
+                        pressAnyKeyObj.SetActive(true);
+                        menuState = 0;
+                    }
+                    break;
 
-            case 0:
-                Blink(pressAnyKeyObj);
-                if (Input.anyKeyDown) {
-                    menuState = 1;
-                    pressAnyKeyObj.SetActive(false);
-                    mainCanvas.SetActive(true);
-                }
-                break;
+                case 0:
+                    Blink(pressAnyKeyObj);
+                    if (Input.anyKeyDown) {
+                        menuState = 1;
+                        pressAnyKeyObj.SetActive(false);
+                        mainCanvas.SetActive(true);
+                    }
+                    break;
 
-            case 1:
-                if(mainCanvasGroup.alpha < 1.0f) {
-                    mainCanvasGroup.alpha += Time.deltaTime*2;
-                }
-                if (delayCounter < 2) {
-                    delayCounter++;
-                }
-                else {
-                    State1Behavior();
-                }
-                break;
+                case 1:
+                    if (mainCanvasGroup.alpha < 1.0f) {
+                        mainCanvasGroup.alpha += Time.deltaTime * 2;
+                    }
+                    if (delayCounter < 2) {
+                        delayCounter++;
+                    } else {
+                        State1Behavior();
+                    }
+                    break;
 
-            case 2:
-                State2Behavior();
-                break;
+                case 2:
+                    State2Behavior();
+                    break;
 
-            case 3:
-                State3Behavior();
-                break;
+                case 3:
+                    State3Behavior();
+                    break;
 
-            default:
-                break;
+                default:
+                    break;
+            }
         }
     }
 

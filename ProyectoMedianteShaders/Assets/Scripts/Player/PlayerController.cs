@@ -51,7 +51,8 @@ public class PlayerController : DoubleObject {
 
 
     float timeNotMoving;
-
+    float timeNotGrounded;
+    float timeNotGroundedThreshold = 0.1f;
     float slowMotionTimeScale;
     float dashForce;
 
@@ -439,8 +440,12 @@ public class PlayerController : DoubleObject {
 
         if (grounded) {
             timeGrounded += Time.deltaTime;
+            timeNotGrounded = 0;
         } else {
             timeGrounded = 0;
+            if (timeNotGrounded < timeNotGroundedThreshold) {
+                timeNotGrounded += Time.deltaTime;
+            }
         }
 
 
@@ -459,7 +464,7 @@ public class PlayerController : DoubleObject {
 
         //if (placeToGo == null) {
         if (rb.velocity.y < 0) {
-            rb.gravityScale = 1.5f;
+            rb.gravityScale = 2.5f;
         } else {
             rb.gravityScale = 1;
         }
@@ -1618,7 +1623,7 @@ void Smash() {
 
             if (dawn) {
                 //BARRA ESPACIADORA = SALTO
-                if (/*Input.GetKeyDown(KeyCode.Space)*/InputManager.instance.jumpButton && !InputManager.instance.prevJumpButton && grounded && !crawling ||/*Input.GetKeyDown(KeyCode.Space)*/InputManager.instance.jumpButton && !InputManager.instance.prevJumpButton && timeNotSliding < 0.2f) {
+                if (/*Input.GetKeyDown(KeyCode.Space)*/InputManager.instance.jumpButton && !InputManager.instance.prevJumpButton && timeNotGrounded< timeNotGroundedThreshold/*grounded*/ && !crawling ||/*Input.GetKeyDown(KeyCode.Space)*/InputManager.instance.jumpButton && !InputManager.instance.prevJumpButton && timeNotSliding < 0.2f) {
                     Jump();
                 }
 
@@ -1647,7 +1652,7 @@ void Smash() {
                 }
             } else {
                 //BARRA ESPACIADORA = SALTO
-                if (/*Input.GetKeyDown(KeyCode.Space)*/InputManager.instance.jumpButton2 && !InputManager.instance.prevJumpButton2 && grounded && !crawling ||/*Input.GetKeyDown(KeyCode.Space)*/InputManager.instance.jumpButton2 && !InputManager.instance.prevJumpButton2 && timeNotSliding < 0.2f) {
+                if (/*Input.GetKeyDown(KeyCode.Space)*/InputManager.instance.jumpButton2 && !InputManager.instance.prevJumpButton2 && timeNotGrounded < timeNotGroundedThreshold/*grounded */&& !crawling ||/*Input.GetKeyDown(KeyCode.Space)*/InputManager.instance.jumpButton2 && !InputManager.instance.prevJumpButton2 && timeNotSliding < 0.2f) {
                     Jump();
                 }
 
