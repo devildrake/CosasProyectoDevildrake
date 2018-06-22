@@ -22,7 +22,6 @@ public class JSON_Reader : EditorWindow {
                 SerializedProperty serializedProperty = serializedObject.FindProperty("localizationData");
                 EditorGUILayout.PropertyField(serializedProperty, true);
                 serializedObject.ApplyModifiedProperties();
-                Debug.Log("Esto lo hace?");
             }
             EditorGUILayout.EndScrollView();
 
@@ -63,6 +62,7 @@ public class JSON_Reader : EditorWindow {
     }
 }
 
+/*
 [System.Serializable]
 public class LocalizationData {
     public LocalizationItem[] items;
@@ -73,3 +73,4 @@ public class LocalizationItem {
     public string key;
     public string value;
 }
+*/
