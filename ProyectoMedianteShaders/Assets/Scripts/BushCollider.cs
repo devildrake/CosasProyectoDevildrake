@@ -12,13 +12,13 @@ public class BushCollider : MonoBehaviour {
         transform.rotation = rotation;
     }
 
-    private void OnTriggerEnter2D(Collider2D collision) {
+    private void OnTriggerEnter(Collider collision) {
         if (collision.tag == "Player") {
             GameLogic.instance.KillPlayer();
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D collision) {
+    private void OnCollisionEnter(Collision collision) {
         if (collision.gameObject.tag == "Player") {
             GameLogic.instance.KillPlayer();
         }

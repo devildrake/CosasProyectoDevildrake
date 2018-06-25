@@ -12,18 +12,26 @@ public class DoubleCheckPoint : DoubleObject
     public GameObject interactionSprite;
     //public AudioClip interactSound;
     public ParticleSystem particulasInteraccion;
+    Rigidbody rb;
     // Use this for initialization
     void Start()
     {
+        rb = GetComponent<Rigidbody>();
         InitTransformable();
         offset = GameLogic.instance.worldOffset;
-        GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
-        if(particulasInteraccion!=null)
+        //GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
+        rb.constraints = RigidbodyConstraints.FreezeAll;
+
+        if (particulasInteraccion!=null)
         particulasInteraccion.Stop();
         if (worldAssignation == world.DAWN)
         {
-            GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
+            //GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
+            rb.isKinematic = true;
+        } else {
+            rb.isKinematic = false;
         }
+
         if (interactionSprite != null)
             interactionSprite.SetActive(false);
     }
@@ -31,8 +39,9 @@ public class DoubleCheckPoint : DoubleObject
     protected override void BrotherBehavior()
     {
         Vector3 positionWithOffset;
-        if (GetComponent<Rigidbody2D>().bodyType == RigidbodyType2D.Kinematic)
-        {
+        //if (GetComponent<Rigidbody2D>().bodyType == RigidbodyType2D.Kinematic)
+        //{
+        if(rb.isKinematic) { 
             positionWithOffset = brotherObject.transform.position;
 
             if (worldAssignation == world.DAWN)
@@ -106,7 +115,7 @@ public class DoubleCheckPoint : DoubleObject
         
     }
 
-    private void OnTriggerStay2D(Collider2D collision) {
+    private void OnTriggerStay(Collider collision) {
         if (collision.gameObject.tag == "Player") {
             PlayerController localPlayer = collision.gameObject.GetComponent<PlayerController>();
             if (endLevel) {
@@ -134,7 +143,7 @@ public class DoubleCheckPoint : DoubleObject
         }
     }
 
-    public void OnTriggerEnter2D(Collider2D collision) {
+    public void OnTriggerEnter(Collider collision) {
         if (collision.gameObject.tag == "Player") {
             PlayerController localPlayer = collision.gameObject.GetComponent<PlayerController>();
             if (endLevel) {
@@ -169,7 +178,7 @@ public class DoubleCheckPoint : DoubleObject
     //    }
     //}
 
-    public void OnTriggerExit2D(Collider2D collision) {
+    public void OnTriggerExit(Collider collision) {
         //if (collision.gameObject.tag == "Player") {
         //    collision.gameObject.GetComponent<PlayerController>().interactableObject = null;
         //    if (interactionSprite != null)

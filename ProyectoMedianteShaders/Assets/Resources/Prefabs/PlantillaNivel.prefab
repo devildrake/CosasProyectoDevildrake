@@ -1808,9 +1808,9 @@ GameObject:
   - component: {fileID: 4165127945090022}
   - component: {fileID: 212263471276660476}
   - component: {fileID: 114175170577696044}
-  - component: {fileID: 61170421474704514}
-  - component: {fileID: 50135031274244864}
   - component: {fileID: 82349351023516306}
+  - component: {fileID: 54866069447696976}
+  - component: {fileID: 65305932553982456}
   m_Layer: 29
   m_Name: Dawn
   m_TagString: Player
@@ -2801,9 +2801,9 @@ GameObject:
   - component: {fileID: 4402962987169400}
   - component: {fileID: 212262296620958686}
   - component: {fileID: 114115324234499466}
-  - component: {fileID: 61636583587002008}
-  - component: {fileID: 50149989434425552}
   - component: {fileID: 82358037776890076}
+  - component: {fileID: 54830600957750344}
+  - component: {fileID: 65024051410382192}
   m_Layer: 29
   m_Name: Dusk
   m_TagString: Player
@@ -5935,7 +5935,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1666293796172694}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -519.361, y: -380.49, z: 0}
+  m_LocalPosition: {x: -518.99, y: -380.65, z: 0}
   m_LocalScale: {x: 0.1, y: 0.10000001, z: 0.1}
   m_Children:
   - {fileID: 4402962987169400}
@@ -8417,46 +8417,36 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1174294747951554}
   m_Mesh: {fileID: 4300000, guid: 2412b846570a26e44a6d6a8f45658dac, type: 3}
---- !u!50 &50135031274244864
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1310752243737936}
-  m_BodyType: 1
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 4
---- !u!50 &50149989434425552
-Rigidbody2D:
-  serializedVersion: 4
+--- !u!54 &54830600957750344
+Rigidbody:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1490667491111644}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
+  serializedVersion: 2
   m_Mass: 1
-  m_LinearDrag: 0
+  m_Drag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
+  m_UseGravity: 0
+  m_IsKinematic: 0
   m_Interpolate: 0
-  m_SleepingMode: 1
+  m_Constraints: 112
   m_CollisionDetection: 0
-  m_Constraints: 4
+--- !u!54 &54866069447696976
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1310752243737936}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 112
+  m_CollisionDetection: 0
 --- !u!58 &58297742664953748
 CircleCollider2D:
   m_ObjectHideFlags: 1
@@ -8502,31 +8492,6 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 50
---- !u!61 &61170421474704514
-BoxCollider2D:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1310752243737936}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0.15478301, y: 0.2915119}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 6, y: 4.7}
-    newSize: {x: 6, y: 4.7}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1.5359569, y: 4.367118}
-  m_EdgeRadius: 0
 --- !u!61 &61472729662305286
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -8552,31 +8517,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.3, y: 1.3}
   m_EdgeRadius: 0
---- !u!61 &61636583587002008
-BoxCollider2D:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1490667491111644}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0.15478301, y: 0.19746149}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 6, y: 4.7}
-    newSize: {x: 6, y: 4.7}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1.5359569, y: 4.4922314}
-  m_EdgeRadius: 0
 --- !u!64 &64916985664810856
 MeshCollider:
   m_ObjectHideFlags: 1
@@ -8591,6 +8531,30 @@ MeshCollider:
   m_InflateMesh: 0
   m_SkinWidth: 0.01
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!65 &65024051410382192
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1490667491111644}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2.386627, y: 5.0515227, z: 0.2}
+  m_Center: {x: 0.24046323, y: 0.4977966, z: 0}
+--- !u!65 &65305932553982456
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1310752243737936}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.9317911, y: 7.3385286, z: 0.2}
+  m_Center: {x: 0.24824044, y: 1.8489935, z: 0}
 --- !u!81 &81219332699322480
 AudioListener:
   m_ObjectHideFlags: 1
@@ -9886,8 +9850,8 @@ MonoBehaviour:
   imagenDawn: {fileID: 21300000, guid: d197577acb4423a46939ec134c5aa2ff, type: 3}
   originalPos: {x: 0, y: 0}
   mascaraRayCast: {fileID: 0}
-  originalSizeCollider: {x: 0, y: 0}
-  originalOffsetCollider: {x: 0, y: 0}
+  originalSizeCollider: {x: 0, y: 0, z: 0}
+  originalCenterCollider: {x: 0, y: 0, z: 0}
   hasACrystal: 0
   savedFragment: 0
   objectsInDeflectArea: []
@@ -9895,6 +9859,7 @@ MonoBehaviour:
   placeToGo: {fileID: 0}
   animationSound: {fileID: 0}
   mustEnd: 0
+  customGravity: {fileID: 0}
   NearbyObjects: []
   crawling: 0
   moving: 0
@@ -10327,8 +10292,8 @@ MonoBehaviour:
   imagenDawn: {fileID: 21300000, guid: d197577acb4423a46939ec134c5aa2ff, type: 3}
   originalPos: {x: 0, y: 0}
   mascaraRayCast: {fileID: 0}
-  originalSizeCollider: {x: 0, y: 0}
-  originalOffsetCollider: {x: 0, y: 0}
+  originalSizeCollider: {x: 0, y: 0, z: 0}
+  originalCenterCollider: {x: 0, y: 0, z: 0}
   hasACrystal: 0
   savedFragment: 0
   objectsInDeflectArea: []
@@ -10336,6 +10301,7 @@ MonoBehaviour:
   placeToGo: {fileID: 0}
   animationSound: {fileID: 0}
   mustEnd: 0
+  customGravity: {fileID: 0}
   NearbyObjects: []
   crawling: 0
   moving: 0
@@ -14047,7 +14013,7 @@ MonoBehaviour:
   pppDkClosed: {fileID: 11400000, guid: df5aa2beb75798541bdf902149f1f255, type: 2}
   pppDnClosed: {fileID: 11400000, guid: 84bba07e75096ff4ba82a9219491bc10, type: 2}
   saved: 0
-  firstOpening: 0
+  playedTutorial: 0
   lastEntranceIndex: 0
   interactuableLevelIndexes: 02000000
   canBePaused: 1
@@ -15322,7 +15288,7 @@ SkinnedMeshRenderer:
   m_BlendShapeWeights: []
   m_RootBone: {fileID: 0}
   m_AABB:
-    m_Center: {x: -0.008221164, y: 0.19509602, z: -0.1059401}
+    m_Center: {x: -0.008220673, y: 0.19511604, z: -0.10598588}
     m_Extent: {x: 0.3619067, y: 0.4003947, z: 0.7436558}
   m_DirtyAABB: 0
 --- !u!137 &137580113668498854
@@ -15366,7 +15332,7 @@ SkinnedMeshRenderer:
   m_BlendShapeWeights: []
   m_RootBone: {fileID: 0}
   m_AABB:
-    m_Center: {x: 0.000000009313226, y: -0.0000667572, z: 0.000035762787}
+    m_Center: {x: 0.000000009313226, y: -0.00006341934, z: 0.00002193451}
     m_Extent: {x: 0.31087235, y: 0.18791716, z: 0.35687187}
   m_DirtyAABB: 0
 --- !u!137 &137857310011618188

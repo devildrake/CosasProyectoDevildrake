@@ -4,20 +4,20 @@ using UnityEngine;
 
 public static class PlayerUtilsStatic {
     public static void DoDash(GameObject PJ, Vector2 direction, float MAX_FORCE, bool limitX) {
-        Rigidbody2D rigidbody = PJ.GetComponent<Rigidbody2D>();
+        Rigidbody rigidbody = PJ.GetComponent<Rigidbody>();
         //Debug.Log(rigidbody.bodyType);
         //rigidbody.AddForce(direction * MAX_FORCE, ForceMode2D.Impulse);
         if (!limitX) {
-            rigidbody.AddForce(direction * MAX_FORCE, ForceMode2D.Impulse);
+            rigidbody.AddForce(direction * MAX_FORCE, ForceMode.Impulse);
         } else {
-            rigidbody.AddForce(new Vector2(direction.x * MAX_FORCE*0.75f,direction.y*MAX_FORCE), ForceMode2D.Impulse);
+            rigidbody.AddForce(new Vector2(direction.x * MAX_FORCE*0.75f,direction.y*MAX_FORCE), ForceMode.Impulse);
         }
     }
     public static void Punch(Vector2 direction, float MAX_FORCE, List<GameObject>NearbyObjects) {
         foreach (GameObject g in NearbyObjects) {
             if (g.GetComponent<DoubleObject>().isPunchable) {
-                g.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
-                g.GetComponent<Rigidbody2D>().AddForce(direction * MAX_FORCE, ForceMode2D.Impulse);
+                g.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
+                g.GetComponent<Rigidbody>().AddForce(direction * MAX_FORCE, ForceMode.Impulse);
                 g.GetComponent<DoubleObject>().isPunchable = false;
             }
         }

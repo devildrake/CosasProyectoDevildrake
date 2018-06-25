@@ -4,17 +4,17 @@ using UnityEngine;
 
 public class DoubleBush : DoubleObject {
     // Use this for initialization
-    Rigidbody2D rb;
+    Rigidbody rb;
     DoubleBush brotherScript;
     bool spawnSound = false;
 	void Start () {
-        rb = GetComponent<Rigidbody2D>();
+        rb = GetComponent<Rigidbody>();
         InitTransformable();
         offset = GameLogic.instance.worldOffset;
-        rb.constraints = RigidbodyConstraints2D.FreezeAll;
+        rb.constraints = RigidbodyConstraints.FreezeAll;
 
         if (worldAssignation == world.DAWN) {
-           rb.bodyType = RigidbodyType2D.Kinematic;
+            rb.isKinematic = true;
         }
         brotherScript = brotherObject.GetComponent<DoubleBush>();
 
@@ -23,7 +23,7 @@ public class DoubleBush : DoubleObject {
 
     protected override void BrotherBehavior() {
         Vector3 positionWithOffset;
-        if (rb.bodyType == RigidbodyType2D.Kinematic) {
+        if (rb.isKinematic) {
             positionWithOffset = brotherObject.transform.position;
 
             if (worldAssignation == world.DAWN)
@@ -91,7 +91,7 @@ public class DoubleBush : DoubleObject {
 
     public override void Change() {
         if (rb == null)
-            rb = GetComponent<Rigidbody2D>();
+            rb = GetComponent<Rigidbody>();
 
             if (worldAssignation == world.DAWN) {
             brotherObject.SetActive(false);
@@ -99,13 +99,13 @@ public class DoubleBush : DoubleObject {
             if (dawn) {
                 brotherObject.SetActive(true);
                 rb.isKinematic = true;
-                brotherObject.GetComponent<Rigidbody2D>().isKinematic = false;
+                brotherObject.GetComponent<Rigidbody>().isKinematic = false;
                 if (brotherScript != null) {
                     brotherScript.PlayDuskCrunch();
                 }
             } else {
                 rb.isKinematic = false;
-                brotherObject.GetComponent<Rigidbody2D>().isKinematic = true;
+                brotherObject.GetComponent<Rigidbody>().isKinematic = true;
 
             }
         }
@@ -130,7 +130,7 @@ public class DoubleBush : DoubleObject {
 
 
 
-    public void OnTriggerEnter2D(Collider2D collision) {
+    public void OnTriggerEnter(Collider collision) {
         if (collision.tag == "Player") {
             if (!dawn) {
                 {
@@ -143,7 +143,7 @@ public class DoubleBush : DoubleObject {
     }
     
 
-    public void OnTriggerStay2D(Collider2D collision) {
+    public void OnTriggerStay(Collider collision) {
         if (collision.tag == "Player") {
             if (!dawn) {
                 {
@@ -155,7 +155,7 @@ public class DoubleBush : DoubleObject {
         }
     }
 
-    private void OnTriggerExit2D(Collider2D collision) {
+    private void OnTriggerExit(Collider collision) {
         if (collision.tag == "Player") {
             if (dawn) {
                 collision.GetComponent<PlayerController>().behindBush = false;

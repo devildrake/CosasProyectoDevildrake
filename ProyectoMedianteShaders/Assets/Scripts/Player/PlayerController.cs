@@ -19,8 +19,11 @@ public class PlayerController : DoubleObject {
     float timeGrounded;
     bool groundedSound;
     public MascaraRayCast mascaraRayCast;
-    public Vector2 originalSizeCollider;
-    public Vector2 originalOffsetCollider;
+    public Vector3 originalSizeCollider;
+    public Vector3 originalCenterCollider;
+    //public Vector3 originalOffsetCollider;
+
+    BoxCollider boxCollider;
 
     public bool hasACrystal;
     public bool savedFragment;
@@ -43,7 +46,7 @@ public class PlayerController : DoubleObject {
     public GameObject placeToGo;
     public AnimationSounds animationSound;
     public bool mustEnd;
-
+    public CustomGravity customGravity;
     private float dashTimer;
 
     private float deflectCoolDown;
@@ -134,7 +137,7 @@ public class PlayerController : DoubleObject {
     //EventInstance punchChargeEvent;
     bool firstPunch;
     //Referencia al RigidBody2D del personaje, se inicializa en el start.
-    public Rigidbody2D rb;
+    public Rigidbody rb;
 
     //ESTE INT ES -1 SI EL MOVIMIENTO PREVIO FUE HACIA LA IZQUIERDA Y ES 1 SI EL MOVIMIENTO PREVIO FUE HACIA LA DERECHA
     public float prevHorizontalMov;
@@ -159,7 +162,7 @@ public class PlayerController : DoubleObject {
     public PlayerController brotherScript;
     Animator myAnimator;
     Animator brotherAnimator;
-    BoxCollider2D myBoxCollider;
+    //BoxCollider2D myBoxCollider;
 
     public GameObject armTarget;
     public IK_FABRIK_UNITY arm;
@@ -180,6 +183,7 @@ public class PlayerController : DoubleObject {
 
     //Se inicializan las cosas
     void Start() {
+        customGravity = gameObject.AddComponent<CustomGravity>();
         animationSound = GetComponentInChildren<AnimationSounds>();
         grabPositions = new Vector3[4];
 
@@ -215,7 +219,7 @@ public class PlayerController : DoubleObject {
         audioSource = GetComponent<AudioSource>();
         groundCheck = GetComponentInChildren<GroundCheck>();
         brotherScript = brotherObject.GetComponent<PlayerController>();
-        myBoxCollider = GetComponent<BoxCollider2D>(); 
+        //myBoxCollider = GetComponent<BoxCollider2D>(); 
         myAnimator = GetComponentInChildren<Animator>();
         brotherAnimator = brotherObject.GetComponentInChildren<Animator>();
 
@@ -232,8 +236,10 @@ public class PlayerController : DoubleObject {
 
 
         maxSpeedY = 20;
-        originalOffsetCollider = GetComponent<BoxCollider2D>().offset;
-        originalSizeCollider = GetComponent<BoxCollider2D>().size;
+        // originalOffsetCollider = GetComponent<BoxCollider>().;
+        boxCollider = GetComponent<BoxCollider>();
+        originalSizeCollider = boxCollider.size;
+        originalCenterCollider = boxCollider.center;
 
         leftPressed = false;
         prevHorizontalMov = 1;
@@ -242,7 +248,7 @@ public class PlayerController : DoubleObject {
         slideMask = LayerMask.GetMask("Slide");
         offset = GameLogic.instance.worldOffset;
 
-        rb = GetComponent<Rigidbody2D>();
+        rb = GetComponent<Rigidbody>();
         slowedInTheAir = false;
         slowMotionTimeScale = 0.75f;
         dashForce = 7;
@@ -320,7 +326,7 @@ public class PlayerController : DoubleObject {
         if (InputManager.instance != null) {
             if (InputManager.GetBlocked() && !GameLogic.instance.cameraTransition) {
                 if (placeToGo != null) {
-                    if (/*placeToGo.transform.position.x != transform.position.x*/Mathf.Abs(placeToGo.transform.position.x - transform.position.x) > 0.01f) {
+                    if (Mathf.Abs(placeToGo.transform.position.x - transform.position.x) > 0.01f) {
 
                         if (whichX == 0) {
                             if (placeToGo.transform.position.x - transform.position.x > 0) {
@@ -384,7 +390,8 @@ public class PlayerController : DoubleObject {
                                     }
                                 }
                             } else {
-                                rb.gravityScale = 3.0f;
+                                //rb.s = 3.0f;
+                                customGravity.gravityScale = 3.0f;
                             }
 
                         } else {
@@ -464,9 +471,13 @@ public class PlayerController : DoubleObject {
 
         //if (placeToGo == null) {
         if (rb.velocity.y < 0) {
-            rb.gravityScale = 2.5f;
+            //rb.gravityScale = 2.5f;
+            customGravity.gravityScale = 2.5f;
+
         } else {
-            rb.gravityScale = 1;
+            //rb.gravityScale = 1;
+            customGravity.gravityScale = 1;
+
         }
         //} else {
         //    rb.gravityScale = 0;
@@ -796,7 +807,9 @@ public class PlayerController : DoubleObject {
 
     public void LateUpdate() {
         if (placeToGo != null){
-            rb.gravityScale = 10;
+            //rb.gravityScale = 10;
+            customGravity.gravityScale = 10;
+
         }
     }
 
@@ -856,7 +869,7 @@ public class PlayerController : DoubleObject {
                 rb.velocity = new Vector2(rb.velocity.x, maxSpeedY);
             }
         } else {
-            rb = GetComponent<Rigidbody2D>();
+            rb = GetComponent<Rigidbody>();
         }
     }
 
@@ -880,7 +893,7 @@ public class PlayerController : DoubleObject {
     protected override void BrotherBehavior()
     {
         Vector3 positionWithOffset;
-        if (rb.bodyType == RigidbodyType2D.Kinematic)
+        if (rb.isKinematic)
         {
 
             positionWithOffset = brotherObject.transform.position;
@@ -997,7 +1010,7 @@ public class PlayerController : DoubleObject {
                             }
 
                             //Velocidad X a 0
-                            rb.AddForce(new Vector2(-rb.velocity.x, 0), ForceMode2D.Impulse);
+                            rb.AddForce(new Vector2(-rb.velocity.x, 0), ForceMode.Impulse);
 
                         }
                     //Not Grounded and not changed
@@ -1073,7 +1086,7 @@ public class PlayerController : DoubleObject {
                             }
 
                             //Velocidad X a 0
-                            rb.AddForce(new Vector2(-rb.velocity.x, 0), ForceMode2D.Impulse);
+                            rb.AddForce(new Vector2(-rb.velocity.x, 0), ForceMode.Impulse);
 
                         }
                         //Not Grounded and not changed
@@ -1220,7 +1233,8 @@ public class PlayerController : DoubleObject {
 
             }
         }else {//Sliding es true
-            rb.gravityScale = 15;
+            //rb.gravityScale = 15;
+            customGravity.gravityScale = 15;
 
             if (rb.velocity.y > 0) {
                 sliding = false;
@@ -1254,7 +1268,7 @@ public class PlayerController : DoubleObject {
 
             //hit2D = Physics2D.Raycast(rb.position, Vector2.right, 1.5f, groundMask);
             //hit2D = PlayerUtilsStatic.RayCastArrayMask(rb.position, Vector2.right, 1.5f, grabbableMask);
-            Debug.DrawRay(rb.position, Vector2.right * 1.5f);
+            //Debug.DrawRay(rb.position, Vector2.right * 1.5f);
         } else {
             //hit2D = Physics2D.Raycast(rb.position, Vector2.left, 1.5f, groundMask);
             //hit2D = PlayerUtilsStatic.RayCastArrayMask(rb.position, Vector2.left, 1.5f, grabbableMask);
@@ -1289,7 +1303,7 @@ public class PlayerController : DoubleObject {
         rb.velocity= new Vector2(0,0);
         //audioSource.pitch = 1.0f;
 
-        rb.AddForce(transform.up * jumpStrenght, ForceMode2D.Impulse);
+        rb.AddForce(transform.up * jumpStrenght, ForceMode.Impulse);
         //audioSource.clip = jumpClip;
         //audioSource.Play();
         string characterToString = "";
@@ -1421,20 +1435,20 @@ public class PlayerController : DoubleObject {
 
         if (/*Input.GetKeyDown(KeyCode.LeftControl)*/InputManager.instance.crawlButton&&!InputManager.instance.prevCrawlButton) {
             crawling = true;
-            Vector2 newSize = myBoxCollider.size;
+            Vector3 newSize = boxCollider.size;
             newSize.y /= 2;
-            Vector2 newOffset = myBoxCollider.offset;
-            newOffset.y = newSize.y / 2;
+            Vector3 newCenter= boxCollider.center;
+            newCenter.y = newSize.y / 2;
 
 
 
 
-            GetComponent<BoxCollider2D>().size = newSize;
-            GetComponent<BoxCollider2D>().offset -= newOffset;
+            //GetComponent<BoxCollider2D>().size = newSize;
+            //GetComponent<BoxCollider2D>().offset -= newOffset;
         }
         else if (/*Input.GetKeyUp(KeyCode.LeftControl)*/!InputManager.instance.crawlButton && InputManager.instance.prevCrawlButton) {
-            GetComponent<BoxCollider2D>().size = originalSizeCollider;
-            GetComponent<BoxCollider2D>().offset = originalOffsetCollider;
+            //GetComponent<BoxCollider2D>().size = originalSizeCollider;
+            //GetComponent<BoxCollider2D>().offset = originalOffsetCollider;
 
             crawling = false;
         }
@@ -1457,8 +1471,8 @@ public class PlayerController : DoubleObject {
                     g.GetComponent<Trampler>().SwitchState(0, new TramplerStunnedState());
                 }
 
-                g.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
-                PlayerUtilsStatic.DoDash(g, deflectDirection, 20*g.GetComponent<Rigidbody2D>().mass/2,false);
+                g.GetComponent<Rigidbody>().velocity = new Vector2(0, 0);
+                PlayerUtilsStatic.DoDash(g, deflectDirection, 20*g.GetComponent<Rigidbody>().mass/2,false);
                 audioSource.clip = deflectClip;
                 audioSource.Play();
 
@@ -1574,7 +1588,7 @@ public class PlayerController : DoubleObject {
 //Método que pone smashing en true modificando la velocidad del personaje para que solo vaya hacia abajo
 void Smash() {
         if (!smashing) {
-            rb.AddForce(new Vector2(-rb.velocity.x,0),ForceMode2D.Impulse);
+            rb.AddForce(new Vector2(-rb.velocity.x,0),ForceMode.Impulse);
             audioSource.clip = smashClip;
             audioSource.pitch = 1.0f;
 
@@ -1587,7 +1601,7 @@ void Smash() {
 
     //Método que comprueba que objeto hay debajo y si es rompible y en caso afirmativo llama a GetBroken
     void DoSmash() {
-        RaycastHit2D hit2D = Physics2D.Raycast(rb.position - new Vector2(0f, 0.5f), Vector2.down, 0.2f, groundMask);
+        RaycastHit2D hit2D = Physics2D.Raycast(rb.position - new Vector3(0f, 0.5f,0), Vector2.down, 0.2f, groundMask);
         if (hit2D) {
             //Debug.Log("HittingStuff");
             if (hit2D.transform.gameObject.GetComponent<DoubleObject>().isBreakable) {
@@ -1609,9 +1623,9 @@ void Smash() {
             bool someRayCastChecks = false;
 
 
-            RaycastHit2D hit2D = Physics2D.Raycast(rb.position - new Vector2(0f, 0.5f), Vector2.down, 0.1f, groundMask);
-            RaycastHit2D hit2DLeft = Physics2D.Raycast(rb.position - new Vector2(0f, 0.5f) + new Vector2(-distanciaBordeSprite, 0), Vector2.down, 0.1f, groundMask);
-            RaycastHit2D hit2DRight = Physics2D.Raycast(rb.position - new Vector2(0f, 0.5f) + new Vector2(distanciaBordeSprite, 0), Vector2.down, 0.1f, groundMask);
+            RaycastHit2D hit2D = Physics2D.Raycast(rb.position - new Vector3(0f, 0.5f,0), Vector2.down, 0.1f, groundMask);
+            RaycastHit2D hit2DLeft = Physics2D.Raycast(rb.position - new Vector3(0f, 0.5f,0) + new Vector3(-distanciaBordeSprite, 0,0), Vector2.down, 0.1f, groundMask);
+            RaycastHit2D hit2DRight = Physics2D.Raycast(rb.position - new Vector3(0f, 0.5f,0) + new Vector3(distanciaBordeSprite, 0,0), Vector2.down, 0.1f, groundMask);
 
             if (hit2D || hit2DLeft || hit2DRight) {
                 someRayCastChecks = true;
@@ -1690,8 +1704,8 @@ void Smash() {
     public void Punch(Vector2 direction, float MAX_FORCE) {
         foreach (GameObject g in NearbyObjects) {
             if (g.GetComponent<DoubleObject>().isPunchable) {
-                g.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
-                g.GetComponent<Rigidbody2D>().AddForce(direction * MAX_FORCE, ForceMode2D.Impulse);
+                g.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
+                g.GetComponent<Rigidbody>().AddForce(direction * MAX_FORCE, ForceMode.Impulse);
                 g.GetComponent<DoubleObject>().isPunchable = false;
             }
 
@@ -1729,8 +1743,11 @@ void Smash() {
                 GameLogic.instance.currentPlayer = brotherScript;
                 dominantVelocity = rb.velocity;
                 brotherScript.dominantVelocity = rb.velocity;
-                brotherScript.rb.bodyType = RigidbodyType2D.Dynamic;
-                rb.bodyType = RigidbodyType2D.Kinematic;
+                //brotherScript.rb.bodyType = RigidbodyType2D.Dynamic;
+                //rb.bodyType = RigidbodyType.Kinematic;
+                rb.isKinematic = true;
+                brotherScript.rb.isKinematic = false;
+
                 OnlyFreezeRotation();
                 brotherScript.rb.velocity = dominantVelocity;
                 rb.velocity = new Vector2(0.0f, 0.0f);
@@ -1753,8 +1770,15 @@ void Smash() {
                 GameLogic.instance.currentPlayer = this;
                 dominantVelocity = brotherScript.rb.velocity;
                 brotherScript.dominantVelocity = brotherScript.rb.velocity;
-                rb.bodyType = RigidbodyType2D.Dynamic;
+
+
+                /*rb.bodyType = RigidbodyType2D.Dynamic;
                 brotherScript.rb.bodyType = RigidbodyType2D.Kinematic;
+                */
+
+                rb.isKinematic = false;
+                brotherScript.rb.isKinematic = true;
+
                 brotherScript.rb.velocity = new Vector2(0.0f, 0.0f);
                 rb.velocity = dominantVelocity;
             }
@@ -1778,6 +1802,10 @@ void Smash() {
         slideClip = Resources.Load<AudioClip>("Sounds/Slide");
         //dieClip = Resources.Load<AudioClip>("Sounds/Die");
         punchClip = Resources.Load<AudioClip>("Sounds/Punch");
+    }
+
+    private void OnCollisionEnter(Collision collision) {
+        Debug.Log(collision.gameObject);
     }
 
     //Método que reinicia la posición del personaje y aumenta la variable de muertes en GameLogic

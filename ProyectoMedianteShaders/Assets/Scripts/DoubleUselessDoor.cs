@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DoubleUselessDoor : DoubleObject {
     public ParticleSystem particleSystem;
-    public BoxCollider2D collider;
+    public BoxCollider collider;
     bool done = false;
     private void Start() {
         collider.enabled = false;
@@ -17,7 +17,7 @@ public class DoubleUselessDoor : DoubleObject {
         if (!done) {
             if (GameLogic.instance != null) {
                 if (GameLogic.instance.currentPlayer != null&&GameLogic.instance.currentPlayer.placeToGo==null) {
-                    if (GameLogic.instance.currentPlayer.transform.position.x - transform.position.x > 2) {
+                    if (GameLogic.instance.currentPlayer.transform.position.x - transform.position.x > 1.3f) {
                         if (particleSystem != null) {
                             particleSystem.Stop();
                             collider.enabled = true;

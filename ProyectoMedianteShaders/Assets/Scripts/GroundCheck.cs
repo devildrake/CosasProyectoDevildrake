@@ -20,9 +20,9 @@ public class GroundCheck : MonoBehaviour {
         RaycastHit2D hit2DLeft = PlayerUtilsStatic.RayCastArrayMask(transform.position + new Vector3(-player.distanciaBordeSprite, 0, 0), Vector3.down, 0.05f, mascaras);
         RaycastHit2D hit2DRight = PlayerUtilsStatic.RayCastArrayMask(transform.position + new Vector3(player.distanciaBordeSprite, 0, 0), Vector3.down, 0.05f, mascaras);
 
-        Debug.DrawLine(transform.position, Vector3.down * 0.05f);
-        Debug.DrawLine(transform.position + new Vector3(-player.distanciaBordeSprite, 0, 0), Vector3.down * 0.05f);
-        Debug.DrawLine(transform.position + new Vector3(player.distanciaBordeSprite, 0, 0), Vector3.down * 0.05f);
+        Debug.DrawLine(transform.position, transform.position + Vector3.down * 0.5f);
+        Debug.DrawLine(transform.position + new Vector3(-player.distanciaBordeSprite, 0, 0), transform.position + new Vector3(-player.distanciaBordeSprite,0,0) + Vector3.down * 0.5f);
+        Debug.DrawLine(transform.position + new Vector3(player.distanciaBordeSprite, 0, 0), transform.position + new Vector3(player.distanciaBordeSprite,0,0) + Vector3.down * 0.5f);
 
 
         //if (hit2D.collider != null) 
@@ -44,22 +44,22 @@ public class GroundCheck : MonoBehaviour {
         } else {
             player.grounded = false;
         }
-        RaycastHit2D hit2DLeftO = Physics2D.Raycast(player.rb.position + new Vector2(-player.distanciaBordeSprite, 0), Vector2.down, 0.1f, player.groundMask);
-        RaycastHit2D hit2DRightO = Physics2D.Raycast(player.rb.position  + new Vector2(player.distanciaBordeSprite, 0), Vector2.down, 0.1f, player.groundMask);
+        RaycastHit2D hit2DLeftO = Physics2D.Raycast(player.rb.position + new Vector3(-player.distanciaBordeSprite, 0,0), Vector2.down, 0.1f, player.groundMask);
+        RaycastHit2D hit2DRightO = Physics2D.Raycast(player.rb.position  + new Vector3(player.distanciaBordeSprite, 0,0), Vector2.down, 0.1f, player.groundMask);
 
         if (!hit2DLeftO && !hit2DRightO) {
             bool right = true;
 
             //SLIDE PA LA DERECHA
-            hit2DRightO = Physics2D.Raycast(player.rb.position  + new Vector2(player.distanciaBordeSprite, 0), Vector2.down, 3.0f, player.slideMask);
-            hit2DLeftO = Physics2D.Raycast(player.rb.position + new Vector2(-player.distanciaBordeSprite, 0), Vector2.down, 0.2f, player.slideMask);
+            hit2DRightO = Physics2D.Raycast(player.rb.position  + new Vector3(player.distanciaBordeSprite, 0,0), Vector2.down, 3.0f, player.slideMask);
+            hit2DLeftO = Physics2D.Raycast(player.rb.position + new Vector3(-player.distanciaBordeSprite, 0,0), Vector2.down, 0.2f, player.slideMask);
 
 
             if (!(hit2DLeftO && hit2DRightO)) {
                 right = false;
                 //SLIDE PA LA IZQUIERDA
-                hit2DRightO = Physics2D.Raycast(player.rb.position + new Vector2(player.distanciaBordeSprite, 0), Vector2.down, 0.2f, player.slideMask);
-                hit2DLeftO = Physics2D.Raycast(player.rb.position + new Vector2(-player.distanciaBordeSprite, 0), Vector2.down, 3.0f, player.slideMask);
+                hit2DRightO = Physics2D.Raycast(player.rb.position + new Vector3(player.distanciaBordeSprite, 0,0), Vector2.down, 0.2f, player.slideMask);
+                hit2DLeftO = Physics2D.Raycast(player.rb.position + new Vector3(-player.distanciaBordeSprite, 0,0), Vector2.down, 3.0f, player.slideMask);
             }
             if (hit2DLeftO && hit2DRightO) {
                 if (!player.facingRight && right) {
