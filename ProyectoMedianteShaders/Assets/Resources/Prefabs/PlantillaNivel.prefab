@@ -8498,7 +8498,7 @@ BoxCollider2D:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1028785849319066}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1
@@ -9838,7 +9838,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   worldAssignation: 0
   brotherObject: {fileID: 1310752243737936}
-  dominantVelocity: {x: 0, y: 0}
+  dominantVelocity: {x: 0, y: 0, z: 0}
   isBreakable: 0
   interactuableBySmash: 0
   isPunchable: 0
@@ -10280,7 +10280,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   worldAssignation: 1
   brotherObject: {fileID: 1490667491111644}
-  dominantVelocity: {x: 0, y: 0}
+  dominantVelocity: {x: 0, y: 0, z: 0}
   isBreakable: 0
   interactuableBySmash: 0
   isPunchable: 0

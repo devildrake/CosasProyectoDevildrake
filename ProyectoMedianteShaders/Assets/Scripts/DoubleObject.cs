@@ -30,7 +30,7 @@ public class DoubleObject : MonoBehaviour {
 
     //Velocidad dominante, solo la utilizan los objetos que deben enviarse de forma amorosa la velocidad
     [Tooltip("Velocidad domintante en caso de que este objeto o su hermano este en movimiento")]
-    public Vector2 dominantVelocity;
+    public Vector3 dominantVelocity;
 
     [Tooltip("Si este objeto se puede romper con Smash")]
     public bool isBreakable;

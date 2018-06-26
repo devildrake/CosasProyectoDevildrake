@@ -39,7 +39,7 @@ GameObject:
   - component: {fileID: 33291126920656858}
   - component: {fileID: 23356046466542662}
   - component: {fileID: 114610007300297702}
-  - component: {fileID: 58512517911592864}
+  - component: {fileID: 65244299008975622}
   m_Layer: 0
   m_Name: CrystalDusk
   m_TagString: Untagged
@@ -90,7 +90,7 @@ GameObject:
   - component: {fileID: 33769291579592804}
   - component: {fileID: 23813210007714622}
   - component: {fileID: 114291788691049424}
-  - component: {fileID: 58063490522392866}
+  - component: {fileID: 65603268159248312}
   m_Layer: 0
   m_Name: CrystalDawn
   m_TagString: Untagged
@@ -159,7 +159,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1514899537072042}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3, y: -5.936913, z: 0}
+  m_LocalPosition: {x: 10.02, y: 3.5, z: 0.09}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4036322657332132}
@@ -245,36 +245,30 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1884784860019462}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!58 &58063490522392866
-CircleCollider2D:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1884784860019462}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 0.125
---- !u!58 &58512517911592864
-CircleCollider2D:
+--- !u!65 &65244299008975622
+BoxCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1487110336914438}
-  m_Enabled: 1
-  m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.125
+  m_Size: {x: 0.2, y: 0.2, z: 0.4}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!65 &65603268159248312
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1884784860019462}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.2, y: 0.2, z: 0.4}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &114291788691049424
 MonoBehaviour:
   m_ObjectHideFlags: 1

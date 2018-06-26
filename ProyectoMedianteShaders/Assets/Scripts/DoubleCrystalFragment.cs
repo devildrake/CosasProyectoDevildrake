@@ -43,7 +43,7 @@ public class DoubleCrystalFragment : DoubleObject {
         }
 
     //Colision de trigger para coger el Fragmento
-    private void OnTriggerEnter2D(Collider2D collision) {
+    private void OnTriggerEnter(Collider collision) {
         if (collision.gameObject.tag == "Player") {
             collision.GetComponent<PlayerController>().hasACrystal = true;
             GameLogic.instance.SafelyDestroy(this);

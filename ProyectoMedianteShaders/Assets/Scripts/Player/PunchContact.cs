@@ -15,13 +15,13 @@ public class PunchContact : MonoBehaviour {
         gameObject.transform.rotation = Quaternion.identity;	
 	}
 
-    void OnTriggerEnter2D(Collider2D col) {
+    void OnTriggerEnter(Collider col) {
         //Debug.Log("Nen");
         if (col.GetComponent<DoubleObject>()!= null) {
             if (col.GetComponent<DoubleObject>().isPunchable) {
                 if (mustPunch) {
-                    col.gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
-                    col.gameObject.GetComponent<Rigidbody2D>().AddForce(direction * 40000, ForceMode2D.Impulse);
+                    col.gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
+                    col.gameObject.GetComponent<Rigidbody>().AddForce(direction * 40000, ForceMode.Impulse);
                     col.gameObject.GetComponent<DoubleObject>().isPunchable = false;
                     mustPunch = false;
                 }

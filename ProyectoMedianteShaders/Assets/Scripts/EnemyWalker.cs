@@ -9,7 +9,7 @@ public class EnemyWalker : DoubleObject {
     ///Bool que regula si este es estático o patrulla
     public bool isStatic;
 
-    Rigidbody2D rb;
+    Rigidbody rb;
     public LayerMask groundMask;
     public float bounceForce;
     public float velocity;
@@ -41,18 +41,21 @@ public class EnemyWalker : DoubleObject {
         interactuableBySmash = false;
         offset = GameLogic.instance.worldOffset;
         if (worldAssignation == world.DAWN) {
-            GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
+            //GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
+            rb.isKinematic = true;
         } 
 
-        rb = GetComponent<Rigidbody2D>();
+        rb = GetComponent<Rigidbody>();
         groundMask = LayerMask.GetMask("Ground");
 
         rb.mass = 5000;
+        rb.constraints = RigidbodyConstraints.FreezeAll;
     }
 
     protected override void BrotherBehavior() {
         Vector3 positionWithOffset;
-        if (GetComponent<Rigidbody2D>().bodyType == RigidbodyType2D.Kinematic) {
+        //if (GetComponent<Rigidbody2D>().bodyType == RigidbodyType2D.Kinematic) {
+        if (rb.isKinematic) { 
             positionWithOffset = brotherObject.transform.position;
 
             if (worldAssignation == world.DAWN)
@@ -82,22 +85,34 @@ public class EnemyWalker : DoubleObject {
         if (worldAssignation == world.DAWN) {
             //Si antes del cambio estaba en dawn, pasara a hacerse kinematic y al otro dynamic, además de darle su velocidad
             if (dawn) {
-                dominantVelocity = GetComponent<Rigidbody2D>().velocity;
-                brotherObject.GetComponent<DoubleObject>().dominantVelocity = GetComponent<Rigidbody2D>().velocity;
-                brotherObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
-                GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
+                dominantVelocity = GetComponent<Rigidbody>().velocity;
+                brotherObject.GetComponent<DoubleObject>().dominantVelocity = GetComponent<Rigidbody>().velocity;
+                //brotherObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
+
+                //GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
+
+                if (rb == null) {
+                    rb = GetComponent<Rigidbody>();
+                }
+
+                brotherObject.GetComponent<Rigidbody>().isKinematic = false;
+                rb.isKinematic = true;
+
                 OnlyFreezeRotation();
-                brotherObject.GetComponent<Rigidbody2D>().velocity = dominantVelocity;
-                GetComponent<Rigidbody2D>().velocity = new Vector2(0.0f, 0.0f);
+                brotherObject.GetComponent<Rigidbody>().velocity = dominantVelocity;
+                GetComponent<Rigidbody>().velocity = new Vector3(0.0f,0.0f, 0.0f);
             }
             //Si antes del cambio estaba en dusk, pasara a hacerse dynamic y al otro kinematic, además de darle su velocidad 
             else {
-                dominantVelocity = brotherObject.GetComponent<Rigidbody2D>().velocity;
-                brotherObject.GetComponent<DoubleObject>().dominantVelocity = brotherObject.GetComponent<Rigidbody2D>().velocity;
-                GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
-                brotherObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
-                brotherObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0.0f, 0.0f);
-                GetComponent<Rigidbody2D>().velocity = dominantVelocity;
+                dominantVelocity = brotherObject.GetComponent<Rigidbody>().velocity;
+                brotherObject.GetComponent<DoubleObject>().dominantVelocity = brotherObject.GetComponent<Rigidbody>().velocity;
+                //GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
+                rb.isKinematic = false;
+                brotherObject.GetComponent<Rigidbody>().isKinematic = true;
+
+                //brotherObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
+                brotherObject.GetComponent<Rigidbody>().velocity = new Vector3(0.0f, 0.0f,0.0f);
+                GetComponent<Rigidbody>().velocity = dominantVelocity;
             }
 
             dawn = !dawn;
@@ -117,7 +132,7 @@ public class EnemyWalker : DoubleObject {
 
             RaycastHit2D hit2D;
 
-            if (GetComponent<Rigidbody2D>().velocity.x > 0) {
+            if (rb.velocity.x > 0) {
                 hit2D = Physics2D.Raycast(transform.position+new Vector3(0,0.5f,0), Vector3.right, 1, LayerMask.GetMask("Platform"));
             } else {
                 hit2D = Physics2D.Raycast(transform.position+ new Vector3(0, 0.5f, 0), Vector3.left, 1, LayerMask.GetMask("Platform"));
@@ -143,9 +158,11 @@ public class EnemyWalker : DoubleObject {
             }
 
             if (velocity > 0) {
-                GetComponent<Rigidbody2D>().velocity = new Vector2(maxSpeed, 0);
+                //rb.velocity = new Vector3(maxSpeed, 0,0);
+                transform.Translate(new Vector3(maxSpeed * Time.deltaTime, 0, 0));
             } else {
-                GetComponent<Rigidbody2D>().velocity = new Vector2(-maxSpeed, 0);
+                //rb.velocity = new Vector3(-maxSpeed, 0,0);
+                transform.Translate(new Vector3(-maxSpeed * Time.deltaTime, 0, 0));
             }
         }
     }
@@ -153,13 +170,13 @@ public class EnemyWalker : DoubleObject {
     //Velocidad a 0 si es el de Dusk
     void DuskBehavior() {
         if (!dawn) {
-            GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
+            rb.velocity = new Vector3(0,0, 0);
                 GetComponentInChildren<Animator>().SetBool("Jumped", timeSinceStompedOn < 0.4f);
         }
     }
 
     //Si colisiona en dawn el personaje, lo mata, si lo hace en dusk con velocidad y inferior o igual a 0, bota
-    private void OnTriggerEnter2D(Collider2D other) {
+    private void OnTriggerEnter(Collider other) {
 
         //Debug.Log(other.tag);
 
@@ -171,37 +188,44 @@ public class EnemyWalker : DoubleObject {
             if (other.tag == "Player") {
 
                 timeSinceStompedOn = 0;
-                if (other.GetComponent<Rigidbody2D>().velocity.y <= 0) {
-                    other.GetComponent<Rigidbody2D>().velocity = new Vector2(other.GetComponent<Rigidbody2D>().velocity.x, 0);
+                if (other.GetComponent<Rigidbody>().velocity.y <= 0) {
+                    other.GetComponent<Rigidbody>().velocity = new Vector3(other.GetComponent<Rigidbody>().velocity.x, 0,0);
                     SoundManager.Instance.PlayEvent("event:/Enemies/Bouncer/Bounce", transform);
-                    other.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, 1 * bounceForce), ForceMode2D.Impulse);
+                    other.GetComponent<Rigidbody>().AddForce(new Vector3(0, 1 * bounceForce,0), ForceMode.Impulse);
                     other.GetComponent<PlayerController>().SetCanDash(true);
                     //Debug.Log(other.GetComponent<Rigidbody2D>().velocity);
                 }
             } else if (other.GetComponent<DoubleObject>() != null) {
-                timeSinceStompedOn = 0;
                 if (other.GetComponent<DoubleObject>().canBounce) {
+                    timeSinceStompedOn = 0;
                     SoundManager.Instance.PlayEvent("event:/Enemies/Bouncer/Bounce", transform);
-                    other.GetComponent<Rigidbody2D>().velocity = new Vector2(other.GetComponent<Rigidbody2D>().velocity.x, 0);
-                    other.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, other.GetComponent<Rigidbody2D>().mass * bounceForce), ForceMode2D.Impulse);
+                    other.GetComponent<Rigidbody>().velocity = new Vector3(other.GetComponent<Rigidbody>().velocity.x, 0,0);
+                    other.GetComponent<Rigidbody>().AddForce(new Vector3(0, other.GetComponent<Rigidbody>().mass * bounceForce,0), ForceMode.Impulse);
                 }
             }
         }
     }
 
     //Si colisiona en dawn el personaje, lo mata, si lo hace en dusk con velocidad y inferior o igual a 0, bota
-    private void OnTriggerStay2D(Collider2D other) {
+    private void OnTriggerStay(Collider other) {
         if (dawn && worldAssignation == world.DAWN) {
             if (other.tag == "Player") {
                 other.GetComponent<PlayerController>().Kill();
             }
         } else if (!dawn && worldAssignation == world.DUSK) {
             if (other.tag == "Player") {
-                if (other.GetComponent<Rigidbody2D>().velocity.y <= 0&&!other.GetComponent<PlayerController>().grounded) {
+                if (other.GetComponent<Rigidbody>().velocity.y <= 0&&!other.GetComponent<PlayerController>().grounded) {
                     timeSinceStompedOn = 0;
-                    Debug.Log(other.GetComponent<Rigidbody2D>());
-                    other.GetComponent<Rigidbody2D>().velocity = new Vector2(other.GetComponent<Rigidbody2D>().velocity.x, 0);
-                    other.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, 1 * bounceForce),ForceMode2D.Impulse);
+                    //Debug.Log(other.GetComponent<Rigidbody2D>());
+                    other.GetComponent<Rigidbody>().velocity = new Vector3(other.GetComponent<Rigidbody>().velocity.x, 0,0.0f);
+                    other.GetComponent<Rigidbody>().AddForce(new Vector3(0, 1 * bounceForce,0),ForceMode.Impulse);
+                }
+            } else if (other.GetComponent<DoubleObject>() != null) {
+                if (other.GetComponent<DoubleObject>().canBounce) {
+                    timeSinceStompedOn = 0;
+                    SoundManager.Instance.PlayEvent("event:/Enemies/Bouncer/Bounce", transform);
+                    other.GetComponent<Rigidbody>().velocity = new Vector3(other.GetComponent<Rigidbody>().velocity.x, 0, 0);
+                    other.GetComponent<Rigidbody>().AddForce(new Vector3(0, other.GetComponent<Rigidbody>().mass * bounceForce, 0), ForceMode.Impulse);
                 }
             }
         }
@@ -234,10 +258,10 @@ public class EnemyWalker : DoubleObject {
 
             //Se rota de forma que haga lo que deberia en funcion de la velociad que lleva
             if (meshObject != null) {
-                if (GetComponent<Rigidbody2D>().velocity.x > 0) {
+                if (rb.velocity.x > 0) {
                     meshObject.transform.rotation = Quaternion.identity;
                     meshObject.transform.rotation = Quaternion.identity * Quaternion.AngleAxis(90, new Vector3(0, 1, 0));
-                } else if (GetComponent<Rigidbody2D>().velocity.x < 0) {
+                } else if (rb.velocity.x < 0) {
                     meshObject.transform.rotation = Quaternion.identity * Quaternion.AngleAxis(270, new Vector3(0, 1, 0));
                 }
             }

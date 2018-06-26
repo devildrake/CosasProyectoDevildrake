@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DoubleBox : DoubleObject {
     // Use this for initialization
-    Rigidbody2D rb;
+    Rigidbody rb;
     DoubleBox brotherScript;
 
     public LayerMask groundMask;
@@ -20,23 +20,26 @@ public class DoubleBox : DoubleObject {
         interactuableBySmash = false;
         timeToBecomePunchable = 0.5f;
         offset = GameLogic.instance.worldOffset;
+        rb = GetComponent<Rigidbody>();
+
         if (worldAssignation == world.DAWN) {
             //GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
             //GetComponent<SpriteRenderer>().sprite = imagenDawn;
-            GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
+            //GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
+            rb.isKinematic = true;
             transform.position += new Vector3(0,GameLogic.instance.worldOffset);
 
         } else {
             //GetComponent<SpriteRenderer>().sprite = imagenDusk;
             // GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
-            GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
+            //GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
+            rb.isKinematic = false;
 
         }
         float randomVal = Random.Range(1, 4);
         //Debug.Log(randomVal);
         GetComponentInChildren<MeshRenderer>().gameObject.transform.rotation *= Quaternion.AngleAxis(randomVal * 90,new Vector3(0,0,1));
 
-        rb = GetComponent<Rigidbody2D>();
         groundMask = LayerMask.GetMask("Ground");
 
         rb.mass = 5000;
@@ -46,10 +49,11 @@ public class DoubleBox : DoubleObject {
         Vector3 positionWithOffset;
 
         if (rb == null)
-            rb = GetComponent<Rigidbody2D>();
+            rb = GetComponent<Rigidbody>();
 
-        if (rb.bodyType == RigidbodyType2D.Kinematic) {
-            //Debug.Log(worldAssignation);
+        //  if (rb.bodyType == RigidbodyType2D.Kinematic) {
+        if (rb.isKinematic) { 
+        //Debug.Log(worldAssignation);
 
 
             positionWithOffset = brotherObject.transform.position;
@@ -93,9 +97,9 @@ public class DoubleBox : DoubleObject {
 
     public override void Change() {
         if (rb == null)
-            rb = GetComponent<Rigidbody2D>();
+            rb = GetComponent<Rigidbody>();
         if (brotherScript.rb == null)
-            brotherScript.rb = GetComponent<Rigidbody2D>();
+            brotherScript.rb = GetComponent<Rigidbody>();
 
         //El objeto que modifica a ambos haciendo de controlador es el que pertenece a Dawn
         if (worldAssignation == world.DAWN) {
@@ -103,8 +107,11 @@ public class DoubleBox : DoubleObject {
             if (dawn) {
                 dominantVelocity = rb.velocity;
                 brotherScript.dominantVelocity = rb.velocity;
-                brotherScript.rb.bodyType = RigidbodyType2D.Dynamic;
-                rb.bodyType = RigidbodyType2D.Kinematic;
+                //brotherScript.rb.bodyType = RigidbodyType2D.Dynamic;
+                //rb.bodyType = RigidbodyType2D.Kinematic;
+                brotherScript.rb.isKinematic = false;
+                rb.isKinematic = true;
+
                 OnlyFreezeRotation();
                 brotherScript.rb.velocity = dominantVelocity;
                 rb.velocity = new Vector2(0.0f, 0.0f);
@@ -113,8 +120,10 @@ public class DoubleBox : DoubleObject {
             else {
                 dominantVelocity = brotherScript.rb.velocity;
                 brotherScript.dominantVelocity = brotherScript.rb.velocity;
-                rb.bodyType = RigidbodyType2D.Dynamic;
-                brotherScript.rb.bodyType = RigidbodyType2D.Kinematic;
+                //rb.bodyType = RigidbodyType2D.Dynamic;
+                //brotherScript.rb.bodyType = RigidbodyType2D.Kinematic;
+                brotherScript.rb.isKinematic = true;
+                rb.isKinematic = false;
                 brotherScript.rb.velocity = new Vector2(0.0f,0.0f);
                 rb.velocity = dominantVelocity;
             }
