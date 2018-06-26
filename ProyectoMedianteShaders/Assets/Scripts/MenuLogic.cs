@@ -88,9 +88,6 @@ public class MenuLogic : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-
-        Debug.Log("MenuState - " + menuState);
-
         switch (menuState) {
             case -2:
                 auxTimer += Time.deltaTime;
@@ -418,11 +415,6 @@ public class MenuLogic : MonoBehaviour {
         else {
             print("Falta asignar URL al botón");
         }
-    }
-
-    public void ChangeLanguage (int i) {
-        GameLogic.instance.currentLanguage = i == 0 ? MessagesFairy.LANGUAGE.Spanish : MessagesFairy.LANGUAGE.English;
-        PlayerPrefs.SetInt("Language", (int)GameLogic.instance.currentLanguage);
     }
     #endregion
 }

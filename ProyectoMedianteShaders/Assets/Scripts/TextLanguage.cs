@@ -1,34 +1,22 @@
-﻿
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
+/*
+ * Esta clase actualiza el texto de UI leyendo directamente del json de idioma que tiene cargado el gamelogic.
+ */
 public class TextLanguage : MonoBehaviour {
-    public MessagesFairy.LANGUAGE prevLanguage;
-    public string EngText;
-    public string SpaText;
+    public string key;
+    Text t;
 
-    Text text;
-	// Use this for initialization
 	void Start () {
-        text = GetComponent<Text>();
-        prevLanguage = MessagesFairy.LANGUAGE.None;
+        t = GetComponent<Text>();
+        t.text = GameLogic.instance.languageData[key];
     }
 
-// Update is called once per frame
-    void Update () {
-        if (GameLogic.instance != null) {
-            if (prevLanguage != GameLogic.instance.currentLanguage) {
-                prevLanguage = GameLogic.instance.currentLanguage;
-                if (GameLogic.instance.currentLanguage == MessagesFairy.LANGUAGE.English) {
-                    if (EngText != null) {
-                        text.text = EngText;
-                    }
-                } else {
-                    if (SpaText != null) {
-                        text.text = SpaText;
-                    }
-                }
-            }
-        }
+    /*
+     * Este metodo lo llama gamelogic cuando detecta un cambio en el idioma.
+     */
+    public void Change() {
+        t.text = GameLogic.instance.languageData[key];
     }
 }
