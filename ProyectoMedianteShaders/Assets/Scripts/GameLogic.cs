@@ -145,6 +145,8 @@ public class GameLogic : MonoBehaviour {
 
     FMOD.Studio.ParameterInstance dawnParameter;
 
+    [HideInInspector] public Dictionary<string, string> languageData; //Se guarda la info leida desde el archivo json en formato key-value
+
 
     /*
      * Conjunto de metodos que se llamaran al cambiar las opciones de juego
@@ -236,6 +238,20 @@ public class GameLogic : MonoBehaviour {
         }
 
 
+        //Cargar el json del idioma inicial
+        languageData = new Dictionary<string, string>();
+        string lan = "";
+        switch (currentLanguage) {
+            case MessagesFairy.LANGUAGE.English:
+                lan = "en";
+                break;
+            case MessagesFairy.LANGUAGE.Spanish:
+                lan = "es";
+                break;
+        }
+        if (!LoadJSONFile(lan)) { //Se carga el JSON del idioma
+            Debug.LogError("No se ha podido cargar el archivo de idioma correctamente");
+        }        
     }
 
 
@@ -775,7 +791,11 @@ public class GameLogic : MonoBehaviour {
         Debug.Log("Cargando Archivos desde " + Application.persistentDataPath);
         if (File.Exists(Application.persistentDataPath + "/saveData_2.15.dat")) {
             BinaryFormatter bf = new BinaryFormatter();
+<<<<<<< HEAD
             FileStream file = File.Open(Application.persistentDataPath + "/saveData_2.15.dat", FileMode.Open);
+=======
+            FileStream file = File.Open(Application.persistentDataPath + "/playerInfoSave.dat", FileMode.Open);
+>>>>>>> json_tool
             PlayerData data = (PlayerData)bf.Deserialize(file);
             file.Close();
 
@@ -816,34 +836,10 @@ public class GameLogic : MonoBehaviour {
             //}
             #endregion
 
-        } else {
+        }
+        else {
             InitLoadSaveVariables();
         }
-    }
-
-    private IEnumerator CloseVignetting() {
-        /*
-        bool done1=false, done2= false, done3 = false;
-        float intensityIncrement = dIntensity - ppp[0].profile.vignette.settings.intensity;
-        while (!done1 && !done2 && !done3) {
-            if (ppp[0].profile.vignette.settings.intensity < dIntensity) {
-
-                //ppp[0].profile.vignette.settings.intensity = ppp[0].profile.vignette.settings.intensity + intensityIncrement * Time.deltaTime;
-            }
-            yield return null;
-        }
-        */
-
-
-        yield break;
-    }
-
-    private IEnumerator OpenVignetting() {
-        bool done1 = false, done2 = false, done3 = false;
-        while (!done1 && !done2 && !done3) {
-
-        }
-        return null;
     }
 
     [Serializable]
@@ -861,4 +857,34 @@ public class GameLogic : MonoBehaviour {
         checkMainMenu = false;
     }
 
+    #region JSON_METHODS
+    public bool LoadJSONFile(string filename) {
+        languageData.Clear();
+        string path = Path.Combine(Path.Combine(Application.streamingAssetsPath, "lan"), filename + ".json");
+        if (File.Exists(path)) {
+
+            string json = File.ReadAllText(path);
+            LocalizationData jsonItems = JsonUtility.FromJson<LocalizationData>(json);
+
+            for (int i = 0; i < jsonItems.items.Length; i++) {
+                languageData.Add(jsonItems.items[i].key, jsonItems.items[i].value);
+            }
+            return true;
+        }
+        else {
+            Debug.LogError("Language file not found!");
+            return false;
+        }
+    }
+
+    public void ChangeLanguage(string lan) {
+        if (LoadJSONFile(lan)) {
+            PlayerPrefs.SetInt("Language", (int)currentLanguage);
+            TextLanguage[] languageElements = FindObjectsOfType<TextLanguage>();
+            foreach (TextLanguage l in languageElements) {
+                l.Change();
+            }
+        }
+    }
+    #endregion
 }
