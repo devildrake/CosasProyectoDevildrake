@@ -52,7 +52,7 @@ public class FlyingSeed : Agent {
         mascaras[2] = LayerMask.GetMask("Platform");
 
 
-        RaycastHit2D hit2D = PlayerUtilsStatic.RayCastArrayMask(transform.position - new Vector3(0, 0.5f, 0), Vector3.down, 0.05f, mascaras);
+        RaycastHit2D hit2D = PlayerUtilsStatic.RayCastArrayMask2D(transform.position - new Vector3(0, 0.5f, 0), Vector3.down, 0.05f, mascaras);
         if (hit2D) {
             Debug.Log("Trying to grab" + hit2D.collider.gameObject);
             GrabObject(hit2D.collider.gameObject);

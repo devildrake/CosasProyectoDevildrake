@@ -3,26 +3,34 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class GroundCheck : MonoBehaviour {
-    public float rayCastLength = 0.2f;
+    public float rayCastLength = 0.00100f;
     private void Start() {
     }
 
     //Método que comprueba si la velocidad y del personaje es 0 o aprox. y actualiza el booleano grounded en consecuencia
     public void CheckGrounded(PlayerController player) {
 
-        LayerMask[] mascaras = new LayerMask[1];
-        mascaras[0] = LayerMask.GetMask("Walkable");
+        LayerMask[] mascaras = new LayerMask[2];
+        mascaras[0] = LayerMask.GetMask("Ground");
+        mascaras[1] = LayerMask.GetMask("Platform");
+
+        //mascaras[0] = LayerMask.GetMask("Walkable");
         //mascaras[1] = LayerMask.GetMask("Ground");
         //mascaras[2] = LayerMask.GetMask("Enemy");
 
 
-        RaycastHit2D hit2D = PlayerUtilsStatic.RayCastArrayMask(transform.position, Vector3.down, rayCastLength, mascaras);
-        RaycastHit2D hit2DLeft = PlayerUtilsStatic.RayCastArrayMask(transform.position + new Vector3(-player.distanciaBordeSprite, 0, 0), Vector3.down, rayCastLength, mascaras);
-        RaycastHit2D hit2DRight = PlayerUtilsStatic.RayCastArrayMask(transform.position + new Vector3(player.distanciaBordeSprite, 0, 0), Vector3.down, rayCastLength, mascaras);
+        //RaycastHit2D hit2D = PlayerUtilsStatic.RayCastArrayMask(transform.position, Vector3.down, rayCastLength, mascaras);
+        //RaycastHit2D hit2DLeft = PlayerUtilsStatic.RayCastArrayMask(transform.position + new Vector3(-player.distanciaBordeSprite, 0, 0), Vector3.down, rayCastLength, mascaras);
+        //RaycastHit2D hit2DRight = PlayerUtilsStatic.RayCastArrayMask(transform.position + new Vector3(player.distanciaBordeSprite, 0, 0), Vector3.down, rayCastLength, mascaras);
 
-        Debug.DrawLine(transform.position, transform.position + Vector3.down * 0.5f);
-        Debug.DrawLine(transform.position + new Vector3(-player.distanciaBordeSprite, 0, 0), transform.position + new Vector3(-player.distanciaBordeSprite,0,0) + Vector3.down * 0.5f);
-        Debug.DrawLine(transform.position + new Vector3(player.distanciaBordeSprite, 0, 0), transform.position + new Vector3(player.distanciaBordeSprite,0,0) + Vector3.down * 0.5f);
+        bool hit2D = PlayerUtilsStatic.RayCastArrayMask(transform.position+new Vector3(0,0.5f,0), Vector3.down, rayCastLength, mascaras);
+        bool hit2DLeft = PlayerUtilsStatic.RayCastArrayMask(transform.position + new Vector3(0, 0.5f, 0) + new Vector3(-player.distanciaBordeSprite, 0, 0), Vector3.down, rayCastLength, mascaras);
+        bool hit2DRight = PlayerUtilsStatic.RayCastArrayMask(transform.position + new Vector3(0, 0.5f, 0) + new Vector3(player.distanciaBordeSprite, 0, 0), Vector3.down, rayCastLength, mascaras);
+
+
+        Debug.DrawLine(transform.position + new Vector3(0, 0.5f, 0) , transform.position + Vector3.down * rayCastLength);
+        Debug.DrawLine(transform.position + new Vector3(0, 0.5f, 0)  + new Vector3(-player.distanciaBordeSprite, 0, 0), transform.position + new Vector3(-player.distanciaBordeSprite,0,0) + Vector3.down * rayCastLength);
+        Debug.DrawLine(transform.position + new Vector3(0, 0.5f, 0)  + new Vector3(player.distanciaBordeSprite, 0, 0), transform.position + new Vector3(player.distanciaBordeSprite,0,0) + Vector3.down * rayCastLength);
 
 
         //if (hit2D.collider != null) 
@@ -34,7 +42,7 @@ public class GroundCheck : MonoBehaviour {
         // If the raycast hit something
         if (hit2D || hit2DLeft || hit2DRight) {
             //if (player.GetComponent<Rigidbody2D>().velocity.y == 0) {
-
+            Debug.Log("HIT");
             if (!player.grounded) {
                 player.grounded = true;
                 //player.dashing = false;

@@ -17,8 +17,8 @@ public class TramplerChargeState : State {
         Trampler agentScript = a.GetComponent<Trampler>();
 
 
-        RaycastHit2D hitWallRight = PlayerUtilsStatic.RayCastArrayMask(a.transform.position+ new Vector3(0.5f, 0, 0), Vector2.right,.1f,a.GetComponent<Trampler>().masks);
-        RaycastHit2D hitWallLeft = PlayerUtilsStatic.RayCastArrayMask(a.transform.position+new Vector3(-0.5f,0,0), Vector2.left, .1f, a.GetComponent<Trampler>().masks);
+        RaycastHit2D hitWallRight = PlayerUtilsStatic.RayCastArrayMask2D(a.transform.position+ new Vector3(0.5f, 0, 0), Vector2.right,.1f,a.GetComponent<Trampler>().masks);
+        RaycastHit2D hitWallLeft = PlayerUtilsStatic.RayCastArrayMask2D(a.transform.position+new Vector3(-0.5f,0,0), Vector2.left, .1f, a.GetComponent<Trampler>().masks);
 
         //Debug.DrawRay(a.transform.position + new Vector3(0.5f, 0, 0), Vector2.right* .1f);
 

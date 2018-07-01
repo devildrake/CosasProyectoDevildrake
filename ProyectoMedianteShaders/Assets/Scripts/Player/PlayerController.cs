@@ -967,9 +967,9 @@ public class PlayerController : DoubleObject {
 
                             rb.velocity = new Vector2(0, rb.velocity.y);
                             //Debug.Log("Se para");
-                            if (facingRight&&!mascaraRayCast.hit2D) {
+                            if (facingRight&&!mascaraRayCast.wasHit) {
                                 transform.Translate(Vector3.right * InputManager.instance.horizontalAxis * characterSpeed * Time.deltaTime);
-                            } else if (!mascaraRayCast.hit2D){
+                            } else if (!mascaraRayCast.wasHit){
                                 transform.Translate(Vector3.left * InputManager.instance.horizontalAxis * characterSpeed * Time.deltaTime);
                             } else {
                                 myAnimator.SetBool("moving", false);
@@ -1003,9 +1003,9 @@ public class PlayerController : DoubleObject {
                             slowedInTheAir = true;
                             mustSlow = 0.5f;
 
-                            if (facingRight && !mascaraRayCast.hit2D) {
+                            if (facingRight && !mascaraRayCast.wasHit) {
                                 transform.Translate(Vector3.right * InputManager.instance.horizontalAxis * characterSpeed * 0.75f * mustSlow * Time.deltaTime);
-                            } else if (!mascaraRayCast.hit2D) {
+                            } else if (!mascaraRayCast.wasHit) {
                                 transform.Translate(Vector3.left * InputManager.instance.horizontalAxis * characterSpeed * 0.75f * mustSlow * Time.deltaTime);
                             }
 
@@ -1020,9 +1020,9 @@ public class PlayerController : DoubleObject {
                                 mustSlow = 0.5f;
                             }
 
-                            if (facingRight && !mascaraRayCast.hit2D) {
+                            if (facingRight && !mascaraRayCast.wasHit) {
                                 transform.Translate(Vector3.right * InputManager.instance.horizontalAxis * characterSpeed * 0.75f * mustSlow * Time.deltaTime);
-                            } else if (!mascaraRayCast.hit2D) {
+                            } else if (!mascaraRayCast.wasHit) {
                                 transform.Translate(Vector3.left * InputManager.instance.horizontalAxis * characterSpeed * 0.75f * mustSlow * Time.deltaTime);
                             }
                         }
@@ -1043,9 +1043,9 @@ public class PlayerController : DoubleObject {
 
                             rb.velocity = new Vector2(0, rb.velocity.y);
                             //Debug.Log("Se para");
-                            if (facingRight&& !mascaraRayCast.hit2D) {
+                            if (facingRight&& !mascaraRayCast.wasHit) {
                                 transform.Translate(Vector3.right * InputManager.instance.horizontalAxis2 * characterSpeed * Time.deltaTime);
-                            } else if(!mascaraRayCast.hit2D) {
+                            } else if(!mascaraRayCast.wasHit) {
                                 transform.Translate(Vector3.left * InputManager.instance.horizontalAxis2 * characterSpeed * Time.deltaTime);
                             } else {
                                 myAnimator.SetBool("moving", false);
@@ -1081,7 +1081,7 @@ public class PlayerController : DoubleObject {
 
                             if (facingRight) {
                                 transform.Translate(Vector3.right * InputManager.instance.horizontalAxis2 * characterSpeed * 0.75f * mustSlow * Time.deltaTime);
-                            } else if (!mascaraRayCast.hit2D) {
+                            } else if (!mascaraRayCast.wasHit) {
                                 transform.Translate(Vector3.left * InputManager.instance.horizontalAxis2 * characterSpeed * 0.75f * mustSlow * Time.deltaTime);
                             }
 
@@ -1096,9 +1096,9 @@ public class PlayerController : DoubleObject {
                                 mustSlow = 0.5f;
                             }
 
-                            if (facingRight && !mascaraRayCast.hit2D) {
+                            if (facingRight && !mascaraRayCast.wasHit) {
                                 transform.Translate(Vector3.right * InputManager.instance.horizontalAxis2 * characterSpeed * 0.75f * mustSlow * Time.deltaTime);
-                            } else if (!mascaraRayCast.hit2D) {
+                            } else if (!mascaraRayCast.wasHit) {
                                 transform.Translate(Vector3.left * InputManager.instance.horizontalAxis2 * characterSpeed * 0.75f * mustSlow * Time.deltaTime);
                             }
                         }
@@ -1254,17 +1254,21 @@ public class PlayerController : DoubleObject {
         bool temp = false;
         NearbyObjects.Clear();
        // if (!moving) {
-            RaycastHit2D hit2D;
+            //RaycastHit2D hit2D;
+        bool hit;
+        RaycastHit raycastHit;
 
         if (facingRight) {
             //ESTO FUNCIONA hit2D = Physics2D.Raycast(rb.position, Vector2.right, 1.5f, LayerMask.GetMask("Platform"));
-            hit2D = Physics2D.Raycast(rb.position, Vector2.right, 1.5f, LayerMask.GetMask("Platform"));
-            if (!hit2D) {
-                hit2D = Physics2D.Raycast(rb.position, Vector2.right, 1.5f, LayerMask.GetMask("Enemy"));
+            hit = Physics.Raycast(rb.position, Vector3.right, out raycastHit, 1.5f, LayerMask.GetMask("Platform"));
+            if (!hit) {
+                hit = Physics.Raycast(rb.position, Vector3.right, out raycastHit, 1.5f, LayerMask.GetMask("Enemy"));
             }
-            if (!hit2D) {
-                hit2D = Physics2D.Raycast(rb.position, Vector2.right, 1.5f, LayerMask.GetMask("Ground"));
+            if (!hit) {
+                hit = Physics.Raycast(rb.position, Vector3.right, out raycastHit, 1.5f, LayerMask.GetMask("Ground"));
             }
+
+            Debug.DrawLine(rb.position, rb.position + Vector3.right * 1.5f);
 
             //hit2D = Physics2D.Raycast(rb.position, Vector2.right, 1.5f, groundMask);
             //hit2D = PlayerUtilsStatic.RayCastArrayMask(rb.position, Vector2.right, 1.5f, grabbableMask);
@@ -1272,18 +1276,18 @@ public class PlayerController : DoubleObject {
         } else {
             //hit2D = Physics2D.Raycast(rb.position, Vector2.left, 1.5f, groundMask);
             //hit2D = PlayerUtilsStatic.RayCastArrayMask(rb.position, Vector2.left, 1.5f, grabbableMask);
-            hit2D = Physics2D.Raycast(rb.position, Vector2.left, 1.5f, LayerMask.GetMask("Platform"));
-            if (!hit2D) {
-                hit2D = Physics2D.Raycast(rb.position, Vector2.left, 1.5f, LayerMask.GetMask("Enemy"));
+            hit = Physics.Raycast(rb.position, Vector2.left, out raycastHit, 1.5f, LayerMask.GetMask("Platform"));
+            if (!hit) {
+                hit = Physics.Raycast(rb.position, Vector2.left, out raycastHit, 1.5f, LayerMask.GetMask("Enemy"));
             }
-            if (!hit2D) {
-                hit2D = Physics2D.Raycast(rb.position, Vector2.left, 1.5f, LayerMask.GetMask("Ground"));
+            if (!hit) {
+                hit = Physics.Raycast(rb.position, Vector2.left, out raycastHit, 1.5f, LayerMask.GetMask("Ground"));
             }
         }
 
-        if (hit2D) {
-                if (!NearbyObjects.Contains(hit2D.transform.gameObject)) {
-                    NearbyObjects.Add(hit2D.transform.gameObject);
+        if (hit) {
+                if (!NearbyObjects.Contains(raycastHit.transform.gameObject)) {
+                    NearbyObjects.Add(raycastHit.transform.gameObject);
                     temp = true;
                 }
             }
@@ -1585,7 +1589,7 @@ public class PlayerController : DoubleObject {
 
 }
 
-//Método que pone smashing en true modificando la velocidad del personaje para que solo vaya hacia abajo
+//Método que pone smashing en true modificando la velocidad     del personaje para que solo vaya hacia abajo
 void Smash() {
         if (!smashing) {
             rb.AddForce(new Vector2(-rb.velocity.x,0),ForceMode.Impulse);

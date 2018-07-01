@@ -1666,7 +1666,7 @@ public static class PlayerUtilsStatic {
  /// <param name="distance"></param>
  /// <param name="mascaras"></param>
  /// <returns></returns>
-    public static RaycastHit2D RayCastArrayMask(Vector3 position,Vector3 direction,float distance,LayerMask[] mascaras) {
+    public static RaycastHit2D RayCastArrayMask2D(Vector3 position,Vector3 direction,float distance,LayerMask[] mascaras) {
         RaycastHit2D local;
         bool found = false;
         int i = 0;
@@ -1681,6 +1681,23 @@ public static class PlayerUtilsStatic {
             }
         }
         return local;
+    }
+
+    public static bool RayCastArrayMask(Vector3 position, Vector3 direction, float distance, LayerMask[] mascaras) {
+        bool hit = false;
+        bool found = false;
+        int i = 0;
+        hit = Physics.Raycast(position - new Vector3(0f, 0.5f, 0f), direction, distance, mascaras[0]);
+
+        while (!found && i < mascaras.Length) {
+            hit = Physics.Raycast(position - new Vector3(0f, 0.5f, 0f), direction, distance, mascaras[i]);
+            if (hit) {
+                found = true;
+            } else {
+                i++;
+            }
+        }
+        return found;
     }
 
 
