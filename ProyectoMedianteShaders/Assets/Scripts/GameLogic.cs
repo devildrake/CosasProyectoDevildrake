@@ -791,11 +791,7 @@ public class GameLogic : MonoBehaviour {
         Debug.Log("Cargando Archivos desde " + Application.persistentDataPath);
         if (File.Exists(Application.persistentDataPath + "/saveData_2.15.dat")) {
             BinaryFormatter bf = new BinaryFormatter();
-<<<<<<< HEAD
             FileStream file = File.Open(Application.persistentDataPath + "/saveData_2.15.dat", FileMode.Open);
-=======
-            FileStream file = File.Open(Application.persistentDataPath + "/playerInfoSave.dat", FileMode.Open);
->>>>>>> json_tool
             PlayerData data = (PlayerData)bf.Deserialize(file);
             file.Close();
 
