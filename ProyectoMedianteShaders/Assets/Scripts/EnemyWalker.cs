@@ -33,7 +33,7 @@ public class EnemyWalker : DoubleObject {
         }
 
         timeSinceStompedOn = 0.5f;
-        bounceForce = 10.5f;
+        bounceForce = 15.5f;
         velocity = 2.5f;
         InitTransformable();
         isPunchable = false;
@@ -188,12 +188,14 @@ public class EnemyWalker : DoubleObject {
             if (other.tag == "Player") {
 
                 timeSinceStompedOn = 0;
-                if (other.GetComponent<Rigidbody>().velocity.y <= 0) {
+                //if (other.GetComponent<Rigidbody>().velocity.y <= 0) {
+                if (timeSinceStompedOn > 0.4f) {
                     other.GetComponent<Rigidbody>().velocity = new Vector3(other.GetComponent<Rigidbody>().velocity.x, 0,0);
                     SoundManager.Instance.PlayEvent("event:/Enemies/Bouncer/Bounce", transform);
                     other.GetComponent<Rigidbody>().AddForce(new Vector3(0, 1 * bounceForce,0), ForceMode.Impulse);
                     other.GetComponent<PlayerController>().SetCanDash(true);
                     //Debug.Log(other.GetComponent<Rigidbody2D>().velocity);
+                    //}
                 }
             } else if (other.GetComponent<DoubleObject>() != null) {
                 if (other.GetComponent<DoubleObject>().canBounce) {
@@ -214,7 +216,7 @@ public class EnemyWalker : DoubleObject {
             }
         } else if (!dawn && worldAssignation == world.DUSK) {
             if (other.tag == "Player") {
-                if (other.GetComponent<Rigidbody>().velocity.y <= 0&&!other.GetComponent<PlayerController>().grounded) {
+                if (other.GetComponent<Rigidbody>().velocity.y <= 0&&!other.GetComponent<PlayerController>().grounded &&(timeSinceStompedOn > 0.4f)) {
                     timeSinceStompedOn = 0;
                     //Debug.Log(other.GetComponent<Rigidbody2D>());
                     other.GetComponent<Rigidbody>().velocity = new Vector3(other.GetComponent<Rigidbody>().velocity.x, 0,0.0f);

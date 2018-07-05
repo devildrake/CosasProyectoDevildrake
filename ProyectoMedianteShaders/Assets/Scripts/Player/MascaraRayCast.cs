@@ -23,21 +23,22 @@ public class MascaraRayCast : MonoBehaviour {
         //    hit2D = Physics2D.Raycast(transform.position, Vector2.right, 0.4f, LayerMask.GetMask("Ground"));
         //}
 
-        if (playerController.worldAssignation == DoubleObject.world.DAWN&&playerController.dawn) {
+        if (playerController.worldAssignation == DoubleObject.world.DAWN && playerController.dawn) {
             if (playerController.facingRight) {
-                wasHit = Physics.Raycast(transform.position + new Vector3(0, -0.3f, 0) , (transform.position + new Vector3(0, -0.3f, 0)) + Vector3.right, out hit, dawnRayDistance,LayerMask.GetMask("Platform"));
+                wasHit = Physics.Raycast(transform.position, transform.position + Vector3.right, out hit, dawnRayDistance, LayerMask.GetMask("Platform"));
                 if (!wasHit) {
-                    wasHit = Physics.Raycast(transform.position + new Vector3(0, -0.3f, 0), (transform.position + new Vector3(0, -0.3f, 0)) + Vector3.right, out hit, dawnRayDistance, LayerMask.GetMask("Ground"));
+                    wasHit = Physics.Raycast(transform.position, transform.position + Vector3.right, out hit, dawnRayDistance, LayerMask.GetMask("Ground"));
                 }
 
-                Debug.DrawLine(transform.position + new Vector3(0, -0.3f, 0) , (transform.position + new Vector3(0, -0.3f, 0))  + Vector3.right * dawnRayDistance);
+                Debug.DrawLine(transform.position, transform.position + Vector3.right * dawnRayDistance);
             } else {
-                wasHit = Physics.Raycast(transform.position + new Vector3(0, -0.3f, 0), (transform.position + new Vector3(0, -0.3f, 0)) + Vector3.left, out hit, dawnRayDistance, LayerMask.GetMask("Platform"));
-                if (!wasHit) {
-                    wasHit = Physics.Raycast(transform.position + new Vector3(0, -0.3f, 0), (transform.position + new Vector3(0, -0.3f, 0)) + Vector3.left, out hit, dawnRayDistance, LayerMask.GetMask("Ground"));
+                wasHit = Physics.Raycast(transform.position, transform.position + Vector3.left, out hit, dawnRayDistance, LayerMask.GetMask("Platform"));
+                if (wasHit) {
+                    wasHit = Physics.Raycast(transform.position, transform.position + Vector3.left, out hit, dawnRayDistance, LayerMask.GetMask("Ground"));
                 }
-                Debug.DrawLine(transform.position + new Vector3(0, -0.3f, 0) , (transform.position + new Vector3(0, -0.3f, 0)) + Vector3.left * dawnRayDistance);
+                Debug.DrawLine(transform.position, transform.position + Vector3.left * dawnRayDistance);
             }
+
         } else if(!playerController.dawn&&playerController.worldAssignation == DoubleObject.world.DUSK){
             if (playerController.facingRight) {
                 wasHit = Physics.Raycast(transform.position, transform.position + Vector3.right, out hit, duskRayDistance, LayerMask.GetMask("Platform"));

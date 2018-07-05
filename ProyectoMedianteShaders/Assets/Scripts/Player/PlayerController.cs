@@ -174,7 +174,7 @@ public class PlayerController : DoubleObject {
     enum ARMSTATE { PUNCH, GRAB, IDLE, PUNCHCHARGE};
     ARMSTATE armstate;
     public PunchContact punchContact;
-    public BoxCollider2D punchTrigger;
+    public BoxCollider punchTrigger;
     [SerializeField] private ParticleSystem armParticleSystem;
     public bool useXOffset = true;
     public bool lookAtMe = false;
@@ -1269,7 +1269,6 @@ public class PlayerController : DoubleObject {
             }
 
             Debug.DrawLine(rb.position, rb.position + Vector3.right * 1.5f);
-
             //hit2D = Physics2D.Raycast(rb.position, Vector2.right, 1.5f, groundMask);
             //hit2D = PlayerUtilsStatic.RayCastArrayMask(rb.position, Vector2.right, 1.5f, grabbableMask);
             //Debug.DrawRay(rb.position, Vector2.right * 1.5f);
@@ -1289,16 +1288,55 @@ public class PlayerController : DoubleObject {
                 if (!NearbyObjects.Contains(raycastHit.transform.gameObject)) {
                     NearbyObjects.Add(raycastHit.transform.gameObject);
                     temp = true;
-                }
+
             }
+        }
        // }
         if (!temp) {
             grabbing = false;
         }
+
+        bool hitSide = false;
+
+        if (facingRight) {
+            //ESTO FUNCIONA hit2D = Physics2D.Raycast(rb.position, Vector2.right, 1.5f, LayerMask.GetMask("Platform"));
+            hitSide = Physics.Raycast(rb.position, Vector3.right, 0.8f, LayerMask.GetMask("Platform"));
+            if (!hitSide) {
+                hitSide = Physics.Raycast(rb.position, Vector3.right, 0.8f, LayerMask.GetMask("Enemy"));
+            }
+            if (!hitSide) {
+                hitSide = Physics.Raycast(rb.position, Vector3.right, 0.8f, LayerMask.GetMask("Ground"));
+            }
+
+            Debug.DrawLine(rb.position, rb.position + Vector3.right * 0.8f);
+            //hit2D = Physics2D.Raycast(rb.position, Vector2.right, 1.5f, groundMask);
+            //hit2D = PlayerUtilsStatic.RayCastArrayMask(rb.position, Vector2.right, 1.5f, grabbableMask);
+            //Debug.DrawRay(rb.position, Vector2.right * 1.5f);
+        } else {
+            //hit2D = Physics2D.Raycast(rb.position, Vector2.left, 1.5f, groundMask);
+            //hit2D = PlayerUtilsStatic.RayCastArrayMask(rb.position, Vector2.left, 1.5f, grabbableMask);
+            hitSide = Physics.Raycast(rb.position, Vector2.left,  0.8f, LayerMask.GetMask("Platform"));
+            if (!hitSide) {
+                hitSide = Physics.Raycast(rb.position, Vector2.left, 0.8f, LayerMask.GetMask("Enemy"));
+            }
+            if (!hitSide) {
+                hitSide = Physics.Raycast(rb.position, Vector2.left, 0.8f, LayerMask.GetMask("Ground"));
+            }
+        }
+
+        mascaraRayCast.wasHit = hitSide;
+
+
     }
 
     //Metodo que añade una fuerza al personaje para simular un salto
     public void Jump() {
+
+        timeNotGrounded = 1.0f;
+        brotherScript.timeNotGrounded = 1.0f;
+        grounded = false;
+        brotherScript.grounded = false;
+
         if (arm != null) {
             armstate = ARMSTATE.IDLE;
             arm.meshObject.SetActive(false);
@@ -1755,6 +1793,7 @@ void Smash() {
                 OnlyFreezeRotation();
                 brotherScript.rb.velocity = dominantVelocity;
                 rb.velocity = new Vector2(0.0f, 0.0f);
+                brotherScript.slowedInTheAir = slowedInTheAir;
                 brotherScript.prevHorizontalMov = prevHorizontalMov;
             }
             maskObjectScript.change = false;
@@ -1785,6 +1824,8 @@ void Smash() {
 
                 brotherScript.rb.velocity = new Vector2(0.0f, 0.0f);
                 rb.velocity = dominantVelocity;
+                slowedInTheAir = brotherScript.slowedInTheAir;
+
             }
 
             //activar el shader

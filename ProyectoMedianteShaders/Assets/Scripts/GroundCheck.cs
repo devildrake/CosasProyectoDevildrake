@@ -43,7 +43,7 @@ public class GroundCheck : MonoBehaviour {
         if (hit2D || hit2DLeft || hit2DRight) {
             //if (player.GetComponent<Rigidbody2D>().velocity.y == 0) {
             Debug.Log("HIT");
-            if (!player.grounded) {
+            if (!player.grounded&&player.rb.velocity.y<0.1f&&player.rb.velocity.y>-0.1f) {
                 player.grounded = true;
                 //player.dashing = false;
                 player.SetCanDash(true);
