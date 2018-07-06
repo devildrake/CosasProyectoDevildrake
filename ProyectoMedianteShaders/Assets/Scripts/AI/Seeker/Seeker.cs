@@ -42,7 +42,7 @@ public class Seeker : Agent {
 
     void Start() {
         brotherScript = brotherObject.GetComponent<Seeker>();
-        rb = GetComponent<Rigidbody2D>();
+        rb = GetComponent<Rigidbody>();
 
         timeOutOfSight = 0;
         visionRange = 10;
@@ -62,7 +62,7 @@ public class Seeker : Agent {
         interactuableBySmash = false;
         offset = GameLogic.instance.worldOffset;
         if (worldAssignation == world.DAWN) {
-            rb.bodyType = RigidbodyType2D.Kinematic;
+            rb.isKinematic = true;
             //GetComponent<SpriteRenderer>().sprite = imagenDawn;
         } else {
             //GetComponent<SpriteRenderer>().sprite = imagenDusk;
@@ -88,7 +88,7 @@ public class Seeker : Agent {
 
     protected override void BrotherBehavior() {
         Vector3 positionWithOffset;
-        if (rb.bodyType == RigidbodyType2D.Kinematic) {
+        if (rb.isKinematic) {
             positionWithOffset = brotherObject.transform.position;
 
             if (worldAssignation == world.DAWN)
@@ -139,8 +139,8 @@ public class Seeker : Agent {
                 //dawnState = new SeedIdleState();
                 dominantVelocity = rb.velocity;
                 brotherScript.dominantVelocity = GetComponent<Rigidbody2D>().velocity;
-                brotherScript.rb.bodyType = RigidbodyType2D.Dynamic;
-                rb.bodyType = RigidbodyType2D.Kinematic;
+                brotherScript.rb.isKinematic = false;
+                rb.isKinematic = true;
                 OnlyFreezeRotation();
                 brotherScript.rb.velocity = dominantVelocity;
                 rb.velocity = new Vector2(0.0f, 0.0f);
@@ -153,8 +153,8 @@ public class Seeker : Agent {
                 touchedByPlayer = false;
                 dominantVelocity = brotherScript.rb.velocity;
                 brotherScript.dominantVelocity = brotherScript.rb.velocity;
-                rb.bodyType = RigidbodyType2D.Dynamic;
-                brotherScript.rb.bodyType = RigidbodyType2D.Kinematic;
+                rb.isKinematic = false;
+                brotherScript.rb.isKinematic = true;
                 brotherScript.rb.velocity = new Vector2(0.0f, 0.0f);
                 rb.velocity = dominantVelocity;
                 if (dawnState != null)

@@ -33,7 +33,7 @@ public class EnemyWalker : DoubleObject {
         }
 
         timeSinceStompedOn = 0.5f;
-        bounceForce = 15.5f;
+        bounceForce = 25.5f;
         velocity = 2.5f;
         InitTransformable();
         isPunchable = false;
@@ -184,15 +184,17 @@ public class EnemyWalker : DoubleObject {
             if (other.tag == "Player") {
                 other.GetComponent<PlayerController>().Kill();
             }
-        }else if (!dawn && worldAssignation == world.DUSK) {
+        } else if (!dawn && worldAssignation == world.DUSK) {
             if (other.tag == "Player") {
 
                 timeSinceStompedOn = 0;
                 //if (other.GetComponent<Rigidbody>().velocity.y <= 0) {
                 if (timeSinceStompedOn > 0.4f) {
-                    other.GetComponent<Rigidbody>().velocity = new Vector3(other.GetComponent<Rigidbody>().velocity.x, 0,0);
+                    other.GetComponent<Rigidbody>().velocity = new Vector3(other.GetComponent<Rigidbody>().velocity.x, 0, 0);
                     SoundManager.Instance.PlayEvent("event:/Enemies/Bouncer/Bounce", transform);
-                    other.GetComponent<Rigidbody>().AddForce(new Vector3(0, 1 * bounceForce,0), ForceMode.Impulse);
+                    other.GetComponent<Rigidbody>().AddForce(new Vector3(0, 1 * bounceForce, 0), ForceMode.Impulse);
+                    Debug.Log("ADDFORCE1");
+
                     other.GetComponent<PlayerController>().SetCanDash(true);
                     //Debug.Log(other.GetComponent<Rigidbody2D>().velocity);
                     //}
@@ -201,8 +203,9 @@ public class EnemyWalker : DoubleObject {
                 if (other.GetComponent<DoubleObject>().canBounce) {
                     timeSinceStompedOn = 0;
                     SoundManager.Instance.PlayEvent("event:/Enemies/Bouncer/Bounce", transform);
-                    other.GetComponent<Rigidbody>().velocity = new Vector3(other.GetComponent<Rigidbody>().velocity.x, 0,0);
-                    other.GetComponent<Rigidbody>().AddForce(new Vector3(0, other.GetComponent<Rigidbody>().mass * bounceForce,0), ForceMode.Impulse);
+                    other.GetComponent<Rigidbody>().velocity = new Vector3(other.GetComponent<Rigidbody>().velocity.x, 0, 0);
+                    other.GetComponent<Rigidbody>().AddForce(new Vector3(0, other.GetComponent<Rigidbody>().mass * bounceForce, 0), ForceMode.Impulse);
+                    Debug.Log("ADDFORCE2");
                 }
             }
         }
@@ -216,11 +219,13 @@ public class EnemyWalker : DoubleObject {
             }
         } else if (!dawn && worldAssignation == world.DUSK) {
             if (other.tag == "Player") {
-                if (other.GetComponent<Rigidbody>().velocity.y <= 0&&!other.GetComponent<PlayerController>().grounded &&(timeSinceStompedOn > 0.4f)) {
+                if (other.GetComponent<Rigidbody>().velocity.y <= 0 && !other.GetComponent<PlayerController>().grounded && (timeSinceStompedOn > 0.4f)) {
                     timeSinceStompedOn = 0;
                     //Debug.Log(other.GetComponent<Rigidbody2D>());
-                    other.GetComponent<Rigidbody>().velocity = new Vector3(other.GetComponent<Rigidbody>().velocity.x, 0,0.0f);
-                    other.GetComponent<Rigidbody>().AddForce(new Vector3(0, 1 * bounceForce,0),ForceMode.Impulse);
+                    other.GetComponent<Rigidbody>().velocity = new Vector3(other.GetComponent<Rigidbody>().velocity.x, 0, 0.0f);
+                    other.GetComponent<Rigidbody>().AddForce(new Vector3(0, 1 * bounceForce, 0), ForceMode.Impulse);
+                    Debug.Log("ADDFORCE3");
+
                 }
             } else if (other.GetComponent<DoubleObject>() != null) {
                 if (other.GetComponent<DoubleObject>().canBounce) {
@@ -228,13 +233,15 @@ public class EnemyWalker : DoubleObject {
                     SoundManager.Instance.PlayEvent("event:/Enemies/Bouncer/Bounce", transform);
                     other.GetComponent<Rigidbody>().velocity = new Vector3(other.GetComponent<Rigidbody>().velocity.x, 0, 0);
                     other.GetComponent<Rigidbody>().AddForce(new Vector3(0, other.GetComponent<Rigidbody>().mass * bounceForce, 0), ForceMode.Impulse);
+                    Debug.Log("ADDFORCE4");
+
                 }
             }
         }
     }
 
 
-    //MËTODO PARA ARREGLAR UNA TONTERIA POR LA QUE NO VA BIEN EL WALKER (SOLO SE LLAMA UNA VES)
+    //MËTODO PARA ARREGLAR UNA TONTERIA POR LA QUE NO VA BIEN EL WALKER(SOLO SE LLAMA UNA VES)
     void Nen() {
         if (!once&&GameLogic.instance.transformableObjects[0]!=null) {
             if (GameLogic.instance.transformableObjects[0].GetComponent<DoubleObject>().dawn != dawn) {

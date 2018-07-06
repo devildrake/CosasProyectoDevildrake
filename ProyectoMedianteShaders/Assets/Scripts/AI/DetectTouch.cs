@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class DetectTouch : MonoBehaviour {
-    private void OnCollisionEnter2D(Collision2D collision) {
+    private void OnCollisionEnter(Collision collision) {
         if (collision.collider.tag == "Player") {
             if (gameObject.GetComponentInParent<Agent>() != null) {
                 gameObject.GetComponentInParent<Agent>().touchedByPlayer = true;

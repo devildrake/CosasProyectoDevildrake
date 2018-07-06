@@ -10,9 +10,10 @@ public class GroundCheck : MonoBehaviour {
     //Método que comprueba si la velocidad y del personaje es 0 o aprox. y actualiza el booleano grounded en consecuencia
     public void CheckGrounded(PlayerController player) {
 
-        LayerMask[] mascaras = new LayerMask[2];
+        LayerMask[] mascaras = new LayerMask[3];
         mascaras[0] = LayerMask.GetMask("Ground");
         mascaras[1] = LayerMask.GetMask("Platform");
+        mascaras[2] = LayerMask.GetMask("Walkable");
 
         //mascaras[0] = LayerMask.GetMask("Walkable");
         //mascaras[1] = LayerMask.GetMask("Ground");
@@ -42,7 +43,6 @@ public class GroundCheck : MonoBehaviour {
         // If the raycast hit something
         if (hit2D || hit2DLeft || hit2DRight) {
             //if (player.GetComponent<Rigidbody2D>().velocity.y == 0) {
-            Debug.Log("HIT");
             if (!player.grounded&&player.rb.velocity.y<0.1f&&player.rb.velocity.y>-0.1f) {
                 player.grounded = true;
                 //player.dashing = false;
@@ -52,22 +52,24 @@ public class GroundCheck : MonoBehaviour {
         } else {
             player.grounded = false;
         }
-        RaycastHit2D hit2DLeftO = Physics2D.Raycast(player.rb.position + new Vector3(-player.distanciaBordeSprite, 0,0), Vector2.down, 0.1f, player.groundMask);
-        RaycastHit2D hit2DRightO = Physics2D.Raycast(player.rb.position  + new Vector3(player.distanciaBordeSprite, 0,0), Vector2.down, 0.1f, player.groundMask);
-
+        //RaycastHit2D hit2DLeftO = Physics2D.Raycast(player.rb.position + new Vector3(-player.distanciaBordeSprite, 0,0), Vector2.down, 0.1f, player.groundMask);
+        //RaycastHit2D hit2DRightO = Physics2D.Raycast(player.rb.position  + new Vector3(player.distanciaBordeSprite, 0,0), Vector2.down, 0.1f, player.groundMask);
+        bool hit2DLeftO = false;
+        bool hit2DRightO = false;
         if (!hit2DLeftO && !hit2DRightO) {
             bool right = true;
 
             //SLIDE PA LA DERECHA
-            hit2DRightO = Physics2D.Raycast(player.rb.position  + new Vector3(player.distanciaBordeSprite, 0,0), Vector2.down, 3.0f, player.slideMask);
-            hit2DLeftO = Physics2D.Raycast(player.rb.position + new Vector3(-player.distanciaBordeSprite, 0,0), Vector2.down, 0.2f, player.slideMask);
+            Debug.DrawLine(player.rb.position + new Vector3(player.distanciaBordeSprite,0,0), player.rb.position + new Vector3(player.distanciaBordeSprite,0,0) + Vector3.down * 3.0f);
+            hit2DRightO = Physics.Raycast(player.rb.position  + new Vector3(player.distanciaBordeSprite, 0,0), Vector3.down, 3.0f, player.slideMask);
+            hit2DLeftO = Physics.Raycast(player.rb.position + new Vector3(-player.distanciaBordeSprite, 0,0), Vector3.down, 0.2f, player.slideMask);
 
 
             if (!(hit2DLeftO && hit2DRightO)) {
                 right = false;
                 //SLIDE PA LA IZQUIERDA
-                hit2DRightO = Physics2D.Raycast(player.rb.position + new Vector3(player.distanciaBordeSprite, 0,0), Vector2.down, 0.2f, player.slideMask);
-                hit2DLeftO = Physics2D.Raycast(player.rb.position + new Vector3(-player.distanciaBordeSprite, 0,0), Vector2.down, 3.0f, player.slideMask);
+                hit2DRightO = Physics.Raycast(player.rb.position + new Vector3(player.distanciaBordeSprite, 0,0), Vector2.down, 0.2f, player.slideMask);
+                hit2DLeftO = Physics.Raycast(player.rb.position + new Vector3(-player.distanciaBordeSprite, 0,0), Vector2.down, 3.0f, player.slideMask);
             }
             if (hit2DLeftO && hit2DRightO) {
                 if (!player.facingRight && right) {

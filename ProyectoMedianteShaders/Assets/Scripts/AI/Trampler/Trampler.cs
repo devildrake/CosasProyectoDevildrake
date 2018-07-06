@@ -29,7 +29,7 @@ public class Trampler : Agent {
 
     void Start() {
         brotherScript = brotherObject.GetComponent<Trampler>();
-        rb = GetComponent<Rigidbody2D>();
+        rb = GetComponent<Rigidbody>();
 
         masks = new LayerMask[2];
 
@@ -50,7 +50,7 @@ public class Trampler : Agent {
         interactuableBySmash = false;
         offset = GameLogic.instance.worldOffset;
         if (worldAssignation == world.DAWN) {
-            rb.bodyType = RigidbodyType2D.Kinematic;
+            rb.isKinematic = true;
         } else {
 
         }
@@ -62,7 +62,7 @@ public class Trampler : Agent {
 
     protected override void BrotherBehavior() {
         Vector3 positionWithOffset;
-        if (rb.bodyType == RigidbodyType2D.Kinematic) {
+        if (rb.isKinematic) {
             positionWithOffset = brotherObject.transform.position;
 
             if (worldAssignation == world.DAWN)
@@ -98,8 +98,8 @@ public class Trampler : Agent {
                 //dawnState = new SeedIdleState();
                 dominantVelocity = rb.velocity;
                 brotherScript.dominantVelocity = rb.velocity;
-                brotherScript.rb.bodyType = RigidbodyType2D.Dynamic;
-                rb.bodyType = RigidbodyType2D.Kinematic;
+                brotherScript.rb.isKinematic = false;
+                rb.isKinematic = true;
                 OnlyFreezeRotation();
                 brotherScript.rb.velocity = dominantVelocity;
                 rb.velocity = new Vector2(0.0f, 0.0f);
@@ -112,8 +112,8 @@ public class Trampler : Agent {
                 touchedByPlayer = false;
                 dominantVelocity = brotherScript.rb.velocity;
                 brotherScript.dominantVelocity = brotherScript.rb.velocity;
-                rb.bodyType = RigidbodyType2D.Dynamic;
-                rb.bodyType = RigidbodyType2D.Kinematic;
+                brotherScript.rb.isKinematic = true;
+                rb.isKinematic = false;
                 brotherScript.rb.velocity = new Vector2(0.0f, 0.0f);
                 rb.velocity = dominantVelocity;
                 if (dawnState != null)
@@ -142,7 +142,7 @@ public class Trampler : Agent {
 
     // Update is called once per frame
     void Update() {
-        rb.gravityScale = 1;
+        //rb.gravityScale = 1;
         //if(dawnState!=null&&dawn&&worldAssignation==world.DAWN)
         //Debug.Log(dawnState.ToString());
 

@@ -470,11 +470,11 @@ public class PlayerController : DoubleObject {
         }
 
         //if (placeToGo == null) {
-        if (rb.velocity.y < 0) {
+        if (rb.velocity.y < 0&&!sliding) {
             //rb.gravityScale = 2.5f;
             customGravity.gravityScale = 2.5f;
 
-        } else {
+        } else if(!sliding){
             //rb.gravityScale = 1;
             customGravity.gravityScale = 1;
 
@@ -967,9 +967,9 @@ public class PlayerController : DoubleObject {
 
                             rb.velocity = new Vector2(0, rb.velocity.y);
                             //Debug.Log("Se para");
-                            if (facingRight&&!mascaraRayCast.wasHit) {
+                            if (facingRight&&!mascaraRayCast.wasHit&&!sliding) {
                                 transform.Translate(Vector3.right * InputManager.instance.horizontalAxis * characterSpeed * Time.deltaTime);
-                            } else if (!mascaraRayCast.wasHit){
+                            } else if (!mascaraRayCast.wasHit& !sliding) {
                                 transform.Translate(Vector3.left * InputManager.instance.horizontalAxis * characterSpeed * Time.deltaTime);
                             } else {
                                 myAnimator.SetBool("moving", false);
@@ -1003,9 +1003,9 @@ public class PlayerController : DoubleObject {
                             slowedInTheAir = true;
                             mustSlow = 0.5f;
 
-                            if (facingRight && !mascaraRayCast.wasHit) {
+                            if (facingRight && !mascaraRayCast.wasHit&& !sliding) {
                                 transform.Translate(Vector3.right * InputManager.instance.horizontalAxis * characterSpeed * 0.75f * mustSlow * Time.deltaTime);
-                            } else if (!mascaraRayCast.wasHit) {
+                            } else if (!mascaraRayCast.wasHit&& !sliding) {
                                 transform.Translate(Vector3.left * InputManager.instance.horizontalAxis * characterSpeed * 0.75f * mustSlow * Time.deltaTime);
                             }
 
@@ -1020,9 +1020,9 @@ public class PlayerController : DoubleObject {
                                 mustSlow = 0.5f;
                             }
 
-                            if (facingRight && !mascaraRayCast.wasHit) {
+                            if (facingRight && !mascaraRayCast.wasHit&& !sliding) {
                                 transform.Translate(Vector3.right * InputManager.instance.horizontalAxis * characterSpeed * 0.75f * mustSlow * Time.deltaTime);
-                            } else if (!mascaraRayCast.wasHit) {
+                            } else if (!mascaraRayCast.wasHit&& !sliding) {
                                 transform.Translate(Vector3.left * InputManager.instance.horizontalAxis * characterSpeed * 0.75f * mustSlow * Time.deltaTime);
                             }
                         }
@@ -1043,9 +1043,9 @@ public class PlayerController : DoubleObject {
 
                             rb.velocity = new Vector2(0, rb.velocity.y);
                             //Debug.Log("Se para");
-                            if (facingRight&& !mascaraRayCast.wasHit) {
+                            if (facingRight&& !mascaraRayCast.wasHit&& !sliding) {
                                 transform.Translate(Vector3.right * InputManager.instance.horizontalAxis2 * characterSpeed * Time.deltaTime);
-                            } else if(!mascaraRayCast.wasHit) {
+                            } else if(!mascaraRayCast.wasHit&& !sliding) {
                                 transform.Translate(Vector3.left * InputManager.instance.horizontalAxis2 * characterSpeed * Time.deltaTime);
                             } else {
                                 myAnimator.SetBool("moving", false);
@@ -1079,9 +1079,9 @@ public class PlayerController : DoubleObject {
                             slowedInTheAir = true;
                             mustSlow = 0.5f;
 
-                            if (facingRight) {
+                            if (facingRight&& !sliding) {
                                 transform.Translate(Vector3.right * InputManager.instance.horizontalAxis2 * characterSpeed * 0.75f * mustSlow * Time.deltaTime);
-                            } else if (!mascaraRayCast.wasHit) {
+                            } else if (!mascaraRayCast.wasHit&& !sliding) {
                                 transform.Translate(Vector3.left * InputManager.instance.horizontalAxis2 * characterSpeed * 0.75f * mustSlow * Time.deltaTime);
                             }
 
@@ -1096,9 +1096,9 @@ public class PlayerController : DoubleObject {
                                 mustSlow = 0.5f;
                             }
 
-                            if (facingRight && !mascaraRayCast.wasHit) {
+                            if (facingRight && !mascaraRayCast.wasHit&& !sliding) {
                                 transform.Translate(Vector3.right * InputManager.instance.horizontalAxis2 * characterSpeed * 0.75f * mustSlow * Time.deltaTime);
-                            } else if (!mascaraRayCast.wasHit) {
+                            } else if (!mascaraRayCast.wasHit&& !sliding) {
                                 transform.Translate(Vector3.left * InputManager.instance.horizontalAxis2 * characterSpeed * 0.75f * mustSlow * Time.deltaTime);
                             }
                         }
@@ -1234,10 +1234,11 @@ public class PlayerController : DoubleObject {
             }
         }else {//Sliding es true
             //rb.gravityScale = 15;
+            Debug.Log("Sliding");
             customGravity.gravityScale = 15;
 
             if (rb.velocity.y > 0) {
-                sliding = false;
+                //sliding = false;
             }
             if (!audioSource.isPlaying) {
                 audioSource.clip = slideClip;
@@ -1295,37 +1296,38 @@ public class PlayerController : DoubleObject {
         if (!temp) {
             grabbing = false;
         }
+        if (!mascaraRayCast.wasHit) {
 
-        bool hitSide = false;
+            //Comprovación objetos in front pa no chocar
+            bool hitSide = false;
+            float rayDistance = 0.6f;
+            if (facingRight) {
+                //ESTO FUNCIONA hit2D = Physics2D.Raycast(rb.position, Vector2.right, 1.5f, LayerMask.GetMask("Platform"));
+                hitSide = Physics.Raycast(rb.position, Vector3.right, rayDistance, LayerMask.GetMask("Platform"));
+                if (!hitSide) {
+                    hitSide = Physics.Raycast(rb.position, Vector3.right, rayDistance, LayerMask.GetMask("Enemy"));
+                }
+                if (!hitSide) {
+                    hitSide = Physics.Raycast(rb.position, Vector3.right, rayDistance, LayerMask.GetMask("Ground"));
+                }
 
-        if (facingRight) {
-            //ESTO FUNCIONA hit2D = Physics2D.Raycast(rb.position, Vector2.right, 1.5f, LayerMask.GetMask("Platform"));
-            hitSide = Physics.Raycast(rb.position, Vector3.right, 0.8f, LayerMask.GetMask("Platform"));
-            if (!hitSide) {
-                hitSide = Physics.Raycast(rb.position, Vector3.right, 0.8f, LayerMask.GetMask("Enemy"));
+                Debug.DrawLine(rb.position, rb.position + Vector3.right * rayDistance);
+                //hit2D = Physics2D.Raycast(rb.position, Vector2.right, 1.5f, groundMask);
+                //hit2D = PlayerUtilsStatic.RayCastArrayMask(rb.position, Vector2.right, 1.5f, grabbableMask);
+                //Debug.DrawRay(rb.position, Vector2.right * 1.5f);
+            } else {
+                //hit2D = Physics2D.Raycast(rb.position, Vector2.left, 1.5f, groundMask);
+                //hit2D = PlayerUtilsStatic.RayCastArrayMask(rb.position, Vector2.left, 1.5f, grabbableMask);
+                hitSide = Physics.Raycast(rb.position, Vector2.left, rayDistance, LayerMask.GetMask("Platform"));
+                if (!hitSide) {
+                    hitSide = Physics.Raycast(rb.position, Vector2.left, rayDistance, LayerMask.GetMask("Enemy"));
+                }
+                if (!hitSide) {
+                    hitSide = Physics.Raycast(rb.position, Vector2.left, rayDistance, LayerMask.GetMask("Ground"));
+                }
             }
-            if (!hitSide) {
-                hitSide = Physics.Raycast(rb.position, Vector3.right, 0.8f, LayerMask.GetMask("Ground"));
-            }
-
-            Debug.DrawLine(rb.position, rb.position + Vector3.right * 0.8f);
-            //hit2D = Physics2D.Raycast(rb.position, Vector2.right, 1.5f, groundMask);
-            //hit2D = PlayerUtilsStatic.RayCastArrayMask(rb.position, Vector2.right, 1.5f, grabbableMask);
-            //Debug.DrawRay(rb.position, Vector2.right * 1.5f);
-        } else {
-            //hit2D = Physics2D.Raycast(rb.position, Vector2.left, 1.5f, groundMask);
-            //hit2D = PlayerUtilsStatic.RayCastArrayMask(rb.position, Vector2.left, 1.5f, grabbableMask);
-            hitSide = Physics.Raycast(rb.position, Vector2.left,  0.8f, LayerMask.GetMask("Platform"));
-            if (!hitSide) {
-                hitSide = Physics.Raycast(rb.position, Vector2.left, 0.8f, LayerMask.GetMask("Enemy"));
-            }
-            if (!hitSide) {
-                hitSide = Physics.Raycast(rb.position, Vector2.left, 0.8f, LayerMask.GetMask("Ground"));
-            }
+            mascaraRayCast.wasHit = hitSide;
         }
-
-        mascaraRayCast.wasHit = hitSide;
-
 
     }
 
@@ -1850,7 +1852,7 @@ void Smash() {
     }
 
     private void OnCollisionEnter(Collision collision) {
-        Debug.Log(collision.gameObject);
+        //Debug.Log(collision.gameObject);
     }
 
     //Método que reinicia la posición del personaje y aumenta la variable de muertes en GameLogic

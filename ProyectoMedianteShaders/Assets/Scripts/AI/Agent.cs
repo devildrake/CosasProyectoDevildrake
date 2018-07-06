@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Agent : DoubleObject {
-    public Rigidbody2D rb;
+    public Rigidbody rb;
     protected State dawnState;
     protected State duskState;
     protected bool startedAI;
@@ -36,7 +36,7 @@ public class Agent : DoubleObject {
         //Debug.Log(randomVal);
         GetComponentInChildren<MeshRenderer>().gameObject.transform.rotation *= Quaternion.AngleAxis(randomVal * 90, new Vector3(0, 0, 1));
 
-        rb = GetComponent<Rigidbody2D>();
+        rb = GetComponent<Rigidbody>();
 
         rb.mass = 1;
     }

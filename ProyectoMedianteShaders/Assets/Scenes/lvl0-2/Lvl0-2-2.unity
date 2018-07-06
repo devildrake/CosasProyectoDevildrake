@@ -464,11 +464,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4293937548690808, guid: 5c9f14f1a930e7a499869ac860cb9ebc, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -7.36
+      value: -3.21
       objectReference: {fileID: 0}
     - target: {fileID: 4293937548690808, guid: 5c9f14f1a930e7a499869ac860cb9ebc, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 3.11
+      value: 6.83
       objectReference: {fileID: 0}
     - target: {fileID: 4293937548690808, guid: 5c9f14f1a930e7a499869ac860cb9ebc, type: 2}
       propertyPath: m_LocalPosition.z
@@ -565,7 +565,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   worldAssignation: 1
   brotherObject: {fileID: 1457354314}
-  dominantVelocity: {x: 0, y: 0}
+  dominantVelocity: {x: 0, y: 0, z: 0}
   isBreakable: 0
   interactuableBySmash: 0
   isPunchable: 0
@@ -580,8 +580,8 @@ MonoBehaviour:
   mustStopHere: 1
   idFirstMessage: -1
   idLastMessage: -1
-  idFirstImage: 0
-  idLastImage: 0
+  hasAnimation: 0
+  idSequence: 0
   parentFairy: {fileID: 0}
 --- !u!4 &109574792
 Transform:
@@ -2131,7 +2131,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   worldAssignation: 0
   brotherObject: {fileID: 2075470272}
-  dominantVelocity: {x: 0, y: 0}
+  dominantVelocity: {x: 0, y: 0, z: 0}
   isBreakable: 0
   interactuableBySmash: 0
   isPunchable: 0
@@ -2146,8 +2146,8 @@ MonoBehaviour:
   mustStopHere: 1
   idFirstMessage: -1
   idLastMessage: -1
-  idFirstImage: 0
-  idLastImage: 0
+  hasAnimation: 0
+  idSequence: 0
   parentFairy: {fileID: 0}
 --- !u!1001 &593523942
 Prefab:
@@ -3276,7 +3276,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &826483952
 Transform:
   m_ObjectHideFlags: 0
@@ -10902,6 +10902,10 @@ Prefab:
       propertyPath: m_Name
       value: map0-2-2 (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: e2be764df5c166440ad5c9ca17c90b69, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e2be764df5c166440ad5c9ca17c90b69, type: 3}
   m_IsPrefabParent: 0
@@ -11555,7 +11559,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   worldAssignation: 0
   brotherObject: {fileID: 1290272185}
-  dominantVelocity: {x: 0, y: 0}
+  dominantVelocity: {x: 0, y: 0, z: 0}
   isBreakable: 0
   interactuableBySmash: 0
   isPunchable: 0
@@ -11570,8 +11574,8 @@ MonoBehaviour:
   mustStopHere: 0
   idFirstMessage: -1
   idLastMessage: -1
-  idFirstImage: 0
-  idLastImage: 0
+  hasAnimation: 0
+  idSequence: 0
   parentFairy: {fileID: 0}
 --- !u!1001 &1227220915
 Prefab:
@@ -11978,7 +11982,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   worldAssignation: 1
   brotherObject: {fileID: 1215425354}
-  dominantVelocity: {x: 0, y: 0}
+  dominantVelocity: {x: 0, y: 0, z: 0}
   isBreakable: 0
   interactuableBySmash: 0
   isPunchable: 0
@@ -11993,8 +11997,8 @@ MonoBehaviour:
   mustStopHere: 0
   idFirstMessage: -1
   idLastMessage: -1
-  idFirstImage: 0
-  idLastImage: 0
+  hasAnimation: 0
+  idSequence: 0
   parentFairy: {fileID: 0}
 --- !u!4 &1290272187
 Transform:
@@ -13018,7 +13022,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   worldAssignation: 0
   brotherObject: {fileID: 109574790}
-  dominantVelocity: {x: 0, y: 0}
+  dominantVelocity: {x: 0, y: 0, z: 0}
   isBreakable: 0
   interactuableBySmash: 0
   isPunchable: 0
@@ -13033,8 +13037,8 @@ MonoBehaviour:
   mustStopHere: 1
   idFirstMessage: -1
   idLastMessage: -1
-  idFirstImage: 0
-  idLastImage: 0
+  hasAnimation: 0
+  idSequence: 0
   parentFairy: {fileID: 0}
 --- !u!1001 &1466224528
 Prefab:
@@ -13930,6 +13934,10 @@ Prefab:
       propertyPath: m_Materials.Array.data[1]
       value: 
       objectReference: {fileID: 2100000, guid: 29818af4b787f9f45b7225f7c7782dba, type: 2}
+    - target: {fileID: 100000, guid: e2be764df5c166440ad5c9ca17c90b69, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e2be764df5c166440ad5c9ca17c90b69, type: 3}
   m_IsPrefabParent: 0
@@ -21562,6 +21570,18 @@ Prefab:
       propertyPath: Path_Points.Array.data[2]
       value: 
       objectReference: {fileID: 1137443030}
+    - target: {fileID: 4257775062482168, guid: 176c35c7e5855b74884bf963b51597f6, type: 2}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4515769013879352, guid: 176c35c7e5855b74884bf963b51597f6, type: 2}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4995992212085944, guid: 176c35c7e5855b74884bf963b51597f6, type: 2}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 176c35c7e5855b74884bf963b51597f6, type: 2}
   m_IsPrefabParent: 0
@@ -21844,7 +21864,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   worldAssignation: 1
   brotherObject: {fileID: 581850267}
-  dominantVelocity: {x: 0, y: 0}
+  dominantVelocity: {x: 0, y: 0, z: 0}
   isBreakable: 0
   interactuableBySmash: 0
   isPunchable: 0
@@ -21859,8 +21879,8 @@ MonoBehaviour:
   mustStopHere: 1
   idFirstMessage: -1
   idLastMessage: -1
-  idFirstImage: 0
-  idLastImage: 0
+  hasAnimation: 0
+  idSequence: 0
   parentFairy: {fileID: 0}
 --- !u!4 &2075470274
 Transform:
@@ -22295,6 +22315,10 @@ Prefab:
     - target: {fileID: 1064851950774982, guid: 176c35c7e5855b74884bf963b51597f6, type: 2}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1975352700925836, guid: 176c35c7e5855b74884bf963b51597f6, type: 2}
+      propertyPath: m_Layer
+      value: 26
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 176c35c7e5855b74884bf963b51597f6, type: 2}

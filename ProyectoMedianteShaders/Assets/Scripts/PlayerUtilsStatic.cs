@@ -1685,20 +1685,15 @@ public static class PlayerUtilsStatic {
 
     public static bool RayCastArrayMask(Vector3 position, Vector3 direction, float distance, LayerMask[] mascaras) {
         bool hit = false;
-        bool found = false;
         int i = 0;
-        hit = Physics.Raycast(position - new Vector3(0f, 0.5f, 0f), direction, distance, mascaras[0]);
+        //hit = Physics.Raycast(position - new Vector3(0f, 0.5f, 0f), direction, distance, mascaras[0]);
 
-        while (!found && i < mascaras.Length) {
+        while (!hit && i < mascaras.Length) {
             hit = Physics.Raycast(position - new Vector3(0f, 0.5f, 0f), direction, distance, mascaras[i]);
-            if (hit) {
-                found = true;
-            } else {
+            if (!hit) {
                 i++;
             }
         }
-        return found;
+        return hit;
     }
-
-
 }

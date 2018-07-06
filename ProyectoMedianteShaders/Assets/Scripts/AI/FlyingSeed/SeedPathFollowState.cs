@@ -23,7 +23,7 @@ public class SeedPathFollowState : State {
 
 
         int currentTarget = agentScript.currentTarget;
-        a.GetComponent<Rigidbody2D>().gravityScale = 0;
+        a.GetComponent<Rigidbody>().useGravity = false;
 
         if (Vector2.Distance(agentScript.VectorPatrolPoints[currentTarget], a.transform.position) > threshold) {
             //ATENUACIÓN SE SPEED CUANDO ESTA LLEGANDO
@@ -38,7 +38,7 @@ public class SeedPathFollowState : State {
             
 
             //SET VELOCITY A CADA FRAME
-            a.gameObject.GetComponent<Rigidbody2D>().velocity = ((agentScript.VectorPatrolPoints[currentTarget]-a.transform.position).normalized * followSpeed);
+            a.gameObject.GetComponent<Rigidbody>().velocity = ((agentScript.VectorPatrolPoints[currentTarget]-a.transform.position).normalized * followSpeed);
         } else {
             if (increasing) {
                 if (currentTarget < agentScript.VectorPatrolPoints.Length - 1) {
@@ -66,6 +66,6 @@ public class SeedPathFollowState : State {
     }
 
     public override void OnExit(Agent a) {
-        a.gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
+        a.gameObject.GetComponent<Rigidbody>().velocity = new Vector2(0, 0);
     }
 }

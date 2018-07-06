@@ -13,7 +13,7 @@ public class SeedIdleState : State {
         FlyingSeed agentScript = a.GetComponent<FlyingSeed>();
 
         agentScript.orbitPos = a.gameObject.transform.position;
-        a.gameObject.GetComponent<Rigidbody2D>().gravityScale = 0;
+        a.gameObject.GetComponent<Rigidbody>().useGravity = false;
         //Debug.Log("Changing orbit pos");
         a.GetComponent<Agent>().stompedOn = false;
 
@@ -36,7 +36,7 @@ public class SeedIdleState : State {
         }
 
         if (Vector2.Distance(targetPos, agent.transform.position) > idleThreshold) {
-            agent.GetComponent<Rigidbody2D>().velocity = (targetPos - agent.transform.position).normalized * idleVelocity;
+            agent.GetComponent<Rigidbody>().velocity = (targetPos - agent.transform.position).normalized * idleVelocity;
         } else {
             rising = !rising;
         }

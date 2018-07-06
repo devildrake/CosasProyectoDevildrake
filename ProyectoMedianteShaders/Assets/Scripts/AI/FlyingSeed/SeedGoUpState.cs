@@ -11,7 +11,8 @@ public class SeedGoUpState : State {
         FlyingSeed agentScript = a.GetComponent<FlyingSeed>();
 
         agentScript.timeOnTheGround = 0;
-        a.GetComponent<Rigidbody2D>().gravityScale = 0;
+        //a.GetComponent<Rigidbody2D>().gravityScale = 0;
+        a.GetComponent<CustomGravity>().gravityScale = 0;
         agentScript.stompedOn = false;
         agentScript.detectStompObject.GetComponent<DetectStomp>().active = true;
     }
@@ -29,8 +30,8 @@ public class SeedGoUpState : State {
 
         //Lleva el tiempo establecido en el suelo, así que sube hasta alcanzar speed>1
         if (agentScript.timeOnTheGround > maxTimeOnTheGround) {
-            if (a.GetComponent<Rigidbody2D>().velocity.y < 1) {
-                a.GetComponent<Rigidbody2D>().velocity = new Vector2(0, a.GetComponent<Rigidbody2D>().velocity.y + speedUp * Time.deltaTime);
+            if (a.GetComponent<Rigidbody>().velocity.y < 1) {
+                a.GetComponent<Rigidbody>().velocity = new Vector2(0, a.GetComponent<Rigidbody>().velocity.y + speedUp * Time.deltaTime);
             } else {
                 a.SwitchState(0, new SeedIdleState());
             }

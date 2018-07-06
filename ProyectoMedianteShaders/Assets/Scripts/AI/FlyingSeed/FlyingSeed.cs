@@ -94,7 +94,7 @@ public class FlyingSeed : Agent {
 
 
     void Start() {
-        rb = GetComponent<Rigidbody2D>();
+        rb = GetComponent<Rigidbody>();
         brotherScript = brotherObject.GetComponent<FlyingSeed>();
         fallTime = 1.0f;
 
@@ -119,7 +119,7 @@ public class FlyingSeed : Agent {
         interactuableBySmash = false;
         offset = GameLogic.instance.worldOffset;
         if (worldAssignation == world.DAWN) {
-            rb.bodyType = RigidbodyType2D.Kinematic;
+            rb.isKinematic = true;
         } else {
 
         }
@@ -131,7 +131,7 @@ public class FlyingSeed : Agent {
 
     protected override void BrotherBehavior() {
         Vector3 positionWithOffset;
-        if (rb.bodyType == RigidbodyType2D.Kinematic) {
+        if (rb.isKinematic) {
             positionWithOffset = brotherObject.transform.position;
 
             if (worldAssignation == world.DAWN)
@@ -161,10 +161,10 @@ public class FlyingSeed : Agent {
 
     public override void Change() {
         if (rb == null) {
-            rb = GetComponent<Rigidbody2D>();
+            rb = GetComponent<Rigidbody>();
         }
         if (brotherScript.rb == null) {
-            brotherScript.rb = brotherObject.GetComponent<Rigidbody2D>();
+            brotherScript.rb = brotherObject.GetComponent<Rigidbody>();
         }
 
 
@@ -175,8 +175,8 @@ public class FlyingSeed : Agent {
                 dawnState = new SeedIdleState();
                 dominantVelocity = rb.velocity;
                 brotherScript.dominantVelocity = rb.velocity;
-                brotherScript.rb.bodyType = RigidbodyType2D.Dynamic;
-                rb.bodyType = RigidbodyType2D.Kinematic;
+                brotherScript.rb.isKinematic = false;
+                rb.isKinematic = true;
                 OnlyFreezeRotation();
                 brotherScript.rb.velocity = dominantVelocity;
                 rb.velocity = new Vector2(0.0f, 0.0f);
@@ -190,8 +190,8 @@ public class FlyingSeed : Agent {
                 touchedByPlayer = false;
                 dominantVelocity = brotherScript.rb.velocity;
                 brotherScript.dominantVelocity = brotherScript.rb.velocity;
-                rb.bodyType = RigidbodyType2D.Dynamic;
-                brotherScript.rb.bodyType = RigidbodyType2D.Kinematic;
+                rb.isKinematic = false;
+                brotherScript.rb.isKinematic = true;
                 brotherScript.rb.velocity = new Vector2(0.0f, 0.0f);
                 rb.velocity = dominantVelocity;
                 if (dawnState != null)

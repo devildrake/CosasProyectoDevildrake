@@ -5,13 +5,13 @@ using UnityEngine;
 public class DetectStomp : MonoBehaviour {
     public bool active;
 
-    private void OnTriggerEnter2D(Collider2D collision) {
+    private void OnTriggerEnter(Collider collision) {
         if (collision.tag == "Player") {
             GetComponentInParent<Agent>().stompedOn = true;
         }
     }
 
-    private void OnTriggerStay2D(Collider2D collision) {
+    private void OnTriggerStay(Collider collision) {
         if (collision.tag == "Player") {
             GetComponentInParent<Agent>().stompedOn = true;
         }
