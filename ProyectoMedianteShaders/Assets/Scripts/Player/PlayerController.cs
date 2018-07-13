@@ -1852,7 +1852,7 @@ void Smash() {
     }
 
     private void OnCollisionEnter(Collision collision) {
-        //Debug.Log(collision.gameObject);
+        Debug.Log(collision.gameObject);
     }
 
     //Método que reinicia la posición del personaje y aumenta la variable de muertes en GameLogic

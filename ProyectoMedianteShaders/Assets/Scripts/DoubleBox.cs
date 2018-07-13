@@ -43,6 +43,7 @@ public class DoubleBox : DoubleObject {
         groundMask = LayerMask.GetMask("Ground");
 
         rb.mass = 5000;
+        rb.constraints = RigidbodyConstraints.FreezeRotation;
 	}
 
     protected override void BrotherBehavior() {

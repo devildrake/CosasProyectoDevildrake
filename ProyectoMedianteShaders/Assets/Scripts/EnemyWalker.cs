@@ -21,6 +21,7 @@ public class EnemyWalker : DoubleObject {
     public Vector3[] VectorPatrolPoints;
     bool goingA;
     float timeSinceStompedOn;
+    float timeSinceStompedOnPlayer;
 
     //El Objeto que esta en DAWN pilla las posiciones de los patrolPoints y los destruye
     void Start() {
@@ -33,19 +34,20 @@ public class EnemyWalker : DoubleObject {
         }
 
         timeSinceStompedOn = 0.5f;
-        bounceForce = 25.5f;
+        bounceForce = 8.5f;
         velocity = 2.5f;
         InitTransformable();
         isPunchable = false;
         isBreakable = false;
         interactuableBySmash = false;
         offset = GameLogic.instance.worldOffset;
+        rb = GetComponent<Rigidbody>();
+
         if (worldAssignation == world.DAWN) {
             //GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
             rb.isKinematic = true;
         } 
 
-        rb = GetComponent<Rigidbody>();
         groundMask = LayerMask.GetMask("Ground");
 
         rb.mass = 5000;
@@ -55,7 +57,7 @@ public class EnemyWalker : DoubleObject {
     protected override void BrotherBehavior() {
         Vector3 positionWithOffset;
         //if (GetComponent<Rigidbody2D>().bodyType == RigidbodyType2D.Kinematic) {
-        if (rb.isKinematic) { 
+        if (rb.isKinematic) {
             positionWithOffset = brotherObject.transform.position;
 
             if (worldAssignation == world.DAWN)
@@ -100,7 +102,7 @@ public class EnemyWalker : DoubleObject {
 
                 OnlyFreezeRotation();
                 brotherObject.GetComponent<Rigidbody>().velocity = dominantVelocity;
-                GetComponent<Rigidbody>().velocity = new Vector3(0.0f,0.0f, 0.0f);
+                GetComponent<Rigidbody>().velocity = new Vector3(0.0f, 0.0f, 0.0f);
             }
             //Si antes del cambio estaba en dusk, pasara a hacerse dynamic y al otro kinematic, además de darle su velocidad 
             else {
@@ -111,7 +113,7 @@ public class EnemyWalker : DoubleObject {
                 brotherObject.GetComponent<Rigidbody>().isKinematic = true;
 
                 //brotherObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
-                brotherObject.GetComponent<Rigidbody>().velocity = new Vector3(0.0f, 0.0f,0.0f);
+                brotherObject.GetComponent<Rigidbody>().velocity = new Vector3(0.0f, 0.0f, 0.0f);
                 GetComponent<Rigidbody>().velocity = dominantVelocity;
             }
 
@@ -133,11 +135,11 @@ public class EnemyWalker : DoubleObject {
             RaycastHit2D hit2D;
 
             if (rb.velocity.x > 0) {
-                hit2D = Physics2D.Raycast(transform.position+new Vector3(0,0.5f,0), Vector3.right, 1, LayerMask.GetMask("Platform"));
+                hit2D = Physics2D.Raycast(transform.position + new Vector3(0, 0.5f, 0), Vector3.right, 1, LayerMask.GetMask("Platform"));
             } else {
-                hit2D = Physics2D.Raycast(transform.position+ new Vector3(0, 0.5f, 0), Vector3.left, 1, LayerMask.GetMask("Platform"));
+                hit2D = Physics2D.Raycast(transform.position + new Vector3(0, 0.5f, 0), Vector3.left, 1, LayerMask.GetMask("Platform"));
             }
-            if (hit2D){
+            if (hit2D) {
                 goingA = !goingA;
             }
 
@@ -170,8 +172,8 @@ public class EnemyWalker : DoubleObject {
     //Velocidad a 0 si es el de Dusk
     void DuskBehavior() {
         if (!dawn) {
-            rb.velocity = new Vector3(0,0, 0);
-                GetComponentInChildren<Animator>().SetBool("Jumped", timeSinceStompedOn < 0.4f);
+            rb.velocity = new Vector3(0, 0, 0);
+            GetComponentInChildren<Animator>().SetBool("Jumped", timeSinceStompedOn < 0.4f);
         }
     }
 
@@ -186,10 +188,12 @@ public class EnemyWalker : DoubleObject {
             }
         } else if (!dawn && worldAssignation == world.DUSK) {
             if (other.tag == "Player") {
-
-                timeSinceStompedOn = 0;
+                Debug.Log("A");
                 //if (other.GetComponent<Rigidbody>().velocity.y <= 0) {
-                if (timeSinceStompedOn > 0.4f) {
+                if (timeSinceStompedOnPlayer > 0.3f) {
+                    Debug.Log("B");
+                    timeSinceStompedOn = 0;
+                    timeSinceStompedOnPlayer = 0;
                     other.GetComponent<Rigidbody>().velocity = new Vector3(other.GetComponent<Rigidbody>().velocity.x, 0, 0);
                     SoundManager.Instance.PlayEvent("event:/Enemies/Bouncer/Bounce", transform);
                     other.GetComponent<Rigidbody>().AddForce(new Vector3(0, 1 * bounceForce, 0), ForceMode.Impulse);
@@ -212,38 +216,38 @@ public class EnemyWalker : DoubleObject {
     }
 
     //Si colisiona en dawn el personaje, lo mata, si lo hace en dusk con velocidad y inferior o igual a 0, bota
-    private void OnTriggerStay(Collider other) {
-        if (dawn && worldAssignation == world.DAWN) {
-            if (other.tag == "Player") {
-                other.GetComponent<PlayerController>().Kill();
-            }
-        } else if (!dawn && worldAssignation == world.DUSK) {
-            if (other.tag == "Player") {
-                if (other.GetComponent<Rigidbody>().velocity.y <= 0 && !other.GetComponent<PlayerController>().grounded && (timeSinceStompedOn > 0.4f)) {
-                    timeSinceStompedOn = 0;
-                    //Debug.Log(other.GetComponent<Rigidbody2D>());
-                    other.GetComponent<Rigidbody>().velocity = new Vector3(other.GetComponent<Rigidbody>().velocity.x, 0, 0.0f);
-                    other.GetComponent<Rigidbody>().AddForce(new Vector3(0, 1 * bounceForce, 0), ForceMode.Impulse);
-                    Debug.Log("ADDFORCE3");
+    //private void OnTriggerStay(Collider other) {
+    //    if (dawn && worldAssignation == world.DAWN) {
+    //        if (other.tag == "Player") {
+    //            other.GetComponent<PlayerController>().Kill();
+    //        }
+    //    } else if (!dawn && worldAssignation == world.DUSK) {
+    //        if (other.tag == "Player") {
+    //            if (other.GetComponent<Rigidbody>().velocity.y <= 0 && !other.GetComponent<PlayerController>().grounded && (timeSinceStompedOn > 0.4f)) {
+    //                timeSinceStompedOn = 0;
+    //                //Debug.Log(other.GetComponent<Rigidbody2D>());
+    //                other.GetComponent<Rigidbody>().velocity = new Vector3(other.GetComponent<Rigidbody>().velocity.x, 0, 0.0f);
+    //                other.GetComponent<Rigidbody>().AddForce(new Vector3(0, 1 * bounceForce, 0), ForceMode.Impulse);
+    //                Debug.Log("ADDFORCE3");
 
-                }
-            } else if (other.GetComponent<DoubleObject>() != null) {
-                if (other.GetComponent<DoubleObject>().canBounce) {
-                    timeSinceStompedOn = 0;
-                    SoundManager.Instance.PlayEvent("event:/Enemies/Bouncer/Bounce", transform);
-                    other.GetComponent<Rigidbody>().velocity = new Vector3(other.GetComponent<Rigidbody>().velocity.x, 0, 0);
-                    other.GetComponent<Rigidbody>().AddForce(new Vector3(0, other.GetComponent<Rigidbody>().mass * bounceForce, 0), ForceMode.Impulse);
-                    Debug.Log("ADDFORCE4");
+    //            }
+    //        } else if (other.GetComponent<DoubleObject>() != null) {
+    //            if (other.GetComponent<DoubleObject>().canBounce) {
+    //                timeSinceStompedOn = 0;
+    //                SoundManager.Instance.PlayEvent("event:/Enemies/Bouncer/Bounce", transform);
+    //                other.GetComponent<Rigidbody>().velocity = new Vector3(other.GetComponent<Rigidbody>().velocity.x, 0, 0);
+    //                other.GetComponent<Rigidbody>().AddForce(new Vector3(0, other.GetComponent<Rigidbody>().mass * bounceForce, 0), ForceMode.Impulse);
+    //                Debug.Log("ADDFORCE4");
 
-                }
-            }
-        }
-    }
+    //            }
+    //        }
+    //    }
+    //}
 
 
     //MËTODO PARA ARREGLAR UNA TONTERIA POR LA QUE NO VA BIEN EL WALKER(SOLO SE LLAMA UNA VES)
     void Nen() {
-        if (!once&&GameLogic.instance.transformableObjects[0]!=null) {
+        if (!once && GameLogic.instance.transformableObjects[0] != null) {
             if (GameLogic.instance.transformableObjects[0].GetComponent<DoubleObject>().dawn != dawn) {
                 dawn = !dawn;
                 once = true;
@@ -262,6 +266,11 @@ public class EnemyWalker : DoubleObject {
             if (timeSinceStompedOn < 0.5f) {
                 timeSinceStompedOn += Time.deltaTime;
             }
+
+            if (timeSinceStompedOnPlayer < 0.5f) {
+                timeSinceStompedOnPlayer += Time.deltaTime;
+            }
+
             //Este método es una mierda que he tenido que meter, es una guarrada pero hace ByPass de un problemilla que solo está en este script
             Nen();
 

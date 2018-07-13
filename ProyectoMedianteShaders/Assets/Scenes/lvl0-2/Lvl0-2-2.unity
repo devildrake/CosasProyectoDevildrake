@@ -11239,7 +11239,7 @@ SphereCollider:
   m_GameObject: {fileID: 1137443029}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
@@ -21582,7 +21582,19 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 65090986675468806, guid: 176c35c7e5855b74884bf963b51597f6,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 65676535275302918, guid: 176c35c7e5855b74884bf963b51597f6,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 65676535275302918, guid: 176c35c7e5855b74884bf963b51597f6, type: 2}
+    - {fileID: 65090986675468806, guid: 176c35c7e5855b74884bf963b51597f6, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 176c35c7e5855b74884bf963b51597f6, type: 2}
   m_IsPrefabParent: 0
 --- !u!4 &1975353025 stripped

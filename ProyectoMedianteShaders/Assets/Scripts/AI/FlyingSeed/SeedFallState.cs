@@ -35,7 +35,6 @@ public class SeedFallState : State {
 
                 agentScript.fallTimer = 0;
             } else {
-                Debug.Log(a.GetComponent<Rigidbody>().velocity.y);
             }
         } else {
             agentScript.fallTimer += Time.deltaTime;

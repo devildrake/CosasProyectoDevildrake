@@ -59,6 +59,7 @@ public class SeedPathFollowState : State {
         }
 
         if (a.touchedByPlayer) {
+            Debug.Log("Touch");
             a.SwitchState(1, new SeedBlowUpState());
         }
 
