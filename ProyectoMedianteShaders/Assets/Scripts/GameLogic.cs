@@ -23,6 +23,8 @@ public class LevelData {
 //si el jugador se encuentra en el menu 
 
 public class GameLogic : MonoBehaviour {
+    private const string GAME_VERSION = "1.0";
+
     public MessagesFairy.LANGUAGE currentLanguage;
     public int levelToLoad;
 
@@ -251,8 +253,18 @@ public class GameLogic : MonoBehaviour {
         }
         if (!LoadJSONFile(lan)) { //Se carga el JSON del idioma
             Debug.LogError("No se ha podido cargar el archivo de idioma correctamente");
-        }        
+        }
+
+        StartCoroutine("CheckVersion");
     }
+
+    #region CHECK_GAME_VERSION
+    IEnumerator CheckVersion() {
+        WWW info = new WWW("duskndawn.000webhostapp.com/game_info/game_version.php");
+        yield return info;
+        string textInfo = info.text;
+    }
+    #endregion
 
 
     //Setter de WaitAFrame
@@ -294,6 +306,7 @@ public class GameLogic : MonoBehaviour {
 
     void Start() {
         //currentLanguage = MessagesFairy.LANGUAGE.English;
+        CheckVersion();
         prevSongId = -1;
         SetWaitAFrame(false);
         SetCheckMainMenu(false);
