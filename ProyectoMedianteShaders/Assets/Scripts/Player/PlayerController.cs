@@ -132,6 +132,9 @@ public class PlayerController : DoubleObject {
 
     //Mascara de suelo (Mas tarde podria ser util, ahora esta aqui por que para gestionar grounded hice pruebas varias)
     public LayerMask groundMask;
+    LayerMask platformMask;
+    LayerMask enemyMask;
+
     public LayerMask slideMask;
     public LayerMask[] grabbableMask;
     //EventInstance punchChargeEvent;
@@ -164,6 +167,7 @@ public class PlayerController : DoubleObject {
     Animator brotherAnimator;
     //BoxCollider2D myBoxCollider;
 
+    public Transform feetPosition;
     public GameObject armTarget;
     public IK_FABRIK_UNITY arm;
     int currentArmTargetIndex=8;
@@ -183,6 +187,12 @@ public class PlayerController : DoubleObject {
 
     //Se inicializan las cosas
     void Start() {
+
+        groundMask = LayerMask.GetMask("Ground");
+        platformMask = LayerMask.GetMask("Platform");
+        enemyMask = LayerMask.GetMask("Enemy");
+
+
         customGravity = gameObject.AddComponent<CustomGravity>();
         animationSound = GetComponentInChildren<AnimationSounds>();
         grabPositions = new Vector3[4];
@@ -230,9 +240,9 @@ public class PlayerController : DoubleObject {
 
         grabbableMask = new LayerMask[3];
 
-        grabbableMask[0] = LayerMask.GetMask("Ground");
-        grabbableMask[2] = LayerMask.GetMask("Enemy");
-        grabbableMask[1] = LayerMask.GetMask("Platform");
+        grabbableMask[0] = groundMask;
+        grabbableMask[2] = enemyMask;
+        grabbableMask[1] = platformMask;
 
 
         maxSpeedY = 20;
@@ -1301,7 +1311,73 @@ public class PlayerController : DoubleObject {
             //Comprovación objetos in front pa no chocar
             bool hitSide = false;
             float rayDistance = 0.6f;
+            int i = 0;
             if (facingRight) {
+                while (!hitSide && i < 6) {
+                    switch (i) {
+                        case 0:
+                            hitSide = Physics.Raycast(rb.position, Vector3.right, rayDistance, groundMask);
+                            Debug.Log("A");
+                            break;
+                        case 1:
+                            hitSide = Physics.Raycast(rb.position, Vector3.right, rayDistance, platformMask);
+                            Debug.Log("B");
+                            break;
+                        case 2:
+                            hitSide = Physics.Raycast(rb.position, Vector3.right, rayDistance, enemyMask);
+                            Debug.Log("C");
+                            break;
+                        case 3:
+                            hitSide = Physics.Raycast(feetPosition.position, Vector3.right, rayDistance, groundMask);
+                            Debug.Log("D");
+                            break;
+                        case 4:
+                            hitSide = Physics.Raycast(feetPosition.position, Vector3.right, rayDistance, platformMask);
+                            Debug.Log("E");
+                            break;
+                        case 5:
+                            hitSide = Physics.Raycast(feetPosition.position, Vector3.right, rayDistance, enemyMask);
+                            Debug.Log("F");
+                            break;
+                        default:
+                            break;
+                    }
+                    i++;
+                }
+            } else {
+                i = 6;
+                while (!hitSide && i < 12) {
+                    switch (i) {
+                        case 6:
+                            hitSide = Physics.Raycast(rb.position, Vector2.left, rayDistance, groundMask);
+                            Debug.Log("G");
+                            break;
+                        case 7:
+                            hitSide = Physics.Raycast(rb.position, Vector2.left, rayDistance, platformMask);
+                            Debug.Log("H");
+                            break;
+                        case 8:
+                            hitSide = Physics.Raycast(rb.position, Vector2.left, rayDistance, enemyMask);
+                            Debug.Log("I");
+                            break;
+                        case 9:
+                            hitSide = Physics.Raycast(feetPosition.position, Vector3.left, rayDistance, groundMask);
+                            Debug.Log("J");
+                            break;
+                        case 10:
+                            hitSide = Physics.Raycast(feetPosition.position, Vector3.left, rayDistance, platformMask);
+                            Debug.Log("K");
+                            break;
+                        case 11:
+                            hitSide = Physics.Raycast(feetPosition.position, Vector3.left, rayDistance, enemyMask);
+                            Debug.Log("L");
+                            break;
+                    }
+                    i++;
+                }
+            }
+
+            /* if (facingRight) {
                 //ESTO FUNCIONA hit2D = Physics2D.Raycast(rb.position, Vector2.right, 1.5f, LayerMask.GetMask("Platform"));
                 hitSide = Physics.Raycast(rb.position, Vector3.right, rayDistance, LayerMask.GetMask("Platform"));
                 if (!hitSide) {
@@ -1309,6 +1385,18 @@ public class PlayerController : DoubleObject {
                 }
                 if (!hitSide) {
                     hitSide = Physics.Raycast(rb.position, Vector3.right, rayDistance, LayerMask.GetMask("Ground"));
+                }
+
+                if (feetPosition != null) {
+                    if (!hitSide) {
+                        hitSide = Physics.Raycast(feetPosition.position, Vector3.right, rayDistance, LayerMask.GetMask("Platform"));
+                    }
+                    if (!hitSide) {
+                        hitSide = Physics.Raycast(feetPosition.position, Vector3.right, rayDistance, LayerMask.GetMask("Enemy"));
+                    }
+                    if (!hitSide) {
+                        hitSide = Physics.Raycast(feetPosition.position, Vector3.right, rayDistance, LayerMask.GetMask("Ground"));
+                    }
                 }
 
                 Debug.DrawLine(rb.position, rb.position + Vector3.right * rayDistance);
@@ -1325,8 +1413,26 @@ public class PlayerController : DoubleObject {
                 if (!hitSide) {
                     hitSide = Physics.Raycast(rb.position, Vector2.left, rayDistance, LayerMask.GetMask("Ground"));
                 }
-            }
+
+
+                if (feetPosition != null) {
+                    if (!hitSide) {
+                        hitSide = Physics.Raycast(feetPosition.position, Vector3.left, rayDistance, LayerMask.GetMask("Platform"));
+                    }
+                    if (!hitSide) {
+                        hitSide = Physics.Raycast(feetPosition.position, Vector3.left, rayDistance, LayerMask.GetMask("Enemy"));
+                    }
+                    if (!hitSide) {
+                        hitSide = Physics.Raycast(feetPosition.position, Vector3.left, rayDistance, LayerMask.GetMask("Ground"));
+                    }
+                }
+
+
+            }*/
+
             mascaraRayCast.wasHit = hitSide;
+        } else {
+            Debug.Log("MascaraHit");
         }
 
     }
@@ -1416,7 +1522,8 @@ public class PlayerController : DoubleObject {
         }
 
         //Si se suelta el botón izquierdo del ratón y se puede dashear, se desactiva la slowMotion y se modifica el timeScale además de poner en false canDash
-        if (/*Input.GetMouseButtonUp(0)*/!InputManager.instance.dashButton && InputManager.instance.prevDashButton && canDash && dashTimer > dashCoolDown) {
+        if (/*Input.GetMouseButtonUp(0)*/
+            !InputManager.instance.dashButton && InputManager.instance.prevDashButton && canDash && dashTimer > dashCoolDown) {
             if (leftPressed&&!grounded) {
                 GameLogic.instance.SetTimeScaleLocal(1.0f);
 
@@ -1479,10 +1586,10 @@ public class PlayerController : DoubleObject {
 
         if (/*Input.GetKeyDown(KeyCode.LeftControl)*/InputManager.instance.crawlButton&&!InputManager.instance.prevCrawlButton) {
             crawling = true;
-            Vector3 newSize = boxCollider.size;
-            newSize.y /= 2;
-            Vector3 newCenter= boxCollider.center;
-            newCenter.y = newSize.y / 2;
+            //Vector3 newSize = boxCollider.size;
+            //newSize.y /= 2;
+            //Vector3 newCenter= boxCollider.center;
+            //newCenter.y = newSize.y / 2;
 
 
 
@@ -1496,6 +1603,15 @@ public class PlayerController : DoubleObject {
 
             crawling = false;
         }
+
+        if (crawling) {
+            boxCollider.center = new Vector3(boxCollider.center.x, -0.3f, boxCollider.center.z);
+            boxCollider.size = new Vector3(boxCollider.size.x, 3.1f, boxCollider.size.z);
+        } else {
+            boxCollider.center = originalCenterCollider;
+            boxCollider.size = originalSizeCollider;
+        }
+
         //Empieza el deflect
         if (/*Input.GetMouseButtonDown(1)*/InputManager.instance.deflectButton && !InputManager.instance.prevDeflectButton && objectsInDeflectArea.Count!=0) {
             if (PSdawnDeflectCast != null) {
@@ -1841,14 +1957,14 @@ void Smash() {
         //imagenDusk = Resources.Load<Sprite>("Presentacion/DuskSprites/Dusk"); ;
         //dashClip = Resources.Load<AudioClip>("Sounds/Dash");
         //jumpClip = Resources.Load<AudioClip>("Sounds/Jump");
-        smashClip = Resources.Load<AudioClip>("Sounds/Smash");
-        crawlClip = Resources.Load<AudioClip>("Sounds/CrawlWalk");
+        //smashClip = Resources.Load<AudioClip>("Sounds/Smash");
+        //crawlClip = Resources.Load<AudioClip>("Sounds/CrawlWalk");
         //walkClip = Resources.Load<AudioClip>("Sounds/WalkLoop");
-        deflectClip = Resources.Load<AudioClip>("Sounds/Deflect");
-        grabClip = Resources.Load<AudioClip>("Sounds/Grab");
-        slideClip = Resources.Load<AudioClip>("Sounds/Slide");
+        //deflectClip = Resources.Load<AudioClip>("Sounds/Deflect");
+        //grabClip = Resources.Load<AudioClip>("Sounds/Grab");
+        //slideClip = Resources.Load<AudioClip>("Sounds/Slide");
         //dieClip = Resources.Load<AudioClip>("Sounds/Die");
-        punchClip = Resources.Load<AudioClip>("Sounds/Punch");
+        //punchClip = Resources.Load<AudioClip>("Sounds/Punch");
     }
 
     private void OnCollisionEnter(Collision collision) {

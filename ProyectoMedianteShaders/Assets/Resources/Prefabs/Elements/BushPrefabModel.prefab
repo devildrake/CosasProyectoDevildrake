@@ -653,7 +653,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1601903697374184}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 5.2181377, y: -2.0777364, z: -3.6576562}
+  m_LocalPosition: {x: -16.621702, y: -10.107362, z: -3.6476562}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4874228405649338}
@@ -1214,7 +1214,7 @@ Rigidbody:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1513173576210544}
   serializedVersion: 2
-  m_Mass: 1
+  m_Mass: 5000
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
@@ -1244,13 +1244,13 @@ Rigidbody:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1962649687257376}
   serializedVersion: 2
-  m_Mass: 1
+  m_Mass: 5000
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 122
+  m_Constraints: 126
   m_CollisionDetection: 0
 --- !u!65 &65142036783146172
 BoxCollider:
@@ -1262,8 +1262,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.53443915, y: 3.2662485, z: 0.5691828}
-  m_Center: {x: -0.058514073, y: -1.777758, z: -0.009951485}
+  m_Size: {x: 0.53443915, y: 2.9200158, z: 0.56918275}
+  m_Center: {x: -0.058514263, y: -1.9508741, z: -0.009951604}
 --- !u!65 &65250445684545746
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -1286,8 +1286,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1, y: 0.5990315, z: 1}
+  m_Center: {x: -0.00000017887136, y: -0.2004844, z: -0.0000001709268}
 --- !u!65 &65501937540609750
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -1347,7 +1347,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   worldAssignation: 0
   brotherObject: {fileID: 1000486733728296}
-  dominantVelocity: {x: 0, y: 0}
+  dominantVelocity: {x: 0, y: 0, z: 0}
   isBreakable: 0
   interactuableBySmash: 0
   isPunchable: 0
@@ -1371,7 +1371,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   worldAssignation: 1
   brotherObject: {fileID: 1513173576210544}
-  dominantVelocity: {x: 0, y: 0}
+  dominantVelocity: {x: 0, y: 0, z: 0}
   isBreakable: 0
   interactuableBySmash: 0
   isPunchable: 0
@@ -1450,7 +1450,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 1019718155
+  randomSeed: -274576745
   InitialModule:
     serializedVersion: 3
     enabled: 1
