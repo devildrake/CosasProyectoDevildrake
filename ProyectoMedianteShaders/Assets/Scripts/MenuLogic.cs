@@ -431,6 +431,9 @@ public class MenuLogic : MonoBehaviour {
         else {
             print("Falta asignar URL al botón");
         }
+        if(menuState == 4) {
+            CloseNewVersion();
+        }
     }
 
     public void CloseNewVersion() {

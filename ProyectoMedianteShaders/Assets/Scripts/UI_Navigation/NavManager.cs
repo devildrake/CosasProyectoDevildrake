@@ -5,15 +5,17 @@ using UnityEngine;
 
 public class NavManager : MonoBehaviour {
 
-
-	// Use this for initialization
+    bool block = false;
+    
 	void Start () {
-		
-	}
+
+    }
 	
 	// Update is called once per frame
-	void Update () {
-		
+	void Update (){
+        if (!block) {
+
+        }
 	}
 
     private void MouseOff() {
