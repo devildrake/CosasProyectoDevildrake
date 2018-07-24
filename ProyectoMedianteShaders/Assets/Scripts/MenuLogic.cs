@@ -39,6 +39,7 @@ public class MenuLogic : MonoBehaviour {
      * menuState = -2 --> Splash del equipo.
      * menuState = -1 --> FadeIn del juego.
      * menuState = 0 --> Pantalla de pulsa cualquier tecla para continuar
+     * menuState = 4 --> Nueva version de juego encontrada
      * menuState = 1 --> Pantalla jugar/salir
      * menuState = 2 --> Opciones abiertas
      * menuState = 3 --> Control de errores para salir
@@ -59,31 +60,38 @@ public class MenuLogic : MonoBehaviour {
     private bool upAlpha = true, downAlpha = true;
     private int delayCounter;
     private EventSystem eventSystem; //referencia al event system para highlightear los botones del canvas.
+    public GameObject newVersionCanvas; //Referencia al canvas que informa que hay una nueva version del juego.
 
     // Use this for initialization
     void Start() {
         auxTimer = 0;
         GameLogic.instance.SetTimeScaleLocal(0.5f);
         GameLogic.instance.isPaused = false;
-        canvas.gameObject.SetActive(false);
+        
         canvasGroup = canvas.GetComponent<CanvasGroup>();
+        mainCanvasGroup = mainCanvas.GetComponent<CanvasGroup>();
+        eventSystem = FindObjectOfType<EventSystem>();
         canvasGroup.alpha = 1;
         canvasFadeSplash.alpha = 0;
         menuState = -2;
         timer = 0f;
         timerM2 = 0f;
         timeToBlink = 0.4f;
-        pressAnyKeyObj.SetActive(false);
         delayCounter = 0;
         selected = 0;
-        newOptionsCanvas.SetActive(false);
-        GameLogic.instance.transformableObjects.Add(gameObject);
-        InputManager.UnBlockInput();
-        mainCanvas.SetActive(false);
-        eventSystem = FindObjectOfType<EventSystem>();
         controlErroresSelected = 0;
-        mainCanvasGroup = mainCanvas.GetComponent<CanvasGroup>();
         mainCanvasGroup.alpha = 0.0f;
+
+        canvas.gameObject.SetActive(false);
+        newOptionsCanvas.SetActive(false);
+        pressAnyKeyObj.SetActive(false);
+        mainCanvas.SetActive(false);
+        newVersionCanvas.SetActive(false);
+        controlErrores.SetActive(false);
+
+        GameLogic.instance.transformableObjects.Add(gameObject);
+
+        InputManager.UnBlockInput();
     }
 
     // Update is called once per frame
@@ -123,12 +131,20 @@ public class MenuLogic : MonoBehaviour {
             case 0:
                 Blink(pressAnyKeyObj);
                 if (Input.anyKeyDown) {
-                    menuState = 1;
+                    menuState = 4;
                     pressAnyKeyObj.SetActive(false);
                     mainCanvas.SetActive(true);
                 }
                 break;
 
+            case 4:
+                if (GameLogic.instance.newVersion) {
+                    newVersionCanvas.SetActive(true);
+                }
+                else {
+                    menuState = 1;
+                }
+                break;
             case 1:
                 if(mainCanvasGroup.alpha < 1.0f) {
                     mainCanvasGroup.alpha += Time.deltaTime*2;
@@ -415,6 +431,11 @@ public class MenuLogic : MonoBehaviour {
         else {
             print("Falta asignar URL al botón");
         }
+    }
+
+    public void CloseNewVersion() {
+        newVersionCanvas.SetActive(false);
+        menuState = 1;
     }
     #endregion
 }

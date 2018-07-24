@@ -130,6 +130,8 @@ public class GameLogic : MonoBehaviour {
     bool dawn = false;
     float dawnValue = 0;
 
+    public bool newVersion = false; //Si hay una nueva versión más actualizada del juego se pone a true para que se lance un aviso.
+
     ///////////////////////////////OPCIONES///////////////////////////
     ///////////////////////////////OPCIONES///////////////////////////
     ///////////////////////////////OPCIONES///////////////////////////
@@ -149,7 +151,7 @@ public class GameLogic : MonoBehaviour {
 
     [HideInInspector] public Dictionary<string, string> languageData; //Se guarda la info leida desde el archivo json en formato key-value
 
-
+    #region OPTIONS
     /*
      * Conjunto de metodos que se llamaran al cambiar las opciones de juego
      */
@@ -167,6 +169,7 @@ public class GameLogic : MonoBehaviour {
     //=====================FINAL DE METODOS DE OPCIONES========================
     //=====================FINAL DE METODOS DE OPCIONES========================
     //=====================FINAL DE METODOS DE OPCIONES========================
+    #endregion
 
     public void KillPlayer() {
         currentPlayer.Kill();
@@ -258,11 +261,16 @@ public class GameLogic : MonoBehaviour {
         StartCoroutine("CheckVersion");
     }
 
-    #region CHECK_GAME_VERSION
+        #region CHECK_GAME_VERSION
+    //Comprueva la ultima version del juego, si hay otra mas actual se lanzará un aviso
     IEnumerator CheckVersion() {
         WWW info = new WWW("duskndawn.000webhostapp.com/game_info/game_version.php");
         yield return info;
         string textInfo = info.text;
+
+        if (!textInfo.Equals(GAME_VERSION)) {
+            newVersion = true;
+        }
     }
     #endregion
 
