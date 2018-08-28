@@ -9,7 +9,7 @@ public class JSON_Reader : EditorWindow {
     public LocalizationData localizationData;
     private Vector2 scrollPos;
 
-    [MenuItem("Window/JSON")]
+    [MenuItem("Tools/JSON Reader (Language)")]
     public static void ShowWindow() {
         EditorWindow.GetWindow(typeof(JSON_Reader));
     }
@@ -44,7 +44,7 @@ public class JSON_Reader : EditorWindow {
     }
 
     private void LoadData() {
-        string path = EditorUtility.OpenFilePanel("Selecciona el archivo", Application.streamingAssetsPath, "json");
+        string path = EditorUtility.OpenFilePanel("Selecciona el archivo", Application.streamingAssetsPath + "/lan", "json");
 
         if (!string.IsNullOrEmpty(path)) {
             string jsonData = File.ReadAllText(path);
@@ -53,7 +53,7 @@ public class JSON_Reader : EditorWindow {
     }
 
     private void SaveData() {
-        string path = EditorUtility.SaveFilePanel("Guardar", Application.streamingAssetsPath, "", "json");
+        string path = EditorUtility.SaveFilePanel("Guardar", Application.streamingAssetsPath + "/lan", "", "json");
 
         if (!string.IsNullOrEmpty(path)) {
             string jsonData = JsonUtility.ToJson(localizationData);
