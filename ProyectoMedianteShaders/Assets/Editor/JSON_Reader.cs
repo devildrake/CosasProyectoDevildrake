@@ -58,7 +58,7 @@ public class JSON_Reader : EditorWindow {
     }
 
     private void SaveData() {
-        string path = EditorUtility.SaveFilePanel("Guardar", Application.streamingAssetsPath + "/lan", "", "json");
+        string path = EditorUtility.SaveFilePanel("Guardar", Application.streamingAssetsPath + "/lan", fileNameOpened, "json");
         string[] s = path.Split(new char[] { '/', '.' });
         fileNameOpened = s[s.Length - 2];
 

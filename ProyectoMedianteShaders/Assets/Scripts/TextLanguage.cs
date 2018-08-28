@@ -10,6 +10,7 @@ public class TextLanguage : MonoBehaviour {
 
 	void Start () {
         t = GetComponent<Text>();
+        t.text = "[TEXT NOT ASSIGNED]";
         t.text = GameLogic.instance.languageData[key];
     }
 
