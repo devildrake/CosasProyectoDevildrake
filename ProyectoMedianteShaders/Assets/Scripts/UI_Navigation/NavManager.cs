@@ -12,8 +12,8 @@ public class NavManager : MonoBehaviour {
                                //cuando se vuelven a usar las flechas se vuelve a poner true
     private InputManager im;
 
-    public NavMenuItem initialItem;
-    private NavMenuItem currentItem;
+    public NavItem initialItem;
+    private NavItem currentItem;
     private EventSystem eventSystem;
 
     private Vector3 pMousePos;
@@ -26,6 +26,8 @@ public class NavManager : MonoBehaviour {
         currentItem = initialItem;
         MouseOff();
         ray = GetComponent<GraphicRaycaster>();
+        eventSystem = FindObjectOfType<EventSystem>();
+        InputManager.UnBlockInput();
     }
 	
 	// Update is called once per frame
@@ -38,6 +40,7 @@ public class NavManager : MonoBehaviour {
             (im.horizontalAxis2 > 0 && im.prevHorizontalAxis2 == 0) ||
             (im.rightKey && !im.prevRightKey)) {
             currentItem = currentItem.RightElement();
+            MouseOff();
             kbUse = true;
         }
 
@@ -46,6 +49,7 @@ public class NavManager : MonoBehaviour {
             (im.horizontalAxis2 < 0 && im.prevHorizontalAxis2 == 0) ||
             (im.leftKey && !im.prevLeftKey)) {
             currentItem = currentItem.LeftElement();
+            MouseOff();
             kbUse = true;
         }
         //ARRIBA
@@ -53,6 +57,7 @@ public class NavManager : MonoBehaviour {
             (im.verticalAxis2 < 0 && im.prevVerticalAxis2 == 0) ||
             (im.upKey && !im.prevUpKey)) {
             currentItem = currentItem.UpElement();
+            MouseOff();
             kbUse = true;
         }
         //ABAJO
@@ -60,6 +65,7 @@ public class NavManager : MonoBehaviour {
             (im.verticalAxis2 > 0 && im.prevVerticalAxis2 == 0) ||
             (im.downKey && !im.prevDownKey)) {
             currentItem = currentItem.DownElement();
+            MouseOff();
             kbUse = true;
         }
         #endregion
@@ -75,15 +81,17 @@ public class NavManager : MonoBehaviour {
             List<RaycastResult> results = new List<RaycastResult>();
             ray.Raycast(ped, results);
 
-            if (!results[0].Equals(pRaycastTarget)) {
-                NavMenuItem item = results[0].gameObject.GetComponent<NavMenuItem>();
-                if (item != null) {
-                    currentItem = item;
+            if (results.Count != 0) {
+                if (!results[0].Equals(pRaycastTarget)) {
+                    NavItem item = results[0].gameObject.GetComponent<NavItem>();
+                    if (item != null) {
+                        currentItem = item;
+                    }
                 }
             }
 
             eventSystem.SetSelectedGameObject(currentItem.gameObject);
-            pRaycastTarget = results[0];
+            if(results.Count != 0 && !kbUse) pRaycastTarget = results[0];
         }
     }
 
@@ -96,14 +104,20 @@ public class NavManager : MonoBehaviour {
     }
 
     private void MouseOff() {
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = false;
+        StartCoroutine(DisableMouse());
         kbUse = true;
     }
 
     private void MouseOn() {
         Cursor.visible = true;
         kbUse = false;
+    }
+
+    IEnumerator DisableMouse() {
+        Cursor.visible = false;
+        yield return null;
+        Cursor.lockState = CursorLockMode.Locked;
+        yield return null;
+        Cursor.lockState = CursorLockMode.None;
     }
 }

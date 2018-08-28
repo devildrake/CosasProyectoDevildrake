@@ -605,7 +605,7 @@ public class GameLogic : MonoBehaviour {
                                         }
                                     }
                                 } else {
-                                    Debug.Log("No encuentra players");
+                                    //Debug.Log("No encuentra players");
                                 }
                             }
                         }

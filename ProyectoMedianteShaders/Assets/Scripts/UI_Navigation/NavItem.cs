@@ -4,22 +4,26 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class NavMenuItem : MonoBehaviour {
+public class NavItem : MonoBehaviour {
     //downItem2 porque las setas pueden bajar a dos opciones dependiendo que está desplegado
     //upItem2 porque los botones de aceptar y cancelar tambien pueden ir hacia arriba a dos sitios.
-    public NavMenuItem upItem, upItem2, downItem, downItem2, rightItem, leftItem;
+    public NavItem upItem, upItem2, downItem, downItem2, rightItem, leftItem;
     public GameObject highlight;
     public Selectable selectableElement1, selectableElement2; //mis sliders tienen dos botones, para ir a izquierda o derecha.
-    public enum MENU_ITEM_TYPE {SHROOM_BUTTON, BUTTON, SLIDER, MY_SLIDER, TOGGLE};
-    public enum OPTION_TYPE {SELECTOR, VIDEO, AUDIO};
+
+    public enum MENU_ITEM_TYPE { SHROOM_BUTTON, BUTTON, SLIDER, MY_SLIDER, TOGGLE };
+    public enum OPTION_TYPE { SELECTOR, VIDEO, AUDIO };
+
     public MENU_ITEM_TYPE myType;
     public OPTION_TYPE optionsPart;
-    private Button button1, button2;
-    private Slider slider;
-    private Toggle toggle;
+    protected Button button1, button2;
+    protected Slider slider;
+    protected Toggle toggle;
 
-    private GameObject eventSystem; //Referencia al event system para poder deseleccionar los botones de aceptar y cancelar.
+    //private GameObject eventSystem; //Referencia al event system para poder deseleccionar los botones de aceptar y cancelar.
     private EventSystem deselectButtons;
+
+    public bool test;
 
     private void Awake() {
         if (highlight != null) {
@@ -54,7 +58,7 @@ public class NavMenuItem : MonoBehaviour {
 
     //to = 0 --> si tiene que bajar a la primera opcion de audio o a cualquier otro item
     //to = 1 --> si tiene que bajar a la primera opcion de video
-    public NavMenuItem DownElement(int to = 0) {
+    public NavItem DownElement(int to = 0) {
         if (to == 0) {
             if (downItem != null) {
                 if (myType == MENU_ITEM_TYPE.BUTTON) {
@@ -101,7 +105,7 @@ public class NavMenuItem : MonoBehaviour {
 
     //to = 0 --> funcionamiento normal
     //to = 1 --> Tiene que subir a la ultima opcion de video.
-    public NavMenuItem UpElement(int to = 0) {
+    public NavItem UpElement(int to = 0) {
         if (to == 0) {
             if (upItem != null) {
                 if (myType == MENU_ITEM_TYPE.BUTTON) {
@@ -134,7 +138,7 @@ public class NavMenuItem : MonoBehaviour {
         return this;
     }
 
-    public NavMenuItem RightElement() {
+    public NavItem RightElement() {
         if(rightItem != null) {
             if(myType == MENU_ITEM_TYPE.BUTTON) {
                 deselectButtons.SetSelectedGameObject(null);
@@ -153,7 +157,7 @@ public class NavMenuItem : MonoBehaviour {
         return this;
     }
 
-    public NavMenuItem LeftElement() {
+    public NavItem LeftElement() {
         if (leftItem != null) {
             if (myType == MENU_ITEM_TYPE.BUTTON) {
                 deselectButtons.SetSelectedGameObject(null);
