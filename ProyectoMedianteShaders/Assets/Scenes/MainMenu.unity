@@ -5929,7 +5929,7 @@ MonoBehaviour:
   selectableElement2: {fileID: 0}
   myType: 1
   optionsPart: 0
-  test: 0
+  navType: 0
 --- !u!1 &868935981
 GameObject:
   m_ObjectHideFlags: 0
@@ -6356,7 +6356,7 @@ MonoBehaviour:
   selectableElement2: {fileID: 0}
   myType: 1
   optionsPart: 0
-  test: 0
+  navType: 0
 --- !u!1 &925317142
 GameObject:
   m_ObjectHideFlags: 0
@@ -10724,7 +10724,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1430484896
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12569,6 +12569,10 @@ Prefab:
     - target: {fileID: 224007451543015238, guid: c951e302b8ff0554daac7727efd12e38,
         type: 2}
       propertyPath: m_Pivot.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1046609279788006, guid: c951e302b8ff0554daac7727efd12e38, type: 2}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

@@ -11,11 +11,13 @@ public class NavItem : MonoBehaviour {
     public GameObject highlight;
     public Selectable selectableElement1, selectableElement2; //mis sliders tienen dos botones, para ir a izquierda o derecha.
 
+    public enum NAV_TYPE { SIMPLE, MAIN_MENU, OPTIONS }
     public enum MENU_ITEM_TYPE { SHROOM_BUTTON, BUTTON, SLIDER, MY_SLIDER, TOGGLE };
     public enum OPTION_TYPE { SELECTOR, VIDEO, AUDIO };
 
     public MENU_ITEM_TYPE myType;
     public OPTION_TYPE optionsPart;
+    public NAV_TYPE navType;
     protected Button button1, button2;
     protected Slider slider;
     protected Toggle toggle;
@@ -23,36 +25,42 @@ public class NavItem : MonoBehaviour {
     //private GameObject eventSystem; //Referencia al event system para poder deseleccionar los botones de aceptar y cancelar.
     private EventSystem deselectButtons;
 
-    public bool test;
-
     private void Awake() {
         if (highlight != null) {
             highlight.SetActive(false);
         }
+
+        NavItemBehavior n = new NavItem_Simple();
+        n.Try();
     }
 
     void Start () {
         deselectButtons = FindObjectOfType<EventSystem>();
         //deselectButtons.GetComponent<EventSystem>();
-        
-        //se coge la referencia del interactuable en qüestion
-        switch (myType) {
-            case MENU_ITEM_TYPE.BUTTON:
-                button1 = selectableElement1.GetComponent<Button>();
-                break;
-            case MENU_ITEM_TYPE.TOGGLE:
-                toggle = selectableElement1.GetComponent<Toggle>();
-                break;
-            case MENU_ITEM_TYPE.SLIDER:
-                slider = selectableElement1.GetComponent<Slider>();
-                break;
-            case MENU_ITEM_TYPE.MY_SLIDER:
-                button1 = selectableElement1.GetComponent<Button>();
-                button2 = selectableElement2.GetComponent<Button>();
-                break;
-            case MENU_ITEM_TYPE.SHROOM_BUTTON:
-                button1 = selectableElement1.GetComponent<Button>();
-                break;
+        if (navType == NAV_TYPE.SIMPLE) {
+            myType = MENU_ITEM_TYPE.BUTTON;
+            button1 = GetComponent<Button>();
+        }
+        else {
+            //se coge la referencia del interactuable en cuestion
+            switch (myType) {
+                case MENU_ITEM_TYPE.BUTTON:
+                    button1 = selectableElement1.GetComponent<Button>();
+                    break;
+                case MENU_ITEM_TYPE.TOGGLE:
+                    toggle = selectableElement1.GetComponent<Toggle>();
+                    break;
+                case MENU_ITEM_TYPE.SLIDER:
+                    slider = selectableElement1.GetComponent<Slider>();
+                    break;
+                case MENU_ITEM_TYPE.MY_SLIDER:
+                    button1 = selectableElement1.GetComponent<Button>();
+                    button2 = selectableElement2.GetComponent<Button>();
+                    break;
+                case MENU_ITEM_TYPE.SHROOM_BUTTON:
+                    button1 = selectableElement1.GetComponent<Button>();
+                    break;
+            }
         }
 	}
 
