@@ -24,14 +24,24 @@ public class NavItem : MonoBehaviour {
 
     //private GameObject eventSystem; //Referencia al event system para poder deseleccionar los botones de aceptar y cancelar.
     private EventSystem deselectButtons;
+    private NavItemBehavior i;
 
     private void Awake() {
         if (highlight != null) {
             highlight.SetActive(false);
         }
 
-        NavItemBehavior n = new NavItem_Simple();
-        n.Try();
+        switch (navType){
+            case NAV_TYPE.SIMPLE:
+                i = new NavItem_Simple();
+                break;
+            case NAV_TYPE.OPTIONS:
+                i = new NavItem_Options();
+                break;
+            case NAV_TYPE.MAIN_MENU:
+                i = new NavItem_MainMenu();
+                break;
+        }
     }
 
     void Start () {
@@ -67,121 +77,156 @@ public class NavItem : MonoBehaviour {
     //to = 0 --> si tiene que bajar a la primera opcion de audio o a cualquier otro item
     //to = 1 --> si tiene que bajar a la primera opcion de video
     public NavItem DownElement(int to = 0) {
-        if (to == 0) {
-            if (downItem != null) {
-                if (myType == MENU_ITEM_TYPE.BUTTON) {
-                    deselectButtons.SetSelectedGameObject(null);
+        switch (navType) {
+            case NAV_TYPE.SIMPLE:
+                return i.DownElement(0,this);
+            case NAV_TYPE.OPTIONS:
+                if (to == 0) {
+                    if (downItem != null) {
+                        if (myType == MENU_ITEM_TYPE.BUTTON) {
+                            deselectButtons.SetSelectedGameObject(null);
+                        }
+                        else {
+                            highlight.SetActive(false);
+                        }
+                        if (downItem.myType == MENU_ITEM_TYPE.BUTTON) {
+                            downItem.button1.Select();
+                        }
+                        else {
+                            downItem.highlight.SetActive(true);
+                        }
+
+                        return downItem;
+                    }
+                    else {
+                        return this;
+                    }
                 }
-                else {
-                    highlight.SetActive(false);
+                else if (to == 1) {
+                    if (downItem2 != null) {
+                        if (myType == MENU_ITEM_TYPE.BUTTON) {
+                            deselectButtons.SetSelectedGameObject(null);
+                        }
+                        else {
+                            highlight.SetActive(false);
+                        }
+                        if (downItem2.myType == MENU_ITEM_TYPE.BUTTON) {
+                            downItem2.button1.Select();
+                        }
+                        else {
+                            downItem2.highlight.SetActive(true);
+                        }
+                        return downItem2;
+                    }
+                    else {
+                        return this;
+                    }
                 }
-                if (downItem.myType == MENU_ITEM_TYPE.BUTTON) {
-                    downItem.button1.Select();
-                }
-                else {
-                    downItem.highlight.SetActive(true);
-                }
-                
-                return downItem;
-            }
-            else {
                 return this;
-            }
+            default:
+                return null;
         }
-        else if(to == 1) {
-            if(downItem2 != null) {
-                if (myType == MENU_ITEM_TYPE.BUTTON) {
-                    deselectButtons.SetSelectedGameObject(null);
-                }
-                else {
-                    highlight.SetActive(false);
-                }
-                if (downItem2.myType == MENU_ITEM_TYPE.BUTTON) {
-                    downItem2.button1.Select();
-                }
-                else {
-                    downItem2.highlight.SetActive(true);
-                }
-                return downItem2;
-            }
-            else {
-                return this;
-            }
-        }
-        return this;
     }
 
     //to = 0 --> funcionamiento normal
     //to = 1 --> Tiene que subir a la ultima opcion de video.
     public NavItem UpElement(int to = 0) {
-        if (to == 0) {
-            if (upItem != null) {
-                if (myType == MENU_ITEM_TYPE.BUTTON) {
-                    deselectButtons.SetSelectedGameObject(null);
-                }
-                else {
-                    highlight.SetActive(false);
-                }
-                upItem.highlight.SetActive(true);
-                return upItem;
-            }
-            else {
-                return this;
-            }
-        }
-        else {
-            if(upItem2 != null) {
-                //solo necesito comprobar el mio porque si voy hacia arriba no puede haber otro botón al que le pueda hacer Select()
-                if (myType == MENU_ITEM_TYPE.BUTTON) {
-                    deselectButtons.SetSelectedGameObject(null);
-                }
-                else {
-                    highlight.SetActive(false);
-                }
-                upItem2.highlight.SetActive(true);
-                return upItem2;
-            }
+        switch (navType) {
+            case NAV_TYPE.SIMPLE:
+                return i.UpElement(0, this);
 
+            case NAV_TYPE.OPTIONS:
+                if (to == 0) {
+                    if (upItem != null) {
+                        if (myType == MENU_ITEM_TYPE.BUTTON) {
+                            deselectButtons.SetSelectedGameObject(null);
+                        }
+                        else {
+                            highlight.SetActive(false);
+                        }
+                        upItem.highlight.SetActive(true);
+                        return upItem;
+                    }
+                    else {
+                        return this;
+                    }
+                }
+                else {
+                    if (upItem2 != null) {
+                        //solo necesito comprobar el mio porque si voy hacia arriba no puede haber otro botón al que le pueda hacer Select()
+                        if (myType == MENU_ITEM_TYPE.BUTTON) {
+                            deselectButtons.SetSelectedGameObject(null);
+                        }
+                        else {
+                            highlight.SetActive(false);
+                        }
+                        upItem2.highlight.SetActive(true);
+                        return upItem2;
+                    }
+
+                }
+                return this;
+
+            default:
+                return null;
         }
-        return this;
+        
     }
 
     public NavItem RightElement() {
-        if(rightItem != null) {
-            if(myType == MENU_ITEM_TYPE.BUTTON) {
-                deselectButtons.SetSelectedGameObject(null);
-            }
-            else {
-                highlight.SetActive(false);
-            }
-            if(rightItem.myType == MENU_ITEM_TYPE.BUTTON) {
-                rightItem.button1.Select();
-            }
-            else {
-                rightItem.highlight.SetActive(true);
-            }
-            return rightItem;
+        switch (navType) {
+            case NAV_TYPE.SIMPLE:
+                return i.RightElement(this);
+
+            case NAV_TYPE.OPTIONS:
+                if (rightItem != null) {
+                    if (myType == MENU_ITEM_TYPE.BUTTON) {
+                        deselectButtons.SetSelectedGameObject(null);
+                    }
+                    else {
+                        highlight.SetActive(false);
+                    }
+                    if (rightItem.myType == MENU_ITEM_TYPE.BUTTON) {
+                        rightItem.button1.Select();
+                    }
+                    else {
+                        rightItem.highlight.SetActive(true);
+                    }
+                    return rightItem;
+                }
+                return this;
+
+            default:
+                return null;
         }
-        return this;
     }
 
     public NavItem LeftElement() {
-        if (leftItem != null) {
-            if (myType == MENU_ITEM_TYPE.BUTTON) {
-                deselectButtons.SetSelectedGameObject(null);
-            }
-            else {
-                highlight.SetActive(false);
-            }
-            if (leftItem.myType == MENU_ITEM_TYPE.BUTTON) {
-                leftItem.button1.Select();
-            }
-            else {
-                leftItem.highlight.SetActive(true);
-            }
-            return leftItem;
+        switch (navType) {
+            case NAV_TYPE.SIMPLE:
+                return i.LeftElement(this);
+            case NAV_TYPE.OPTIONS:
+                if (leftItem != null) {
+                    if (myType == MENU_ITEM_TYPE.BUTTON) {
+                        deselectButtons.SetSelectedGameObject(null);
+                    }
+                    else {
+                        highlight.SetActive(false);
+                    }
+                    if (leftItem.myType == MENU_ITEM_TYPE.BUTTON) {
+                        leftItem.button1.Select();
+                    }
+                    else {
+                        leftItem.highlight.SetActive(true);
+                    }
+                    return leftItem;
+                }
+                return this;
+
+            default:
+                return null;
         }
-        return this;
+        
     }
 
     public void InteractClick() {

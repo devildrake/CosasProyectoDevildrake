@@ -2,15 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NavItem_MainMenu : MonoBehaviour {
+public class NavItem_MainMenu : NavItemBehavior {
+    public override NavItem DownElement(int i = 0, NavItem item = null) {
+        throw new System.NotImplementedException();
+    }
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    public override NavItem LeftElement(NavItem item) {
+        throw new System.NotImplementedException();
+    }
+
+    public override NavItem RightElement(NavItem item) {
+        throw new System.NotImplementedException();
+    }
+
+    public override NavItem UpElement(int i = 0, NavItem item = null) {
+        throw new System.NotImplementedException();
+    }
 }

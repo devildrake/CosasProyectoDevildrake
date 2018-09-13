@@ -104,20 +104,14 @@ public class NavManager : MonoBehaviour {
     }
 
     private void MouseOff() {
-        StartCoroutine(DisableMouse());
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.lockState = CursorLockMode.None;
         kbUse = true;
     }
 
     private void MouseOn() {
         Cursor.visible = true;
         kbUse = false;
-    }
-
-    IEnumerator DisableMouse() {
-        Cursor.visible = false;
-        yield return null;
-        Cursor.lockState = CursorLockMode.Locked;
-        yield return null;
-        Cursor.lockState = CursorLockMode.None;
     }
 }
