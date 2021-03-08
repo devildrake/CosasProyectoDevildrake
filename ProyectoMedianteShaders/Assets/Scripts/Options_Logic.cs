@@ -36,8 +36,8 @@ public class Options_Logic : MonoBehaviour {
     private int prevResolution, prevQuality, prevFps;
     private bool prevMute, prevMostrarTiempo;
 
-    [SerializeField] private NavMenuItem firstAudio, firstVideo;
-    private NavMenuItem currentItem;
+    [SerializeField] private NavItem firstAudio, firstVideo;
+    private NavItem currentItem;
 
     void Awake() {
 
@@ -231,16 +231,16 @@ public class Options_Logic : MonoBehaviour {
 
     //METODO DE CONTROL DE LA NAVEGACION DE LAS OPCIONES
     private void MenuNav() {
-        NavMenuItem.MENU_ITEM_TYPE type = currentItem.myType;
+        NavItem.MENU_ITEM_TYPE type = currentItem.myType;
 
         //accionar una opcion
         if (InputManager.instance.selectButton && !InputManager.instance.prevSelectButton || 
             InputManager.instance.selectButton2 &&  !InputManager.instance.prevSelectButton2) {
-            if(type == NavMenuItem.MENU_ITEM_TYPE.BUTTON || type == NavMenuItem.MENU_ITEM_TYPE.SHROOM_BUTTON || type == NavMenuItem.MENU_ITEM_TYPE.TOGGLE) {
+            if(type == NavItem.MENU_ITEM_TYPE.BUTTON || type == NavItem.MENU_ITEM_TYPE.SHROOM_BUTTON || type == NavItem.MENU_ITEM_TYPE.TOGGLE) {
                 currentItem.InteractClick();
             }
         }
-        if (type == NavMenuItem.MENU_ITEM_TYPE.SLIDER) {
+        if (type == NavItem.MENU_ITEM_TYPE.SLIDER) {
             if (InputManager.instance.horizontalAxis > 0.1 || InputManager.instance.horizontalAxis2 > 0.1 || InputManager.instance.rightKey) {//derecha
                 currentItem.InteractRight();
             }
@@ -248,7 +248,7 @@ public class Options_Logic : MonoBehaviour {
                 currentItem.InteractLeft();
             }
         }
-        else if (type == NavMenuItem.MENU_ITEM_TYPE.MY_SLIDER) {
+        else if (type == NavItem.MENU_ITEM_TYPE.MY_SLIDER) {
             //derecha
             if ((InputManager.instance.horizontalAxis > 0.1 && InputManager.instance.prevHorizontalAxis == 0) || (InputManager.instance.horizontalAxis2 > 0.1 && InputManager.instance.prevHorizontalAxis2 == 0) || (InputManager.instance.rightKey && !InputManager.instance.prevRightKey)) {
                 currentItem.InteractRight();
@@ -262,10 +262,10 @@ public class Options_Logic : MonoBehaviour {
         //MOVIMIENTO VERTICAL
         //abajo
         if ((InputManager.instance.verticalAxis < 0 && InputManager.instance.prevVerticalAxis == 0) || (InputManager.instance.verticalAxis2 < 0 && InputManager.instance.prevVerticalAxis2 == 0) || (InputManager.instance.downKey && !InputManager.instance.prevDownKey)) {//abajo
-            if (type == NavMenuItem.MENU_ITEM_TYPE.SHROOM_BUTTON && currentState == OptionsState.AUDIO_DESPLEGADO) {
+            if (type == NavItem.MENU_ITEM_TYPE.SHROOM_BUTTON && currentState == OptionsState.AUDIO_DESPLEGADO) {
                 currentItem = currentItem.DownElement(0);
             }
-            else if(type == NavMenuItem.MENU_ITEM_TYPE.SHROOM_BUTTON && currentState == OptionsState.VIDEO_DESPLEGADO){
+            else if(type == NavItem.MENU_ITEM_TYPE.SHROOM_BUTTON && currentState == OptionsState.VIDEO_DESPLEGADO){
                 currentItem = currentItem.DownElement(1);
             }
             else {
@@ -274,10 +274,10 @@ public class Options_Logic : MonoBehaviour {
         }
         //arriba
         else if ((InputManager.instance.verticalAxis > 0 && InputManager.instance.prevVerticalAxis == 0) || (InputManager.instance.verticalAxis2 > 0 && InputManager.instance.prevVerticalAxis2 == 0) || (InputManager.instance.upKey && !InputManager.instance.prevUpKey)) {//arriba
-            if (type == NavMenuItem.MENU_ITEM_TYPE.BUTTON && currentState == OptionsState.AUDIO_DESPLEGADO) {
+            if (type == NavItem.MENU_ITEM_TYPE.BUTTON && currentState == OptionsState.AUDIO_DESPLEGADO) {
                 currentItem = currentItem.UpElement(0);
             }
-            else if (type == NavMenuItem.MENU_ITEM_TYPE.BUTTON && currentState == OptionsState.VIDEO_DESPLEGADO) {
+            else if (type == NavItem.MENU_ITEM_TYPE.BUTTON && currentState == OptionsState.VIDEO_DESPLEGADO) {
                 currentItem = currentItem.UpElement(1);
             }
             else {

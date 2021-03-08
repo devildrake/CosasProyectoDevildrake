@@ -23,6 +23,8 @@ public class LevelData {
 //si el jugador se encuentra en el menu 
 
 public class GameLogic : MonoBehaviour {
+    private const string GAME_VERSION = "1.0";
+
     public MessagesFairy.LANGUAGE currentLanguage;
     public int levelToLoad;
 
@@ -128,6 +130,8 @@ public class GameLogic : MonoBehaviour {
     bool dawn = false;
     float dawnValue = 0;
 
+    public bool newVersion = false; //Si hay una nueva versión más actualizada del juego se pone a true para que se lance un aviso.
+
     ///////////////////////////////OPCIONES///////////////////////////
     ///////////////////////////////OPCIONES///////////////////////////
     ///////////////////////////////OPCIONES///////////////////////////
@@ -147,7 +151,7 @@ public class GameLogic : MonoBehaviour {
 
     [HideInInspector] public Dictionary<string, string> languageData; //Se guarda la info leida desde el archivo json en formato key-value
 
-
+    #region OPTIONS
     /*
      * Conjunto de metodos que se llamaran al cambiar las opciones de juego
      */
@@ -165,6 +169,7 @@ public class GameLogic : MonoBehaviour {
     //=====================FINAL DE METODOS DE OPCIONES========================
     //=====================FINAL DE METODOS DE OPCIONES========================
     //=====================FINAL DE METODOS DE OPCIONES========================
+    #endregion
 
     public void KillPlayer() {
         currentPlayer.Kill();
@@ -251,8 +256,23 @@ public class GameLogic : MonoBehaviour {
         }
         if (!LoadJSONFile(lan)) { //Se carga el JSON del idioma
             Debug.LogError("No se ha podido cargar el archivo de idioma correctamente");
-        }        
+        }
+
+        StartCoroutine("CheckVersion");
     }
+
+        #region CHECK_GAME_VERSION
+    //Comprueva la ultima version del juego, si hay otra mas actual se lanzará un aviso
+    IEnumerator CheckVersion() {
+        WWW info = new WWW("duskndawn.000webhostapp.com/game_info/game_version.php");
+        yield return info;
+        string textInfo = info.text;
+
+        if (!textInfo.Equals(GAME_VERSION)) {
+            newVersion = true;
+        }
+    }
+    #endregion
 
 
     //Setter de WaitAFrame
@@ -294,6 +314,7 @@ public class GameLogic : MonoBehaviour {
 
     void Start() {
         //currentLanguage = MessagesFairy.LANGUAGE.English;
+        CheckVersion();
         prevSongId = -1;
         SetWaitAFrame(false);
         SetCheckMainMenu(false);
@@ -584,7 +605,7 @@ public class GameLogic : MonoBehaviour {
                                         }
                                     }
                                 } else {
-                                    Debug.Log("No encuentra players");
+                                    //Debug.Log("No encuentra players");
                                 }
                             }
                         }
